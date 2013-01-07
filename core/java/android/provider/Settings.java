@@ -6815,6 +6815,15 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_SHOW_TICKER = "status_bar_show_ticker";
+        /**
+         * Whether to launch default music player when headset plugged in
+         * @hide
+         */
+        public static final String HEADSET_CONNECT_PLAYER = "headset_connect_player";
+        /** @hide */
+        private static final Validator HEADSET_CONNECT_PLAYER_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
 
         /**
          * Ticker mode
@@ -7006,6 +7015,7 @@ public final class Settings {
             STOCK_STATUSBAR_IN_HIDE,
             QS_DATAUSAGE,
             DUAL_ROW_DATAUSAGE,
+            HEADSET_CONNECT_PLAYER,
         };
 
         /**
@@ -7246,6 +7256,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STOCK_STATUSBAR_IN_HIDE);
             PRIVATE_SETTINGS.add(QS_DATAUSAGE);
             PRIVATE_SETTINGS.add(DUAL_ROW_DATAUSAGE);
+            PRIVATE_SETTINGS.add(HEADSET_CONNECT_PLAYER);
         }
 
         /**
@@ -7463,6 +7474,7 @@ public final class Settings {
             VALIDATORS.put(STOCK_STATUSBAR_IN_HIDE, STOCK_STATUSBAR_IN_HIDE_VALIDATOR);
             VALIDATORS.put(QS_DATAUSAGE, QS_DATAUSAGE_VALIDATOR);
             VALIDATORS.put(DUAL_ROW_DATAUSAGE, DUAL_ROW_DATAUSAGE_VALIDATOR);
+            VALIDATORS.put(HEADSET_CONNECT_PLAYER, HEADSET_CONNECT_PLAYER_VALIDATOR);
         }
 
         /**
