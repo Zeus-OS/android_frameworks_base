@@ -3098,6 +3098,8 @@ public final class Settings {
 
             // At one time in System, then Global, but now back in Secure
             MOVED_TO_SECURE.add(Secure.INSTALL_NON_MARKET_APPS);
+
+            MOVED_TO_SECURE.add(Secure.VOLUME_LINK_NOTIFICATION);
         }
 
         @UnsupportedAppUsage
@@ -9981,6 +9983,12 @@ public final class Settings {
          */
         public static final String LOCK_SCREEN_TRANSPARENT_NOTIFICATIONS_ENABLED =
                 "lock_screen_transparent_notifications_enabled";
+
+        /**
+         * Boolean value whether to link ringtone and notification volume
+         * @hide
+         */
+        public static final String VOLUME_LINK_NOTIFICATION = "volume_link_notification";
 
         /**
          * Whether face unlock is allowed only on security view.
