@@ -13548,6 +13548,12 @@ public final class Settings {
         public static final String INSTANT_APP_DEXOPT_ENABLED = "instant_app_dexopt_enabled";
 
         /**
+         * Toast animations
+         * @hide
+         */
+        public static final String TOAST_ANIMATION = "toast_animation";
+
+        /**
          * The min period for caching installed instant apps in milliseconds.
          * <p>
          * Type: long
