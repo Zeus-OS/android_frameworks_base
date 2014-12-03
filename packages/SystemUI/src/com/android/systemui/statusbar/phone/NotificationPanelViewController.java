@@ -143,6 +143,13 @@ import java.util.function.Function;
 
 import javax.inject.Inject;
 
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.database.ContentObserver;
+import android.net.Uri;
+import android.os.Handler;
+import android.os.UserHandle;
+
 @StatusBarComponent.StatusBarScope
 public class NotificationPanelViewController extends PanelViewController {
 
@@ -421,6 +428,9 @@ public class NotificationPanelViewController extends PanelViewController {
     private ArrayList<Runnable> mVerticalTranslationListener = new ArrayList<>();
     private HeadsUpAppearanceController mHeadsUpAppearanceController;
 
+    private SettingsObserver mSettingsObserver;
+    private Handler mHandler = new Handler();
+
     private int mPanelAlpha;
     private Runnable mPanelAlphaEndAction;
     private float mBottomAreaShadeAlpha;
@@ -473,6 +483,8 @@ public class NotificationPanelViewController extends PanelViewController {
     private boolean mShowingKeyguardHeadsUp;
     private boolean mAllowExpandForSmallExpansion;
     private Runnable mExpandAfterLayoutRunnable;
+
+    private int mQsSmartPullDown;
 
     /**
      * Is this a collapse that started on the panel where we should allow the panel to intercept
@@ -638,6 +650,8 @@ public class NotificationPanelViewController extends PanelViewController {
         if (DEBUG) {
             mView.getOverlay().add(new DebugDrawable());
         }
+
+        mSettingsObserver = new SettingsObserver(mHandler);
 
         onFinishInflate();
     }
@@ -1434,6 +1448,13 @@ public class NotificationPanelViewController extends PanelViewController {
                 break;
         }
         showQsOverride &= mBarState == StatusBarState.SHADE;
+
+        if (mQsSmartPullDown == 1 && !hasActiveClearableNotifications()
+                || mQsSmartPullDown == 2 &&
+                !mEntryManager.hasActiveOngoingNotifications()
+                || mQsSmartPullDown == 3 && !mEntryManager.hasActiveVisibleNotifications()) {
+                showQsOverride = true;
+        }
 
         return !isQSEventBlocked() && (twoFingerDrag || showQsOverride
                 || stylusButtonClickDrag || mouseButtonClickDrag);
@@ -2952,6 +2973,38 @@ public class NotificationPanelViewController extends PanelViewController {
         return !isFullWidth() || !mShowIconsWhenExpanded;
     }
 
+    class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+        void observe() {
+            ContentResolver resolver = mView.getContext().getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_SMART_PULLDOWN),
+                    false, this, UserHandle.USER_ALL);
+            update();
+        }
+
+        void unobserve() {
+            ContentResolver resolver = mView.getContext().getContentResolver();
+            resolver.unregisterContentObserver(this);
+        }
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            update();
+        }
+        public void update() {
+            ContentResolver resolver = mView.getContext().getContentResolver();
+            mQsSmartPullDown = Settings.System.getIntForUser(resolver,
+                    Settings.System.QS_SMART_PULLDOWN, 0,
+                    UserHandle.USER_CURRENT);
+        }
+    }
+
     private final FragmentListener mFragmentListener = new FragmentListener() {
         @Override
         public void onFragmentViewCreated(String tag, Fragment fragment) {
@@ -3977,6 +4030,7 @@ public class NotificationPanelViewController extends PanelViewController {
             TunerService.Tunable {
         @Override
         public void onViewAttachedToWindow(View v) {
+            mSettingsObserver.observe();
             FragmentHostManager.get(mView).addTagListener(QS.TAG, mFragmentListener);
             mStatusBarStateController.addCallback(mStatusBarStateListener);
             mZenModeController.addCallback(mZenModeControllerCallback);
@@ -3995,6 +4049,7 @@ public class NotificationPanelViewController extends PanelViewController {
 
         @Override
         public void onViewDetachedFromWindow(View v) {
+            mSettingsObserver.unobserve();
             FragmentHostManager.get(mView).removeTagListener(QS.TAG, mFragmentListener);
             mStatusBarStateController.removeCallback(mStatusBarStateListener);
             mZenModeController.removeCallback(mZenModeControllerCallback);
