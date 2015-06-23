@@ -13746,6 +13746,17 @@ public final class Settings {
         public static final String ANIMATION_CONTROLS_DURATION = "animation_controls_duration";
 
         /**
+         * @hide
+         *
+         * Disabled Transition animations of the android system
+         * @hide
+         */
+        public static final String DISABLE_TRANSITION_ANIMATIONS = "disable_transition_animations";
+
+        /**
+        public static final String SHOW_CPU_OVERLAY = "show_cpu_overlay";
+
+        /**
          * Global settings that shouldn't be persisted.
          *
          * @hide
