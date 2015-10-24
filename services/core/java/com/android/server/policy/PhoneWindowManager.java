@@ -99,6 +99,7 @@ import android.app.ActivityTaskManager;
 import android.app.AlarmManager;
 import android.app.AppOpsManager;
 import android.app.IUiModeManager;
+import android.app.KeyguardManager;
 import android.app.PendingIntent;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
@@ -1693,14 +1694,18 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     }
 
     void showGlobalActionsInternal() {
-        final boolean keyguardShowing = isKeyguardShowingAndNotOccluded();
-        if (keyguardShowing && isKeyguardSecure(mCurrentUserId) &&
-                mHideGlobalActionsOnSecure) {
+        KeyguardManager km = (KeyguardManager) mContext.getSystemService(Context.KEYGUARD_SERVICE);
+        boolean locked = km.isKeyguardLocked();
+        boolean globalActionsOnLockScreen = Settings.System.getInt(
+                mContext.getContentResolver(), Settings.System.LOCKSCREEN_ENABLE_POWER_MENU, 1) != 0;
+
+        if (locked && !globalActionsOnLockScreen)
             return;
-        }
+
         if (mGlobalActions == null) {
             mGlobalActions = new GlobalActions(mContext, mWindowManagerFuncs);
         }
+        final boolean keyguardShowing = isKeyguardShowingAndNotOccluded();
         mGlobalActions.showDialog(keyguardShowing, isDeviceProvisioned());
         // since it took two seconds of long press to bring this up,
         // poke the wake lock so they have some time to see the dialog.
