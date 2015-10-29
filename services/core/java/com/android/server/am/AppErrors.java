@@ -855,7 +855,10 @@ class AppErrors {
                     && (showFirstCrash || showFirstCrashDevOption || data.repeating)) {
                 proc.getDialogController().showCrashDialogs(data);
                 if (!proc.isolated) {
+                        if (Settings.System.getInt(mContext.getContentResolver(), 
+                        Settings.System.ENABLE_FC_NOTIFICATIONS, 1) != 0) {
                     mProcessCrashShowDialogTimes.put(proc.info.processName, proc.uid, now);
+                        }
                 }
             } else {
                 // The device is asleep, so just pretend that the user
