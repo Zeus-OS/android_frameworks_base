@@ -54,6 +54,7 @@ import com.android.systemui.qs.tiles.LiveDisplayTile;
 import com.android.systemui.qs.tiles.LocaleTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.MusicTile;
+import com.android.systemui.qs.tiles.NavBarTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
 import com.android.systemui.qs.tiles.ReadingModeTile;
@@ -133,6 +134,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<CameraTile> mCameraTileProvider;
     private final Provider<LocaleTile> mLocaleTileProvider;
     private final Provider<GoogleAmbientModeTile> mGoogleAmbientModeTileProvider;
+    private final Provider<NavBarTile> mNavBarTileProvider;
 
     private QSTileHost mHost;
 
@@ -185,7 +187,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<CameraTile> cameraTileProvider,
             Provider<LocaleTile> localeTileProvider,
             Provider<GoogleAmbientModeTile> googleAmbientModeTileProvider,
-            ) {
+            Provider<NavBarTile> navBarTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -234,6 +236,7 @@ public class QSFactoryImpl implements QSFactory {
         mCameraTileProvider = cameraTileProvider;
         mLocaleTileProvider = localeTileProvider;
         mGoogleAmbientModeTileProvider = googleAmbientModeTileProvider;
+        mNavBarTileProvider = navBarTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -345,6 +348,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mLocaleTileProvider.get();
             case "googleambientmode":
                 return mGoogleAmbientModeTileProvider.get();
+            case "navbar":
+                return mNavBarTileProvider.get();
         }
 
         // Intent tiles.
