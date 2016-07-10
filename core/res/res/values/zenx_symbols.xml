@@ -95,4 +95,7 @@
     <java-symbol type="anim" name="ethans_launch_task_behind_target" />
 
      <java-symbol type="array" name="config_blockPackagesSensorDrain" />
+
+     <!-- Whether device has dash charging support -->
+     <java-symbol type="bool" name="config_hasDashCharger" />
 </resources>
