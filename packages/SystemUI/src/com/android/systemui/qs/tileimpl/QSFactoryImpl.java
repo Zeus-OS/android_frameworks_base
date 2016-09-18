@@ -67,6 +67,7 @@ import com.android.systemui.qs.tiles.SoundSearchTile;
 import com.android.systemui.qs.tiles.UiModeNightTile;
 import com.android.systemui.qs.tiles.UsbTetherTile;
 import com.android.systemui.qs.tiles.CalcTile;
+import com.android.systemui.qs.tiles.SoundTile;
 import com.android.systemui.qs.tiles.UserTile;
 import com.android.systemui.qs.tiles.VolumeTile;
 import com.android.systemui.qs.tiles.VpnTile;
@@ -132,6 +133,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<CameraTile> mCameraTileProvider;
     private final Provider<LocaleTile> mLocaleTileProvider;
     private final Provider<LteTile> mLteTileProvider;
+    private final Provider<SoundTile> mSoundTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
 
@@ -182,7 +184,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<CallTile> callTileProvider,
             Provider<CameraTile> cameraTileProvider,
             Provider<LteTile> lteTileProvider,
-            Provider<SmartPixelsTile> smartPixelsTileProvider) {
+            Provider<SmartPixelsTile> smartPixelsTileProvider,
+            Provider<SoundTile> soundTileProvider) {
         mQsHostLazy = qsHostLazy;
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
@@ -230,6 +233,7 @@ public class QSFactoryImpl implements QSFactory {
         mCameraTileProvider = cameraTileProvider;
         mLocaleTileProvider = localeTileProvider;
         mLteTileProvider = lteTileProvider;
+        mSoundTileProvider = soundTileProvider;
     }
 
     public QSTile createTile(String tileSpec) {
@@ -334,6 +338,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mLocaleTileProvider.get();
             case "lte":
                 return mLteTileProvider.get();
+            case "sound":
+                return mSoundTileProvider.get();
         }
 
         // Custom tiles
