@@ -116,4 +116,8 @@
     <dimen name="keyguard_charging_indication_width">68dp</dimen>
 
     <dimen name="battery_bar_view_height">6dp</dimen>
+    <!-- Network traffic monitor -->
+    <dimen name="net_traffic_multi_text_size">8dp</dimen>
+    <dimen name="net_traffic_txt_img_padding">2dp</dimen>
+
 </resources>
