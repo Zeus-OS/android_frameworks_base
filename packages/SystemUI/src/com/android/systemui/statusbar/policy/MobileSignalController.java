@@ -108,6 +108,7 @@ public class MobileSignalController extends SignalController<
 
     // Data disabled icon
     private boolean mDataDisabledIcon;
+    private boolean mRoamingIconAllowed;
 
     // Volte Icon
     private boolean mVoLTEicon;
@@ -197,7 +198,10 @@ public class MobileSignalController extends SignalController<
                     this, UserHandle.USER_ALL);
            resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.VOLTE_ICON_STYLE), false,
-                  this, UserHandle.USER_ALL);
+                    this, UserHandle.USER_ALL);
+           resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.ROAMING_INDICATOR_ICON), false,
+                    this, UserHandle.USER_ALL);
            updateSettings();
         }
 
@@ -225,6 +229,10 @@ public class MobileSignalController extends SignalController<
         mVoLTEstyle = Settings.System.getIntForUser(resolver,
                 Settings.System.VOLTE_ICON_STYLE, 0,
                 UserHandle.USER_CURRENT);
+
+        mRoamingIconAllowed = Settings.System.getIntForUser(resolver,
+                Settings.System.ROAMING_INDICATOR_ICON, 1,
+                UserHandle.USER_CURRENT) == 1;
 
         mapIconSets();
         updateTelephony();
@@ -776,7 +784,7 @@ public class MobileSignalController extends SignalController<
         mCurrentState.dataConnected = mCurrentState.connected
                 && mDataState == TelephonyManager.DATA_CONNECTED;
 
-        mCurrentState.roaming = isRoaming();
+        mCurrentState.roaming = isRoaming() && mRoamingIconAllowed;
         if (isCarrierNetworkChangeActive()) {
             mCurrentState.iconGroup = TelephonyIcons.CARRIER_NETWORK_CHANGE;
         } else if (isDataDisabled() && mDataDisabledIcon/*!mConfig.alwaysShowDataRatIcon*/) {
