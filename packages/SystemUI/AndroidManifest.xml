@@ -309,6 +309,9 @@
 
     <protected-broadcast android:name="android.intent.action.USER_PRESENT" />
 
+
+    <protected-broadcast android:name="android.intent.action.SCREEN_STATE_SERVICE_UPDATE" />
+
     <application
         android:name=".SystemUIApplication"
         android:persistent="true"
@@ -867,6 +870,12 @@
                 android:exported="true" >
             <intent-filter>
                <action android:name="android.intent.action.RANDOM_COLOR_SERVICE_UPDATE"/>
+            </intent-filter>
+        </service>
+        <service android:name=".screenstate.ScreenStateService"
+                android:exported="true" >
+            <intent-filter>
+               <action android:name="android.intent.action.SCREEN_STATE_SERVICE_UPDATE"/>
             </intent-filter>
         </service>
     </application>

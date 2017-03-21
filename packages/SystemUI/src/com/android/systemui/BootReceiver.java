@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.os.Handler;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Log;
 
@@ -82,6 +83,13 @@ public class BootReceiver extends BroadcastReceiver {
                     Settings.System.RANDOM_ACCENT_COLOR_ON_SCREEN_OFF, 0, UserHandle.USER_CURRENT) != 0) {
                 Intent randomcolorstate = new Intent(mContext, com.android.systemui.zenx.randomcolor.RandomColorService.class);
                 mContext.startService(randomcolorstate);
+            }
+
+            // start the screen state service if activated
+            if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.START_SCREEN_STATE_SERVICE, 0, UserHandle.USER_CURRENT) != 0) {
+                Intent screenstate = new Intent(mContext, com.android.systemui.screenstate.ScreenStateService.class);
+                mContext.startService(screenstate);
             }
 
         } catch (Exception e) {
