@@ -61,7 +61,7 @@
             android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
             android:visibility="gone"
             android:singleLine="true"/>
-            
+
         <FrameLayout
             android:layout_height="match_parent"
             android:layout_width="0dp"
@@ -108,6 +108,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout="@layout/operator_name" />
+
+
+                    <com.android.systemui.zenx.logo.LogoImageView
+                        android:id="@+id/statusbar_logo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingEnd="1dip"
+                        android:scaleType="center"
+                        android:visibility="gone" />
 
                     <com.android.systemui.statusbar.AlphaOptimizedFrameLayout
                         android:id="@+id/notification_icon_area"

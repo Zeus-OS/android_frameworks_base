@@ -58,6 +58,16 @@
           android:clipChildren="false"
           systemui:textAppearance="@style/TextAppearance.StatusBar.Clock" />
 
+
+    <com.android.systemui.zenx.logo.LogoImageViewRight
+        android:id="@+id/statusbar_logo_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingStart="2dip"
+        android:scaleType="center"
+        android:gravity="center_vertical"
+        android:visibility="gone" />
+
       <com.android.keyguard.AlphaOptimizedLinearLayout
         android:id="@+id/right_clock_layout"
         android:layout_width="wrap_content"
@@ -76,7 +86,6 @@
             android:visibility="gone"
         />
     </com.android.keyguard.AlphaOptimizedLinearLayout>
-
              </LinearLayout>
     </LinearLayout>
 </LinearLayout>

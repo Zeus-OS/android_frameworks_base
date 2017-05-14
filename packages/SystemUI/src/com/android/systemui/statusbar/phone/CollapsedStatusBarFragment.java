@@ -74,6 +74,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private View mOperatorNameFrame;
     private CommandQueue mCommandQueue;
     private ClockController mClockController;
+    private View mStatusBarLogo, mStatusBarLogoRight;
 
     // Bliss additions
     private View mBatteryBars[] = new View[2];
@@ -155,6 +156,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mBatteryBars[0] = mStatusBar.findViewById(R.id.battery_bar);
         mBatteryBars[1] = mStatusBar.findViewById(R.id.battery_bar_1);
         mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);
+        mStatusBarLogo = mStatusBar.findViewById(R.id.statusbar_logo);
+        mStatusBarLogoRight = mStatusBar.findViewById(R.id.statusbar_logo_right);
         showSystemIconArea(false);
         initEmergencyCryptkeeperText();
         initOperatorName();
@@ -308,6 +311,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         for (View batteryBar: mBatteryBars) {
             animateHide(batteryBar, animate);
         }
+        animateHide(mStatusBarLogoRight, animate);
     }
 
     public void showSystemIconArea(boolean animate) {
@@ -315,6 +319,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         for (View batteryBar: mBatteryBars) {
             animateShow(batteryBar, animate);
         }
+        animateShow(mStatusBarLogoRight, animate);
     }
 
     /**
@@ -335,6 +340,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         animateHide(mCenteredIconArea, animate);
         animateHide(mCustomIconArea, animate);
         animateHide(mCenterClockLayout, animate);
+        animateHide(mStatusBarLogo, animate);
     }
 
     public void showNotificationIconArea(boolean animate) {
@@ -342,6 +348,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         animateShow(mCenteredIconArea, animate);
         animateShow(mCustomIconArea, animate);
         animateShow(mCenterClockLayout, animate);
+        animateShow(mStatusBarLogo, animate);
     }
 
     public void hideOperatorName(boolean animate) {
