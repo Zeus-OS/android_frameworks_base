@@ -69,6 +69,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private LinearLayout mCustomIconArea;
     private View mClockView;
     private int mClockStyle;
+    private View mZenxLogoRight;
     private View mNotificationIconAreaInner;
     private View mCenteredIconArea;
     private int mDisabled1;
@@ -151,6 +152,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mCenterClockLayout = (LinearLayout) mStatusBar.findViewById(R.id.center_clock_layout);
         mRightClock = mStatusBar.findViewById(R.id.right_clock);
         mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);
+        mZenxLogoRight = mStatusBar.findViewById(R.id.zenx_logo_right);
         showSystemIconArea(false);
         initEmergencyCryptkeeperText();
         animateHide(mClockView, false, false);
@@ -296,6 +298,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             animateHide(mRightClock, animate, true);
         }
         animateHide(mSystemIconArea, animate, true);
+        animateHide(mZenxLogoRight, animate, true);
     }
 
     public void showSystemIconArea(boolean animate) {
@@ -304,6 +307,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
             animateShow(mRightClock, animate);
         }
         animateShow(mSystemIconArea, animate);
+        animateShow(mZenxLogoRight, animate);
     }
 
 /*    public void hideClock(boolean animate) {
