@@ -94,4 +94,5 @@
     <java-symbol type="anim" name="ethans_launch_task_behind_source" />
     <java-symbol type="anim" name="ethans_launch_task_behind_target" />
 
+     <java-symbol type="array" name="config_blockPackagesSensorDrain" />
 </resources>
