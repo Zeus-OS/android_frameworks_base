@@ -6343,7 +6343,11 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
-         * Disable dashboard suggestions in settings
+         * @hide
+         */
+        public static final String SENSOR_BLOCK = "sensor_block";
+
+        /**
          * @hide
          */
         public static final String ENABLE_SUGGESTIONS = "enable_suggestions";
