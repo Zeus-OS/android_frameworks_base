@@ -52,6 +52,7 @@ import com.android.systemui.qs.tiles.LocaleTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.LiveDisplayTile;
 import com.android.systemui.qs.tiles.MusicTile;
+import com.android.systemui.qs.tiles.LteTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
 import com.android.systemui.qs.tiles.PowerShareTile;
@@ -130,6 +131,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<CallTile> mCallTileProvider;
     private final Provider<CameraTile> mCameraTileProvider;
     private final Provider<LocaleTile> mLocaleTileProvider;
+    private final Provider<LteTile> mLteTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
 
@@ -177,8 +179,9 @@ public class QSFactoryImpl implements QSFactory {
             Provider<CalcTile> calcTileProvider,
             Provider<CalendarTile> calendarTileProvider,
             Provider<LocaleTile> localeTileProvider,
-            Provider<CallTile> callTileProvider
-            Provider<CameraTile> cameraTileProvider
+            Provider<CallTile> callTileProvider,
+            Provider<CameraTile> cameraTileProvider,
+            Provider<LteTile> lteTileProvider,
             Provider<SmartPixelsTile> smartPixelsTileProvider) {
         mQsHostLazy = qsHostLazy;
         mWifiTileProvider = wifiTileProvider;
@@ -226,6 +229,7 @@ public class QSFactoryImpl implements QSFactory {
         mCallTileProvider = callTileProvider;
         mCameraTileProvider = cameraTileProvider;
         mLocaleTileProvider = localeTileProvider;
+        mLteTileProvider = lteTileProvider;
     }
 
     public QSTile createTile(String tileSpec) {
@@ -328,6 +332,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mCameraTileProvider.get();
             case "locale":
                 return mLocaleTileProvider.get();
+            case "lte":
+                return mLteTileProvider.get();
         }
 
         // Custom tiles
