@@ -27,7 +27,7 @@
 
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_extra" translatable="false">
-        compass,cpuinfo,smartpixels
+        compass,cpuinfo,music,smartpixels
     </string>
 
     <!-- Max visible system icons -->

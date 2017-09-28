@@ -45,6 +45,7 @@ import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.LiveDisplayTile;
+import com.android.systemui.qs.tiles.MusicTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
 import com.android.systemui.qs.tiles.PowerShareTile;
@@ -109,6 +110,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<SmartPixelsTile> mSmartPixelsTileProvider;
     private final Provider<CPUInfoTile> mCPUInfoTileProvider;
     private final Provider<CompassTile> mCompassTileProvider;
+    private final Provider<MusicTile> mMusicTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
 
@@ -148,6 +150,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<VpnTile> vpnTileProvider,
             Provider<CPUInfoTile> cpuInfoTileProvider,
             Provider<CompassTile> compassTileProvider,
+            Provider<MusicTile> musicTileProvider,
             Provider<SmartPixelsTile> smartPixelsTileProvider) {
         mQsHostLazy = qsHostLazy;
         mWifiTileProvider = wifiTileProvider;
@@ -185,6 +188,7 @@ public class QSFactoryImpl implements QSFactory {
         mSmartPixelsTileProvider = smartPixelsTileProvider;
         mCPUInfoTileProvider = cpuInfoTileProvider;
         mCompassTileProvider = compassTileProvider;
+        mMusicTileProvider = musicTileProvider;
     }
 
     public QSTile createTile(String tileSpec) {
@@ -267,6 +271,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mCPUInfoTileProvider.get();
             case "compass":
                 return mCompassTileProvider.get();
+            case "music":
+                return mMusicTileProvider.get();
         }
 
         // Custom tiles
