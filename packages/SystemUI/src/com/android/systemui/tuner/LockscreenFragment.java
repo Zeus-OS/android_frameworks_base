@@ -23,6 +23,12 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.LauncherActivityInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PaintFlagsDrawFilter;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -357,7 +363,9 @@ public class LockscreenFragment extends PreferenceFragment {
             mShortcut = shortcut;
             mIconState = new IconState();
             mIconState.isVisible = true;
-            mIconState.drawable = shortcut.icon.loadDrawable(context).mutate();
+            // we need to flatten AdaptiveIconDrawable layers to a single drawable
+            mIconState.drawable = getBitmapDrawable(
+                    context.getResources(), shortcut.icon.loadDrawable(context)).mutate();
             mIconState.contentDescription = mShortcut.label;
             int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32,
                     context.getResources().getDisplayMetrics());
@@ -373,7 +381,10 @@ public class LockscreenFragment extends PreferenceFragment {
 
         @Override
         public Intent getIntent() {
-            return mShortcut.intent;
+            if (mShortcut != null) {
+                return mShortcut.intent;
+            }
+            return null;
         }
     }
 
@@ -385,7 +396,8 @@ public class LockscreenFragment extends PreferenceFragment {
             mIntent = new Intent().setComponent(new ComponentName(info.packageName, info.name));
             mIconState = new IconState();
             mIconState.isVisible = true;
-            mIconState.drawable = info.loadIcon(context.getPackageManager()).mutate();
+            mIconState.drawable = getBitmapDrawable(
+                     context.getResources(), info.loadIcon(context.getPackageManager())).mutate();
             mIconState.contentDescription = info.loadLabel(context.getPackageManager());
             int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 32,
                     context.getResources().getDisplayMetrics());
@@ -403,5 +415,21 @@ public class LockscreenFragment extends PreferenceFragment {
         public Intent getIntent() {
             return mIntent;
         }
+    }
+
+    private static BitmapDrawable getBitmapDrawable(Resources resources, Drawable image) {
+        if (image instanceof BitmapDrawable) {
+            return (BitmapDrawable) image;
+        }
+        final Canvas canvas = new Canvas();
+        canvas.setDrawFilter(new PaintFlagsDrawFilter(Paint.ANTI_ALIAS_FLAG,
+                Paint.FILTER_BITMAP_FLAG));
+
+        Bitmap bmResult = Bitmap.createBitmap(image.getIntrinsicWidth(), image.getIntrinsicHeight(),
+                Bitmap.Config.ARGB_8888);
+        canvas.setBitmap(bmResult);
+        image.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        image.draw(canvas);
+        return new BitmapDrawable(resources, bmResult);
     }
 }
