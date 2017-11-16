@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
 /**
- * Copyright (C) 2019 Havoc-OS
+ * Copyright (C) 2019 Zenx-OS
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,9 @@
 -->
 <resources>
 
-    <!-- Burn-in protection -->
-    <dimen name="horizontal_max_swift">3.0dp</dimen>
-    <dimen name="vertical_max_swift">1.0dp</dimen>
+    <!-- Caffeine tile -->
+    <string name="quick_settings_caffeine_label">Caffeine</string>
+    <string name="accessibility_quick_settings_caffeine_off">Caffeine off</string>
+    <string name="accessibility_quick_settings_caffeine_on">Caffeine on</string>
 
 </resources>
