@@ -70,6 +70,7 @@ public class LockIcon extends KeyguardAffordanceView {
             int newState = mState;
             Drawable icon = getIcon(newState);
             mIsFaceUnlock = newState == STATE_SCANNING_FACE;
+            setImageDrawable(icon, false, false);
 
             if (mIsFaceUnlock) {
                 icon = mContext.getDrawable(getIconForState(newState));
