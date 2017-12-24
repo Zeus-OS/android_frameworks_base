@@ -27,7 +27,7 @@
 
     <!-- The default tiles to display in QuickSettings -->
     <string name="quick_settings_tiles_extra" translatable="false">
-        smartpixels
+        cpuinfo,smartpixels
     </string>
 
     <!-- Max visible system icons -->
