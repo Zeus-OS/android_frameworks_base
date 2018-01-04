@@ -27,4 +27,7 @@
     <java-symbol type="string" name="config_SmartChargingSupspendValue" />
     <java-symbol type="string" name="config_SmartChargingResumeValue" />
 
+    <!-- Whether the device supports Smart Pixels -->
+    <java-symbol type="bool" name="config_enableSmartPixels" />
+
 </resources>
