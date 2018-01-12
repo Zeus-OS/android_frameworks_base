@@ -7222,6 +7222,17 @@ public final class Settings {
         public static final String SBC_HD_PRIORITY = "sbc_hd_priority";
 
         /**
+         /**
+         * Defines the screen-off animation to display
+         * @hide
+         */
+        public static final String SCREEN_OFF_ANIMATION = "screen_off_animation";
+
+        /** @hide */
+        private static final Validator SCREEN_OFF_ANIMATION_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -7401,6 +7412,7 @@ public final class Settings {
             NOTIFICATION_HEADERS,
             QS_PANEL_BG_USE_NEW_TINT,
             CUSTOM_STATUSBAR_HEIGHT,
+            SCREEN_OFF_ANIMATION
         };
 
         /**
@@ -7660,6 +7672,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_TILE_STYLE);
             PRIVATE_SETTINGS.add(CUSTOM_STATUSBAR_HEIGHT);
             PRIVATE_SETTINGS.add(UI_STYLE);
+            PRIVATE_SETTINGS.add(SCREEN_OFF_ANIMATION);
         }
 
         /**
@@ -7891,6 +7904,7 @@ public final class Settings {
             VALIDATORS.put(NOTIFICATION_HEADERS, NOTIFICATION_HEADERS_VALIDATOR);
             VALIDATORS.put(QS_PANEL_BG_USE_NEW_TINT, QS_PANEL_BG_USE_NEW_TINT_VALIDATOR);
             VALIDATORS.put(CUSTOM_STATUSBAR_HEIGHT, CUSTOM_STATUSBAR_HEIGHT_VALIDATOR);
+            VALIDATORS.put(SCREEN_OFF_ANIMATION, SCREEN_OFF_ANIMATION_VALIDATOR);
         }
 
         /**
