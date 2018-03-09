@@ -174,6 +174,7 @@ public class KeyguardPINView extends KeyguardPinBasedInputView {
                 view.setDigit(sNumbers.get(i));
             }
         }
+        setButtonVisibility(getOkButton(), !quickUnlock);
     }
 
     @Override
