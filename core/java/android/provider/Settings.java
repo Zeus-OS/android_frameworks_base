@@ -6099,7 +6099,34 @@ public final class Settings {
         public static final String LOCKSCREEN_ANIMATION_ON_DOZE = "lockscreen_animation_on_doze";
 
         /**
-         * Enable\Disable visibility of smart replies in notifications
+         * Show Settings icon in QS Footer
+         *
+         * @hide
+         */
+        public static final String QS_FOOTER_SHOW_SETTINGS = "qs_footer_show_settings";
+
+        /**
+         * Show Running Services icon in QS Footer.
+         *
+         * @hide
+         */
+        public static final String QS_FOOTER_SHOW_SERVICES = "qs_footer_show_services";
+
+        /**
+         * Show Edit icon in QS Footer.
+         *
+         * @hide
+         */
+        public static final String QS_FOOTER_SHOW_EDIT = "qs_footer_show_edit";
+
+        /**
+         * Show User switcher icon in QS Footer.
+         *
+         * @hide
+         */
+        public static final String QS_FOOTER_SHOW_USER = "qs_footer_show_user";
+
+         /** Enable\Disable visibility of smart replies in notifications
          * @hide
          */
         public static final String HIDE_SMART_REPLIES = "hide_smart_replies";
