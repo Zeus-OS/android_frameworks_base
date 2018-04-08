@@ -15,10 +15,6 @@
      limitations under the License.
 -->
 <resources>
-    <!-- The default tiles to display in QuickSettings -->
-    <string name="quick_settings_tiles_extra" translatable="false">
-    </string>
-
     <!-- Should we listen for fingerprints when the screen is off?  Devices
          with a rear-mounted sensor want this, but certain devices have
          the sensor embedded in the power key and listening all the time
@@ -28,6 +24,11 @@
     <!-- Burn in protection -->
     <bool name="config_statusBarBurnInProtection">false</bool>
     <integer name="config_shift_interval">60</integer>
+
+    <!-- The default tiles to display in QuickSettings -->
+    <string name="quick_settings_tiles_extra" translatable="false">
+        smartpixels
+    </string>
 
     <!-- Max visible system icons -->
     <integer name="config_maxVisibleStatusIconContainer">7</integer>
