@@ -39,4 +39,7 @@
 
     <!-- Pocket Lock -->
     <string name="pocket_lock_message_long_press">Press and hold power button to unlock</string>
+
+    <!-- Long-press kill application -->
+    <string name="app_killed_message">Application killed</string>
 </resources>
