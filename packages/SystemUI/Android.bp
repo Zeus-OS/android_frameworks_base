@@ -83,6 +83,10 @@ android_library {
         "telephony-common",
     ],
 
+    libs: [
+        "ims-common",
+    ],
+
     kotlincflags: ["-Xjvm-default=enable"],
 
     plugins: ["dagger2-compiler-2.19"],
@@ -159,6 +163,7 @@ android_library {
     libs: [
         "android.test.runner",
         "android.test.base",
+        "ims-common",
     ],
     kotlincflags: ["-Xjvm-default=enable"],
     aaptflags: [
@@ -186,6 +191,10 @@ android_app {
 
     libs: [
         "telephony-common",
+    ],
+
+    libs: [
+        "ims-common",
     ],
 
     kotlincflags: ["-Xjvm-default=enable"],
