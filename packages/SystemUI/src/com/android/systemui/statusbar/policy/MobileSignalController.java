@@ -145,6 +145,7 @@ public class MobileSignalController extends SignalController<
 
         int phoneId = SubscriptionManager.getPhoneId(mSubscriptionInfo.getSubscriptionId());
         mImsManager = ImsManager.getInstance(mContext, phoneId);
+        updateImsRegistrationState();
 
         mObserver = new ContentObserver(new Handler(receiverLooper)) {
             @Override
@@ -282,6 +283,11 @@ public class MobileSignalController extends SignalController<
     public void unregisterListener() {
         mPhone.listen(mPhoneStateListener, 0);
         mContext.getContentResolver().unregisterContentObserver(mObserver);
+        try {
+            mImsManager.removeRegistrationListener(mImsRegistrationCallback);
+        }catch(ImsException e){
+            Log.d(mTag, "exception:" + e);
+        }
         mContext.unregisterReceiver(mVolteSwitchObserver);
     }
 
@@ -410,6 +416,11 @@ public class MobileSignalController extends SignalController<
             resId = R.drawable.ic_volte;
         }
         return resId;
+    }
+
+    private void updateImsRegistrationState() {
+        mImsResitered = mPhone.isImsRegistered(mSubscriptionInfo.getSubscriptionId());
+        Log.d(mTag, "updateImsRegistrationState mImsResitered=" + mImsResitered);
     }
 
     @Override
@@ -847,6 +858,15 @@ public class MobileSignalController extends SignalController<
             updateDataSim();
             updateTelephony();
         }
+
+        @Override
+        public void onCallStateChanged(int state, String phoneNumber) {
+            if (DEBUG) {
+                Log.d(mTag, "onCallStateChanged: state=" + state);
+            }
+            mCallState = state;
+            updateTelephony();
+        }
     };
 
     private final ImsRegistrationImplBase.Callback mImsRegistrationCallback =
@@ -855,7 +875,7 @@ public class MobileSignalController extends SignalController<
                 public void onRegistered(
                         @ImsRegistrationImplBase.ImsRegistrationTech int imsRadioTech) {
                     Log.d(mTag, "onRegistered imsRadioTech=" + imsRadioTech);
-                    mImsResitered = true;
+                    updateImsRegistrationState();
                     notifyListeners();
                 }
 
@@ -863,14 +883,14 @@ public class MobileSignalController extends SignalController<
                 public void onRegistering(
                         @ImsRegistrationImplBase.ImsRegistrationTech int imsRadioTech) {
                     Log.d(mTag, "onRegistering imsRadioTech=" + imsRadioTech);
-                    mImsResitered = false;
+                    updateImsRegistrationState();
                     notifyListeners();
                 }
 
                 @Override
                 public void onDeregistered(ImsReasonInfo imsReasonInfo) {
                     Log.d(mTag, "onDeregistered imsReasonInfo=" + imsReasonInfo);
-                    mImsResitered = false;
+                    updateImsRegistrationState();
                     notifyListeners();
                 }
             };
