@@ -73,6 +73,7 @@ import com.android.systemui.qs.tiles.ScreenshotTile;
 import com.android.systemui.qs.tiles.UserTile;
 import com.android.systemui.qs.tiles.VolumeTile;
 import com.android.systemui.qs.tiles.VpnTile;
+import com.android.systemui.qs.tiles.WeatherTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.qs.tiles.SystemInfoTile;
@@ -138,6 +139,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<SoundTile> mSoundTileProvider;
     private final Provider<ScreenshotTile> mScreenshotTileProvider;
     private final Provider<GamingModeTile> mGamingModeTileProvider;
+    private final Provider<WeatherTile> mWeatherTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
 
@@ -191,7 +193,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<SmartPixelsTile> smartPixelsTileProvider,
             Provider<ScreenshotTile> screenshotTileProvider,
             Provider<SoundTile> soundTileProvider,
-            Provider<GamingModeTile> gamingModeTileProvider) {
+            Provider<GamingModeTile> gamingModeTileProvider,
+            Provider<WeatherTile> weatherTileProvider) {
         mQsHostLazy = qsHostLazy;
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
@@ -242,6 +245,7 @@ public class QSFactoryImpl implements QSFactory {
         mSoundTileProvider = soundTileProvider;
         mScreenshotTileProvider = screenshotTileProvider;
         mGamingModeTileProvider = gamingModeTileProvider;
+        mWeatherTileProvider = weatherTileProvider;
     }
 
     public QSTile createTile(String tileSpec) {
@@ -352,6 +356,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mScreenshotTileProvider.get();
             case "gaming":
                 return mGamingModeTileProvider.get();
+            case "weather":
+                return mWeatherTile.get();
         }
 
         // Custom tiles
