@@ -465,6 +465,10 @@ public class StatusBar extends SystemUI implements DemoMode,
     private boolean mBrightnessChanged;
     private boolean mJustPeeked;
 
+    //Lockscreen Notifications
+    private int mMaxKeyguardNotifConfig;
+    private boolean mCustomMaxKeyguard;
+
     // for disabling the status bar
     private int mDisabled1 = 0;
     private int mDisabled2 = 0;
@@ -4144,7 +4148,12 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.NAVBAR_STYLE),
                     false, this, UserHandle.USER_ALL);
-        }
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG),
+                    false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.LOCKSCREEN_DATE_SELECTION),
                     false, this, UserHandle.USER_ALL);
@@ -4159,6 +4168,8 @@ public class StatusBar extends SystemUI implements DemoMode,
 	        }
              if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_DATE_SELECTION))) {
                 updateKeyguardStatusSettings();
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG))) {
+                setMaxKeyguardNotifConfig();
             }
             updateTileStyle();
             updateGModStyle();
@@ -4171,6 +4182,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setHeadsUpStoplist();
             setHeadsUpBlacklist();
             updateKeyguardStatusSettings();
+            setMaxKeyguardNotifConfig();
         }
     }
 
@@ -4207,6 +4219,11 @@ public class StatusBar extends SystemUI implements DemoMode,
          int brighthnessSliderStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
                  Settings.System.NAVBAR_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
      }
+
+    private void setMaxKeyguardNotifConfig() {
+        mMaxKeyguardNotifConfig = Settings.System.getIntForUser(mContext.getContentResolver(),
+                 Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG, 3, UserHandle.USER_CURRENT);
+    }
 
     public int getWakefulnessState() {
         return mWakefulnessLifecycle.getWakefulness();
