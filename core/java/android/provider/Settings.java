@@ -5348,6 +5348,12 @@ public final class Settings {
          public static final String NETWORK_TRAFFIC_VIEW_LOCATION = "network_traffic_view_location";
 
         /**
+         * Whether to display cross sign for a data disabled connection
+         * @hide
+         */
+        public static final String DATA_DISABLED_ICON = "data_disabled_icon";
+
+        /**
          * Whether to display 4G icon instead LTE
          * @hide
          */
