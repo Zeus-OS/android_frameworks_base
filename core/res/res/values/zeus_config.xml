@@ -178,4 +178,6 @@
     to enable/disable DC dimming. -->
     <string name="config_deviceDcDimmingSysfsNode"></string>
 
+    <!-- Screen off delay -->
+    <integer name="config_screen_off_delay">1000</integer>
 </resources>
