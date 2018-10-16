@@ -4115,6 +4115,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.HEADS_UP_STOPLIST_VALUES), false, this);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.HEADS_UP_BLACKLIST_VALUES), false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.QS_TILE_STYLE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4124,6 +4127,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 stockSwitchStyle();
                 updateSwitchStyle();
 	        }
+            updateTileStyle();
             update();
         }
 
@@ -4143,6 +4147,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             mNotificationInterruptStateProvider.setHeadsUpBlacklist();
     }
 
+     public void updateTileStyle() {
+         int qsTileStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
+                 Settings.System.QS_TILE_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
+     }
     public int getWakefulnessState() {
         return mWakefulnessLifecycle.getWakefulness();
     }
