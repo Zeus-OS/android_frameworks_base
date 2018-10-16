@@ -7120,6 +7120,11 @@ public final class Settings {
         public static final String AMBIENT_LIGHT_LAYOUT = "ambient_light_layout";
 
         /**
+         * @hide
+         */
+        public static final String QS_TILE_STYLE = "qs_tile_style";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -7552,6 +7557,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DATA_DISABLED_ICON);
             PRIVATE_SETTINGS.add(VOWIFI_ICON);
             PRIVATE_SETTINGS.add(VOWIFI_ICON_STYLE);
+            PRIVATE_SETTINGS.add(QS_TILE_STYLE);
         }
 
         /**

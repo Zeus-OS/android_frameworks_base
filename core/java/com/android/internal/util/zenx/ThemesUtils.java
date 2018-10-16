@@ -43,6 +43,14 @@ public class ThemesUtils {
         "com.android.system.switch.retro", // 5
     };
 
+        public static final String[] QS_TILE_THEMES = {
+            "com.android.systemui.qstile.default",
+            "com.android.systemui.qstile.circletrim",
+            "com.android.systemui.qstile.dualtonecircletrim",
+            "com.android.systemui.qstile.squircletrim",
+    };
+
+
     public static void updateSwitchStyle(IOverlayManager om, int userId, int switchStyle) {
         if (switchStyle == 0) {
             stockSwitchStyle(om, userId);

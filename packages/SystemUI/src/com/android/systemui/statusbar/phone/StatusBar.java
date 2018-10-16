@@ -4793,6 +4793,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_TILE_ACCENT_TINT),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.QS_TILE_STYLE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4807,6 +4810,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 stockSwitchStyle();
                 updateSwitchStyle();
 	        }
+            updateTileStyle();
             update();
         }
 
@@ -4858,6 +4862,11 @@ public class StatusBar extends SystemUI implements DemoMode,
             mStatusBarWindow.updateSettings();
         }
     }
+
+     public void updateTileStyle() {
+         int qsTileStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
+                 Settings.System.QS_TILE_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
+     }
 
     private void setQsColumns() {
         if (mQSPanel != null) {
