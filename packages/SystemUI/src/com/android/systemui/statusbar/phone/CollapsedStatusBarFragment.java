@@ -70,7 +70,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private View mOperatorNameFrame;
     private CommandQueue mCommandQueue;
     private ClockController mClockController;
-    private View mBatteryBar;
+
+    // Bliss additions
+    private View mBatteryBars[] = new View[2];
 
     private SignalCallback mSignalCallback = new SignalCallback() {
         @Override
@@ -120,7 +122,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mCustomIconArea = mStatusBar.findViewById(R.id.left_icon_area);
         mCenterClockLayout = (LinearLayout) mStatusBar.findViewById(R.id.center_clock_layout);
         mClockController = new ClockController(getContext(), mStatusBar);
-        mBatteryBar = mStatusBar.findViewById(R.id.battery_bar);
+        mBatteryBars[0] = mStatusBar.findViewById(R.id.battery_bar);
+        mBatteryBars[1] = mStatusBar.findViewById(R.id.battery_bar_1);
         showSystemIconArea(false);
         initEmergencyCryptkeeperText();
         initOperatorName();
@@ -268,12 +271,16 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
     public void hideSystemIconArea(boolean animate) {
         animateHide(mSystemIconArea, animate);
-        animateHide(mBatteryBar, animate);
+        for (View batteryBar: mBatteryBars) {
+            animateHide(batteryBar, animate);
+        }
     }
 
     public void showSystemIconArea(boolean animate) {
         animateShow(mSystemIconArea, animate);
-        animateShow(mBatteryBar, animate);
+        for (View batteryBar: mBatteryBars) {
+            animateShow(batteryBar, animate);
+        }
     }
 
     /**
