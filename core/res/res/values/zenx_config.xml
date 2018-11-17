@@ -104,4 +104,10 @@
 
     <!-- Whether device has VOOC charging support -->
     <bool name="config_hasVoocCharger">false</bool>
+
+      <!-- Powermenu animations -->
+  <java-symbol type="style" name="GlobalActionsAnimation" />
+  <java-symbol type="style" name="GlobalActionsAnimationTop" />
+  <java-symbol type="style" name="GlobalActionsAnimationEnter" />
+
 </resources>
