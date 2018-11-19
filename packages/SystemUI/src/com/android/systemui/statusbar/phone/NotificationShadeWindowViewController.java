@@ -18,6 +18,9 @@ package com.android.systemui.statusbar.phone;
 
 import static android.app.StatusBarManager.WINDOW_STATE_SHOWING;
 
+import static com.android.systemui.qs.QSPanel.QS_SHOW_AUTO_BRIGHTNESS_BUTTON;
+import static com.android.systemui.qs.QSPanel.QS_SHOW_BRIGHTNESS_SIDE_BUTTONS;
+
 import android.app.StatusBarManager;
 import android.graphics.RectF;
 import android.hardware.display.AmbientDisplayConfiguration;
@@ -33,6 +36,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.systemui.ExpandHelper;
@@ -106,6 +110,13 @@ public class NotificationShadeWindowViewController {
     private final SuperStatusBarViewFactory mStatusBarViewFactory;
     private final PowerManager mPowerManager;
 
+    private ImageView mAutoBrightnessIcon;
+    private ImageView mMaxBrightness;
+    private ImageView mMinBrightness;
+
+    private boolean mShowAutoBrightnessButton;
+    private boolean mShowBrightnessSideButtons;
+
     // Used for determining view / touch intersection
     private int[] mTempLocation = new int[2];
     private RectF mTempRect = new RectF();
@@ -167,6 +178,10 @@ public class NotificationShadeWindowViewController {
 
         // This view is not part of the newly inflated expanded status bar.
         mBrightnessMirror = mView.findViewById(R.id.brightness_mirror);
+
+        mAutoBrightnessIcon = (ImageView) mBrightnessMirror.findViewById(R.id.brightness_icon);
+        mMaxBrightness = (ImageView) mBrightnessMirror.findViewById(R.id.brightness_right);
+        mMinBrightness = (ImageView) mBrightnessMirror.findViewById(R.id.brightness_left);
     }
 
     /** Inflates the {@link R.layout#status_bar_expanded} layout and sets it up. */
@@ -191,12 +206,27 @@ public class NotificationShadeWindowViewController {
                     mDoubleTapEnabledNative = Settings.Secure.getIntForUser(mView.getContext().getContentResolver(),
                             Settings.Secure.DOUBLE_TAP_TO_WAKE, 0, UserHandle.USER_CURRENT) == 1;
                     break;
+                case QS_SHOW_AUTO_BRIGHTNESS_BUTTON:
+                    if (mAutoBrightnessIcon != null) {
+                        mShowAutoBrightnessButton = (newValue == null || Integer.parseInt(newValue) == 0) ? false : true;
+                        mAutoBrightnessIcon.setVisibility(!mShowAutoBrightnessButton ? View.GONE : View.VISIBLE);
+                    }
+                    break;
+                case QS_SHOW_BRIGHTNESS_SIDE_BUTTONS:
+                    if (mMaxBrightness != null || mMinBrightness != null) {
+                        mShowBrightnessSideButtons = (newValue == null || Integer.parseInt(newValue) == 0) ? false : true;
+                        mMaxBrightness.setVisibility(!mShowBrightnessSideButtons ? View.GONE : View.VISIBLE);
+                        mMinBrightness.setVisibility(!mShowBrightnessSideButtons ? View.GONE : View.VISIBLE);
+                    }
+                    break;
             }
         };
         mTunerService.addTunable(tunable,
                 Settings.Secure.DOZE_DOUBLE_TAP_GESTURE,
                 Settings.Secure.DOZE_TAP_SCREEN_GESTURE,
                 DOUBLE_TAP_SLEEP_GESTURE,
+                QS_SHOW_AUTO_BRIGHTNESS_BUTTON,
+                QS_SHOW_BRIGHTNESS_SIDE_BUTTONS,
                 Settings.Secure.DOUBLE_TAP_TO_WAKE);
         mQuickQsOffsetHeight = mView.getResources().getDimensionPixelSize(
                 com.android.internal.R.dimen.quick_qs_offset_height);
@@ -409,6 +439,12 @@ public class NotificationShadeWindowViewController {
             public void onChildViewAdded(View parent, View child) {
                 if (child.getId() == R.id.brightness_mirror) {
                     mBrightnessMirror = child;
+                    mAutoBrightnessIcon = (ImageView) child.findViewById(R.id.brightness_icon);
+                    mAutoBrightnessIcon.setVisibility(!mShowAutoBrightnessButton ? View.GONE : View.VISIBLE);
+                    mMaxBrightness = (ImageView) child.findViewById(R.id.brightness_right);
+                    mMaxBrightness.setVisibility(!mShowBrightnessSideButtons ? View.GONE : View.VISIBLE);
+                    mMinBrightness = (ImageView) child.findViewById(R.id.brightness_left);
+                    mMinBrightness.setVisibility(!mShowBrightnessSideButtons ? View.GONE : View.VISIBLE);
                 }
             }
 
