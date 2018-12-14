@@ -56,6 +56,7 @@ public class ThemesUtils {
             "com.android.systemui.qstile.circletrim",
             "com.android.systemui.qstile.dualtonecircletrim",
             "com.android.systemui.qstile.cookie",
+            "com.android.systemui.qstile.circleoutline",
     };
 
 
