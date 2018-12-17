@@ -5143,6 +5143,24 @@ public final class Settings {
          */
         public static final String ANIM_TILE_INTERPOLATOR = "anim_tile_interpolator";
 
+        /** @hide */
+        public static final String AUDIO_PANEL_VIEW_MEDIA = "audio_panel_view_media";
+
+        /** @hide */
+        public static final String AUDIO_PANEL_VIEW_RINGER = "audio_panel_view_ringer";
+
+        /** @hide */
+        public static final String AUDIO_PANEL_VIEW_NOTIFICATION = "audio_panel_view_notification";
+
+        /** @hide */
+        public static final String AUDIO_PANEL_VIEW_ALARM = "audio_panel_view_alarm";
+
+        /** @hide */
+        public static final String AUDIO_PANEL_VIEW_VOICE = "audio_panel_view_voice";
+
+        /** @hide */
+        public static final String AUDIO_PANEL_VIEW_BT_SCO = "audio_panel_view_bt_sco";
+
         /**
          * Whether to display set of animations when prompting the power menu
          *
