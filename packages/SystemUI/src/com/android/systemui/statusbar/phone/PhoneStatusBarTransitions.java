@@ -22,6 +22,7 @@ import android.animation.ObjectAnimator;
 import android.content.res.Resources;
 import android.view.View;
 
+import com.android.internal.util.havoc.Utils;
 import com.android.systemui.R;
 
 public final class PhoneStatusBarTransitions extends BarTransitions {
@@ -32,7 +33,7 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
     private final PhoneStatusBarView mView;
     private final float mIconAlphaWhenOpaque;
 
-    private View mLeftSide, mStatusIcons, mBattery, mCenterClock;
+    private View mLeftSide, mStatusIcons, mBattery, mCenterClock, mNetworkTraffic;
     private View mBatteryBars[] = new View[2];
     private View mZenxLogo, mZenxLogoRight;
 
@@ -54,6 +55,8 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
         mZenxLogoRight = mView.findViewById(R.id.zenx_logo_right);
         mBatteryBars[0] = mView.findViewById(R.id.battery_bar);
         mBatteryBars[1] = mView.findViewById(R.id.battery_bar_1);
+        mNetworkTraffic.setVisibility(
+                Utils.hasNotch(mView.getContext()) ? View.GONE : View.VISIBLE);
         applyModeBackground(-1, getMode(), false /*animate*/);
         applyMode(getMode(), false /*animate*/);
     }
@@ -98,10 +101,8 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
                     animateTransitionTo(mStatusIcons, newAlpha),
 		            animateTransitionTo(mBattery, newAlphaBC),
                     animateTransitionTo(mCenterClock, newAlphaBC),
-                    animateTransitionTo(mZenxLogo, newAlpha),
-                    animateTransitionTo(mZenxLogoRight, newAlpha),
                     animateTransitionTo(mBatteryBars[0], newAlphaBC),
-                    animateTransitionTo(mBatteryBars[1], newAlphaBC)
+                    animateTransitionTo(mNetworkTraffic, newAlpha)
                     );
             if (isLightsOut(mode)) {
                 anims.setDuration(LIGHTS_OUT_DURATION);
@@ -117,6 +118,7 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
             mZenxLogoRight.setAlpha(newAlpha);
             mBatteryBars[0].setAlpha(newAlphaBC);
             mBatteryBars[1].setAlpha(newAlphaBC);
+            mNetworkTraffic.setAlpha(newAlpha);
         }
     }
 }
