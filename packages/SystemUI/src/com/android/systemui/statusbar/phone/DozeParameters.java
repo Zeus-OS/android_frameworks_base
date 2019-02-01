@@ -53,7 +53,6 @@ public class DozeParameters implements TunerService.Tunable,
     private final AlwaysOnDisplayPolicy mAlwaysOnPolicy;
     private final Resources mResources;
 
-    private boolean mDozeAlwaysOn;
     private boolean mControlScreenOffAnimation;
 
     @Inject
@@ -164,7 +163,7 @@ public class DozeParameters implements TunerService.Tunable,
      * @return {@code true} if enabled and available.
      */
     public boolean getAlwaysOn() {
-        return mDozeAlwaysOn;
+        return mAmbientDisplayConfiguration.alwaysOnEnabled(UserHandle.USER_CURRENT);
     }
 
     /**
@@ -207,12 +206,12 @@ public class DozeParameters implements TunerService.Tunable,
         return mResources.getBoolean(R.bool.doze_double_tap_reports_touch_coordinates);
     }
 
-    @Override
-    public void onTuningChanged(String key, String newValue) {
-        mDozeAlwaysOn = mAmbientDisplayConfiguration.alwaysOnEnabled(UserHandle.USER_CURRENT);
-    }
-
     public AlwaysOnDisplayPolicy getPolicy() {
         return mAlwaysOnPolicy;
     }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+    }
+
 }
