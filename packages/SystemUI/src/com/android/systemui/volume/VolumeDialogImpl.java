@@ -31,6 +31,7 @@ import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
+import static com.android.settingslib.media.MediaOutputSliceConstants.ACTION_MEDIA_OUTPUT;
 import static com.android.systemui.volume.Events.DISMISS_REASON_SETTINGS_CLICKED;
 
 import android.database.ContentObserver;
@@ -40,6 +41,8 @@ import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.Dialog;
 import android.app.KeyguardManager;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothProfile;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -97,6 +100,7 @@ import com.android.systemui.plugins.VolumeDialog;
 import com.android.systemui.plugins.VolumeDialogController;
 import com.android.systemui.plugins.VolumeDialogController.State;
 import com.android.systemui.plugins.VolumeDialogController.StreamState;
+import com.android.systemui.statusbar.phone.ExpandableIndicator;
 import com.android.systemui.statusbar.policy.AccessibilityManagerWrapper;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
@@ -139,8 +143,10 @@ public class VolumeDialogImpl implements VolumeDialog,
     private ImageButton mRingerIcon;
     private ViewGroup mODICaptionsView;
     private CaptionsToggleImageButton mODICaptionsIcon;
-    private View mSettingsView;
-    private ImageButton mSettingsIcon;
+    private View mMediaOutputView;
+    private ImageButton mMediaOutputIcon;
+    private View mExpandRowsView;
+    private ExpandableIndicator mExpandRows;
     private FrameLayout mZenIcon;
     private final List<VolumeRow> mRows = new ArrayList<>();
     private ConfigurableTexts mConfigurableTexts;
@@ -209,6 +215,8 @@ public class VolumeDialogImpl implements VolumeDialog,
 
     private SettingsObserver settingsObserver;
 
+    private boolean mExpanded;
+
     public VolumeDialogImpl(Context context) {
         mContext =
                 new ContextThemeWrapper(context, R.style.qs_theme);
@@ -252,6 +260,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         mConfigurableTexts = new ConfigurableTexts(mContext);
         mHovering = false;
         mShowing = false;
+        mExpanded = false;
         mWindow = mDialog.getWindow();
         mWindow.requestFeature(Window.FEATURE_NO_TITLE);
         mWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -337,9 +346,11 @@ public class VolumeDialogImpl implements VolumeDialog,
 
         }
 
-        mSettingsView = mDialog.findViewById(R.id.settings_container);
-        mSettingsIcon = mDialog.findViewById(R.id.settings);
-        mSettingsIcon.setOnLongClickListener(this);
+        mMediaOutputView = mDialog.findViewById(R.id.media_output_container);
+        mMediaOutputIcon = mDialog.findViewById(R.id.media_output);
+
+        mExpandRowsView = mDialog.findViewById(R.id.expandable_indicator_container);
+        mExpandRows = mDialog.findViewById(R.id.expandable_indicator);
 
         if (mContext.getResources().getBoolean(R.bool.config_audioPanelOnLeftSide))
             mExpandRows.setDefaultDirection(false);
@@ -360,7 +371,7 @@ public class VolumeDialogImpl implements VolumeDialog,
                             R.drawable.ic_volume_notification_mute, true, false);
                 }
                 addRow(STREAM_ALARM,
-                        R.drawable.ic_alarm, R.drawable.ic_volume_alarm_mute, true, false);
+                        R.drawable.ic_volume_alarm, R.drawable.ic_volume_alarm_mute, true, false);
                 addRow(AudioManager.STREAM_VOICE_CALL,
                         com.android.internal.R.drawable.ic_phone,
                         com.android.internal.R.drawable.ic_phone, false, false);
@@ -423,11 +434,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         if (D.BUG) Slog.d(TAG, "Adding row for stream " + stream);
         VolumeRow row = new VolumeRow();
         initRow(row, stream, iconRes, iconMuteRes, important, defaultStream);
-        if(!isAudioPanelOnLeftSide()){
-            mDialogRowsView.addView(row.view, 0);
-        } else {
-            mDialogRowsView.addView(row.view);
-        }
+        mDialogRowsView.addView(row.view, isAudioPanelOnLeftSide() ? -1 : 0);
         mRows.add(row);
     }
 
@@ -438,11 +445,7 @@ public class VolumeDialogImpl implements VolumeDialog,
             final VolumeRow row = mRows.get(i);
             initRow(row, row.stream, row.iconRes, row.iconMuteRes, row.important,
                     row.defaultStream);
-            if(!isAudioPanelOnLeftSide()){
-                mDialogRowsView.addView(row.view, 0);
-            } else {
-                mDialogRowsView.addView(row.view);
-            }
+            mDialogRowsView.addView(row.view, isAudioPanelOnLeftSide() ? -1 : 0);
             updateVolumeRowH(row);
         }
     }
@@ -541,20 +544,44 @@ public class VolumeDialogImpl implements VolumeDialog,
         }
     }
 
+    private static boolean isBluetoothA2dpConnected() {
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        return mBluetoothAdapter != null && mBluetoothAdapter.isEnabled()
+                && mBluetoothAdapter.getProfileConnectionState(BluetoothProfile.A2DP)
+                == BluetoothProfile.STATE_CONNECTED;
+    }
+
     public void initSettingsH() {
-        if (mSettingsView != null) {
-            mSettingsView.setVisibility(
+        if (mMediaOutputView != null) {
+            mMediaOutputView.setVisibility(
+                    mDeviceProvisionedController.isCurrentUserSetup() &&
+                            mActivityManager.getLockTaskModeState() == LOCK_TASK_MODE_NONE &&
+                            isBluetoothA2dpConnected() ? VISIBLE : GONE);
+        }
+        if (mMediaOutputIcon != null) {
+            mMediaOutputIcon.setOnClickListener(v -> {
+                Events.writeEvent(mContext, Events.EVENT_SETTINGS_CLICK);
+                Intent intent = new Intent(ACTION_MEDIA_OUTPUT);
+                dismissH(DISMISS_REASON_SETTINGS_CLICKED);
+                Dependency.get(ActivityStarter.class).startActivity(intent,
+                        true /* dismissShade */);
+            });
+        }
+
+        if (mExpandRowsView != null) {
+            mExpandRowsView.setVisibility(
                     mDeviceProvisionedController.isCurrentUserSetup() &&
                             mActivityManager.getLockTaskModeState() == LOCK_TASK_MODE_NONE ?
                             VISIBLE : GONE);
         }
-        if (mSettingsIcon != null) {
-            mSettingsIcon.setOnClickListener(v -> {
-                Events.writeEvent(mContext, Events.EVENT_SETTINGS_CLICK);
-                Intent intent = new Intent(Settings.Panel.ACTION_VOLUME);
-                dismissH(DISMISS_REASON_SETTINGS_CLICKED);
-                Dependency.get(ActivityStarter.class).startActivity(intent,
-                        true /* dismissShade */);
+        if (mExpandRows != null) {
+            mExpandRows.setOnClickListener(v -> {
+                Util.setVisOrGone(findRow(AudioManager.STREAM_RING).view, !mExpanded);
+                Util.setVisOrGone(findRow(STREAM_ALARM).view, !mExpanded);
+
+                if (mExpanded) mController.setActiveStream(AudioManager.STREAM_MUSIC);
+                mExpandRows.setExpanded(!mExpanded);
+                mExpanded = !mExpanded;
             });
         }
     }
@@ -821,6 +848,10 @@ public class VolumeDialogImpl implements VolumeDialog,
             Log.d(TAG, "mDialog.dismiss() reason: " + Events.DISMISS_REASONS[reason]
                     + " from: " + Debug.getCaller());
         }
+        if (!mShowing) {
+            // This may happen when dismissing an expanded panel, don't animate again
+            return;
+        }
         mHandler.removeMessages(H.DISMISS);
         mHandler.removeMessages(H.SHOW);
         mDialogView.animate().cancel();
@@ -838,6 +869,8 @@ public class VolumeDialogImpl implements VolumeDialog,
                 .withEndAction(() -> mHandler.postDelayed(() -> {
                     mDialog.dismiss();
                     tryToRemoveCaptionsTooltip();
+                    mExpanded = false;
+                    mExpandRows.setExpanded(mExpanded);
                 }, 50));
         if (!isLandscape()) animator.translationX((mDialogView.getWidth() / 2.0f)*(isAudioPanelOnLeftSide() ? -1 : 1));
         animator.start();
@@ -911,7 +944,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         for (final VolumeRow row : mRows) {
             final boolean isActive = row == activeRow;
             final boolean shouldBeVisible = shouldBeVisibleH(row, activeRow);
-            Util.setVisOrGone(row.view, shouldBeVisible);
+            if (!mExpanded) Util.setVisOrGone(row.view, shouldBeVisible);
             if (row.view.isShown()) {
                 updateVolumeRowTintH(row, isActive);
             }
@@ -1222,7 +1255,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         final int alpha = useActiveColoring
                 ? Color.alpha(tint.getDefaultColor())
                 : getAlphaAttr(android.R.attr.secondaryContentAlpha);
-        if (tint == row.cachedTint) return;
+        if (tint == row.cachedTint && mExpanded) return;
         row.slider.setProgressTintList(tint);
         row.slider.setThumbTintList(tint);
         row.slider.setProgressBackgroundTintList(tint);
@@ -1495,7 +1528,7 @@ public class VolumeDialogImpl implements VolumeDialog,
     }
 
     public boolean onLongClick(View v) {
-        if (v == mSettingsIcon) {
+        if (v == mExpandRows) {
             startSoundActivity();
         }
         return false;
