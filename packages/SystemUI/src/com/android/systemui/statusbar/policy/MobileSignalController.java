@@ -484,7 +484,8 @@ public class MobileSignalController extends SignalController<
     private int getVolteResId() {
         int resId = 0;
 
-        if (mCurrentState.imsRegistered && mVoLTEicon) {
+        if ((mCurrentState.voiceCapable || mCurrentState.videoCapable)
+                &&  mCurrentState.imsRegistered && mVoLTEicon) {
             switch(mVoLTEstyle) {
                 // VoLTE
                 case 1:
