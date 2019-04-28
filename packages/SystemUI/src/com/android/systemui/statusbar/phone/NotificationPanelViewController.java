@@ -2552,6 +2552,10 @@ public class NotificationPanelViewController extends PanelViewController {
         mKeyguardStatusView.dozeTimeTick();
     }
 
+    public void updateKeyguardStatusSettings() {
+        mKeyguardStatusView.updateAll();
+    }
+
     @Override
     protected boolean onMiddleClicked() {
         switch (mBarState) {

@@ -4139,6 +4139,10 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.NAVBAR_STYLE),
                     false, this, UserHandle.USER_ALL);
         }
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.LOCKSCREEN_DATE_SELECTION),
+                    false, this, UserHandle.USER_ALL);
+	}
 
         @Override
         public void onChange(boolean selfChange, Uri uri) {
@@ -4147,6 +4151,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                 stockSwitchStyle();
                 updateSwitchStyle();
 	        }
+             if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_DATE_SELECTION))) {
+                updateKeyguardStatusSettings();
+            }
             updateTileStyle();
             updateGModStyle();
             updateBrightnessSliderStyle();
@@ -4157,12 +4164,17 @@ public class StatusBar extends SystemUI implements DemoMode,
         public void update() {
             setHeadsUpStoplist();
             setHeadsUpBlacklist();
+            updateKeyguardStatusSettings();
         }
     }
 
     private void setHeadsUpStoplist() {
         if (mNotificationInterruptStateProvider != null)
             mNotificationInterruptStateProvider.setHeadsUpStoplist();
+    }
+
+    private void updateKeyguardStatusSettings() {
+        mNotificationPanelViewController.updateKeyguardStatusSettings();
     }
 
     private void setHeadsUpBlacklist() {
