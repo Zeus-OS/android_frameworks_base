@@ -48,6 +48,11 @@ public class ThemesUtils {
             "com.android.systemui.qstile.circletrim",
             "com.android.systemui.qstile.dualtonecircletrim",
             "com.android.systemui.qstile.squircletrim",
+            "com.android.systemui.qstile.teardrop",
+            "com.android.systemui.qstile.hexagon",
+            "com.android.systemui.qstile.star",
+            "com.android.systemui.qstile.square",
+            "com.android.systemui.qstile.badge",
     };
 
 
