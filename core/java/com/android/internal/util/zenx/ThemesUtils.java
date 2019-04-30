@@ -53,6 +53,7 @@ public class ThemesUtils {
             "com.android.systemui.qstile.star",
             "com.android.systemui.qstile.square",
             "com.android.systemui.qstile.badge",
+            "com.android.systemui.qstile.sun",
     };
 
 
