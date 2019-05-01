@@ -45,15 +45,16 @@ public class ThemesUtils {
 
         public static final String[] QS_TILE_THEMES = {
             "com.android.systemui.qstile.default",
-            "com.android.systemui.qstile.circletrim",
-            "com.android.systemui.qstile.dualtonecircletrim",
+            "com.android.systemui.qstile.square",
             "com.android.systemui.qstile.squircletrim",
             "com.android.systemui.qstile.teardrop",
-            "com.android.systemui.qstile.hexagon",
+            "com.android.systemui.qstile.diamond",
             "com.android.systemui.qstile.star",
-            "com.android.systemui.qstile.square",
+            "com.android.systemui.qstile.gear",
             "com.android.systemui.qstile.badge",
-            "com.android.systemui.qstile.sun",
+            "com.android.systemui.qstile.badgetwo",
+            "com.android.systemui.qstile.circletrim",
+            "com.android.systemui.qstile.dualtonecircletrim",
     };
 
 
