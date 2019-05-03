@@ -166,6 +166,8 @@
   <java-symbol type="id" name="pocket_hint_image" />
   <java-symbol type="id" name="pocket_hint_message" />
 
-    <!-- Pocket bridge -->
+  <!-- Pocket bridge -->
   <java-symbol type="string" name="config_pocketBridgeSysfsInpocket" />
+  <java-symbol type="bool" name="config_pocketModeSupported" />
+
 </resources>
