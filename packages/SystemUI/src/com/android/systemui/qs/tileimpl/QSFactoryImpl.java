@@ -46,6 +46,7 @@ import com.android.systemui.qs.tiles.DndTile;
 import com.android.systemui.qs.tiles.CalendarTile;
 import com.android.systemui.qs.tiles.CallTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
+import com.android.systemui.qs.tiles.GamingModeTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.LocaleTile;
@@ -136,6 +137,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<LteTile> mLteTileProvider;
     private final Provider<SoundTile> mSoundTileProvider;
     private final Provider<ScreenshotTile> mScreenshotTileProvider;
+    private final Provider<GamingModeTile> mGamingModeTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
 
@@ -188,7 +190,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<LteTile> lteTileProvider,
             Provider<SmartPixelsTile> smartPixelsTileProvider,
             Provider<ScreenshotTile> screenshotTileProvider,
-            Provider<SoundTile> soundTileProvider) {
+            Provider<SoundTile> soundTileProvider,
+            Provider<GamingModeTile> gamingModeTileProvider) {
         mQsHostLazy = qsHostLazy;
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
@@ -238,6 +241,7 @@ public class QSFactoryImpl implements QSFactory {
         mLteTileProvider = lteTileProvider;
         mSoundTileProvider = soundTileProvider;
         mScreenshotTileProvider = screenshotTileProvider;
+        mGamingModeTileProvider = gamingModeTileProvider;
     }
 
     public QSTile createTile(String tileSpec) {
@@ -346,6 +350,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mSoundTileProvider.get();
             case "screenshot":
                 return mScreenshotTileProvider.get();
+            case "gaming":
+                return mGamingModeTileProvider.get();
         }
 
         // Custom tiles
