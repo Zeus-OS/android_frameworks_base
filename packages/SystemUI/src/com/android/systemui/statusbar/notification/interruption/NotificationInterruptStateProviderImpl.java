@@ -333,7 +333,8 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
     private boolean shouldSkipHeadsUp(StatusBarNotification sbn) {
         boolean isImportantHeadsUp = false;
         String notificationPackageName = sbn.getPackageName().toLowerCase();
-        isImportantHeadsUp = notificationPackageName.contains("dialer");
+        isImportantHeadsUp = notificationPackageName.contains("dialer") ||
+                notificationPackageName.contains("clock");
         return mLessBoringHeadsUp && !isImportantHeadsUp;
     }
 
