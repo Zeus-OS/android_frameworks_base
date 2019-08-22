@@ -301,5 +301,8 @@
   <java-symbol type="style" name="Animation.Toast.SlideLeftRight" />
     <!-- Home button wake -->
     <java-symbol type="bool" name="config_enableHomeButtonWake" /> 
+
+      <!-- Whether device supports internal audio recording -->
+  <java-symbol type="bool" name="config_hasInternalAudioRecordingSupport" />
  
 </resources>
