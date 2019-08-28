@@ -825,6 +825,9 @@ public final class DefaultPermissionGrantPolicy {
 
         // Google Markup
         grantSystemFixedPermissionsToSystemPackage("com.google.android.markup", userId, STORAGE_PERMISSIONS);
+        
+        // Google Backup Transport
+        grantSystemFixedPermissionsToSystemPackage("com.google.android.backuptransport", userId, CONTACTS_PERMISSIONS);
     }
 
     private String getDefaultSystemHandlerActivityPackageForCategory(String category, int userId) {
