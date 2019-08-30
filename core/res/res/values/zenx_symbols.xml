@@ -150,4 +150,6 @@
     <java-symbol type="bool" name="config_alt_ambient_display"/>
 
     <java-symbol type="array" name="config_customPermissionsList" />
+      <!-- Whether to send camera status intent -->
+    <java-symbol type="bool" name="config_sendCameraStatusIntent" />
 </resources>

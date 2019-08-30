@@ -112,6 +112,8 @@ public class CameraServiceProxy extends SystemService
     private ScheduledThreadPoolExecutor mLogWriterService = new ScheduledThreadPoolExecutor(
             /*corePoolSize*/ 1);
 
+    private final boolean mSendCameraStatusIntent;
+
     private long mClosedEvent;
 
     /**
@@ -207,7 +209,7 @@ public class CameraServiceProxy extends SystemService
 
             updateActivityCount(cameraId, newCameraState, facing, clientName, apiLevel);
 
-            if (facing == ICameraServiceProxy.CAMERA_FACING_FRONT) {
+            if (mSendCameraStatusIntent && facing == ICameraServiceProxy.CAMERA_FACING_FRONT) {
                 switch (newCameraState) {
                    case ICameraServiceProxy.CAMERA_STATE_OPEN : {
                        if (SystemClock.elapsedRealtime() - mClosedEvent < CAMERA_EVENT_DELAY_TIME) {
@@ -238,6 +240,9 @@ public class CameraServiceProxy extends SystemService
         // Don't keep any extra logging threads if not needed
         mLogWriterService.setKeepAliveTime(1, TimeUnit.SECONDS);
         mLogWriterService.allowCoreThreadTimeOut(true);
+
+        mSendCameraStatusIntent = mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_sendCameraStatusIntent);
     }
 
     @Override
@@ -247,7 +252,9 @@ public class CameraServiceProxy extends SystemService
                 notifySwitchWithRetries(msg.arg1);
             } break;
             case MSG_CAMERA_CLOSED: {
-                sendCameraStateIntent("0");
+                if (mSendCameraStatusIntent){
+                    sendCameraStateIntent("0");
+                }
             } break;
             default: {
                 Slog.e(TAG, "CameraServiceProxy error, invalid message: " + msg.what);
@@ -614,7 +621,6 @@ public class CameraServiceProxy extends SystemService
         }
         return "CAMERA_FACING_UNKNOWN";
     }
-
 
     private void sendCameraStateIntent(String cameraState) {
         Intent intent = new Intent(android.content.Intent.ACTION_CAMERA_STATUS_CHANGED);
