@@ -681,7 +681,7 @@ public class NotificationIconContainer extends AlphaOptimizedFrameLayout {
 
     public class IconState extends ViewState {
         public static final int NO_VALUE = NotificationIconContainer.NO_VALUE;
-        public float iconAppearAmount = 1.0f;
+        public float iconAppearAmount = 0.8f;
         public float clampedAppearAmount = 1.0f;
         public int visibleState;
         public boolean justAdded = true;
