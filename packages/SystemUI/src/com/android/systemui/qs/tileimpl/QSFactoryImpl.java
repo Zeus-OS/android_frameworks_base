@@ -64,6 +64,7 @@ import com.android.systemui.qs.tiles.SoundTile;
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.UiModeNightTile;
 import com.android.systemui.qs.tiles.UsbTetherTile;
+import com.android.systemui.qs.tiles.CalcTile;
 import com.android.systemui.qs.tiles.UserTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
@@ -121,6 +122,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<AODTile> mAODTileProvider;
     private final Provider<SoundTile> mSoundTileProvider;
     private final Provider<SystemInfoTile> mSystemInfoTileProvider;
+    private final Provider<CalcTile> mCalcTileProvider;
 
     private QSTileHost mHost;
 
@@ -166,7 +168,9 @@ public class QSFactoryImpl implements QSFactory {
             Provider<AODTile> aodTileProvider,
             Provider<SoundTile> soundTileProvider,
             Provider<FPSInfoTile> fpsInfoTileProvider,
-            Provider<SystemInfoTile> systemInfoTileProvider) {
+            Provider<SystemInfoTile> systemInfoTileProvider,
+            Provider<CalcTile> calcTileProvider,
+            ) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -209,6 +213,7 @@ public class QSFactoryImpl implements QSFactory {
         mSoundTileProvider = soundTileProvider;
         mFPSInfoTileProvider = fpsInfoTileProvider;
         mSystemInfoTileProvider = systemInfoTileProvider;
+        mCalcTileProvider = calcTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -308,6 +313,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mFPSInfoTileProvider.get();
             case "systeminfo":
                 return mSystemInfoTileProvider.get();
+            case "calc":
+                return mCalcTileProvider.get();
         }
 
         // Intent tiles.
