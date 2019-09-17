@@ -4291,4 +4291,10 @@
     <!-- Enable sms authorization framework-->
     <bool name="config_sms_authorization_enabled">false</bool>
 
+     <!-- Sets the paths that are needed for SystemInfo-->
+    <string name="config_cpu_temp_path" translatable="false"></string>
+    <string name="config_battery_temp_path" translatable="false"></string>
+    <string name="config_gpu_clock_path" translatable="false"></string>
+    <string name="config_gpu_busy_path" translatable="false"></string>
+
 </resources>
