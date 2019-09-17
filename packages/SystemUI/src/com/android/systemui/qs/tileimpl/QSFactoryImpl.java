@@ -60,6 +60,7 @@ import com.android.systemui.qs.tiles.SmartPixelsTile;
 import com.android.systemui.qs.tiles.SoundSearchTile;
 import com.android.systemui.qs.tiles.UiModeNightTile;
 import com.android.systemui.qs.tiles.UsbTetherTile;
+import com.android.systemui.qs.tiles.CalcTile;
 import com.android.systemui.qs.tiles.UserTile;
 import com.android.systemui.qs.tiles.VolumeTile;
 import com.android.systemui.qs.tiles.VpnTile;
@@ -119,6 +120,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<SoundSearchTile> mSoundSearchTileProvider;
     private final Provider<DataSwitchTile> mDataSwitchTileProvider;
     private final Provider<SystemInfoTile> mSystemInfoTileProvider;
+    private final Provider<CalcTile> mCalcTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
 
@@ -163,6 +165,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<SoundSearchTile> soundSearchTileProvider,
             Provider<DataSwitchTile> dataSwitchTileProvider,
             Provider<SystemInfoTile> systemInfoTileProvider,
+            Provider<CalcTile> calcTileProvider,
             Provider<SmartPixelsTile> smartPixelsTileProvider) {
         mQsHostLazy = qsHostLazy;
         mWifiTileProvider = wifiTileProvider;
@@ -205,6 +208,7 @@ public class QSFactoryImpl implements QSFactory {
         mSoundSearchTileProvider = soundSearchTileProvider;
         mDataSwitchTileProvider = dataSwitchTileProvider;
         mSystemInfoTileProvider = systemInfoTileProvider;
+        mCalcTileProvider = calcTileProvider;
     }
 
     public QSTile createTile(String tileSpec) {
@@ -297,6 +301,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mDataSwitchTileProvider.get();
             case "systeminfo":
                 return mSystemInfoTileProvider.get();
+            case "calc":
+                return mCalcTileProvider.get();
         }
 
         // Custom tiles
