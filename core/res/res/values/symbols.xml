@@ -4050,4 +4050,10 @@
   <java-symbol type="array" name="config_notificationMsgPkgsAllowedAsConvos" />
 
   <java-symbol type="array" name="config_keep_warming_services" />
+
+  <java-symbol type="string" name="config_cpu_temp_path" />
+  <java-symbol type="string" name="config_battery_temp_path" />
+  <java-symbol type="string" name="config_gpu_clock_path" />
+  <java-symbol type="string" name="config_gpu_busy_path" />
+
 </resources>

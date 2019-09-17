@@ -4375,4 +4375,10 @@
 
     <!-- Component names of the services which will keep critical code path warm -->
     <string-array name="config_keep_warming_services" translatable="false" />
+    
+    <string name="config_cpu_temp_path" translatable="false"></string>
+    <string name="config_battery_temp_path" translatable="false"></string>
+    <string name="config_gpu_clock_path" translatable="false"></string>
+    <string name="config_gpu_busy_path" translatable="false"></string>
+
 </resources>
