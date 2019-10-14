@@ -4764,6 +4764,12 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * Clock font style
+         * @hide
+         */
+        public static final String STATUS_BAR_CLOCK_FONT_STYLE = "status_bar_clock_font_style";
+
+        /**
          * Volume rocker wake
          * @hide
          */
