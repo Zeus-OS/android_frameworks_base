@@ -52,6 +52,7 @@ public class AmbientDisplayConfiguration {
                 || wakeDisplayGestureEnabled(user)
                 || pickupGestureEnabled(user)
                 || tapGestureEnabled(user)
+                || pulseOnCustomDozeEventEnabled(user)
                 || doubleTapGestureEnabled(user);
     }
 
@@ -135,6 +136,13 @@ public class AmbientDisplayConfiguration {
     /** {@hide} */
     public String longPressSensorType() {
         return mContext.getResources().getString(R.string.config_dozeLongPressSensorType);
+    }
+
+    /** (@hide} */
+    private boolean pulseOnCustomDozeEventEnabled(int user) {
+        return (Settings.System.getInt(mContext.getContentResolver(), Settings.System.CUSTOM_AMBIENT_POCKETMODE_GESTURE, 0) != 0
+                || Settings.System.getInt(mContext.getContentResolver(), Settings.System.CUSTOM_AMBIENT_HANDWAVE_GESTURE, 0) != 0)
+                && pulseOnNotificationAvailable();
     }
 
     /** {@hide} */
