@@ -5410,6 +5410,12 @@ public final class Settings {
         public static final String ROAMING_INDICATOR_ICON = "roaming_indicator_icon";
 
         /**
+         * Whether footer #DerpFest text shows
+         * @hide
+         */
+        public static final String OMNI_FOOTER_TEXT_SHOW = "omni_footer_text_show";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -5580,6 +5586,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_PANEL_TYPE_BACKGROUND);
             PRIVATE_SETTINGS.add(QS_PANEL_CUSTOM_IMAGE);
             PRIVATE_SETTINGS.add(QS_PANEL_CUSTOM_IMAGE_BLUR);
+            PRIVATE_SETTINGS.add(OMNI_FOOTER_TEXT_SHOW);
         }
 
         /**
