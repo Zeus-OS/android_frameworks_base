@@ -1250,6 +1250,9 @@ class WindowStateAnimator {
         if (mXOffset == dx && mYOffset == dy && Float.compare(mWallpaperScale, scale) == 0) {
             return false;
         }
+        if (mSurfaceController == null) {
+            return false;
+        }
         mXOffset = dx;
         mYOffset = dy;
         mWallpaperScale = scale;
