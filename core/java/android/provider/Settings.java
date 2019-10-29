@@ -5958,6 +5958,15 @@ public final class Settings {
         public static final String GAMING_MODE_DYNAMIC_STATE = "gaming_mode_dynamic_state";
 
         /**
+         * Whether allowing pocket service to register sensors and dispatch informations.
+         *   0 = disabled
+         *   1 = enabled
+         * @author Carlo Savignano
+         * @hide
+         */
+        public static final String POCKET_JUDGE = "pocket_judge";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -14720,14 +14729,6 @@ public final class Settings {
          */
         public static final String DISABLE_TRANSITION_ANIMATIONS = "disable_transition_animations";
 
-        /**
-        public static final String SHOW_CPU_OVERLAY = "show_cpu_overlay";
-
-        /**
-         * Google Hybrid Battery Warnings
-         * @hide
-         */
-        public static final String HYBRID_SYSUI_BATTERY_WARNING_FLAGS = "hybrid_sysui_battery_warning_flags";
 
         /**
          * Google Hybrid Battery Warnings
