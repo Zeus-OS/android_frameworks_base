@@ -168,6 +168,7 @@ import com.android.systemui.dagger.qualifiers.UiBackground;
 import com.android.systemui.fragments.ExtensionFragmentListener;
 import com.android.systemui.fragments.FragmentHostManager;
 import com.android.systemui.keyguard.DismissCallbackRegistry;
+import com.android.systemui.keyguard.KeyguardSliceProvider;
 import com.android.systemui.keyguard.KeyguardViewMediator;
 import com.android.systemui.keyguard.ScreenLifecycle;
 import com.android.systemui.keyguard.WakefulnessLifecycle;
@@ -302,6 +303,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             "system:" + Settings.System.GAMING_MODE_ACTIVE;
     private static final String GAMING_MODE_HEADSUP_TOGGLE =
             "system:" + Settings.System.GAMING_MODE_HEADSUP_TOGGLE;
+    private static final String PULSE_ON_NEW_TRACKS =
+            Settings.Secure.PULSE_ON_NEW_TRACKS;
 
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
@@ -940,6 +943,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         mTunerService.addTunable(this, QS_TILE_TITLE_VISIBILITY);
         mTunerService.addTunable(this, GAMING_MODE_ACTIVE);
         mTunerService.addTunable(this, GAMING_MODE_HEADSUP_TOGGLE);
+        mTunerService.addTunable(this, PULSE_ON_NEW_TRACKS);
 
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         mDreamManager = IDreamManager.Stub.asInterface(
@@ -4913,6 +4917,13 @@ public class StatusBar extends SystemUI implements DemoMode,
                 mHeadsUpDisabled =
                         TunerService.parseIntegerSwitch(newValue, true);
                 mNotificationInterruptStateProvider.setGamingPeekMode(mGamingModeActivated && mHeadsUpDisabled);
+                break;
+            case PULSE_ON_NEW_TRACKS:
+                boolean showPulseOnNewTracks =
+                        TunerService.parseIntegerSwitch(newValue, false);
+                KeyguardSliceProvider sliceProvider = KeyguardSliceProvider.getAttachedInstance();
+                if (sliceProvider != null)
+                    sliceProvider.setPulseOnNewTracks(showPulseOnNewTracks);
                 break;
             default:
                 break;
