@@ -77,4 +77,10 @@
         <!-- Recognizing fingerprint animation -->
     <dimen name="fod_animation_size">280dp</dimen>
     <dimen name="fod_animation_offset">0dp</dimen>
+
+    <dimen name="status_bar_mobile_signal_with_type_width">18dp</dimen>
+    <dimen name="status_bar_mobile_signal_width">16dp</dimen>
+    <dimen name="status_bar_mobile_type_height">8dp</dimen>
+    <dimen name="status_bar_mobile_type_padding">2dp</dimen>
+    <dimen name="status_bar_mobile_type_padding_limit">10dp</dimen>
 </resources>
