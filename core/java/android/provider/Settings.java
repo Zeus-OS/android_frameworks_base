@@ -6921,6 +6921,15 @@ public final class Settings {
         public static final String SHOW_VOLTE_ICON = "volte_icon";
 
         /**
+         * Whether to show VoLTE icon or not
+         * @hide
+         */
+        public static final String VOLTE_ICON_STYLE = "volte_icon_style";
+
+        /** @hide */
+        public static final Validator VOLTE_ICON_STYLE_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -7337,6 +7346,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_HEADER_STYLE);
             PRIVATE_SETTINGS.add(QS_HEADER_STYLE_COLOR);
             PRIVATE_SETTINGS.add(QS_BACKGROUND_STYLE_COLOR);
+            PRIVATE_SETTINGS.add(VOLTE_ICON_STYLE);
         }
 
         /**
@@ -7556,6 +7566,7 @@ public final class Settings {
             VALIDATORS.put(DUAL_ROW_DATAUSAGE, DUAL_ROW_DATAUSAGE_VALIDATOR);
             VALIDATORS.put(HEADSET_CONNECT_PLAYER, HEADSET_CONNECT_PLAYER_VALIDATOR);
             VALIDATORS.put(THEMING_SETTINGS_DASHBOARD_ICONS, THEMING_SETTINGS_DASHBOARD_ICONS_VALIDATOR);
+            VALIDATORS.put(VOLTE_ICON_STYLE, VOLTE_ICON_STYLE_VALIDATOR);
         }
 
         /**
