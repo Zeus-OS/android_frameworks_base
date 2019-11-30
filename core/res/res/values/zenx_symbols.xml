@@ -191,4 +191,7 @@
 
   <!-- Default value for FOD animation package resources -->
   <java-symbol type="string" name="config_fodAnimationPackage" />
+
+    <!-- Whether to use old mobile type icons as default -->
+  <java-symbol type="bool" name="config_useOldMobileIcons" />
 </resources>
