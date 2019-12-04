@@ -33,6 +33,7 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
     protected int mSidePaddingEnd;
     protected int mRows = 1;
     protected int mDefaultColumns;
+    private boolean mLayoutChanged = false;
 
     protected final ArrayList<TileRecord> mRecords = new ArrayList<>();
     private int mCellMarginTop;
@@ -121,7 +122,7 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
         mMaxAllowedRows = Math.max(1, getResources().getInteger(R.integer.quick_settings_max_rows));
         if (mLessRows) mMaxAllowedRows = Math.max(mMinRows, mMaxAllowedRows - 1);
         updateSettings();
-        return false;
+        return mLayoutChanged;
     }
 
     private boolean updateColumns() {
@@ -256,6 +257,7 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
                 UserHandle.USER_CURRENT);
         if (mColumns != (isPortrait ? columns : columnsLandscape)) {
             mColumns = isPortrait ? columns : columnsLandscape;
+            mLayoutChanged = true;
             requestLayout();
         }
     }
