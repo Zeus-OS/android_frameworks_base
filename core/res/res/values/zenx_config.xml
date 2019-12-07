@@ -70,7 +70,7 @@
         <item>com.amazon.mShop.android.shopping</item>   
         <item>com.google.android.inputmethod.latin</item>   
         <item>com.google.android.apps.plus</item>   
-        <item>com.google.android.apps.maps</item>   
+        <item>com.google.android.apps.maps</item>
         <item>ru.ok.android</item>   
         <item>com.instagram.android.MainTabActivity</item>  
         <item>com.facebook.orca.StartScreenActivity</item> 
@@ -131,5 +131,9 @@
 
      <!-- Whether device supports an alt. ambient display -->
     <bool name="config_alt_ambient_display">false</bool>
+    
+    <string-array translatable="false" name="config_customPermissionsList">
+        <!-- <item>more packages</item>-->
+    </string-array>
 
 </resources>
