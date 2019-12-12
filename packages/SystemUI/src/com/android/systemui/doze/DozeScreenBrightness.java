@@ -110,6 +110,13 @@ public class DozeScreenBrightness extends BroadcastReceiver implements DozeMachi
     public void transitionTo(DozeMachine.State oldState, DozeMachine.State newState) {
         switch (newState) {
             case INITIALIZED:
+            case DOZE_AOD_DOCKED:
+                setLightSensorEnabled(true);
+                // we dont have a brightness sensor so remove any font scrim right away
+                if (!mRegistered) {
+                    mDozeHost.setAodDimmingScrim(0f);
+                }
+                break;
             case DOZE:
                 resetBrightnessToDefault();
                 break;
