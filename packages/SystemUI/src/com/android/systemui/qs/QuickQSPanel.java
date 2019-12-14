@@ -333,7 +333,6 @@ public class QuickQSPanel extends QSPanel {
         public boolean updateResources() {
             mCellWidth = mContext.getResources().getDimensionPixelSize(R.dimen.qs_quick_tile_size);
             mCellHeight = mCellWidth;
-            updateSettings();
 
             return false;
         }
