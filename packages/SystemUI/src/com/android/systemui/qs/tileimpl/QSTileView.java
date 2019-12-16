@@ -49,6 +49,8 @@ public class QSTileView extends QSTileBaseView {
     private ColorStateList mColorLabelDefault;
     private ColorStateList mColorLabelActive;
     private ColorStateList mColorLabelUnavailable;
+    private int mColorLabelActiveRandom;
+    private int setQsLabelUseNewTint;
 
     public QSTileView(Context context, QSIconView icon) {
         this(context, icon, false);
@@ -65,13 +67,9 @@ public class QSTileView extends QSTileBaseView {
         createLabel();
         setOrientation(VERTICAL);
         setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
-        boolean setQsUseNewTint = Settings.System.getIntForUser(context.getContentResolver(),
-                Settings.System.QS_PANEL_BG_USE_NEW_TINT, 0, UserHandle.USER_CURRENT) == 1;
+        mColorLabelActive = Utils.getColorAttr(getContext(), android.R.attr.colorAccent);
+        mColorLabelActiveRandom = QSTileBaseView.randomColor(isThemeDark(context));
         mColorLabelDefault = Utils.getColorAttr(getContext(), android.R.attr.textColorPrimary);
-        if (setQsUseNewTint)
-            mColorLabelActive = Utils.getColorAttr(getContext(), android.R.attr.colorAccent);
-        else
-            mColorLabelActive = mColorLabelDefault;
         // The text color for unavailable tiles is textColorSecondary, same as secondaryLabel for
         // contrast purposes
         mColorLabelUnavailable = Utils.getColorAttr(getContext(),
@@ -124,6 +122,8 @@ public class QSTileView extends QSTileBaseView {
     @Override
     protected void handleStateChanged(QSTile.State state) {
         super.handleStateChanged(state);
+        setQsLabelUseNewTint = Settings.System.getIntForUser(getContext().getContentResolver(),
+                    Settings.System.QS_LABEL_USE_NEW_TINT, 0, UserHandle.USER_CURRENT);
         if (!Objects.equals(mLabel.getText(), state.label) || mState != state.state) {
             mLabel.setTextColor(state.state == Tile.STATE_UNAVAILABLE ? mColorLabelUnavailable
                     : mColorLabelDefault);
@@ -149,6 +149,17 @@ public class QSTileView extends QSTileBaseView {
         } else if (state.state == Tile.STATE_INACTIVE) {
             mLabel.setTextColor(mColorLabelDefault);
             mExpandIndicator.setImageTintList(mColorLabelDefault);
+        }
+        if (state.state == Tile.STATE_ACTIVE) {
+            if (setQsLabelUseNewTint == 1) {
+                mLabel.setTextColor(mColorLabelActiveRandom);
+            } else if (setQsLabelUseNewTint == 2) {
+                mLabel.setTextColor(mColorLabelActive);
+            } else {
+                mLabel.setTextColor(mColorLabelDefault);
+            }
+        } else if (state.state == Tile.STATE_INACTIVE) {
+            mLabel.setTextColor(mColorLabelDefault);
         }
         boolean dualTarget = DUAL_TARGET_ALLOWED && state.dualTarget;
         mExpandIndicator.setVisibility(View.GONE);
