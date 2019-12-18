@@ -53,6 +53,7 @@ import android.view.KeyEvent;
 import android.os.AsyncTask;
 import android.app.IActivityManager;
 import android.app.ActivityManager;
+import android.media.AudioManager;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.graphics.Color;
@@ -553,5 +554,10 @@ public class ZenxUtils {
         }
 
         return null;
+    }
+
+    public static void toggleVolumePanel(Context context) {
+        AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        am.adjustVolume(AudioManager.ADJUST_SAME, AudioManager.FLAG_SHOW_UI);
     }
 }
