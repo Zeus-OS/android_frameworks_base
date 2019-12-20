@@ -31,6 +31,11 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.os.SystemClock;
+import android.net.NetworkInfo;
+import android.net.ConnectivityManager;
+import android.os.SystemProperties;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.view.IWindowManager;
 import android.view.WindowManagerGlobal;
 import android.provider.Settings;
@@ -65,6 +70,45 @@ public class ZenxUtils {
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
         return (cm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE) == false);
+    }
+
+	// Check if device is connected to the internet
+    public static boolean isConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm == null) return false;
+
+        NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mobile = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        return wifi.isConnected() || mobile.isConnected();
+    }
+
+    public static String batteryTemperature(Context context, Boolean ForC) {
+        Intent intent = context.registerReceiver(null, new IntentFilter(
+                Intent.ACTION_BATTERY_CHANGED));
+        float  temp = ((float) (intent != null ? intent.getIntExtra(
+                BatteryManager.EXTRA_TEMPERATURE, 0) : 0)) / 10;
+        // Round up to nearest number
+        int c = (int) ((temp) + 0.5f);
+        float n = temp + 0.5f;
+        // Use boolean to determine celsius or fahrenheit
+        return String.valueOf((n - c) % 2 == 0 ? (int) temp :
+                ForC ? c * 9/5 + 32:c);
+    }
+
+    // Method to detect countries that use Fahrenheit
+    public static boolean mccCheck(Context context) {
+        // MCC's belonging to countries that use Fahrenheit
+        String[] mcc = {"364", "552", "702", "346", "550", "376", "330",
+                "310", "311", "312", "551"};
+
+        TelephonyManager tel = (TelephonyManager) context.getSystemService(
+                Context.TELEPHONY_SERVICE);
+        String networkOperator = tel.getNetworkOperator();
+
+        // Check the array to determine celsius or fahrenheit.
+        // Default to celsius if can't access MCC
+        return !TextUtils.isEmpty(networkOperator) && Arrays.asList(mcc).contains(
+                networkOperator.substring(0, /*Filter only 3 digits*/ 3));
     }
 
     // Check to see if a package is installed
