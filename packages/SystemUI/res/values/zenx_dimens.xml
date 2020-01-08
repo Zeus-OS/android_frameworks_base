@@ -91,8 +91,8 @@
     <dimen name="status_bar_mobile_signal_with_type_width">18dp</dimen>
     <dimen name="status_bar_mobile_signal_width">16dp</dimen>
     <dimen name="status_bar_mobile_type_height">8dp</dimen>
-    <dimen name="status_bar_mobile_type_padding">2dp</dimen>
-    <dimen name="status_bar_mobile_type_padding_limit">10dp</dimen>
+    <dimen name="status_bar_mobile_type_padding">3dp</dimen>
+    <dimen name="status_bar_mobile_type_padding_limit">11dp</dimen>
 
     <!-- Custom cutout overlay view sizes -->
     <dimen name="config_customCutoutTopWidth">0.0px</dimen>
