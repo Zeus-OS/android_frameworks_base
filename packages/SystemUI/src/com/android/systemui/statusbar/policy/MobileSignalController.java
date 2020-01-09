@@ -69,7 +69,7 @@ import java.util.regex.Pattern;
 
 public class MobileSignalController extends SignalController<
         MobileSignalController.MobileState, MobileSignalController.MobileIconGroup> {
-            
+
     // The message to display Nr5G icon gracfully by CarrierConfig timeout
     private static final int MSG_DISPLAY_GRACE = 1;
 
@@ -217,7 +217,8 @@ public class MobileSignalController extends SignalController<
             if (uri.equals(Settings.System.getUriFor(Settings.System.SHOW_FOURG_ICON))
                     || uri.equals(Settings.System.getUriFor(Settings.System.VOLTE_ICON))
                     || uri.equals(Settings.System.getUriFor(Settings.System.VOLTE_ICON_STYLE))
-                    || uri.equals(Settings.System.getUriFor(Settings.System.USE_OLD_MOBILETYPE))) {
+                    || uri.equals(Settings.System.getUriFor(Settings.System.USE_OLD_MOBILETYPE))
+                    || uri.equals(Settings.System.getUriFor(Settings.System.DATA_DISABLED_ICON))) {
                 updateSettings();
             }
         }
@@ -240,16 +241,9 @@ public class MobileSignalController extends SignalController<
                 Settings.System.VOLTE_ICON_STYLE, 0, UserHandle.USER_CURRENT);
     }
 
-    @Override
-    public void onTuningChanged(String key, String newValue) {
-        switch (key) {
-            case "data_disabled":
-                     mDataDisabledIcon  =
-                        TunerService.parseIntegerSwitch(newValue, true);
-                     updateTelephony();
-            default:
-                break;
-        }
+    private boolean dataDisabledIcon() {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.DATA_DISABLED_ICON, 1, UserHandle.USER_CURRENT) == 1;
     }
 
     public void setConfiguration(Config config) {
@@ -731,7 +725,7 @@ public class MobileSignalController extends SignalController<
         mCurrentState.roaming = isRoaming() && mRoamingIconAllowed;
         if (isCarrierNetworkChangeActive()) {
             mCurrentState.iconGroup = TelephonyIcons.CARRIER_NETWORK_CHANGE;
-        } else if (isDataDisabled() && mDataDisabledIcon/*!mConfig.alwaysShowDataRatIcon*/) {
+        } else if (isDataDisabled() && dataDisabledIcon()) {
             if (mSubscriptionInfo.getSubscriptionId()
                     != mDefaults.getDefaultDataSubId()) {
                 mCurrentState.iconGroup = TelephonyIcons.NOT_DEFAULT_DATA;

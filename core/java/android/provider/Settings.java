@@ -5297,12 +5297,6 @@ public final class Settings {
         private static final Validator LOCKSCREEN_MEDIA_BLUR_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
-         * Whether to display cross sign for a data disabled connection
-         * @hide
-         */
-        public static final String DATA_DISABLED_ICON = "data_disabled_icon";
-
-        /**
          * @hide
          */
         public static final String ROAMING_INDICATOR_ICON = "roaming_indicator_icon";
@@ -6932,6 +6926,15 @@ public final class Settings {
         public static final Validator VOLTE_ICON_STYLE_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
+         * Whether to show cross when data is disabled
+         * @hide
+         */
+        public static final String DATA_DISABLED_ICON = "data_disabled_icon";
+
+        /** @hide */
+        private static final Validator DATA_DISABLED_ICON_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -7102,6 +7105,7 @@ public final class Settings {
             THEMING_SETTINGS_DASHBOARD_ICONS,
             VOLTE_ICON,
             VOLTE_ICON_STYLE,
+            DATA_DISABLED_ICON,
         };
 
         /**
@@ -7353,6 +7357,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_HEADER_STYLE_COLOR);
             PRIVATE_SETTINGS.add(QS_BACKGROUND_STYLE_COLOR);
             PRIVATE_SETTINGS.add(VOLTE_ICON_STYLE);
+            PRIVATE_SETTINGS.add(DATA_DISABLED_ICON);
         }
 
         /**
@@ -7575,6 +7580,7 @@ public final class Settings {
             VALIDATORS.put(HEADSET_CONNECT_PLAYER, HEADSET_CONNECT_PLAYER_VALIDATOR);
             VALIDATORS.put(THEMING_SETTINGS_DASHBOARD_ICONS, THEMING_SETTINGS_DASHBOARD_ICONS_VALIDATOR);
             VALIDATORS.put(VOLTE_ICON_STYLE, VOLTE_ICON_STYLE_VALIDATOR);
+            VALIDATORS.put(DATA_DISABLED_ICON, DATA_DISABLED_ICON_VALIDATOR);
         }
 
         /**
