@@ -474,7 +474,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
     }
 
     private void updateAlpha() {
-        setAlpha(mIsDreaming ? 0.5f : 1.0f);
+        if (mIsCircleShowing) {
+            setAlpha(1.0f);
+        }
     }
 
     private void updatePosition() {
