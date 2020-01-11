@@ -197,7 +197,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private int mSystemInfoMode;
     private View mSystemInfoLayout;
     private ImageView mSystemInfoIcon;
-
+    public static final String STATUS_BAR_CUSTOM_HEADER_HEIGHT =
+            "system:" + Settings.System.STATUS_BAR_CUSTOM_HEADER_HEIGHT;
     private final BroadcastReceiver mRingerReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -292,7 +293,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mSystemInfoIcon = findViewById(R.id.system_info_icon);
         mSystemInfoText = findViewById(R.id.system_info_text);
 
-        updateResources();
         addQuickQSPanel();
 
         Rect tintArea = new Rect(0, 0, 0, 0);
@@ -326,6 +326,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mNextAlarmTextView.setSelected(true);
 
         mPermissionsHubEnabled = PrivacyItemControllerKt.isPermissionsHubEnabled();;
+        updateResources();
         // Change the ignored slots when DeviceConfig flag changes
         DeviceConfig.addOnPropertyChangedListener(DeviceConfig.NAMESPACE_PRIVACY,
                 mContext.getMainExecutor(), mPropertyListener);
@@ -334,7 +335,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         Dependency.get(TunerService.class).addTunable(this,
                 QS_SHOW_AUTO_BRIGHTNESS,
                 QQS_SHOW_BRIGHTNESS_SLIDER,
-                QS_SHOW_BRIGHTNESS_BUTTONS);
+                QS_SHOW_BRIGHTNESS_BUTTONS,
+                STATUS_BAR_CUSTOM_HEADER_HEIGHT);
         updateSettings();
     }
 
@@ -605,7 +607,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         updateResources();
-        updateStatusbarProperties();
     }
 
     @Override
@@ -724,6 +725,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         updateStatusIconAlphaAnimator();
         updateHeaderTextContainerAlphaAnimator();
         updatePrivacyChipAlphaAnimator();
+
+        boolean shouldUseWallpaperTextColor = mLandscape && !mHeaderImageEnabled;
+        mClockView.useWallpaperTextColor(shouldUseWallpaperTextColor);
     }
 
     private void updateSettings() {
@@ -1433,6 +1437,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             case QQS_SHOW_BRIGHTNESS_SLIDER:
                 mBrightnessSlider = TunerService.parseInteger(newValue, 2);
                 addQuickQSPanel();
+            case STATUS_BAR_CUSTOM_HEADER_HEIGHT:
+                mHeaderImageHeight =
+                        TunerService.parseInteger(newValue, 0);
+                updateHeaderImage(mHeaderImageHeight);
                 updateResources();
                 break;
             case QS_SHOW_AUTO_BRIGHTNESS:
@@ -1447,5 +1455,4 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 break;
         }
     }
-
 }
