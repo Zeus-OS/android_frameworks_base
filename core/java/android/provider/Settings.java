@@ -6648,6 +6648,9 @@ public final class Settings {
          */
         public static final String ADAPTIVE_PLAYBACK_ENABLED = "adaptive_playback_enabled";
 
+        /** @hide */
+        private static final Validator VOLTE_ICON_VALIDATOR = BOOLEAN_VALIDATOR;
+
         /**
          * Adaptive playback's timeout in ms
          * @hide
@@ -6913,12 +6916,11 @@ public final class Settings {
 
         /** @hide */
         private static final Validator THEMING_SETTINGS_DASHBOARD_ICONS_VALIDATOR = ANY_INTEGER_VALIDATOR;
+        
+        public static final String VOLTE_ICON = "volte_icon";
 
-        /**
-         * Whether to show VoLTE icon or not
-         * @hide
-         */
-        public static final String SHOW_VOLTE_ICON = "volte_icon";
+        /** @hide */
+        private static final Validator VOLTE_ICON_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
          * Whether to show VoLTE icon or not
@@ -7098,6 +7100,8 @@ public final class Settings {
             DUAL_ROW_DATAUSAGE,
             HEADSET_CONNECT_PLAYER,
             THEMING_SETTINGS_DASHBOARD_ICONS,
+            VOLTE_ICON,
+            VOLTE_ICON_STYLE,
         };
 
         /**
@@ -7286,6 +7290,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(USE_OLD_MOBILETYPE);
             PRIVATE_SETTINGS.add(PULSE_BRIGHTNESS);
             PRIVATE_SETTINGS.add(DOZE_BRIGHTNESS);
+            PRIVATE_SETTINGS.add(VOLTE_ICON);
+            PRIVATE_SETTINGS.add(VOLTE_ICON_STYLE);
             PRIVATE_SETTINGS.add(FLASHLIGHT_ON_CALL);
             PRIVATE_SETTINGS.add(INCALL_FEEDBACK_VIBRATE);
             PRIVATE_SETTINGS.add(BACK_GESTURE_HAPTIC);
@@ -7520,6 +7526,8 @@ public final class Settings {
             VALIDATORS.put(USE_OLD_MOBILETYPE, USE_OLD_MOBILETYPE_VALIDATOR);
             VALIDATORS.put(PULSE_BRIGHTNESS, PULSE_BRIGHTNESS_VALIDATOR);
             VALIDATORS.put(DOZE_BRIGHTNESS, DOZE_BRIGHTNESS_VALIDATOR);
+            VALIDATORS.put(VOLTE_ICON, VOLTE_ICON_VALIDATOR);
+            VALIDATORS.put(VOLTE_ICON_STYLE, VOLTE_ICON_STYLE_VALIDATOR);
             VALIDATORS.put(FLASHLIGHT_ON_CALL, FLASHLIGHT_ON_CALL_VALIDATOR);
             VALIDATORS.put(INCALL_FEEDBACK_VIBRATE, INCALL_FEEDBACK_VIBRATE_VALIDATOR);
             VALIDATORS.put(BACK_GESTURE_HAPTIC, BACK_GESTURE_HAPTIC_VALIDATOR);
