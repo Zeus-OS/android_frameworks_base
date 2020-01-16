@@ -414,7 +414,7 @@
 
     <dimen name="volume_dialog_ringer_icon_padding">8dp</dimen>
 
-    <dimen name="volume_dialog_caption_size">64dp</dimen>
+    <dimen name="volume_dialog_caption_size">@dimen/volume_dialog_ringer_size</dimen>
 
     <dimen name="volume_dialog_tap_target_size">46dip</dimen>
 
