@@ -16,4 +16,7 @@
     <color name="gradient_end">#ff11b411</color>
 
     <color name="qs_icon_active_color">#ffffffff</color>
+    
+        <!-- Themes -->
+    <color name="theme_generic_semi_transparent_color">#EAFFFFFF</color>
 </resources>
