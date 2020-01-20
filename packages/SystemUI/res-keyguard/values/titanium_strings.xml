@@ -17,10 +17,11 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="clock_title_binary" translatable="false">Binary</string>
-    <string name="clock_title_two_line_digital" translatable="false">Vertical</string>
-    <string name="clock_title_one_line_digital" translatable="false">Digital</string>
     <string name="clock_title_custom_num" translatable="false">Custom-Num</string>
+    <string name="clock_title_one_line_digital" translatable="false">Digital</string>
+    <string name="clock_title_spectrum" translatable="false">Spectrum</string>
     <string name="clock_title_spidey" translatable="false">Spidey</string>
+    <string name="clock_title_two_line_digital" translatable="false">Vertical</string>
 
     <!-- Minutes displayed in words on the typographic clock face. [CHAR LIMIT=20] -->
     <string-array name="type_clock_minutes_alt">
