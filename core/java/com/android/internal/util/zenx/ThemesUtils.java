@@ -32,10 +32,20 @@ import android.util.Log;
 public class ThemesUtils {
 
     public static final String TAG = "ThemesUtils";
-
+    
     public static final String[] SOLARIZED_DARK = {
             "com.android.theme.solarizeddark.system",
             "com.android.theme.solarizeddark.systemui",
+    };
+
+    public static final String[] BAKED_GREEN = {
+            "com.android.theme.bakedgreen.system",
+            "com.android.theme.bakedgreen.systemui",
+    };
+
+    public static final String[] CHOCO_X = {
+            "com.android.theme.chocox.system",
+            "com.android.theme.chocox.systemui",
     };
 
     // Switch themes
