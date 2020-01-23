@@ -624,12 +624,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 R.dimen.qs_quick_header_panel_height);
 
         if (mBrightnessSlider != 0) {
-           if (mHeaderImageEnabled) {
                qqsHeight += mContext.getResources().getDimensionPixelSize(
                        R.dimen.brightness_mirror_height)
                        + mContext.getResources().getDimensionPixelSize(
                        R.dimen.qs_tile_margin_top);
-           }
         }
 
         setMinimumHeight(sbHeight + qqsHeight);
@@ -811,7 +809,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 mQuickQsBrightness.setVisibility(VISIBLE);
             }
         }
-        updateSystemInfoText();
     }
 
     public void disable(int state1, int state2, boolean animate) {
