@@ -41,13 +41,13 @@
     <dimen name="opa_return_translation">-1.0dip</dimen>
     <dimen name="opa_rest_to_collapse">7.0dip</dimen>
 
-        <!-- Width of the battery icon in the status bar when set to circle style. -->
+    <!-- Width of the battery icon in the status bar when set to circle style. -->
     <dimen name="status_bar_battery_icon_circle_width">14.5dp</dimen>
 
-        <!-- QS tile text visibility -->
+    <!-- QS tile text visibility -->
     <dimen name="qs_tile_height_wo_label">64dp</dimen>
 
-        <!-- Custom header -->
+    <!-- Custom header -->
     <dimen name="qs_header_image_offset">32dp</dimen>
     <dimen name="qs_header_image_side_margin">8dp</dimen>
     <dimen name="qs_header_image_top_margin">4dp</dimen>
@@ -62,10 +62,10 @@
 
     <dimen name="battery_bar_view_height">6dp</dimen>
 
-        <!-- QS detail view scrolling -->
+    <!-- QS detail view scrolling -->
     <dimen name="qs_detail_item_height_twoline">72dp</dimen>
 
-        <!-- Notification header R -->
+    <!-- Notification header R -->
     <dimen name="notification_header_margin_top">0dp</dimen>
 
     <!-- QS Brightness control padding -->
@@ -74,7 +74,7 @@
     <dimen name="qs_page_indicator_margin_bottom">12dp</dimen>
     <dimen name="qs_paged_tile_layout_padding_bottom">4dp</dimen>
 
-        <!-- Recognizing fingerprint animation -->
+    <!-- Recognizing fingerprint animation -->
     <dimen name="fod_animation_size">280dp</dimen>
     <dimen name="fod_animation_offset">0dp</dimen>
 
@@ -84,7 +84,7 @@
     <dimen name="status_bar_mobile_type_padding">2dp</dimen>
     <dimen name="status_bar_mobile_type_padding_limit">10dp</dimen>
 
-        <!-- Tri-state UI -->
+    <!-- Tri-state UI -->
     <dimen name="tri_state_down_dialog_position">850.0px</dimen>
     <dimen name="tri_state_down_dialog_position_l">650.0px</dimen>
     <dimen name="tri_state_middle_dialog_position">650.0px</dimen>
@@ -96,16 +96,25 @@
     <dimen name="tri_state_dialog_elevation">4.0dip</dimen>
     <dimen name="tri_state_dialog_icon_size">24.0dip</dimen>
     <dimen name="tri_state_dialog_padding">8.0dip</dimen>
-    <dimen name="tri_state_down_bottom_left_radius">24.0dip</dimen>
-    <dimen name="tri_state_down_bottom_right_radius">24.0dip</dimen>
-    <dimen name="tri_state_down_top_left_radius">24.0dip</dimen>
-    <dimen name="tri_state_down_top_right_radius">0.0dip</dimen>
     <dimen name="tri_state_mid_bottom_left_radius">24.0dip</dimen>
     <dimen name="tri_state_mid_bottom_right_radius">24.0dip</dimen>
     <dimen name="tri_state_mid_top_left_radius">24.0dip</dimen>
     <dimen name="tri_state_mid_top_right_radius">24.0dip</dimen>
-    <dimen name="tri_state_up_bottom_left_radius">24.0dip</dimen>
-    <dimen name="tri_state_up_bottom_right_radius">0.0dip</dimen>
-    <dimen name="tri_state_up_top_left_radius">24.0dip</dimen>
-    <dimen name="tri_state_up_top_right_radius">24.0dip</dimen>
+
+    <dimen name="left_tri_state_down_bottom_left_radius">24.0dip</dimen>
+    <dimen name="left_tri_state_down_bottom_right_radius">24.0dip</dimen>
+    <dimen name="left_tri_state_down_top_left_radius">0.0dip</dimen>
+    <dimen name="left_tri_state_down_top_right_radius">24.0dip</dimen>
+    <dimen name="left_tri_state_up_bottom_left_radius">0.0dip</dimen>
+    <dimen name="left_tri_state_up_bottom_right_radius">24.0dip</dimen>
+    <dimen name="left_tri_state_up_top_left_radius">24.0dip</dimen>
+    <dimen name="left_tri_state_up_top_right_radius">24.0dip</dimen>
+    <dimen name="right_tri_state_down_bottom_left_radius">24.0dip</dimen>
+    <dimen name="right_tri_state_down_bottom_right_radius">24.0dip</dimen>
+    <dimen name="right_tri_state_down_top_left_radius">24.0dip</dimen>
+    <dimen name="right_tri_state_down_top_right_radius">0.0dip</dimen>
+    <dimen name="right_tri_state_up_bottom_left_radius">24.0dip</dimen>
+    <dimen name="right_tri_state_up_bottom_right_radius">0.0dip</dimen>
+    <dimen name="right_tri_state_up_top_left_radius">24.0dip</dimen>
+    <dimen name="right_tri_state_up_top_right_radius">24.0dip</dimen>
 </resources>
