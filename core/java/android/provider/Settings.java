@@ -6580,12 +6580,6 @@ public final class Settings {
         public static final String SHOW_MEDIA_HEADS_UP = "show_media_heads_up";
 
         /**
-         * FOD recognizing animation
-         * @hide
-         */
-        public static final String FOD_RECOGNIZING_ANIMATION = "fod_recognizing_animation";
-
-        /**
          * Adaptive playback
          * Automatically pause media when the volume is muted and
          * will resume automatically when volume is restored.
@@ -6764,6 +6758,12 @@ public final class Settings {
          * @hide
          */
         public static final String FOD_ICON = "fod_icon";
+
+        /**
+         * FOD recognizing animation
+         * @hide
+         */
+        public static final String FOD_RECOGNIZING_ANIMATION = "fod_recognizing_animation";
 
         /**
          * Whether to show the notification ticker on the status bar
