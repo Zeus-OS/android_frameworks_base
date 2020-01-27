@@ -103,6 +103,7 @@
     <dimen name="fod_icon_size">174.0px</dimen>
 
     <!-- Size of the FOD animation -->
+    <dimen name="fod_animation_size">280dp</dimen>  
     <dimen name="fod_animation_offset">0.0px</dimen>
 
     <!-- Width of the battery icon in the status bar when set to circle style. -->
