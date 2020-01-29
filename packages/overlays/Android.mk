@@ -32,16 +32,17 @@ LOCAL_REQUIRED_MODULES := \
 	FontGoogleSansOverlay \
 	FontNotoSerifSourceOverlay \
 	FontRubikRubikOverlay \
-        FontAclonicaSourceOverlay \
-        FontAmaranteSourceOverlay \
-        FontBariolSourceOverlay \
-        FontCagliostroSourceOverlay \
-        FontCoolstorySourceOverlay \
-        FontLGSmartGothicSourceOverlay \
-        FontNotoSerifSourceOverlay \
-        FontRosemarySourceOverlay \
-        FontSonySketchSourceOverlay \
-        FontSurferSourceOverlay \
+    FontAclonicaSourceOverlay \
+    FontAmaranteSourceOverlay \
+    FontBariolSourceOverlay \
+    FontCagliostroSourceOverlay \
+    FontCoolstorySourceOverlay \
+    FontLGSmartGothicSourceOverlay \
+    FontNotoSerifSourceOverlay \
+    FontRosemarySourceOverlay \
+    FontSonySketchSourceOverlay \
+    FontSurferSourceOverlay \
+    FontSamsungOneSourceOverlay \
 	IconPackCircularAndroidOverlay \
 	IconPackCircularPixelLauncherOverlay \
 	IconPackCircularPixelThemePickerOverlay \
