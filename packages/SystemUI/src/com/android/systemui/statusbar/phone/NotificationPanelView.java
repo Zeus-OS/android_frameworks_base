@@ -1277,7 +1277,7 @@ public class NotificationPanelView extends PanelView implements
         return !mQsTouchAboveFalsingThreshold;
     }
 
-    private float getQsExpansionFraction() {
+    public float getQsExpansionFraction() {
         return Math.min(1f, (mQsExpansionHeight - mQsMinExpansionHeight)
                 / (mQsMaxExpansionHeight - mQsMinExpansionHeight));
     }
@@ -2317,6 +2317,7 @@ public class NotificationPanelView extends PanelView implements
         }
         mNotificationStackScroller.setAlpha(alpha);
         mStatusBar.updateBlurVisibility();
+        mStatusBar.setDismissAllVisible(true);
     }
 
     private float getFadeoutAlpha() {
