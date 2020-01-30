@@ -86,4 +86,6 @@
     <color name="accent_device_default_light">@*android:color/accent_device_default_light</color>
     <color name="recents_dismiss_all_background_color">@color/accent_device_default_light</color>
     <color name="recents_dismiss_all_icon_color">@android:color/black</color>
+    <color name="keyguard_affordance_background_preview">#171717</color>
+    <color name="keyguard_affordance_background_preview_background">#242426</color>
 </resources>

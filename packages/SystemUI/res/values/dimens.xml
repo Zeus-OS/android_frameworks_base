@@ -1179,4 +1179,9 @@
     <dimen name="dismiss_all_button_width">55dp</dimen>
     <dimen name="dismiss_all_fab_src_size">24dp</dimen>
 
+    
+    <dimen name="lockscreen_shortcuts_preview_paddingVertical">30dp</dimen>
+    <dimen name="lockscreen_shortcuts_preview_paddingHorizontal">50dp</dimen>
+    <dimen name="keyguard_affordance_icon_preview_padding">15dp</dimen>
+
 </resources>
