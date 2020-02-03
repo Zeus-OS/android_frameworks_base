@@ -3187,7 +3187,8 @@ public class NotificationPanelViewController extends PanelViewController {
                 Settings.System.AMBIENT_TEXT_ANIMATION, 0, UserHandle.USER_CURRENT) != 0;
         boolean ambientImage = Settings.System.getIntForUser(resolver,
                 Settings.System.AMBIENT_IMAGE, 0, UserHandle.USER_CURRENT) != 0;
-
+        boolean pulseForAll = Settings.System.getIntForUser(resolver,
+                Settings.System.AMBIENT_LIGHT_PULSE_FOR_ALL, 0, UserHandle.USER_CURRENT) == 1;
         if (animatePulse) {
             mAnimateNextPositionUpdate = true;
         }
@@ -3218,7 +3219,7 @@ public class NotificationPanelViewController extends PanelViewController {
                 }
             }
             if (mPulsing) {
-                if (pulseReasonNotification) {
+                if (pulseReasonNotification || pulseForAll) {
                     if (activeNotif) {
                         // show the bars if we have to
                         if (pulseLights) {

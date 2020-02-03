@@ -5972,11 +5972,12 @@ public final class Settings {
 	 **/
         public static final String SCREENSHOT_TYPE = "screenshot_type";
 
+        /*
+         * @hide
+         */
+        public static final String AMBIENT_LIGHT_PULSE_FOR_ALL = "ambient_light_pulse_for_all";
+
         /**
-         * Shows custom date before clock time
-         * 0 - No Date
-         * 1 - Small Date
-         * 2 - Normal Date
          * @hide
          */
         public static final String STATUS_BAR_CLOCK_DATE_DISPLAY = "status_bar_clock_date_display";
