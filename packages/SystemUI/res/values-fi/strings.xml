@@ -1089,4 +1089,5 @@
     <string name="controls_added_tooltip" msgid="4842812921719153085">"Paina virtapainiketta pitkään nähdäksesi uudet säätimet"</string>
     <string name="controls_menu_add" msgid="4447246119229920050">"Lisää säätimiä"</string>
     <string name="controls_menu_edit" msgid="890623986951347062">"Muokkaa säätimiä"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Toista mediasisältöä"</string>
 </resources>

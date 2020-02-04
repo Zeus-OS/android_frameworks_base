@@ -1089,4 +1089,5 @@
     <string name="controls_added_tooltip" msgid="4842812921719153085">"電源ボタンを長押しすると、新しいコントロールが表示されます"</string>
     <string name="controls_menu_add" msgid="4447246119229920050">"コントロールを追加"</string>
     <string name="controls_menu_edit" msgid="890623986951347062">"コントロールを編集"</string>
+    <string name="media_output_title" msgid="115223550977351699">"メディアの再生先"</string>
 </resources>

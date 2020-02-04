@@ -1089,4 +1089,5 @@
     <string name="controls_added_tooltip" msgid="4842812921719153085">"ထိန်းချုပ်မှုအသစ်များ ကြည့်ရန် ဖွင့်ပိတ်ခလုတ်ကို ဖိထားပါ"</string>
     <string name="controls_menu_add" msgid="4447246119229920050">"ထိန်းချုပ်မှုများ ထည့်ရန်"</string>
     <string name="controls_menu_edit" msgid="890623986951347062">"ထိန်းချုပ်မှုများ တည်းဖြတ်ရန်"</string>
+    <string name="media_output_title" msgid="115223550977351699">"မီဒီယာကို အောက်ပါစက်တွင် ဖွင့်ရန်"</string>
 </resources>

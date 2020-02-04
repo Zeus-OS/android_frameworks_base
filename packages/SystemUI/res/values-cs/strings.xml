@@ -1101,4 +1101,5 @@
     <string name="controls_added_tooltip" msgid="4842812921719153085">"Nové ovládací prvky zobrazíte podržením vypínače"</string>
     <string name="controls_menu_add" msgid="4447246119229920050">"Přidat ovládací prvky"</string>
     <string name="controls_menu_edit" msgid="890623986951347062">"Upravit ovládací prvky"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Přehrávat média v"</string>
 </resources>

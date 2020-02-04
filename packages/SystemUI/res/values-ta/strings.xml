@@ -1089,4 +1089,5 @@
     <string name="controls_added_tooltip" msgid="4842812921719153085">"புதிய கட்டுப்பாடுகளைப் பார்க்க பவர் பட்டனைப் பிடித்திருக்கவும்"</string>
     <string name="controls_menu_add" msgid="4447246119229920050">"கட்டுப்பாடுகளைச் சேர்த்தல்"</string>
     <string name="controls_menu_edit" msgid="890623986951347062">"கட்டுப்பாடுகளை மாற்றுதல்"</string>
+    <string name="media_output_title" msgid="115223550977351699">"மீடியாவை இதில் இயக்கு"</string>
 </resources>

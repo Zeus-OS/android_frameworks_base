@@ -1089,4 +1089,5 @@
     <string name="controls_added_tooltip" msgid="4842812921719153085">"Задржете го копчето за вклучување за да ги видите новите контроли"</string>
     <string name="controls_menu_add" msgid="4447246119229920050">"Додајте контроли"</string>
     <string name="controls_menu_edit" msgid="890623986951347062">"Изменете ги контролите"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Пуштање содржина на"</string>
 </resources>

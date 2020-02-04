@@ -1089,4 +1089,5 @@
     <string name="controls_added_tooltip" msgid="4842812921719153085">"Houd de aan/uit-knop ingedrukt om nieuwe bedieningselementen te bekijken"</string>
     <string name="controls_menu_add" msgid="4447246119229920050">"Bedieningselementen toevoegen"</string>
     <string name="controls_menu_edit" msgid="890623986951347062">"Bedieningselementen bewerken"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Media afspelen naar"</string>
 </resources>

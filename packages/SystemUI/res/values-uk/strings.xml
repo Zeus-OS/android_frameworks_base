@@ -1101,4 +1101,5 @@
     <string name="controls_added_tooltip" msgid="4842812921719153085">"Утримуйте кнопку живлення, щоб переглянути нові елементи керування"</string>
     <string name="controls_menu_add" msgid="4447246119229920050">"Додати елементи керування"</string>
     <string name="controls_menu_edit" msgid="890623986951347062">"Змінити елементи керування"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Відтворювати медіа-вміст у додатку"</string>
 </resources>

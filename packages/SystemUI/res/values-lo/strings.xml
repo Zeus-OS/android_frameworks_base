@@ -1089,4 +1089,5 @@
     <string name="controls_added_tooltip" msgid="4842812921719153085">"ກົດປຸ່ມເປີດປິດຄ້າງໄວ້ເພື່ອເບິ່ງການຄວບຄຸມໃໝ່"</string>
     <string name="controls_menu_add" msgid="4447246119229920050">"ເພີ່ມການຄວບຄຸມ"</string>
     <string name="controls_menu_edit" msgid="890623986951347062">"ແກ້ໄຂການຄວບຄຸມ"</string>
+    <string name="media_output_title" msgid="115223550977351699">"ຫຼິ້ນມີເດຍໄປທີ່"</string>
 </resources>

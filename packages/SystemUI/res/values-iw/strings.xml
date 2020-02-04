@@ -1101,4 +1101,5 @@
     <string name="controls_added_tooltip" msgid="4842812921719153085">"ניתן ללחוץ על לחצן ההפעלה כדי להציג פקדים חדשים"</string>
     <string name="controls_menu_add" msgid="4447246119229920050">"הוספת פקדים"</string>
     <string name="controls_menu_edit" msgid="890623986951347062">"עריכת פקדים"</string>
+    <string name="media_output_title" msgid="115223550977351699">"הפעלת מדיה באמצעות"</string>
 </resources>

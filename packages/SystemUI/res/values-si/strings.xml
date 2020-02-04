@@ -1089,4 +1089,5 @@
     <string name="controls_added_tooltip" msgid="4842812921719153085">"නව පාලන බැලීමට බල බොත්තම අල්ලාගෙන සිටින්න"</string>
     <string name="controls_menu_add" msgid="4447246119229920050">"පාලන එක් කරන්න"</string>
     <string name="controls_menu_edit" msgid="890623986951347062">"පාලන සංස්කරණය කරන්න"</string>
+    <string name="media_output_title" msgid="115223550977351699">"මාධ්‍ය වාදනය කරන්න"</string>
 </resources>

@@ -1089,4 +1089,5 @@
     <string name="controls_added_tooltip" msgid="4842812921719153085">"Mantén pulsado el botón de encendido para ver los controles nuevos"</string>
     <string name="controls_menu_add" msgid="4447246119229920050">"Añadir controles"</string>
     <string name="controls_menu_edit" msgid="890623986951347062">"Editar controles"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Reproducir contenido multimedia en"</string>
 </resources>

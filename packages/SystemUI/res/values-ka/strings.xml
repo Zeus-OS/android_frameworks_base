@@ -1089,4 +1089,5 @@
     <string name="controls_added_tooltip" msgid="4842812921719153085">"ხანგრძლივად დააჭირეთ ჩართვის ღილაკს მართვის ახალი საშუალებების სანახავად"</string>
     <string name="controls_menu_add" msgid="4447246119229920050">"მართვის საშუალებების დამატება"</string>
     <string name="controls_menu_edit" msgid="890623986951347062">"მართვის საშუალებათა რედაქტირება"</string>
+    <string name="media_output_title" msgid="115223550977351699">"მედიის დაკვრა შემდეგზე"</string>
 </resources>

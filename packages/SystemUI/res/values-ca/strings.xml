@@ -1089,4 +1089,5 @@
     <string name="controls_added_tooltip" msgid="4842812921719153085">"Mantén premut el botó d\'engegada per veure controls nous"</string>
     <string name="controls_menu_add" msgid="4447246119229920050">"Afegeix controls"</string>
     <string name="controls_menu_edit" msgid="890623986951347062">"Edita els controls"</string>
+    <string name="media_output_title" msgid="115223550977351699">"Reprodueix el contingut multimèdia a"</string>
 </resources>
