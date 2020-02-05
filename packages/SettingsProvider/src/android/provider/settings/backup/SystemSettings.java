@@ -89,5 +89,6 @@ public class SystemSettings {
         Settings.System.NOTIFICATION_HEADERS,
         Settings.System.CENTER_NOTIFICATION_HEADERS,
         Settings.System.ACCENT_COLOR,
+        Settings.System.SCREENSHOT_SOUND,
     };
 }
