@@ -119,7 +119,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         R.drawable.fod_icon_rainbow_horn,
         R.drawable.fod_icon_shooky,
         R.drawable.fod_icon_spiral_blue,
-        R.drawable.fod_icon_sun_metro
+        R.drawable.fod_icon_sun_metro,
+        R.drawable.fod_icon_transparent
     };
 
     private IFingerprintInscreenCallback mFingerprintInscreenCallback =
