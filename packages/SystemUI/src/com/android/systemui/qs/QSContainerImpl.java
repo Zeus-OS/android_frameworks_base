@@ -150,6 +150,9 @@ public class QSContainerImpl extends FrameLayout implements
             getContext().getContentResolver().registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_ACCENT_HEADER_SWITCH), false,
             this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.STATUS_BAR_CUSTOM_HEADER), false,
+            this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -164,6 +167,7 @@ public class QSContainerImpl extends FrameLayout implements
                 UserHandle.USER_CURRENT);
         mIsAccentQsHeaderEnabled = isAccentQsHeaderEnabled();
         setBackgroundGradientVisibility(getResources().getConfiguration());
+        mHeaderImageEnabled = isHeaderImageEnabled();
 
         Drawable bg = mBackground.getBackground();
         if (bgAlpha < 255 ) {
@@ -268,9 +272,7 @@ public class QSContainerImpl extends FrameLayout implements
 
         if (mHeaderImageEnabled) {
             mStatusBarBackground.setBackgroundColor(Color.TRANSPARENT);
-        } else {
-            mStatusBarBackground.setBackgroundColor(Color.BLACK);
-        }
+        } 
     }
 
     /**
@@ -304,7 +306,7 @@ public class QSContainerImpl extends FrameLayout implements
     private void setBackgroundGradientVisibility(Configuration newConfig) {
 
         if (newConfig.orientation == ORIENTATION_LANDSCAPE) {
-            if(mIsAccentQsHeaderEnabled) {
+            if(mIsAccentQsHeaderEnabled && !isHeaderImageEnabled()) {
                 mBackgroundGradient.setVisibility(View.GONE);
                 mStatusBarBackground.setVisibility(View.GONE);
                 mBackgroundGradientAccent.setVisibility(View.INVISIBLE);
@@ -316,7 +318,7 @@ public class QSContainerImpl extends FrameLayout implements
                 mStatusBarBackground.setVisibility(View.INVISIBLE);
             }
         } else {
-            if(mIsAccentQsHeaderEnabled) {
+            if(mIsAccentQsHeaderEnabled && !isHeaderImageEnabled()) {
                 mBackgroundGradient.setVisibility(View.GONE);
                 mStatusBarBackground.setVisibility(View.GONE);
                 mBackgroundGradientAccent.setVisibility(mQsDisabled ? View.INVISIBLE : View.VISIBLE);
@@ -333,6 +335,11 @@ public class QSContainerImpl extends FrameLayout implements
     public boolean isAccentQsHeaderEnabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
             Settings.System.QS_ACCENT_HEADER_SWITCH, 1) == 1;
+    }
+
+    public boolean isHeaderImageEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.STATUS_BAR_CUSTOM_HEADER, 0) == 1;
     }
 
 
