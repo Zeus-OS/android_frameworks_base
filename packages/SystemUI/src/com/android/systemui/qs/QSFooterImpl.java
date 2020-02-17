@@ -65,6 +65,7 @@ import com.android.systemui.statusbar.phone.SettingsButton;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserInfoController.OnUserInfoChangedListener;
+import com.android.systemui.statusbar.policy.QSFooterNetworkTraffic;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -85,6 +86,8 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     private boolean mQsDisabled;
     private QSPanel mQsPanel;
     private QuickQSPanel mQuickQSPanel;
+    private QSFooterNetworkTraffic mNetworkTraffic;
+    private int mIsEnabled;
 
     private boolean mExpanded;
 
@@ -148,6 +151,8 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mSettingsContainer = findViewById(R.id.settings_button_container);
         mSettingsButton.setOnClickListener(this);
         mSettingsButton.setOnLongClickListener(this);
+
+        mNetworkTraffic = findViewById(R.id.networkTraffic);
 
         mRunningServicesButton = findViewById(R.id.running_services_button);
         mRunningServicesButton.setOnClickListener(this);
@@ -240,6 +245,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                 .addFloat(mEditContainer, "alpha", 0, 1)
                 .addFloat(mDragHandle, "alpha", 1, 0, 0)
                 .addFloat(mPageIndicator, "alpha", 0, 1)
+                .addFloat(mNetworkTraffic, "alpha", 0, 1)
                 .setStartDelay(0.15f)
                 .build();
     }
@@ -343,6 +349,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mMultiUserSwitch.setVisibility(isUserEnabled() ? (showUserSwitcher() ? View.VISIBLE : View.INVISIBLE) : View.GONE);
         mEditContainer.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
         mEdit.setVisibility(isEditEnabled() ? View.VISIBLE : View.GONE);
+        mNetworkTraffic.setVisibility(isNetworkTrafficInQsFooterEnabled() ? View.VISIBLE : View.GONE);
     }
 
     private boolean showUserSwitcher() {
@@ -356,6 +363,18 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
             mUserInfoController.removeCallback(this);
         }
     }
+
+    public boolean isNetworkTrafficInQsFooterEnabled() {
+        mIsEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.NETWORK_TRAFFIC_LOCATION, 0,
+            UserHandle.USER_CURRENT);
+
+        if(mIsEnabled == 2) {
+            return true;
+        }
+        return false;
+    }
+
 
     @Override
     public void setQSPanel(final QSPanel qsPanel, final QuickQSPanel quickQSPanel) {
