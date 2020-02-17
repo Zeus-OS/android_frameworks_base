@@ -451,10 +451,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private String getBatteryTemp() {
          String value = readOneLine(getContext().getResources().getString(
                      com.android.internal.R.string.config_battery_temp_path));
-        if(value != null) {
-            return String.format("%s", Integer.parseInt(value) / 10) + "\u2103";
-        }
-        return String.format("%s", 10 / 10) + "\u2103";
+        return String.format("%s", Integer.parseInt(value) / 10) + "\u2103";
     }
 
     private String getCPUTemp() {
@@ -469,13 +466,12 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         return value;
     }
 
-
     private String getGPUClock() {
          String value = readOneLine(getContext().getResources().getString(
                      com.android.internal.R.string.config_gpu_clock_path));
         return String.format("%s", Integer.parseInt(value)) + "Mhz";
     }
-
+    
     private static String readOneLine(String fname) {
         BufferedReader br;
         String line = null;
