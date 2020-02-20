@@ -395,6 +395,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 Settings.System.QS_SYSTEM_INFO, 0);
     }
 
+    public boolean isQsSystemInfoIconEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.QS_SYSTEM_INFO_ICON, 1) == 1;
+    }
+
     private void updateSystemInfoText() {
         if (mSystemInfoMode == 0) {
             mSystemInfoText.setVisibility(View.GONE);
@@ -402,7 +407,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             return;
         } else {
             mSystemInfoText.setVisibility(View.VISIBLE);
-            mSystemInfoIcon.setVisibility(View.VISIBLE);
+            if(isQsSystemInfoIconEnabled()) {
+                mSystemInfoIcon.setVisibility(View.VISIBLE);
+            } else {
+                mSystemInfoIcon.setVisibility(View.GONE);
+            }
         }
 
         switch (mSystemInfoMode) {
@@ -902,6 +911,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                     this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_SYS_BATTERY_MODE), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.QS_SYSTEM_INFO_ICON), false,
                     this, UserHandle.USER_ALL);
         }
 

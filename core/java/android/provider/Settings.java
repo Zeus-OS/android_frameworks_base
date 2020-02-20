@@ -3572,6 +3572,12 @@ public final class Settings {
         public static final String QS_SYSTEM_INFO = "qs_system_info";
 
         /**
+         * Shows system info icon
+         */
+        public static final String QS_SYSTEM_INFO_ICON = "qs_system_info_icon";
+
+
+        /**
          * Shows system info in QS OFF:0, BatteryMeter: 1 , BatteryRemaining: 2
          */
         public static final String QS_BATTERY_MODE = "qs_battery_mode";
