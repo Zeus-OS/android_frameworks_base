@@ -736,6 +736,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private static final int MSG_POWER_VERY_LONG_PRESS = 25;
     private static final int MSG_RINGER_TOGGLE_CHORD = 26;
     private static final int MSG_DISPATCH_VOLKEY_SKIP_TRACK = 52;
+    private static final int MSG_DISPATCH_VOLKEY_WITH_WAKE_LOCK = 28;
 
     // Lineage additions
     private static final int MSG_TOGGLE_TORCH = 100;
@@ -846,10 +847,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     mIsLongPress = true;
                     break;
                 case MSG_DISPATCH_VOLKEY_WITH_WAKE_LOCK: {
-                    KeyEvent event = (KeyEvent) msg.obj;
-                    dispatchMediaKeyWithWakeLockToAudioService(event);
+                    KeyEvent e = (KeyEvent) msg.obj;
+                    dispatchMediaKeyWithWakeLockToAudioService(e);
                     dispatchMediaKeyWithWakeLockToAudioService(
-                            KeyEvent.changeAction(event, KeyEvent.ACTION_UP));
+                            KeyEvent.changeAction(e, KeyEvent.ACTION_UP));
+                    break;
+                }
                 case MSG_DISPATCH_VOLKEY_SKIP_TRACK: {
                     sendSkipTrackEventToStatusBar(msg.arg1);
                     mVolumeMusicControlActive = true;
@@ -1971,19 +1974,25 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 closeApp();
                 break;
             case TORCH:
-                Utils.toggleCameraFlash();
+                ZenxUtils.toggleCameraFlash();
                 break;
             case SCREENSHOT:
                 takeScreenshot(TAKE_SCREENSHOT_FULLSCREEN);
                 break;
             case VOLUME_PANEL:
-                Utils.toggleVolumePanel(mContext);
+                ZenxUtils.toggleVolumePanel(mContext);
                 break;
             case CLEAR_ALL_NOTIFICATIONS:
-                Utils.clearAllNotifications();
+                ZenxUtils.clearAllNotifications();
                 break;
             case NOTIFICATIONS:
-                Utils.toggleNotifications();
+                ZenxUtils.toggleNotifications();
+                break;
+            case QS_PANEL:
+                ZenxUtils.toggleQsPanel();
+                break;
+            case RINGER_MODES:
+                ZenxUtils.toggleRingerModes(mContext);
                 break;
             default:
                 break;

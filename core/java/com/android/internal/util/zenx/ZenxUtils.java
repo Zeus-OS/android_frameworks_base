@@ -17,6 +17,7 @@
 package com.android.internal.util.zenx;
 
 import android.app.ActivityManager.StackInfo;
+import android.app.ActivityManagerNative;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -47,11 +48,13 @@ import android.hardware.input.InputManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.UserHandle;
+import android.os.Vibrator;
 import android.view.InputDevice;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.os.AsyncTask;
 import android.app.IActivityManager;
+import android.app.NotificationManager;
 import android.app.ActivityManager;
 import android.media.AudioManager;
 import android.hardware.Sensor;
@@ -62,6 +65,7 @@ import android.app.AlertDialog;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.content.pm.ResolveInfo;
+import android.util.Log;
 
 import android.content.om.IOverlayManager;
 import android.content.om.OverlayInfo;
@@ -71,12 +75,18 @@ import android.app.UiModeManager;
 import com.android.internal.R;
 import com.android.internal.statusbar.IStatusBarService;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
+import static android.content.Context.VIBRATOR_SERVICE;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 public class ZenxUtils {
+
+    private static final String TAG = "ZenxUtils";
+    private static final String SYSTEMUI_PACKAGE = "com.android.systemui";
 
     public static final String INTENT_SCREENSHOT = "action_take_screenshot";
     public static final String INTENT_REGION_SCREENSHOT = "action_take_region_screenshot";
@@ -241,6 +251,10 @@ public class ZenxUtils {
         FireActions.toggleNotifications();
     }
 
+    public static void toggleQsPanel() {
+        FireActions.toggleQsPanel();
+    }
+
     public static void sendKeycode(int keycode) {
         long when = SystemClock.uptimeMillis();
         final KeyEvent evDown = new KeyEvent(when, when, KeyEvent.ACTION_DOWN, keycode, 0,
@@ -306,6 +320,18 @@ public class ZenxUtils {
             if (service != null) {
                 try {
                     service.togglePanel();
+                } catch (RemoteException e) {
+                    // do nothing.
+                }
+            }
+        }
+
+        // Toggle qs panel
+        public static void toggleQsPanel() {
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                try {
+                    service.expandSettingsPanel(null);
                 } catch (RemoteException e) {
                     // do nothing.
                 }
@@ -589,5 +615,28 @@ public class ZenxUtils {
     public static void toggleVolumePanel(Context context) {
         AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         am.adjustVolume(AudioManager.ADJUST_SAME, AudioManager.FLAG_SHOW_UI);
+    }
+
+    public static void toggleRingerModes (Context context) {
+        AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        Vibrator mVibrator = (Vibrator) context.getSystemService(VIBRATOR_SERVICE);
+
+        switch (am.getRingerMode()) {
+            case AudioManager.RINGER_MODE_NORMAL:
+                if (mVibrator.hasVibrator()) {
+                    am.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+                }
+                break;
+            case AudioManager.RINGER_MODE_VIBRATE:
+                am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                NotificationManager notificationManager =
+                        (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+                notificationManager.setInterruptionFilter(
+                        NotificationManager.INTERRUPTION_FILTER_PRIORITY);
+                break;
+            case AudioManager.RINGER_MODE_SILENT:
+                am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+                break;
+        }
     }
 }
