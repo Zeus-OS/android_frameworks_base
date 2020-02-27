@@ -210,7 +210,7 @@ public class BatteryBarController extends LinearLayout {
                 mLocation = 0;
             }
 
-        if (isLocationValid(mLocation)) {
+        if (mLocation > 0 && isLocationValid(mLocation)) {
             removeBars();
             addBars();
         } else {
