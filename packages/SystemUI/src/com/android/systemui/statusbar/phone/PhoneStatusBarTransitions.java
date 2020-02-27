@@ -32,7 +32,8 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
     private final PhoneStatusBarView mView;
     private final float mIconAlphaWhenOpaque;
 
-    private View mLeftSide, mStatusIcons, mBattery, mCenterClock, mBatteryBar;
+    private View mLeftSide, mStatusIcons, mBattery, mCenterClock;
+    private View mBatteryBars[] = new View[2];
     private View mZenxLogo, mZenxLogoRight;
 
     private Animator mCurrentAnimation;
@@ -51,7 +52,8 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
         mCenterClock = mView.findViewById(R.id.center_clock);
         mZenxLogo = mView.findViewById(R.id.zenx_logo);
         mZenxLogoRight = mView.findViewById(R.id.zenx_logo_right);
-        mBatteryBar = mView.findViewById(R.id.battery_bar);
+        mBatteryBars[0] = mView.findViewById(R.id.battery_bar);
+        mBatteryBars[1] = mView.findViewById(R.id.battery_bar_1);
         applyModeBackground(-1, getMode(), false /*animate*/);
         applyMode(getMode(), false /*animate*/);
     }
@@ -98,7 +100,8 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
                     animateTransitionTo(mCenterClock, newAlphaBC),
                     animateTransitionTo(mZenxLogo, newAlpha),
                     animateTransitionTo(mZenxLogoRight, newAlpha),
-                    animateTransitionTo(mBatteryBar, newAlphaBC)
+                    animateTransitionTo(mBatteryBars[0], newAlphaBC),
+                    animateTransitionTo(mBatteryBars[1], newAlphaBC)
                     );
             if (isLightsOut(mode)) {
                 anims.setDuration(LIGHTS_OUT_DURATION);
@@ -112,7 +115,8 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
             mCenterClock.setAlpha(newAlphaBC);
             mZenxLogo.setAlpha(newAlpha);
             mZenxLogoRight.setAlpha(newAlpha);
-            mBatteryBar.setAlpha(newAlphaBC);
+            mBatteryBars[0].setAlpha(newAlphaBC);
+            mBatteryBars[1].setAlpha(newAlphaBC);
         }
     }
 }

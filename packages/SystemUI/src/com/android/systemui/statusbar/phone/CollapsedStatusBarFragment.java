@@ -90,7 +90,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private BatteryMeterView mBatteryMeterView;
     private StatusIconContainer mStatusIcons;
     private int mSignalClusterEndPadding = 0;
-    private View mBatteryBar;
+    private View mBatteryBars[] = new View[2];
 
     private class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
@@ -176,7 +176,8 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mRightClock = mStatusBar.findViewById(R.id.right_clock);
         mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);
         mZenxLogoRight = mStatusBar.findViewById(R.id.zenx_logo_right);
-        mBatteryBar = mStatusBar.findViewById(R.id.battery_bar);
+        mBatteryBars[0] = mStatusBar.findViewById(R.id.battery_bar);
+        mBatteryBars[1] = mStatusBar.findViewById(R.id.battery_bar_1);
         showSystemIconArea(false);
         initEmergencyCryptkeeperText();
         animateHide(mClockView, false, false);
@@ -326,7 +327,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         }
         animateHide(mSystemIconArea, animate, true);
         animateHide(mZenxLogoRight, animate, true);
-        animateHide(mBatteryBar, animate);
+        for (View batteryBar: mBatteryBars) {
+            animateHide(batteryBar, animate, true);
+        }
     }
 
     public void showSystemIconArea(boolean animate) {
@@ -336,7 +339,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         }
         animateShow(mSystemIconArea, animate);
         animateShow(mZenxLogoRight, animate);
-        animateShow(mBatteryBar, animate);
+        for (View batteryBar: mBatteryBars) {
+            animateShow(batteryBar, animate);
+        }
     }
 
 /*    public void hideClock(boolean animate) {
