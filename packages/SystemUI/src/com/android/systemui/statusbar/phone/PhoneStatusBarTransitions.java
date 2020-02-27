@@ -32,7 +32,7 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
     private final PhoneStatusBarView mView;
     private final float mIconAlphaWhenOpaque;
 
-    private View mLeftSide, mStatusIcons, mBattery, mCenterClock;
+    private View mLeftSide, mStatusIcons, mBattery, mCenterClock, mBatteryBar;
     private View mZenxLogo, mZenxLogoRight;
 
     private Animator mCurrentAnimation;
@@ -51,6 +51,7 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
         mCenterClock = mView.findViewById(R.id.center_clock);
         mZenxLogo = mView.findViewById(R.id.zenx_logo);
         mZenxLogoRight = mView.findViewById(R.id.zenx_logo_right);
+        mBatteryBar = mView.findViewById(R.id.battery_bar);
         applyModeBackground(-1, getMode(), false /*animate*/);
         applyMode(getMode(), false /*animate*/);
     }
@@ -96,7 +97,8 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
 		            animateTransitionTo(mBattery, newAlphaBC),
                     animateTransitionTo(mCenterClock, newAlphaBC),
                     animateTransitionTo(mZenxLogo, newAlpha),
-                    animateTransitionTo(mZenxLogoRight, newAlpha)
+                    animateTransitionTo(mZenxLogoRight, newAlpha),
+                    animateTransitionTo(mBatteryBar, newAlphaBC)
                     );
             if (isLightsOut(mode)) {
                 anims.setDuration(LIGHTS_OUT_DURATION);
@@ -110,6 +112,7 @@ public final class PhoneStatusBarTransitions extends BarTransitions {
             mCenterClock.setAlpha(newAlphaBC);
             mZenxLogo.setAlpha(newAlpha);
             mZenxLogoRight.setAlpha(newAlpha);
+            mBatteryBar.setAlpha(newAlphaBC);
         }
     }
 }
