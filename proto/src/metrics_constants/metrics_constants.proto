@@ -7438,5 +7438,8 @@ message MetricsEvent {
 
     // ZenX-OS
     ZENX_SETTINGS = 1990;
+
+    // Panel for Mobile Data
+    PANEL_MOBILE_DATA = 9997;
   }
 }
