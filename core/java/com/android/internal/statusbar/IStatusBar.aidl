@@ -186,4 +186,5 @@ oneway interface IStatusBar
      * Zenx
      */
     void toggleCameraFlash();
+    void killForegroundApp();
 }
