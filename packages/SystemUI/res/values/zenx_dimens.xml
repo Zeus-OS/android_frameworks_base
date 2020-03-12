@@ -116,6 +116,6 @@
     <dimen name="qs_temperatur_icon_size">16sp</dimen>
 
         <!-- The width/height of the charging indicator view on keyguard. -->
-    <dimen name="keyguard_charging_indication_height">60dp</dimen>
-    <dimen name="keyguard_charging_indication_width">32dp</dimen>
+    <dimen name="keyguard_charging_indication_height">96dp</dimen>
+    <dimen name="keyguard_charging_indication_width">68dp</dimen>
 </resources>
