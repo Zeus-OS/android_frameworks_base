@@ -233,4 +233,8 @@
     <string name="hp_buddy_right">Right only</string>
     <string name="hp_buddy_center">Both</string>
     <string name="hp_buddy_not_connected">Connect your headphones</string>
+
+    <!-- Alert slide extras -->
+    <string name="volume_ringer_priority_only">Priority</string>
+    <string name="volume_ringer_alarms_only">Alarms</string>
 </resources>
