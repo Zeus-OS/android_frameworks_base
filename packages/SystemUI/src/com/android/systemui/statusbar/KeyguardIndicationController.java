@@ -447,7 +447,7 @@ public class KeyguardIndicationController implements StateListener,
 
         if (mVisible) {
             final boolean showBatteryBar = Settings.System.getInt(mContext.getContentResolver(),
-                    KEYGUARD_SHOW_BATTERY_BAR, 1) == 1;
+                    KEYGUARD_SHOW_BATTERY_BAR, 0) == 1;
             final boolean showBatteryBarAlways = Settings.System.getInt(mContext.getContentResolver(),
                     KEYGUARD_SHOW_BATTERY_BAR_ALWAYS, 0) == 1;
             int batteryBarColor = Settings.System.getInt(mContext.getContentResolver(),
@@ -476,7 +476,6 @@ public class KeyguardIndicationController implements StateListener,
                     if (showBatteryBar) {
                         mBatteryBar.setVisibility(View.VISIBLE);
                         mBatteryBar.setBatteryPercent(mBatteryLevel);
-                        mBatteryBar.setBarColor(Color.WHITE);
                     }
                 } else {
                     // Use the high voltage symbol ⚡ (u26A1 unicode) but prevent the system
@@ -538,7 +537,6 @@ public class KeyguardIndicationController implements StateListener,
                     mBatteryBar.setVisibility(View.VISIBLE);
                     mBatteryBar.setBatteryPercent(mBatteryLevel);
                     // NOTE: Following indication text color
-                    mBatteryBar.setBarColor(mTextView.getCurrentTextColor());
                 }
             } else if (!TextUtils.isEmpty(trustManagedIndication)
                     && mKeyguardUpdateMonitor.getUserTrustIsManaged(userId)

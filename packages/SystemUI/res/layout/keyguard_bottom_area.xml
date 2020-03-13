@@ -44,16 +44,6 @@
             android:visibility="gone" />
 
         <com.android.systemui.statusbar.phone.KeyguardIndicationTextView
-            android:id="@+id/keyguard_indication_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingStart="@dimen/keyguard_indication_text_padding"
-            android:paddingEnd="@dimen/keyguard_indication_text_padding"
-            android:textAppearance="@style/TextAppearance.Keyguard.BottomArea"
-            android:accessibilityLiveRegion="polite"/>
-
-        <com.android.systemui.statusbar.phone.KeyguardIndicationTextView
             android:id="@+id/keyguard_indication_enterprise_disclosure"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -63,23 +53,37 @@
             android:textAppearance="@style/TextAppearance.Keyguard.BottomArea"
             android:alpha=".54"
             android:visibility="gone"/>
-
-  <com.android.systemui.omni.BatteryBarView
+            
+        <com.android.systemui.omni.BatteryBarView
             android:id="@+id/battery_bar_view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/battery_bar_view_height"
-            android:background="@drawable/battery_bar_view_bg"
+            android:background="@color/transparent"
             android:visibility="gone"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="5dp" >
+            android:gravity="center"
+            android:layout_marginStart="42dp"
+            android:layout_marginEnd="42dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="3dp" >
 
             <ImageView
                 android:id="@+id/battery_bar_view_fg"
                 android:layout_width="0dp"
+                android:gravity="center"
                 android:layout_height="@dimen/battery_bar_view_height"
                 android:src="@drawable/battery_bar_view_fg"/>
         </com.android.systemui.omni.BatteryBarView>
+
+        <com.android.systemui.statusbar.phone.KeyguardIndicationTextView
+            android:id="@+id/keyguard_indication_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="@dimen/keyguard_indication_text_padding"
+            android:paddingEnd="@dimen/keyguard_indication_text_padding"
+            android:textAppearance="@style/TextAppearance.Keyguard.BottomArea"
+            android:accessibilityLiveRegion="polite"/>
+
     </LinearLayout>
 
     <FrameLayout
