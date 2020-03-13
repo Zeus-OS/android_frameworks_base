@@ -5362,6 +5362,20 @@ public final class Settings {
          */
          public static final String NETWORK_TRAFFIC_FONT_SIZE = "network_traffic_font_size";
 
+        /**
+         * whether to enable or disable battery bar on lock screen
+         *
+         * @hide
+         */
+        public static final String SYSUI_KEYGUARD_SHOW_BATTERY_BAR = "sysui_keyguard_show_battery_bar";
+
+        /**
+         * whether to always show battery bar on lock screen
+         *
+         * @hide
+         */
+        public static final String SYSUI_KEYGUARD_SHOW_BATTERY_BAR_ALWAYS = "sysui_keyguard_show_battery_bar_always";
+
          /**
          * Network traffic layout
          * @hide
