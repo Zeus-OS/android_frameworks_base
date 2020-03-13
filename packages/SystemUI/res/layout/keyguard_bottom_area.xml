@@ -64,7 +64,7 @@
             android:alpha=".54"
             android:visibility="gone"/>
 
-        <com.android.systemui.omni.BatteryBarView
+  <com.android.systemui.omni.BatteryBarView
             android:id="@+id/battery_bar_view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/battery_bar_view_height"
