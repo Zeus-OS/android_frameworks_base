@@ -545,6 +545,13 @@ public class KeyguardIndicationController implements StateListener,
             } else {
                 mTextView.switchIndication(mRestingIndication);
             }
+            // we may want to overwrite things set above
+            if (mPowerPluggedIn) {
+                if (showBatteryBar && showBatteryBarAlways) {
+                    mBatteryBar.setVisibility(View.VISIBLE);
+                    mBatteryBar.setBatteryPercent(mBatteryLevel);
+                }
+            }
             mTextView.setTextColor(isError ? Utils.getColorError(mContext)
                     : mInitialTextColorState);
             updateChargingIndication();
