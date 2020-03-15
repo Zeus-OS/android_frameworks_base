@@ -544,6 +544,13 @@ public class KeyguardIndicationController implements StateListener,
                 mTextView.switchIndication(mRestingIndication);
                 mTextView.setTextColor(mInitialTextColorState);
             }
+            // we may want to overwrite things set above
+            if (mPowerPluggedIn) {
+                if (showBatteryBar && showBatteryBarAlways) {
+                    mBatteryBar.setVisibility(View.VISIBLE);
+                    mBatteryBar.setBatteryPercent(mBatteryLevel);
+                }
+            }
             updateChargingIndication();
         }
     }
