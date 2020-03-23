@@ -102,6 +102,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
     private Uri mKeyguardSliceUri;
     @VisibleForTesting
     TextView mTitle;
+    TextView mSubTitle;
     private RelativeLayout mRowContainer;
     private Row mRow;
     private int mTextColor;
@@ -122,6 +123,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
     private final int mRowPadding;
     private int mRowTextSize;
     private float mRowWithHeaderTextSize;
+    private float mHeaderTextSize;
 
     @Inject
     public KeyguardSliceView(@Named(VIEW_CONTEXT) Context context, AttributeSet attrs,
@@ -152,6 +154,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
     protected void onFinishInflate() {
         super.onFinishInflate();
         mTitle = findViewById(R.id.title);
+        mSubTitle = findViewById(R.id.subTitle);
         mRowContainer = findViewById(R.id.row_maincenter);
         mRow = findViewById(R.id.row);
         mTextColor = Utils.getColorAttrDefaultColor(mContext, R.attr.wallpaperTextColor);
@@ -161,6 +164,8 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
                 R.dimen.lock_date_font_size_21);
         mRowWithHeaderTextSize = mContext.getResources().getDimensionPixelSize(
                 R.dimen.header_row_font_size);
+        mHeaderTextSize = mContext.getResources().getDimensionPixelSize(
+                R.dimen.header_font_size);
         mTitle.setOnClickListener(this);
         mTitle.setBreakStrategy(LineBreaker.BREAK_STRATEGY_BALANCED);
     }
@@ -201,7 +206,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
 
     private int getLockDateSize() {
         return Settings.System.getInt(mContext.getContentResolver(),
-               Settings.System.LOCKDATE_FONT_SIZE, 14);
+               Settings.System.LOCKDATE_FONT_SIZE, 21);
     }
 
     /**
@@ -239,6 +244,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
         }
         if (!mHasHeader) {
             mTitle.setVisibility(GONE);
+            mSubTitle.setVisibility(GONE);
         } else {
             mTitle.setVisibility(VISIBLE);
 
@@ -246,6 +252,16 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
             SliceItem mainTitle = header.getTitleItem();
             CharSequence title = mainTitle != null ? mainTitle.getText() : null;
             mTitle.setText(title);
+            mTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mHeaderTextSize);
+
+            SliceItem subTitle = header.getSubtitleItem();
+            if (subTitle != null) {
+                mSubTitle.setVisibility(VISIBLE);
+                CharSequence subTitleText = subTitle.getText();
+                mSubTitle.setText(subTitleText);
+                mSubTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, mRowWithHeaderTextSize);
+            }
+
             if (header.getPrimaryAction() != null
                     && header.getPrimaryAction().getAction() != null) {
                 mClickActions.put(mTitle, header.getPrimaryAction().getAction());
@@ -284,8 +300,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
             final SliceItem titleItem = rc.getTitleItem();
             button.setText(titleItem == null ? null : titleItem.getText());
             button.setContentDescription(rc.getContentDescription());
-            button.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                    mHasHeader ? mRowWithHeaderTextSize : mRowTextSize);
+            button.setTextSize(TypedValue.COMPLEX_UNIT_PX, mRowTextSize);
 
             Drawable iconDrawable = null;
             SliceItem icon = SliceQuery.find(item.getSlice(),
