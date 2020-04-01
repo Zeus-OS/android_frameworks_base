@@ -200,10 +200,10 @@
     </LinearLayout>
     <View
         android:id="@+id/qs_drag_handle_view"
-        android:layout_width="24dp"
+        android:layout_width="48dp"
         android:layout_height="3dp"
-        android:layout_marginBottom="12dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         android:layout_gravity="center_horizontal|bottom"
         android:background="@drawable/qs_footer_drag_handle" />
 
