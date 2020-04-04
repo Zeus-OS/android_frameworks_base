@@ -21,6 +21,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.admin.DevicePolicyManager;
 import android.content.Context;
+import android.content.ContentResolver;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -99,7 +101,13 @@ public class KeyguardIndicationController implements StateListener,
     private KeyguardIndicationTextView mTextView;
     private KeyguardIndicationTextView mDisclosure;
     private LottieAnimationView mChargingIndicationView;
-    private boolean mChargingIndication = true;
+    private LottieAnimationView mChargingIndicationBat;
+    private LottieAnimationView mChargingIndicationDrop;
+    private LottieAnimationView mChargingIndicationExplosion;
+    private LottieAnimationView mChargingIndicationWater;
+    private LottieAnimationView mChargingIndicationColorful;
+    private LottieAnimationView mChargingIndicationProgress;
+    private int mChargingIndication;
     private final UserManager mUserManager;
     private final IBatteryStats mBatteryInfo;
     private final SettableWakeLock mWakeLock;
@@ -209,13 +217,25 @@ public class KeyguardIndicationController implements StateListener,
     }
 
     public void setIndicationArea(ViewGroup indicationArea) {
-      mChargingIndicationView = (LottieAnimationView) indicationArea.findViewById(
-              R.id.charging_indication);
         mIndicationArea = indicationArea;
         mTextView = indicationArea.findViewById(R.id.keyguard_indication_text);
         mInitialTextColorState = mTextView != null ?
                 mTextView.getTextColors() : ColorStateList.valueOf(Color.WHITE);
         mDisclosure = indicationArea.findViewById(R.id.keyguard_indication_enterprise_disclosure);
+        mChargingIndicationView = (LottieAnimationView) indicationArea.findViewById(
+                R.id.charging_indication);
+        mChargingIndicationBat = (LottieAnimationView) indicationArea.findViewById(
+              R.id.charging_indication_1);
+        mChargingIndicationDrop = (LottieAnimationView) indicationArea.findViewById(
+              R.id.charging_indication_2);
+        mChargingIndicationExplosion = (LottieAnimationView) indicationArea.findViewById(
+              R.id.charging_indication_3);
+        mChargingIndicationWater = (LottieAnimationView) indicationArea.findViewById(
+              R.id.charging_indication_4);
+        mChargingIndicationColorful = (LottieAnimationView) indicationArea.findViewById(
+              R.id.charging_indication_5);
+        mChargingIndicationProgress = (LottieAnimationView) indicationArea.findViewById(
+              R.id.charging_indication_6);
         updateIndication(false /* animate */);
     }
 
@@ -495,17 +515,102 @@ public class KeyguardIndicationController implements StateListener,
         }
     }
 
-    public void updateChargingIndication(boolean visible) {
-        mChargingIndication = visible;
-    }
+    public void updateChargingIndication() {
+        final ContentResolver resolver = mContext.getContentResolver();
+        mChargingIndication = Settings.System.getIntForUser(resolver,
+                Settings.System.LOCKSCREEN_CHARGING_ANIMATION, 1, UserHandle.USER_CURRENT);
 
-    private void updateChargingIndication() {
-        if (mChargingIndication && !mDozing && mPowerPluggedIn) {
-            mChargingIndicationView.setVisibility(View.VISIBLE);
-            mChargingIndicationView.playAnimation();
+        if (mPowerPluggedIn) {
+            switch (mChargingIndication) {
+                case 0: // hidden
+                    mChargingIndicationView.setVisibility(View.GONE);
+                    mChargingIndicationBat.setVisibility(View.GONE);
+                    mChargingIndicationDrop.setVisibility(View.GONE);
+                    mChargingIndicationExplosion.setVisibility(View.GONE);
+                    mChargingIndicationWater.setVisibility(View.GONE);
+                    mChargingIndicationColorful.setVisibility(View.GONE);
+                    mChargingIndicationProgress.setVisibility(View.GONE);
+                    break;
+                case 1: // Flash
+                    mChargingIndicationView.setVisibility(View.VISIBLE);
+                    mChargingIndicationView.playAnimation();
+                    mChargingIndicationBat.setVisibility(View.GONE);
+                    mChargingIndicationDrop.setVisibility(View.GONE);
+                    mChargingIndicationExplosion.setVisibility(View.GONE);
+                    mChargingIndicationWater.setVisibility(View.GONE);
+                    mChargingIndicationColorful.setVisibility(View.GONE);
+                    mChargingIndicationProgress.setVisibility(View.GONE);
+                    break;
+                case 2: // Battery
+                    mChargingIndicationBat.setVisibility(View.VISIBLE);
+                    mChargingIndicationBat.playAnimation();
+                    mChargingIndicationView.setVisibility(View.GONE);
+                    mChargingIndicationDrop.setVisibility(View.GONE);
+                    mChargingIndicationExplosion.setVisibility(View.GONE);
+                    mChargingIndicationWater.setVisibility(View.GONE);
+                    mChargingIndicationColorful.setVisibility(View.GONE);
+                    mChargingIndicationProgress.setVisibility(View.GONE);
+                    break;
+                case 3: // Drop
+                    mChargingIndicationDrop.setVisibility(View.VISIBLE);
+                    mChargingIndicationDrop.playAnimation();
+                    mChargingIndicationView.setVisibility(View.GONE);
+                    mChargingIndicationBat.setVisibility(View.GONE);
+                    mChargingIndicationExplosion.setVisibility(View.GONE);
+                    mChargingIndicationWater.setVisibility(View.GONE);
+                    mChargingIndicationColorful.setVisibility(View.GONE);
+                    mChargingIndicationProgress.setVisibility(View.GONE);
+                    break;
+                case 4: // Explosion
+                    mChargingIndicationExplosion.setVisibility(View.VISIBLE);
+                    mChargingIndicationExplosion.playAnimation();
+                    mChargingIndicationView.setVisibility(View.GONE);
+                    mChargingIndicationBat.setVisibility(View.GONE);
+                    mChargingIndicationDrop.setVisibility(View.GONE);
+                    mChargingIndicationWater.setVisibility(View.GONE);
+                    mChargingIndicationColorful.setVisibility(View.GONE);
+                    mChargingIndicationProgress.setVisibility(View.GONE);
+                    break;
+                case 5: // Water
+                    mChargingIndicationWater.setVisibility(View.VISIBLE);
+                    mChargingIndicationWater.playAnimation();
+                    mChargingIndicationView.setVisibility(View.GONE);
+                    mChargingIndicationBat.setVisibility(View.GONE);
+                    mChargingIndicationDrop.setVisibility(View.GONE);
+                    mChargingIndicationExplosion.setVisibility(View.GONE);
+                    mChargingIndicationColorful.setVisibility(View.GONE);
+                    mChargingIndicationProgress.setVisibility(View.GONE);
+                    break;
+                case 6: // Colorful
+                    mChargingIndicationWater.setVisibility(View.GONE);
+                    mChargingIndicationView.setVisibility(View.GONE);
+                    mChargingIndicationBat.setVisibility(View.GONE);
+                    mChargingIndicationDrop.setVisibility(View.GONE);
+                    mChargingIndicationExplosion.setVisibility(View.GONE);
+                    mChargingIndicationColorful.setVisibility(View.VISIBLE);
+                    mChargingIndicationColorful.playAnimation();
+                    mChargingIndicationProgress.setVisibility(View.GONE);
+                    break;
+                case 7: // Progress
+                    mChargingIndicationWater.setVisibility(View.GONE);
+                    mChargingIndicationView.setVisibility(View.GONE);
+                    mChargingIndicationBat.setVisibility(View.GONE);
+                    mChargingIndicationDrop.setVisibility(View.GONE);
+                    mChargingIndicationExplosion.setVisibility(View.GONE);
+                    mChargingIndicationColorful.setVisibility(View.GONE);
+                    mChargingIndicationProgress.setVisibility(View.VISIBLE);
+                    mChargingIndicationProgress.playAnimation();
+                    break;
+            }
         } else {
             mChargingIndicationView.setVisibility(View.GONE);
-        }
+            mChargingIndicationBat.setVisibility(View.GONE);
+            mChargingIndicationDrop.setVisibility(View.GONE);
+            mChargingIndicationExplosion.setVisibility(View.GONE);
+            mChargingIndicationWater.setVisibility(View.GONE);
+            mChargingIndicationColorful.setVisibility(View.GONE);
+            mChargingIndicationProgress.setVisibility(View.GONE);
+	    }
     }
 
     // animates textView - textView moves up and bounces down
