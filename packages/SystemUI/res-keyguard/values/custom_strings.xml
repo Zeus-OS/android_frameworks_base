@@ -30,5 +30,6 @@
     <string name="clock_title_two_line_digital" translatable="false">Vertical</string>
     <string name="clock_title_one_line_digital" translatable="false">Digital</string>
     <string name="clock_title_samsung" translatable="false">Samsung</string>
+    <string name="clock_title_samsung_accent" translatable="false">Samsung (Colored)</string>
 
 </resources>
