@@ -7302,6 +7302,19 @@ public final class Settings {
                 ANY_INTEGER_VALIDATOR;
 
         /**
+          * Whether cool divider in lockscreen shows
+          * by.tikkiX2
+          * @hide
+          */
+         public static final String SYNTHOS_LOCK_COOL_DIVIDER_SHOW = "synthos_lock_cool_divider_show";
+
+          /**
+           * Whether show/hide things in volume panel by.tikkiX2
+           * @hide
+           */
+          public static final String SYNTHOS_HIDE_THINGS_VOLUMEPANEL = "synthos_hide_things_volumepanel";
+
+        /*
         * Ambient Image
         * by.tikkiX2
         * @hide

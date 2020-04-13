@@ -66,6 +66,7 @@
 
 
         <LinearLayout
+            android:id="@+id/things"
             android:layout_width="@dimen/volume_dialog_ringer_size"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/volume_dialog_spacer"
