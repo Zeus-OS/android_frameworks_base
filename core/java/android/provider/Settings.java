@@ -7269,6 +7269,33 @@ public final class Settings {
         */
         public static final String SYNTHOS_VISUALIZER_QSPANEL = "synthos_visualizer_qspanel";
 
+          /**
+           * Whether show/hide things in volume panel by.tikkiX2
+           * @hide
+           */
+          public static final String SYNTHOS_HIDE_THINGS_VOLUMEPANEL = "synthos_hide_things_volumepanel";
+
+        /*
+        * Ambient Image
+        * by.tikkiX2
+        * @hide
+        */
+        public static final String SYNTHOS_AMBIENT_IMAGE = "synthos_ambient_image";
+
+        public static final String SYNTHOS_AMBIENT_CUSTOM_IMAGE = "synthos_ambient_custom_image";
+
+        /**
+        * Ambient Video
+        * by.tikkiX2
+        * @hide
+        */
+        public static final String SYNTHOS_AMBIENT_VIDEO = "synthos_ambient_video";
+
+        public static final String SYNTHOS_AMBIENT_CUSTOM_VIDEO = "synthos_ambient_custom_video";
+
+        public static final String SYNTHOS_AMBIENT_VIDEO_LOOPING = "synthos_ambient_video_looping";
+
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
