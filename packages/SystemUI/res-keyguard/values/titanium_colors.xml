@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (c) 2019 TitaniumOS
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+-->
+<resources>
+
+    <color name="binary_clock_dot_color">#ffffff</color>
+    <color name="binary_clock_empty_dot_color">#ffffff</color>
+    <color name="binary_clock_ambient_dot_color">#ffffff</color>
+    <color name="binary_clock_ambient_empty_dot_color">#ffffff</color>
+
+    <!-- Date styles requires clock -->
+    <color name="date_style_system_bg">@*android:color/background_material_dark</color>
+    <color name="date_style_system_accent_follow">@*android:color/transparent</color>
+
+    <!-- Custom Analog clocks -->
+    <color name="analog_clock_border_color">#212121</color>
+    <color name="analog_clock_face_color">#FFFFFF</color>
+    <color name="analog_clock_hand_hour_color">@*android:color/accent_device_default_light</color>
+    <color name="analog_clock_hand_minute_color">#212121</color>
+    <color name="analog_clock_hour_color">#ff0000</color>
+    <color name="analog_clock_minute_color">#ffffff</color>
+    <color name="analog_clock_bg_color">#303030</color>
+    <color name="custom_text_clock_top_color">@*android:color/accent_device_default_light</color>
+
+</resources>
