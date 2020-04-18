@@ -7130,6 +7130,14 @@ public final class Settings {
         public static final String QS_TILE_STYLE = "qs_tile_style";
 
         /**
+         * Controls whether to show R style notification headers
+         * @hide
+         */
+        public static final String NOTIFICATION_HEADERS = "notification_headers";
+
+        private static final Validator NOTIFICATION_HEADERS_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -7306,6 +7314,7 @@ public final class Settings {
             DATA_DISABLED_ICON,
             VOWIFI_ICON,
             VOWIFI_ICON_STYLE,
+            NOTIFICATION_HEADERS,
         };
 
         /**
@@ -7791,6 +7800,7 @@ public final class Settings {
             VALIDATORS.put(DATA_DISABLED_ICON, DATA_DISABLED_ICON_VALIDATOR);
             VALIDATORS.put(VOWIFI_ICON, VOWIFI_ICON_VALIDATOR);
             VALIDATORS.put(VOWIFI_ICON_STYLE, VOWIFI_ICON_STYLE_VALIDATOR);
+            VALIDATORS.put(NOTIFICATION_HEADERS, NOTIFICATION_HEADERS_VALIDATOR);
         }
 
         /**
