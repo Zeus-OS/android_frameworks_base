@@ -14,8 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="120dp"
-            android:layout_marginRight="120dp"
+            android:layout_marginLeft="42dp"
+            android:layout_marginRight="42dp"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             android:layout_alignParentTop="true">
@@ -35,17 +35,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:format12Hour="EEE, MMM d"
-                android:format24Hour="EEE, MMM d"
+                android:format12Hour="EEEE, d. MMMM"
+                android:format24Hour="EEEE, d. MMMM"
                 android:textColor="?attr/wallpaperTextColor"
                 android:theme="@style/TextAppearance.Keyguard"
                 android:fontFamily="@*android:string/config_bodyFontFamily"
-                android:textSize="14sp"
+                android:textSize="21sp"
                 android:layout_weight="1"
                 android:letterSpacing="0.25"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:alpha="0.85"
-                android:paddingTop="15dp" />
+                android:paddingTop="28dp" />
 
             <TextClock
                 android:id="@+id/clock"
@@ -60,7 +60,7 @@
                 android:fontFamily="@*android:string/config_headlineFontFamilyMedium"
                 android:letterSpacing="0.3"
                 android:textColor="?attr/wallpaperTextColor"
-                android:textSize="42sp" />
+                android:textSize="64sp" />
 
             <View
                 android:id="@+id/bottomLine"
