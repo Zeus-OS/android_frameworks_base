@@ -154,4 +154,101 @@
     <string name="clock_title_default" msgid="6342735240617459864">"Standard"</string>
     <string name="clock_title_bubble" msgid="2204559396790593213">"Bubble"</string>
     <string name="clock_title_analog" msgid="8409262532900918273">"Analog"</string>
+        <!-- Time displayed on typographic clock face, which displays the time in words.
+             Example:
+
+                 It's
+                 Four
+                 Twenty
+                 Nine
+
+         This string requires two arguments: the first in the hours of the time and
+         the second is the minutes of the time. The hours string is obtained from
+         string-array type_clock_hours below and the minutes string is obtained
+         from string-array type_clock_minutes below.
+
+    [CHAR LIMIT=8] -->
+    <plurals name="type_clock_header">
+        <item quantity="one"><annotation name="color">Es ist</annotation>\n^1\n^2</item>
+        <item quantity="few"><annotation name="color">Es ist</annotation>\n^1\n^2</item>
+        <item quantity="other"><annotation name="color">Es ist</annotation>\n^1\n^2</item>
+    </plurals>
+
+    <!-- Hour displayed in words on the typographic clock face. [CHAR LIMIT=12] -->
+    <string-array name="type_clock_hours">
+        <item>Zwölf</item>
+        <item>Ein Uhr</item>
+        <item>Zwei Uhr</item>
+        <item>Drei Uhr</item>
+        <item>Vier Uhr</item>
+        <item>Fünf Uhr</item>
+        <item>Sechs Uhr</item>
+        <item>Sieben Uhr</item>
+        <item>Acht Uhr</item>
+        <item>Neun Uhr</item>
+        <item>Zehn Uhr</item>
+        <item>Elf Uhr</item>
+    </string-array>
+
+  <string-array name="type_clock_minutes">
+      <item>"Eins"</item>
+      <item>"Zwei"</item>
+      <item>"Drei"</item>
+      <item>"Vier"</item>
+      <item>"Fünf"</item>
+      <item>"Sechs"</item>
+      <item>"Sieben"</item>
+      <item>"Acht"</item>
+      <item>"Neun"</item>
+      <item>"Zehn"</item>
+      <item>"Elf"</item>
+      <item>"Zwölf"</item>
+      <item>"Dreizehn"</item>
+      <item>"Vierzehn"</item>
+      <item>"Fünfzehn"</item>
+      <item>"Sechzehn"</item>
+      <item>"Siebzehn"</item>
+      <item>"Achtzehn"</item>
+      <item>"Neunzehn"</item>
+      <item>"Zwanzig"</item>
+      <item>"Einund-\nzwanzig"</item>
+      <item>"Zweiund-\nzwanzig"</item>
+      <item>"Dreiund-\nzwanzig"</item>
+      <item>"Vierund-\nzwanzig"</item>
+      <item>"Fünfund-\nzwanzig"</item>
+      <item>"Sechsund-\nzwanzig"</item>
+      <item>"Siebenund-\nzwanzig"</item>
+      <item>"Achtund-\nzwanzig"</item>
+      <item>"Neunund-\nzwanzig"</item>
+      <item>"Dreißig"</item>
+      <item>"Einund-\ndreißig"</item>
+      <item>"Zweiund-\ndreißig"</item>
+      <item>"Dreiund-\ndreißig"</item>
+      <item>"Vierund-\ndreißig"</item>
+      <item>"Fünfund-\ndreißig"</item>
+      <item>"Sechsund-\ndreißig"</item>
+      <item>"Siebenund-\ndreißig"</item>
+      <item>"Achtund-\ndreißig"</item>
+      <item>"Neunund-\ndreißig"</item>
+      <item>"Vierzig"</item>
+      <item>"Einund-\nvierzig"</item>
+      <item>"Zweiund-\nvierzig"</item>
+      <item>"Dreiund-\nvierzig"</item>
+      <item>"Vierund-\nvierzig"</item>
+      <item>"Fünfund-\nvierzig"</item>
+      <item>"Sechsund-\nvierzig"</item>
+      <item>"Siebenund-\nvierzig"</item>
+      <item>"Achtund-\nvierzig"</item>
+      <item>"Neunund-\nvierzig"</item>
+      <item>"Fünfzig"</item>
+      <item>"Einund-\nfünfzig"</item>
+      <item>"Zweiund-\nfünfzig"</item>
+      <item>"Dreiund-\nfünfzig"</item>
+      <item>"Vierund-\nfünfzig"</item>
+      <item>"Fünfund-\nfünfzig"</item>
+      <item>"Sechsund-\nfünfzig"</item>
+      <item>"Siebenund-\nfünfzig"</item>
+      <item>"Achtund-\nfünfzig"</item>
+      <item>"Neunund-\nfünfzig"</item>
+  </string-array>
 </resources>
