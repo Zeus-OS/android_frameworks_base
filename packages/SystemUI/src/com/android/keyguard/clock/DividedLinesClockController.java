@@ -28,11 +28,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextClock;
 import android.widget.TextView;
+import android.content.Context;
 
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
+import com.android.internal.util.zenx.ZenxUtils;
 
 import java.util.TimeZone;
 
@@ -85,6 +87,8 @@ public class DividedLinesClockController implements ClockPlugin {
     private View mTopLine;
     private View mBottomLine;
 
+    private Context mContext;
+
     /**
      * Create a DefaultClockController instance.
      *
@@ -93,10 +97,11 @@ public class DividedLinesClockController implements ClockPlugin {
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     public DividedLinesClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mColorExtractor = colorExtractor;
+        mContext = context;
     }
 
     private void createViews() {
@@ -104,7 +109,9 @@ public class DividedLinesClockController implements ClockPlugin {
                 .inflate(R.layout.divided_lines_clock, null);
         mClock = mView.findViewById(R.id.clock);
         mDate = mView.findViewById(R.id.date);
-        mClock.setFormat12Hour("h:mm");
+        mTopLine = mView.findViewById(R.id.topLine);
+        mBottomLine = mView.findViewById(R.id.bottomLine);
+        mClock.setFormat12Hour("hh:mm");
         onTimeTick();
     }
 
@@ -139,7 +146,7 @@ public class DividedLinesClockController implements ClockPlugin {
         TextClock previewDate = previewView.findViewById(R.id.date);
         View previewTLine = previewView.findViewById(R.id.topLine);
         View previewBLine = previewView.findViewById(R.id.bottomLine);
-        previewTime.setFormat12Hour("h:mm");
+        previewTime.setFormat12Hour("hh:mm");
 
         // Initialize state of plugin before generating preview.
         previewTime.setTextColor(Color.WHITE);
@@ -177,7 +184,16 @@ public class DividedLinesClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
-        mClock.setTextColor(color);
+        mClock.setTextColor(Color.WHITE);
+        mDate.setTextColor(Color.WHITE);
+        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
+            mDate.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
+            mTopLine.setBackgroundColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
+            mBottomLine.setBackgroundColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
+        } else {
+            mTopLine.setBackgroundColor(color);
+            mBottomLine.setBackgroundColor(color);
+        }
     }
 
     @Override
