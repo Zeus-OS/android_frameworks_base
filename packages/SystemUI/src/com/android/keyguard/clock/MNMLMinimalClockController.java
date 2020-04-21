@@ -27,11 +27,13 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextClock;
+import android.content.Context;
 
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
+import com.android.internal.util.zenx.ZenxUtils;
 
 import java.util.TimeZone;
 
@@ -74,6 +76,8 @@ public class MNMLMinimalClockController implements ClockPlugin {
     private TextClock mClock;
     private TextClock mDate;
 
+    private Context mContext;
+
     /**
      * Create a DefaultClockController instance.
      *
@@ -82,10 +86,11 @@ public class MNMLMinimalClockController implements ClockPlugin {
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     public MNMLMinimalClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mColorExtractor = colorExtractor;
+        mContext = context;
     }
 
     private void createViews() {
@@ -93,9 +98,13 @@ public class MNMLMinimalClockController implements ClockPlugin {
                 .inflate(R.layout.digital_mnml_minimal, null);
         mClock = mView.findViewById(R.id.clock);
         mDate = mView.findViewById(R.id.date);
-        ColorExtractor.GradientColors colors = mColorExtractor.getColors(
+        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
+            mClock.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
+        } else {
+           ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);
         setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
+        }
     }
 
     @Override
@@ -177,7 +186,13 @@ public class MNMLMinimalClockController implements ClockPlugin {
         }
         final int accentColor = colorPalette[Math.max(0, colorPalette.length - 5)];
         GradientDrawable dateBg = (GradientDrawable) mDate.getBackground();
-        dateBg.setColor(accentColor);
+
+        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
+            dateBg.setColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
+        } else {
+            dateBg.setColor(accentColor);
+        }
+
         dateBg.setStroke(0,Color.TRANSPARENT);
     }
 
