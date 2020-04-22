@@ -295,7 +295,6 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
     private boolean mBouncerFullyShown;
 
     private final boolean mFaceAuthOnlyOnSecurityView;
-    private boolean mBouncerFullyShown;
     // Face unlock
     private static final boolean mCustomFaceUnlockSupported = FaceUnlockUtils.isFaceUnlockSupported();
 
@@ -2058,7 +2057,8 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                         || shouldListenForFaceAssistant())
                 && !mSwitchingUser && !isFaceDisabled(user) && becauseCannotSkipBouncer
                 && !mKeyguardGoingAway && mFaceSettingEnabledForUser.get(user) && !mLockIconPressed
-                && strongAuthAllowsScanning && mIsPrimaryUser; 
+                && strongAuthAllowsScanning && mIsPrimaryUser
+                && !mSecureCameraLaunched && !mIsDeviceInPocket;
 
         if (shouldListen && mFaceAuthOnlyOnSecurityView && !mBouncerFullyShown){
             shouldListen = false;
