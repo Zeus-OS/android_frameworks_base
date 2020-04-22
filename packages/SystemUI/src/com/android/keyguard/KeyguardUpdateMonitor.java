@@ -1717,7 +1717,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                         handleKeyguardGoingAway((boolean) msg.obj);
                         break;
                     case MSG_POCKET_STATE_CHANGED:
-                        updateFingerprintListeningState();
+                        updateBiometricListeningState();
                         break;
                     default:
                         super.handleMessage(msg);
@@ -1973,7 +1973,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         BiometricAuthenticated face = mUserFaceAuthenticated.get(getCurrentUser());
         return mAssistantVisible && mKeyguardOccluded
                 && !(face != null && face.mAuthenticated)
-                && !mUserHasTrust.get(getCurrentUser(), false) && !mIsDeviceInPocket;
+                && !mUserHasTrust.get(getCurrentUser(), false);
     }
 
     private boolean shouldListenForFingerprint() {
@@ -2039,7 +2039,8 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                 && !mSwitchingUser && !isFaceDisabled(user) && becauseCannotSkipBouncer
                 && !mKeyguardGoingAway && mFaceSettingEnabledForUser.get(user) && !mLockIconPressed
                 && strongAuthAllowsScanning && mIsPrimaryUser
-                && !mSecureCameraLaunched && unlockPossible;
+                && !mSecureCameraLaunched
+                && unlockPossible && !mIsDeviceInPocket;
 
         // Aggregate relevant fields for debug logging.
         if (DEBUG_FACE || DEBUG_SPEW) {
