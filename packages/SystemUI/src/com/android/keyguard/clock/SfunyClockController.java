@@ -26,11 +26,13 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextClock;
+import android.content.Context;
 
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
+import com.android.internal.util.zenx.ZenxUtils;
 
 import java.util.TimeZone;
 
@@ -72,6 +74,9 @@ public class SfunyClockController implements ClockPlugin {
      */
     private TextClock mHourClock;
     private TextClock mMinuteClock;
+    private TextClock mDate;
+
+    private Context mContext;
 
     /**
      * Create a DefaultClockController instance.
@@ -81,10 +86,11 @@ public class SfunyClockController implements ClockPlugin {
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     public SfunyClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mColorExtractor = colorExtractor;
+        mContext = context;
     }
 
     private void createViews() {
@@ -92,6 +98,8 @@ public class SfunyClockController implements ClockPlugin {
                 .inflate(R.layout.digital_clock_sfuny, null);
         mHourClock = mView.findViewById(R.id.clockHour);
         mMinuteClock = mView.findViewById(R.id.clockMinute);
+        // mDate = mView.findViewById(R.id.date);
+        // mDate.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -99,6 +107,8 @@ public class SfunyClockController implements ClockPlugin {
         mView = null;
         mHourClock = null;
         mMinuteClock = null;
+        // mDate.setVisibility(View.GONE);
+        // mDate = null;
     }
 
     @Override
@@ -122,12 +132,12 @@ public class SfunyClockController implements ClockPlugin {
         View previewView = mLayoutInflater.inflate(R.layout.digital_sfuny_preview, null);
         TextClock previewHourTime = previewView.findViewById(R.id.clockHour);
         TextClock previewMinuteTime = previewView.findViewById(R.id.clockMinute);
-        TextClock previewDate = previewView.findViewById(R.id.date);
+        // TextClock previewDate = previewView.findViewById(R.id.date);
 
         // Initialize state of plugin before generating preview.
         previewHourTime.setTextColor(Color.WHITE);
         previewMinuteTime.setTextColor(Color.WHITE);
-        previewDate.setTextColor(Color.WHITE);
+        // previewDate.setTextColor(Color.WHITE);
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);
         setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
@@ -159,8 +169,17 @@ public class SfunyClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
-        mHourClock.setTextColor(color);
-        mMinuteClock.setTextColor(color);
+        mMinuteClock.setTextColor(Color.WHITE);
+        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
+            mHourClock.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
+        } else {
+            mHourClock.setTextColor(color);
+        }
+        // if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
+        //     mDate.setTextColor(color);
+        // } else {
+        //     mDate.setTextColor(color);
+        // }
     }
 
     @Override
