@@ -330,4 +330,7 @@
     <string name="config_performance_profile" translatable="false">0</string>
     <string name="config_powersave_profile" translatable="false">0</string>
     <string name="config_screen_off_profile" translatable="false">0</string>
+    <!-- Custom proximity sensor to be used for pocket detection -->
+    <string name="config_customProximitySensor"></string>
+
 </resources>

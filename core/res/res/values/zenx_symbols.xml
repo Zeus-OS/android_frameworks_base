@@ -272,4 +272,7 @@
   <java-symbol type="string" name="config_performance_profile" />
   <java-symbol type="string" name="config_powersave_profile" />
   <java-symbol type="string" name="config_screen_off_profile"/>
+    <!-- Custom proximity sensor to be used for pocket detection -->
+    <java-symbol type="string" name="config_customProximitySensor" />
+
 </resources>
