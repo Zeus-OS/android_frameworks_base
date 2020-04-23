@@ -94,5 +94,14 @@
         <item>com.whatsapp.Main</item>
         <item>com.whatsapp.Whatsapp</item>
         <item>org.telegram.messenger.Telegram</item>
-    </string-array> 
+    </string-array>
+
+        <!-- Whether device has dash charging support -->
+    <bool name="config_hasDashCharger">false</bool>
+
+    <!-- Whether device has warp charging support -->
+    <bool name="config_hasWarpCharger">false</bool>
+
+    <!-- Whether device has VOOC charging support -->
+    <bool name="config_hasVoocCharger">false</bool>
 </resources>
