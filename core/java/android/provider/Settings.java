@@ -6099,7 +6099,12 @@ public final class Settings {
         public static final String LOCKSCREEN_ANIMATION_ON_DOZE = "lockscreen_animation_on_doze";
 
         /**
-         * Quick Settings Smart Pulldown
+         * Enable\Disable visibility of smart replies in notifications
+         * @hide
+         */
+        public static final String HIDE_SMART_REPLIES = "hide_smart_replies";
+
+        /** 
          * @hide
          */
         public static final String QS_SMART_PULLDOWN = "qs_smart_pulldown";
@@ -6284,6 +6289,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(LOCKSCREEN_WEATHER_SHOW_CITY);
 	    PRIVATE_SETTINGS.add(LOCKSCREEN_WEATHER_SHOW_IMAGE);
             PRIVATE_SETTINGS.add(CENTER_NOTIFICATION_HEADERS);
+            PRIVATE_SETTINGS.add(HIDE_SMART_REPLIES);
         }
 
         /**
