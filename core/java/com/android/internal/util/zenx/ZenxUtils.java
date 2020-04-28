@@ -80,4 +80,10 @@ public class ZenxUtils {
         return Resources.getSystem().getBoolean(
                         R.bool.config_intelligent_performance_profile);
     }
+
+    // Check for lockscreen accent color
+    public static boolean useLockscreenClockAccentColor(Context context) {
+        return Settings.System.getInt(context.getContentResolver(),
+          Settings.System.LOCKSCREEN_ACCENT_COLOR, 0) == 1;
+    }
 }

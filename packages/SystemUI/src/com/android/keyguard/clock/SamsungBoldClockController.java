@@ -31,6 +31,7 @@ import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
+import com.android.internal.util.zenx.ZenxUtils;
 
 import java.util.TimeZone;
 
@@ -161,7 +162,7 @@ public class SamsungBoldClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
-        if(Utils.useLockscreenClockAccentColor(mContext)) {
+        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
             mClock.setTextColor(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
         } else {
              mClock.setTextColor(color);

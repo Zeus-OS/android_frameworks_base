@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextClock;
 import android.content.Context;
+import com.android.internal.util.zenx.ZenxUtils;
 
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
@@ -181,7 +182,7 @@ public class DotClockController implements ClockPlugin {
     private void updateColor() {
         final int primary = mPalette.getPrimaryColor();
         final int secondary = mPalette.getSecondaryColor();
-        if(Utils.useLockscreenClockAccentColor(mContext)) {
+        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
             mLockClock.setTextColor(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
         } else {
             mLockClock.setTextColor(secondary);
