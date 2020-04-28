@@ -275,4 +275,7 @@
     <!-- Custom proximity sensor to be used for pocket detection -->
     <java-symbol type="string" name="config_customProximitySensor" />
 
+  <!-- SystemUI Restart -->
+  <java-symbol type="string" name="systemui_restart_title" />
+  <java-symbol type="string" name="systemui_restart_message" />
 </resources>
