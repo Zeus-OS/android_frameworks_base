@@ -283,7 +283,7 @@ public class KeyguardStatusView extends GridLayout implements
 
     private int getLockDateFont() {
         return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.LOCK_DATE_FONTS, 32);
+                Settings.System.LOCK_DATE_FONTS, 28);
     }
 
     private void refreshFormat() {
@@ -306,7 +306,7 @@ public class KeyguardStatusView extends GridLayout implements
     private void refreshLockDateFont() {
         final Resources res = getContext().getResources();
         boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-        int lockDateFont = isPrimary ? getLockDateFont() : 32;
+        int lockDateFont = isPrimary ? getLockDateFont() : 28;
         if (lockDateFont == 0) {
             mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         }
@@ -394,25 +394,25 @@ public class KeyguardStatusView extends GridLayout implements
         if (lockDateFont == 28) {
             mKeyguardSlice.setViewsTypeface(Typeface.create("googlesans-sys", Typeface.NORMAL));
         }
-        if (lockDateFont == 29) {
+	    if (lockDateFont == 29) {
             mKeyguardSlice.setViewsTypeface(Typeface.create("neoneon-sys", Typeface.NORMAL));
         }
         if (lockDateFont == 30) {
             mKeyguardSlice.setViewsTypeface(Typeface.create("themeable-sys", Typeface.NORMAL));
-    	}
-        if (lockDateFont == 31) {
+	    }
+	    if (lockDateFont == 31) {
             mKeyguardSlice.setViewsTypeface(Typeface.create("samsung-sys", Typeface.NORMAL));
         }
-	if (lockDateFont == 32) {
+	    if (lockDateFont == 32) {
             mKeyguardSlice.setViewsTypeface(Typeface.create("mexcellent-sys", Typeface.NORMAL));
         }
-	if (lockDateFont == 33) {
+	    if (lockDateFont == 33) {
             mKeyguardSlice.setViewsTypeface(Typeface.create("burnstown-sys", Typeface.NORMAL));
         }
         if (lockDateFont == 34) {
             mKeyguardSlice.setViewsTypeface(Typeface.create("dumbledor-sys", Typeface.NORMAL));
         }
-	if (lockDateFont == 35) {
+        if (lockDateFont == 35) {
             mKeyguardSlice.setViewsTypeface(Typeface.create("phantombold-sys", Typeface.NORMAL));
         }
     }
