@@ -6019,6 +6019,12 @@ public final class Settings {
         private static final Validator PULSE_BRIGHTNESS_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
+         * Whether to use accent lock clock colors
+         * @hide
+         */
+        public static final String LOCKSCREEN_ACCENT_COLOR = "lockscreen_accent_color";
+
+        /**
          * User definable value of aod screen brightness
          *
          * @hide
