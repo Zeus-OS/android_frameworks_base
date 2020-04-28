@@ -41,6 +41,7 @@ import com.android.systemui.qs.tiles.CPUInfoTile;
 import com.android.systemui.qs.tiles.DataSaverTile;
 import com.android.systemui.qs.tiles.DataSwitchTile;
 import com.android.systemui.qs.tiles.DndTile;
+import com.android.systemui.qs.tiles.CalendarTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
@@ -121,6 +122,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<DataSwitchTile> mDataSwitchTileProvider;
     private final Provider<SystemInfoTile> mSystemInfoTileProvider;
     private final Provider<CalcTile> mCalcTileProvider;
+    private final Provider<CalendarTile> mCalendarTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
 
@@ -166,6 +168,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<DataSwitchTile> dataSwitchTileProvider,
             Provider<SystemInfoTile> systemInfoTileProvider,
             Provider<CalcTile> calcTileProvider,
+            Provider<CalendarTile> calendarTileProvider,
             Provider<SmartPixelsTile> smartPixelsTileProvider) {
         mQsHostLazy = qsHostLazy;
         mWifiTileProvider = wifiTileProvider;
@@ -209,6 +212,7 @@ public class QSFactoryImpl implements QSFactory {
         mDataSwitchTileProvider = dataSwitchTileProvider;
         mSystemInfoTileProvider = systemInfoTileProvider;
         mCalcTileProvider = calcTileProvider;
+        mCalendarTileProvider = calendarTileProvider;
     }
 
     public QSTile createTile(String tileSpec) {
@@ -303,6 +307,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mSystemInfoTileProvider.get();
             case "calc":
                 return mCalcTileProvider.get();
+            case "calendar":
+                return mCalendarTileProvider.get();
         }
 
         // Custom tiles
