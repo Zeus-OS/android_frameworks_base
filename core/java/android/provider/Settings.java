@@ -5375,18 +5375,13 @@ public final class Settings {
          * @hide
          */
         public static final String SHOW_BATTERY_BAR_ON_KEYGUARD = "show_battery_bar_on_keyguard";
-        /** @hide */
-        private static final Validator SHOW_BATTERY_BAR_ON_KEYGUARD_VALIDATOR =
-                BOOLEAN_VALIDATOR;
+
         /**
          * whether to enable or disable battery bar on lock screen
          *
          * @hide
          */
         public static final String SHOW_BATTERY_BAR_ON_DOZE = "show_battery_bar_on_doze";
-        /** @hide */
-        private static final Validator SHOW_BATTERY_BAR_ON_DOZE_VALIDATOR =
-                BOOLEAN_VALIDATOR;
 
         /**
          * whether to always show battery bar on lock screen
@@ -5401,10 +5396,7 @@ public final class Settings {
          * @hide
          */
         public static final String SYSUI_KEYGUARD_BATTERY_BAR_COLOR = "sysui_keyguard_battery_bar_color";
-        /** @hide */
-        private static final Validator SYSUI_KEYGUARD_BATTERY_BAR_COLOR_VALIDATOR =
-                ANY_INTEGER_VALIDATOR;
-
+   
          /**
          * Network traffic layout
          * @hide
@@ -6080,6 +6072,18 @@ public final class Settings {
          * @hide
          */
         public static final String CENTER_NOTIFICATION_HEADERS = "center_notification_headers";
+
+        /**
+         * Whether to show animation on lock screen
+         * @hide
+         */
+        public static final String LOCKSCREEN_ANIMATION = "lockscreen_animation";
+
+        /**
+         * Whether to show animation on lock screen
+         * @hide
+         */
+        public static final String LOCKSCREEN_ANIMATION_ON_DOZE = "lockscreen_animation_on_doze";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
