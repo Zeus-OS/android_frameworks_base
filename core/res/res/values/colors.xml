@@ -224,4 +224,5 @@
 
     <!-- Resolver/Chooser -->
     <color name="resolver_text_color_secondary_dark">#ffC4C6C6</color>
+
 </resources>
