@@ -159,6 +159,7 @@ public class KeyguardIndicationController implements StateListener,
     // omni additions
     private static final String KEYGUARD_SHOW_BATTERY_BAR = "sysui_keyguard_show_battery_bar";
     private static final String KEYGUARD_SHOW_BATTERY_BAR_ALWAYS = "sysui_keyguard_show_battery_bar_always";
+    private static final String KEYGUARD_BATTERY_BAR_COLOR = "sysui_keyguard_battery_bar_color";
 
     private BatteryBarView mBatteryBar;
 
@@ -443,6 +444,9 @@ public class KeyguardIndicationController implements StateListener,
                     KEYGUARD_SHOW_BATTERY_BAR, 1) == 1;
             final boolean showBatteryBarAlways = Settings.Secure.getInt(mContext.getContentResolver(),
                     KEYGUARD_SHOW_BATTERY_BAR_ALWAYS, 0) == 1;
+            int batteryBarColor = Settings.System.getInt(mContext.getContentResolver(),
+                    KEYGUARD_BATTERY_BAR_COLOR, 0xffffffff);
+            batteryBarColor = Color.argb(255, Color.red(batteryBarColor), Color.green(batteryBarColor), Color.blue(batteryBarColor));
 
             // Walk down a precedence-ordered list of what indication
             // should be shown based on user or device state
@@ -519,7 +523,11 @@ public class KeyguardIndicationController implements StateListener,
                 if (DEBUG_CHARGING_SPEED) {
                     powerIndication += ",  " + (mChargingWattage / 1000) + " mW";
                 }
-                mTextView.setTextColor(mInitialTextColorState);
+                if(HavocUtils.useLockscreenIndicationAccentColor(mContext)) {
+                    mTextView.setTextColor(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
+                } else {
+                    mTextView.setTextColor(batteryBarColor);
+                }
                 if (animate) {
                     animateText(mTextView, powerIndication);
                 } else {
@@ -528,6 +536,7 @@ public class KeyguardIndicationController implements StateListener,
                 if (showBatteryBar && showBatteryBarAlways) {
                     mBatteryBar.setVisibility(View.VISIBLE);
                     mBatteryBar.setBatteryPercent(mBatteryLevel);
+                    // NOTE: Following indication text color 
                     mBatteryBar.setBarColor(mTextView.getCurrentTextColor());
                 }
             } else if (!TextUtils.isEmpty(trustManagedIndication)

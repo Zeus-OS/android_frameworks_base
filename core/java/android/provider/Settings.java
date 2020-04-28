@@ -5508,6 +5508,16 @@ public final class Settings {
         private static final Validator SYSUI_KEYGUARD_SHOW_BATTERY_BAR_ALWAYS_VALIDATOR =
                 BOOLEAN_VALIDATOR;
 
+        /**
+         * Battery bar color
+         *
+         * @hide
+         */
+        public static final String SYSUI_KEYGUARD_BATTERY_BAR_COLOR = "sysui_keyguard_battery_bar_color";
+        /** @hide */
+        private static final Validator SYSUI_KEYGUARD_BATTERY_BAR_COLOR_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
          /**
           * Volume dialog timeout
           * @hide
@@ -6706,6 +6716,7 @@ public final class Settings {
             CUSTOM_DEVICE_FEATURE_SETTINGS,
             SYSUI_KEYGUARD_SHOW_BATTERY_BAR,
             SYSUI_KEYGUARD_SHOW_BATTERY_BAR_ALWAYS,
+            SYSUI_KEYGUARD_BATTERY_BAR_COLOR,
             STATUS_BAR_CLOCK,
             STATUSBAR_CLOCK_STYLE,
             STATUS_BAR_CLOCK_SECONDS,
@@ -7144,6 +7155,7 @@ public final class Settings {
             VALIDATORS.put(CUSTOM_DEVICE_FEATURE_SETTINGS, CUSTOM_DEVICE_FEATURE_SETTINGS_VALIDATOR);
             VALIDATORS.put(SYSUI_KEYGUARD_SHOW_BATTERY_BAR, SYSUI_KEYGUARD_SHOW_BATTERY_BAR_VALIDATOR);
             VALIDATORS.put(SYSUI_KEYGUARD_SHOW_BATTERY_BAR_ALWAYS, SYSUI_KEYGUARD_SHOW_BATTERY_BAR_ALWAYS_VALIDATOR);
+            VALIDATORS.put(SYSUI_KEYGUARD_BATTERY_BAR_COLOR, SYSUI_KEYGUARD_BATTERY_BAR_COLOR_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_CLOCK, STATUS_BAR_CLOCK_VALIDATOR);
             VALIDATORS.put(STATUSBAR_CLOCK_STYLE, STATUSBAR_CLOCK_STYLE_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_CLOCK_SECONDS, STATUS_BAR_CLOCK_SECONDS_VALIDATOR);
