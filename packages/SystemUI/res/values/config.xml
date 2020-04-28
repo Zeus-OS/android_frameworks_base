@@ -114,11 +114,7 @@
 
     <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
     <string name="quick_settings_tiles_stock" translatable="false">
-<<<<<<< HEAD
-        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,nfc,location,hotspot,inversion,saver,dark,work,cast,night,screenrecord,reverse,ambient_display,aod,caffeine,heads_up,livedisplay,powershare,profiles,reading_mode,sync,usb_tether,volume_panel,vpn,systeminfo,calc,calendar,call
-=======
-        wifi,call,cell,calc,battery,dnd,flashlight,rotation,bt,airplane,nfc,location,hotspot,inversion,saver,dark,work,cast,night,screenrecord,systeminfo,reverse,calendar,camera
->>>>>>> 75b69a56f8ab8 (SystemUI: Add Camera Tile)
+        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,nfc,locale,location,hotspot,inversion,saver,dark,work,cast,night,screenrecord,reverse,ambient_display,aod,caffeine,heads_up,livedisplay,powershare,profiles,reading_mode,sync,usb_tether,volume_panel,vpn,systeminfo,calc,calendar,call,camera
     </string>
 
     <!-- The tiles to display in QuickSettings -->

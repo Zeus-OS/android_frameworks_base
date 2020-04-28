@@ -48,6 +48,7 @@ import com.android.systemui.qs.tiles.CallTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
 import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
+import com.android.systemui.qs.tiles.LocaleTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.LiveDisplayTile;
 import com.android.systemui.qs.tiles.MusicTile;
@@ -128,6 +129,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<CalendarTile> mCalendarTileProvider;
     private final Provider<CallTile> mCallTileProvider;
     private final Provider<CameraTile> mCameraTileProvider;
+    private final Provider<LocaleTile> mLocaleTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
 
@@ -174,6 +176,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<SystemInfoTile> systemInfoTileProvider,
             Provider<CalcTile> calcTileProvider,
             Provider<CalendarTile> calendarTileProvider,
+            Provider<LocaleTile> localeTileProvider,
             Provider<CallTile> callTileProvider
             Provider<CameraTile> cameraTileProvider
             Provider<SmartPixelsTile> smartPixelsTileProvider) {
@@ -222,6 +225,7 @@ public class QSFactoryImpl implements QSFactory {
         mCalendarTileProvider = calendarTileProvider;
         mCallTileProvider = callTileProvider;
         mCameraTileProvider = cameraTileProvider;
+        mLocaleTileProvider = localeTileProvider;
     }
 
     public QSTile createTile(String tileSpec) {
@@ -322,6 +326,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mCallTileProvider.get();
             case "camera":
                 return mCameraTileProvider.get();
+            case "locale":
+                return mLocaleTileProvider.get();
         }
 
         // Custom tiles
