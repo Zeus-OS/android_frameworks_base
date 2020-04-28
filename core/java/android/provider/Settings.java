@@ -4764,6 +4764,12 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * Clock font style  QS 
+         * @hide
+         */
+        public static final String QS_HEADER_CLOCK_FONT_STYLE = "qs_header_clock_font_style";
+
+        /**
          * Clock font style
          * @hide
          */

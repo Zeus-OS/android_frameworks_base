@@ -116,6 +116,7 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
     public static final int STYLE_DATE_RIGHT = 1;
 
     private int mClockFontStyle = FONT_NORMAL;
+    private int mQsClockFontStyle = FONT_MEDIUM;
     public static final int FONT_NORMAL = 0;
     public static final int FONT_ITALIC = 1;
     public static final int FONT_BOLD = 2;
@@ -202,6 +203,9 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CLOCK_AUTO_HIDE_SDURATION),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_CLOCK_FONT_STYLE),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CLOCK_FONT_STYLE),
@@ -387,7 +391,7 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
     }
 
     protected void updateClockVisibility() {
-        boolean visible = ((mClockStyle == STYLE_CLOCK_LEFT) || (mQsHeader))
+        boolean visible = ((mClockStyle == STYLE_CLOCK_LEFT))
                 && mShowClock && mClockVisibleByPolicy && mClockVisibleByUser;
         int visibility = visible ? View.VISIBLE : View.GONE;
         try {
@@ -749,9 +753,16 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
 
     private void updateClockFontStyle() {
         mClockFontStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.STATUS_BAR_CLOCK_FONT_STYLE, FONT_NORMAL,
-		UserHandle.USER_CURRENT);
-        getClockFontStyle(mClockFontStyle);
+                Settings.System.STATUS_BAR_CLOCK_FONT_STYLE, FONT_MEDIUM,
+                UserHandle.USER_CURRENT);
+        mQsClockFontStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QS_HEADER_CLOCK_FONT_STYLE, FONT_MEDIUM,
+                UserHandle.USER_CURRENT);
+        if(mQsHeader) {
+            getClockFontStyle(mQsClockFontStyle);
+        } else {
+            getClockFontStyle(mClockFontStyle);
+        }
         updateClock();
     }
 
