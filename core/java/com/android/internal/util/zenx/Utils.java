@@ -50,6 +50,9 @@ import android.view.IWindowManager;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 import android.view.WindowManagerGlobal;
+import android.provider.Settings;
+import android.os.AsyncTask;
+import android.graphics.Color;
 
 import com.android.internal.R;
 
@@ -94,6 +97,109 @@ public class Utils {
 
         return true;
     }
+
+    public static int getBlendColorForPercent(int fullColor, int emptyColor, boolean reversed,
+        int percentage) {
+        float[] newColor = new float[3];
+        float[] empty = new float[3];
+        float[] full = new float[3];
+        Color.colorToHSV(fullColor, full);
+        int fullAlpha = Color.alpha(fullColor);
+        Color.colorToHSV(emptyColor, empty);
+        int emptyAlpha = Color.alpha(emptyColor);
+        float blendFactor = percentage/100f;
+        if (reversed) {
+        if (empty[0] < full[0]) {
+        empty[0] += 360f;
+        }
+        newColor[0] = empty[0] - (empty[0]-full[0])*blendFactor;
+        } else {
+        if (empty[0] > full[0]) {
+        full[0] += 360f;
+        }
+        newColor[0] = empty[0] + (full[0]-empty[0])*blendFactor;
+        }
+        if (newColor[0] > 360f) {
+        newColor[0] -= 360f;
+        } else if (newColor[0] < 0) {
+        newColor[0] += 360f;
+        }
+        newColor[1] = empty[1] + ((full[1]-empty[1])*blendFactor);
+        newColor[2] = empty[2] + ((full[2]-empty[2])*blendFactor);
+        int newAlpha = (int) (emptyAlpha + ((fullAlpha-emptyAlpha)*blendFactor));
+        return Color.HSVToColor(newAlpha, newColor);
+    }
+
+    public static void restartSystemUi(Context context) {
+        new RestartSystemUiTask(context).execute();
+    }
+
+    public static void showSystemUiRestartDialog(Context context) {
+        new AlertDialog.Builder(context)
+                .setTitle(R.string.systemui_restart_title)
+                .setMessage(R.string.systemui_restart_message)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        restartSystemUi(context);
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
+
+    private static class RestartSystemUiTask extends AsyncTask<Void, Void, Void> {
+        private Context mContext;
+
+
+        public RestartSystemUiTask(Context context) {
+            super();
+            mContext = context;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                ActivityManager am =
+                        (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+                IActivityManager ams = ActivityManager.getService();
+                for (ActivityManager.RunningAppProcessInfo app: am.getRunningAppProcesses()) {
+                    if ("com.android.systemui".equals(app.processName)) {
+                        ams.killApplicationProcess(app.processName, app.uid);
+                        break;
+                    }
+                }
+                //Class ActivityManagerNative = Class.forName("android.app.ActivityManagerNative");
+                //Method getDefault = ActivityManagerNative.getDeclaredMethod("getDefault", null);
+                //Object amn = getDefault.invoke(null, null);
+                //Method killApplicationProcess = amn.getClass().getDeclaredMethod("killApplicationProcess", String.class, int.class);
+                //mContext.stopService(new Intent().setComponent(new ComponentName("com.android.systemui", "com.android.systemui.SystemUIService")));
+                //am.killBackgroundProcesses("com.android.systemui");
+                //for (ActivityManager.RunningAppProcessInfo app : am.getRunningAppProcesses()) {
+                //    if ("com.android.systemui".equals(app.processName)) {
+                //        killApplicationProcess.invoke(amn, app.processName, app.uid);
+                //        break;
+                //    }
+                //}
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+
+    public static boolean isAvailableApp(String packageName, Context context) {
+        Context mContext = context;
+        final PackageManager pm = mContext.getPackageManager();
+        try {
+            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            int enabled = pm.getApplicationEnabledSetting(packageName);
+            return enabled != PackageManager.COMPONENT_ENABLED_STATE_DISABLED &&
+                enabled != PackageManager.COMPONENT_ENABLED_STATE_DISABLED_USER;
+        } catch (NameNotFoundException e) {
+            return false;
+        }
+     }
 
     public static boolean isPackageInstalled(Context context, String pkg) {
         return isPackageInstalled(context, pkg, true);
