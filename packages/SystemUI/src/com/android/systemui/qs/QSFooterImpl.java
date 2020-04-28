@@ -66,7 +66,7 @@ import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserInfoController.OnUserInfoChangedListener;
 import com.android.systemui.statusbar.policy.QSFooterNetworkTraffic;
-
+import com.android.systemui.statusbar.info.DataUsageView;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -82,6 +82,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     protected View mSettingsContainer;
     private PageIndicator mPageIndicator;
     private View mRunningServicesButton;
+    private DataUsageView mDataUsage;
 
     private boolean mQsDisabled;
     private QSPanel mQsPanel;
@@ -154,6 +155,9 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
         mNetworkTraffic = findViewById(R.id.networkTraffic);
 
+        mDataUsage = findViewById(R.id.data_sim_usage);
+        mDataUsage.setOnClickListener(this);
+
         mRunningServicesButton = findViewById(R.id.running_services_button);
         mRunningServicesButton.setOnClickListener(this);
 
@@ -175,6 +179,9 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight,
                 oldBottom) -> updateAnimator(right - left));
         setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
+        if(isDataUsageEnabled() && mDataUsage != null) {
+            mDataUsage.setVisibility(View.VISIBLE);
+        }
         updateEverything();
         //setBuildText();
     }
@@ -246,6 +253,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                 .addFloat(mDragHandle, "alpha", 1, 0, 0)
                 .addFloat(mPageIndicator, "alpha", 0, 1)
                 .addFloat(mNetworkTraffic, "alpha", 0, 1)
+                .addFloat(mDataUsage, "alpha", 0, 1)
                 .setStartDelay(0.15f)
                 .build();
     }
@@ -339,6 +347,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mMultiUserSwitch.setClickable(mMultiUserSwitch.getVisibility() == View.VISIBLE);
         mEdit.setClickable(mEdit.getVisibility() == View.VISIBLE);
         mSettingsButton.setClickable(mSettingsButton.getVisibility() == View.VISIBLE);
+        mDataUsage.setClickable(mDataUsage.getVisibility() == View.VISIBLE);
     }
 
     private void updateVisibilities() {
@@ -350,6 +359,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mEditContainer.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
         mEdit.setVisibility(isEditEnabled() ? View.VISIBLE : View.GONE);
         mNetworkTraffic.setVisibility(isNetworkTrafficInQsFooterEnabled() ? View.VISIBLE : View.GONE);
+        mDataUsage.setVisibility(isDataUsageEnabled() ? View.VISIBLE : View.GONE);
     }
 
     private boolean showUserSwitcher() {
@@ -384,6 +394,11 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
             mMultiUserSwitch.setQsPanel(qsPanel);
             mQsPanel.setFooterPageIndicator(mPageIndicator);
         }
+    }
+
+    public boolean isDataUsageEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.QS_DATAUSAGE, 1) == 1;
     }
 
     public boolean isSettingsEnabled() {
@@ -429,6 +444,11 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                     mExpanded ? MetricsProto.MetricsEvent.ACTION_QS_EXPANDED_SETTINGS_LAUNCH
                             : MetricsProto.MetricsEvent.ACTION_QS_COLLAPSED_SETTINGS_LAUNCH);
             startRunningServicesActivity();
+        } else if (v == mDataUsage) {
+            MetricsLogger.action(mContext,
+                    mExpanded ? MetricsProto.MetricsEvent.ACTION_QS_EXPANDED_SETTINGS_LAUNCH
+                            : MetricsProto.MetricsEvent.ACTION_QS_COLLAPSED_SETTINGS_LAUNCH);
+                    startDataUsageActivity();
         }
     }
 
@@ -453,6 +473,13 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         nIntent.setClassName("com.android.settings",
             "com.android.settings.Settings$ConfigCenterActivity");
         mActivityStarter.startActivity(nIntent, true /* dismissShade */);
+    }
+
+    private void startDataUsageActivity() {
+        Intent intent = new Intent();
+        intent.setClassName("com.android.settings",
+                "com.android.settings.Settings$DataUsageSummaryActivity");
+        mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 
     private void startSettingsActivity() {

@@ -37,11 +37,18 @@
         android:gravity="end" >
 
         <com.android.keyguard.AlphaOptimizedLinearLayout
-            android:id="@+id/qs_footer_actions_edit_container"
+            android:id="@+id/qs_footer_actions_edit_datausage"
             android:layout_width="@integer/qs_footer_actions_width"
             android:layout_height="match_parent"
             android:layout_weight="@integer/qs_footer_actions_weight"
             android:gravity="center_vertical|start" >
+
+        <com.android.keyguard.AlphaOptimizedLinearLayout
+            android:id="@+id/qs_footer_actions_edit_container"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|start" >
+
             <com.android.systemui.statusbar.AlphaOptimizedImageView
                 android:id="@android:id/edit"
                 android:layout_width="@dimen/qs_footer_action_button_size"
@@ -64,6 +71,20 @@
                 android:focusable="true"
                 android:textAppearance="@style/TextAppearance.QS.Status"
                 android:visibility="gone"/>
+
+    </com.android.keyguard.AlphaOptimizedLinearLayout>
+
+         <com.android.systemui.statusbar.info.DataUsageView
+            android:id="@+id/data_sim_usage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|end"
+            android:paddingStart="@dimen/qs_footer_data_used_start_padding"
+            android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.StatusBar.Clock"
+            android:text="" />
+
          </com.android.keyguard.AlphaOptimizedLinearLayout>
 
         <com.android.systemui.qs.PageIndicator

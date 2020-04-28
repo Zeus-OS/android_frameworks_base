@@ -1166,4 +1166,6 @@
 
     <!-- Size of the RAT type for CellularTile -->
     <dimen name="celltile_rat_type_size">10sp</dimen>
+
+    <dimen name="qs_footer_data_used_start_padding">4dp</dimen>
 </resources>

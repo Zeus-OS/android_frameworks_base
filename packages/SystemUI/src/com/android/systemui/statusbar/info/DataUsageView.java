@@ -65,12 +65,17 @@ public class DataUsageView extends TextView {
         final DataUsageController.DataUsageInfo info = mobileDataController.getDataUsageInfo();
         
         formatedinfo = formatDataUsage(info.usageLevel) + " " + mContext.getResources().getString(R.string.usage_data);
+        if(formatedinfo == "" || formatedinfo == " ") {
+            formatedinfo = "Collecting data..";
+        } else {
+            formatedinfo = formatDataUsage(info.usageLevel) + " " + mContext.getResources().getString(R.string.usage_data);
+        }
         shouldUpdateDataTextView = true;
     }
 
     private boolean isDataUsageEnabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_DATAUSAGE, 0) != 0;
+                Settings.System.QS_DATAUSAGE, 1) != 0;
     }
 
     public static void updateUsage() {
