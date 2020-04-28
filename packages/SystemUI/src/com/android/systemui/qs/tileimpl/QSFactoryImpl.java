@@ -40,6 +40,7 @@ import com.android.systemui.qs.tiles.CPUInfoTile;
 import com.android.systemui.qs.tiles.DataSaverTile;
 import com.android.systemui.qs.tiles.DataSwitchTile;
 import com.android.systemui.qs.tiles.DndTile;
+import com.android.systemui.qs.tiles.CalendarTile;
 import com.android.systemui.qs.tiles.FlashlightTile;
 import com.android.systemui.qs.tiles.FPSInfoTile;
 import com.android.systemui.qs.tiles.GamingModeTile;
@@ -123,6 +124,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<SoundTile> mSoundTileProvider;
     private final Provider<SystemInfoTile> mSystemInfoTileProvider;
     private final Provider<CalcTile> mCalcTileProvider;
+    private final Provider<CalendarTile> mCalendarTileProvider;
 
     private QSTileHost mHost;
 
@@ -170,6 +172,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<FPSInfoTile> fpsInfoTileProvider,
             Provider<SystemInfoTile> systemInfoTileProvider,
             Provider<CalcTile> calcTileProvider,
+            Provider<CalendarTile> calendarTileProvider
             ) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
@@ -214,6 +217,7 @@ public class QSFactoryImpl implements QSFactory {
         mFPSInfoTileProvider = fpsInfoTileProvider;
         mSystemInfoTileProvider = systemInfoTileProvider;
         mCalcTileProvider = calcTileProvider;
+        mCalendarTileProvider = calendarTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -315,6 +319,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mSystemInfoTileProvider.get();
             case "calc":
                 return mCalcTileProvider.get();
+            case "calendar":
+                return mCalendarTileProvider.get();
         }
 
         // Intent tiles.

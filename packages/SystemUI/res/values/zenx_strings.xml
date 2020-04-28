@@ -264,4 +264,5 @@
 
     <string name="system_info_tile_label">System info</string>
     <string name="calc_title_tile">Calculator</string>
+    <string name="calendar_title_tile">Add Event</string>
 </resources>
