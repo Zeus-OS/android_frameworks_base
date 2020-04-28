@@ -5499,6 +5499,25 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * whether to enable or disable battery bar on lock screen
+         *
+         * @hide
+         */
+        public static final String SHOW_BATTERY_BAR_ON_KEYGUARD = "show_battery_bar_on_keyguard";
+        /** @hide */
+        private static final Validator SHOW_BATTERY_BAR_ON_KEYGUARD_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+        /**
+         * whether to enable or disable battery bar on lock screen
+         *
+         * @hide
+         */
+        public static final String SHOW_BATTERY_BAR_ON_DOZE = "show_battery_bar_on_doze";
+        /** @hide */
+        private static final Validator SHOW_BATTERY_BAR_ON_DOZE_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * whether to always show battery bar on lock screen
          *
          * @hide
@@ -6717,6 +6736,8 @@ public final class Settings {
             SYSUI_KEYGUARD_SHOW_BATTERY_BAR,
             SYSUI_KEYGUARD_SHOW_BATTERY_BAR_ALWAYS,
             SYSUI_KEYGUARD_BATTERY_BAR_COLOR,
+            SHOW_BATTERY_BAR_ON_KEYGUARD,
+            SHOW_BATTERY_BAR_ON_DOZE,
             STATUS_BAR_CLOCK,
             STATUSBAR_CLOCK_STYLE,
             STATUS_BAR_CLOCK_SECONDS,
@@ -7155,6 +7176,8 @@ public final class Settings {
             VALIDATORS.put(CUSTOM_DEVICE_FEATURE_SETTINGS, CUSTOM_DEVICE_FEATURE_SETTINGS_VALIDATOR);
             VALIDATORS.put(SYSUI_KEYGUARD_SHOW_BATTERY_BAR, SYSUI_KEYGUARD_SHOW_BATTERY_BAR_VALIDATOR);
             VALIDATORS.put(SYSUI_KEYGUARD_SHOW_BATTERY_BAR_ALWAYS, SYSUI_KEYGUARD_SHOW_BATTERY_BAR_ALWAYS_VALIDATOR);
+            VALIDATORS.put(SHOW_BATTERY_BAR_ON_KEYGUARD, SHOW_BATTERY_BAR_ON_KEYGUARD_VALIDATOR);
+            VALIDATORS.put(SHOW_BATTERY_BAR_ON_DOZE, SHOW_BATTERY_BAR_ON_DOZE_VALIDATOR);
             VALIDATORS.put(SYSUI_KEYGUARD_BATTERY_BAR_COLOR, SYSUI_KEYGUARD_BATTERY_BAR_COLOR_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_CLOCK, STATUS_BAR_CLOCK_VALIDATOR);
             VALIDATORS.put(STATUSBAR_CLOCK_STYLE, STATUSBAR_CLOCK_STYLE_VALIDATOR);
