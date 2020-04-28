@@ -51,6 +51,7 @@ import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.HWKeysTile;
 import com.android.systemui.qs.tiles.IntentTile;
 import com.android.systemui.qs.tiles.LiveDisplayTile;
+import com.android.systemui.qs.tiles.LocaleTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.MusicTile;
 import com.android.systemui.qs.tiles.NfcTile;
@@ -129,6 +130,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<CalendarTile> mCalendarTileProvider;
     private final Provider<CallTile> mCallTileProvider;
     private final Provider<CameraTile> mCameraTileProvider;
+    private final Provider<LocaleTile> mLocaleTileProvider;
 
     private QSTileHost mHost;
 
@@ -176,9 +178,10 @@ public class QSFactoryImpl implements QSFactory {
             Provider<FPSInfoTile> fpsInfoTileProvider,
             Provider<SystemInfoTile> systemInfoTileProvider,
             Provider<CalcTile> calcTileProvider,
-            Provider<CalendarTile> calendarTileProvider
-            Provider<CallTile> callTileProvider
-            Provider<CameraTile> cameraTileProvider
+            Provider<CalendarTile> calendarTileProvider,
+            Provider<CallTile> callTileProvider,
+            Provider<CameraTile> cameraTileProvider,
+            Provider<LocaleTile> localeTileProvider
             ) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
@@ -226,6 +229,7 @@ public class QSFactoryImpl implements QSFactory {
         mCalendarTileProvider = calendarTileProvider;
         mCallTileProvider = callTileProvider;
         mCameraTileProvider = cameraTileProvider;
+        mLocaleTileProvider = localeTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -333,6 +337,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mCallTileProvider.get();
             case "camera":
                 return mCameraTileProvider.get();
+            case "locale":
+                return mLocaleTileProvider.get();
         }
 
         // Intent tiles.

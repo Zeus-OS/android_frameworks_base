@@ -262,10 +262,14 @@
     <string name="recents_app_killed">App killed</string>
     <string name="nope_cant_kill">Launcher cannot be killed</string>
 
-    <!--Havoc Extra Tiles-->
+    <!--ZenX Extra Tiles-->
     <string name="system_info_tile_label">System info</string>
     <string name="calc_title_tile">Calculator</string>
     <string name="calendar_title_tile">Add Event</string>
     <string name="call_title_tile">Dialer</string>
     <string name="camera_title_tile">Camera</string>
+    
+    <!-- Language toggle tile -->
+    <string name="quick_settings_locale_label">Language</string>
+    <string name="quick_settings_locale_more_locales_toast">Please configure multiple languages to enable toggle functionality</string>
 </resources>
