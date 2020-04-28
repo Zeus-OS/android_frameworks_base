@@ -262,7 +262,9 @@
     <string name="recents_app_killed">App killed</string>
     <string name="nope_cant_kill">Launcher cannot be killed</string>
 
+    <!--Havoc Extra Tiles-->
     <string name="system_info_tile_label">System info</string>
     <string name="calc_title_tile">Calculator</string>
     <string name="calendar_title_tile">Add Event</string>
+    <string name="call_title_tile">Dialer</string>
 </resources>
