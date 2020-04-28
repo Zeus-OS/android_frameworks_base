@@ -5370,6 +5370,25 @@ public final class Settings {
         public static final String SYSUI_KEYGUARD_SHOW_BATTERY_BAR = "sysui_keyguard_show_battery_bar";
 
         /**
+         * whether to enable or disable battery bar on lock screen
+         *
+         * @hide
+         */
+        public static final String SHOW_BATTERY_BAR_ON_KEYGUARD = "show_battery_bar_on_keyguard";
+        /** @hide */
+        private static final Validator SHOW_BATTERY_BAR_ON_KEYGUARD_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+        /**
+         * whether to enable or disable battery bar on lock screen
+         *
+         * @hide
+         */
+        public static final String SHOW_BATTERY_BAR_ON_DOZE = "show_battery_bar_on_doze";
+        /** @hide */
+        private static final Validator SHOW_BATTERY_BAR_ON_DOZE_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * whether to always show battery bar on lock screen
          *
          * @hide

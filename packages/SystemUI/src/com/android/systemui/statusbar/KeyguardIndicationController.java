@@ -71,7 +71,6 @@ import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.util.wakelock.SettableWakeLock;
 import com.android.systemui.util.wakelock.WakeLock;
-import com.android.internal.util.havoc.HavocUtils;
 import com.android.systemui.tuner.TunerService;
 
 import java.io.FileDescriptor;
@@ -440,6 +439,16 @@ public class KeyguardIndicationController implements StateListener,
         }
     }
 
+    private boolean showBatteryBarOnDoze() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SHOW_BATTERY_BAR_ON_DOZE, 0) != 0;
+    }
+
+    private boolean showBatteryBarOnKeyguard() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.SHOW_BATTERY_BAR_ON_KEYGUARD, 0) != 0;
+    }
+
     protected final void updateIndication(boolean animate) {
         if (TextUtils.isEmpty(mTransientIndication)) {
             mWakeLock.setAcquired(false);
@@ -487,6 +496,10 @@ public class KeyguardIndicationController implements StateListener,
                         CharSequence chargeIndicator = (mPowerPluggedIn ? (bolt + " ") : "") +
                                 NumberFormat.getPercentInstance().format(mBatteryLevel / 100f);
                         mTextView.switchIndication(chargeIndicator);
+                        if (showBatteryBarOnDoze()) {
+                            mBatteryBar.setVisibility(View.VISIBLE);
+                            mBatteryBar.setBatteryPercent(mBatteryLevel);
+                        }
                     } else {
                         mTextView.switchIndication(null);
                     }
@@ -527,7 +540,7 @@ public class KeyguardIndicationController implements StateListener,
                 if (DEBUG_CHARGING_SPEED) {
                     powerIndication += ",  " + (mChargingWattage / 1000) + " mW";
                 }
-                    mTextView.setTextColor(batteryBarColor);
+                mTextView.setTextColor(batteryBarColor);
                 if (animate) {
                     animateText(mTextView, powerIndication);
                 } else {
@@ -543,17 +556,28 @@ public class KeyguardIndicationController implements StateListener,
                     && !mKeyguardUpdateMonitor.getUserHasTrust(userId)) {
                 mTextView.switchIndication(trustManagedIndication);
             } else {
-                mTextView.switchIndication(mRestingIndication);
+                mTextView.setTextColor(mInitialTextColorState);
+                if (showBatteryBarOnKeyguard() && !mPowerPluggedIn) {
+
+                        mTextView.switchIndication(mRestingIndication);
+                        mBatteryBar.setVisibility(View.VISIBLE);
+                        mBatteryBar.setBatteryPercent(mBatteryLevel);
+                }           
             }
             // we may want to overwrite things set above
             if (mPowerPluggedIn) {
                 if (showBatteryBar && showBatteryBarAlways) {
-                    mBatteryBar.setVisibility(View.VISIBLE);
-                    mBatteryBar.setBatteryPercent(mBatteryLevel);
+                            mBatteryBar.setVisibility(View.VISIBLE);
+                            mBatteryBar.setBatteryPercent(mBatteryLevel);
                 }
             }
             mTextView.setTextColor(isError ? Utils.getColorError(mContext)
                     : mInitialTextColorState);
+
+            if (showBatteryBarOnKeyguard() && !mPowerPluggedIn )  {
+                            mBatteryBar.setVisibility(View.VISIBLE);
+                            mBatteryBar.setBatteryPercent(mBatteryLevel);
+            }
             updateChargingIndication();
         }
     }
