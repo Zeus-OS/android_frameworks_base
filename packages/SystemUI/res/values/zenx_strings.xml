@@ -272,6 +272,11 @@
     <!-- Language toggle tile -->
     <string name="quick_settings_locale_label">Language</string>
     <string name="quick_settings_locale_more_locales_toast">Please configure multiple languages to enable toggle functionality</string>
-  
+
     <string name="usage_data">used</string>
+    
+    <string name="tuner_keyguard_show_battery_bar_title">Show battery bar</string>
+    <string name="tuner_keyguard_show_battery_bar_summary">Show battery bar on charging in always on display</string>
+    <string name="tuner_keyguard_show_battery_bar_always_title">Always show battery bar</string>
+    <string name="tuner_keyguard_show_battery_bar_always_summary">Always show battery bar on charging</string>
 </resources>
