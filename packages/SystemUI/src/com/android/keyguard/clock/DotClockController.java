@@ -21,6 +21,7 @@ import android.graphics.Paint.Style;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextClock;
+import android.content.Context;
 
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
@@ -76,6 +77,8 @@ public class DotClockController implements ClockPlugin {
      */
     private final ClockPalette mPalette = new ClockPalette();
 
+    private Context mContext;
+
     /**
      * Create a BubbleClockController instance.
      *
@@ -84,11 +87,12 @@ public class DotClockController implements ClockPlugin {
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     public DotClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mColorExtractor = colorExtractor;
         mClockPosition = new SmallClockPosition(res);
+        mContext = context;
     }
 
     private void createViews() {
@@ -177,7 +181,12 @@ public class DotClockController implements ClockPlugin {
     private void updateColor() {
         final int primary = mPalette.getPrimaryColor();
         final int secondary = mPalette.getSecondaryColor();
-        mLockClock.setTextColor(secondary);
+        if(Utils.useLockscreenClockAccentColor(mContext)) {
+            mLockClock.setTextColor(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
+        } else {
+            mLockClock.setTextColor(secondary);
+        }
+
         //mDotClock.setClockColors(primary, secondary);
     }
 

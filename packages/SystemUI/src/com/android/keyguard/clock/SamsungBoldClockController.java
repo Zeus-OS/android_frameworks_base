@@ -25,6 +25,7 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextClock;
+import android.content.Context;
 
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
@@ -71,6 +72,8 @@ public class SamsungBoldClockController implements ClockPlugin {
      */
     private TextClock mClock;
 
+    private Context mContext;
+
     /**
      * Create a DefaultClockController instance.
      *
@@ -79,10 +82,11 @@ public class SamsungBoldClockController implements ClockPlugin {
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     public SamsungBoldClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mColorExtractor = colorExtractor;
+        mContext = context;
     }
 
     private void createViews() {
@@ -157,7 +161,11 @@ public class SamsungBoldClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
-        mClock.setTextColor(color);
+        if(Utils.useLockscreenClockAccentColor(mContext)) {
+            mClock.setTextColor(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
+        } else {
+             mClock.setTextColor(color);
+        }
     }
 
     @Override
