@@ -34,6 +34,7 @@ import com.android.systemui.qs.tiles.BluetoothTile;
 import com.android.systemui.qs.tiles.CaffeineTile;
 import com.android.systemui.qs.tiles.CastTile;
 import com.android.systemui.qs.tiles.CellularTile;
+import com.android.systemui.qs.tiles.CameraTile;
 import com.android.systemui.qs.tiles.ColorInversionTile;
 import com.android.systemui.qs.tiles.CompassTile;
 import com.android.systemui.qs.tiles.CPUInfoTile;
@@ -127,6 +128,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<CalcTile> mCalcTileProvider;
     private final Provider<CalendarTile> mCalendarTileProvider;
     private final Provider<CallTile> mCallTileProvider;
+    private final Provider<CameraTile> mCameraTileProvider;
 
     private QSTileHost mHost;
 
@@ -176,6 +178,7 @@ public class QSFactoryImpl implements QSFactory {
             Provider<CalcTile> calcTileProvider,
             Provider<CalendarTile> calendarTileProvider
             Provider<CallTile> callTileProvider
+            Provider<CameraTile> cameraTileProvider
             ) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
@@ -222,6 +225,7 @@ public class QSFactoryImpl implements QSFactory {
         mCalcTileProvider = calcTileProvider;
         mCalendarTileProvider = calendarTileProvider;
         mCallTileProvider = callTileProvider;
+        mCameraTileProvider = cameraTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -327,6 +331,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mCalendarTileProvider.get();
             case "call":
                 return mCallTileProvider.get();
+            case "camera":
+                return mCameraTileProvider.get();
         }
 
         // Intent tiles.
