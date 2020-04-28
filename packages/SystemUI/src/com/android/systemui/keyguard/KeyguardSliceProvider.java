@@ -26,6 +26,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
+import android.database.ContentObserver;
+import android.graphics.drawable.Drawable;
+import android.content.res.Resources;
 import android.graphics.drawable.Icon;
 import android.icu.text.DateFormat;
 import android.icu.text.DisplayContext;
@@ -116,6 +119,8 @@ public class KeyguardSliceProvider extends SliceProvider implements
     private String mLastText;
     private boolean mRegistered;
     private String mNextAlarm;
+    private int mLsDateSel;
+    private String mLsDateSPattern;
     private NextAlarmController mNextAlarmController;
     @VisibleForTesting
     protected AlarmManager mAlarmManager;
@@ -228,6 +233,54 @@ public class KeyguardSliceProvider extends SliceProvider implements
         return slice;
     }
 
+    private ZenxSettingsObserver mZenxSettingsObserver;
+
+    private class ZenxSettingsObserver extends ContentObserver {
+        ZenxSettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            mContentResolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.LOCKSCREEN_DATE_SELECTION),
+                    false, this, UserHandle.USER_ALL);
+            mHandler.post(KeyguardSliceProvider.this::updateSettings);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            super.onChange(selfChange, uri);
+            if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_DATE_SELECTION))) {
+                updateDateSkeleton();
+                mContentResolver.notifyChange(mSliceUri, null /* observer */);
+            }
+            mHandler.post(KeyguardSliceProvider.this::updateSettings);
+        }
+
+        public void updateDateSkeleton() {
+            mLsDateSel = Settings.Secure.getIntForUser(mContentResolver, Settings.Secure.LOCKSCREEN_DATE_SELECTION, 0, UserHandle.USER_CURRENT);
+            switch (mLsDateSel) {
+            case 4: case 6: case 8:
+                mDatePattern = getContext().getString(R.string.abbrev_wday_day_no_year);
+                break;
+            case 5: case 7: case 9:
+                mDatePattern = getContext().getString(R.string.abbrev_wday_no_year);
+                break;
+            case 10:
+                mDatePattern = getContext().getString(R.string.abbrev_wday_month_no_year);
+                break;
+            default:
+                mDatePattern = getContext().getString(R.string.system_ui_aod_date_pattern);
+                break;
+            }
+            updateClockLocked();
+        }
+    }
+
+    public void updateSettings() {
+        mContentResolver.notifyChange(mSliceUri, null /* observer */);
+    }
+
     public boolean needsMediaLocked() {
         boolean keepWhenAwake = mKeyguardBypassController != null
                 && mKeyguardBypassController.getBypassEnabled() && mDozeParameters.getAlwaysOn();
@@ -322,6 +375,9 @@ public class KeyguardSliceProvider extends SliceProvider implements
             mZenModeController = new ZenModeControllerImpl(getContext(), mHandler);
             mZenModeController.addCallback(this);
             mDatePattern = getContext().getString(R.string.system_ui_aod_date_pattern);
+            mZenxSettingsObserver = new ZenxSettingsObserver(mHandler);
+            mZenxSettingsObserver.observe();
+            mZenxSettingsObserver.updateDateSkeleton();
             mPendingIntent = PendingIntent.getActivity(getContext(), 0, new Intent(), 0);
             mMediaWakeLock = new SettableWakeLock(WakeLock.createPartial(getContext(), "media"),
                     "media");
@@ -417,12 +473,10 @@ public class KeyguardSliceProvider extends SliceProvider implements
     }
 
     protected String getFormattedDateLocked() {
-        if (mDateFormat == null) {
-            final Locale l = Locale.getDefault();
-            DateFormat format = DateFormat.getInstanceForSkeleton(mDatePattern, l);
-            format.setContext(DisplayContext.CAPITALIZATION_FOR_STANDALONE);
-            mDateFormat = format;
-        }
+        final Locale l = Locale.getDefault();
+        DateFormat format = DateFormat.getInstanceForSkeleton(mDatePattern, l);
+        format.setContext(DisplayContext.CAPITALIZATION_FOR_STANDALONE);
+        mDateFormat = format;
         mCurrentTime.setTime(System.currentTimeMillis());
         return mDateFormat.format(mCurrentTime);
     }
