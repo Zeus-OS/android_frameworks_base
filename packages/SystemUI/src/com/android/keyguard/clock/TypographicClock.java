@@ -26,7 +26,6 @@ import android.text.format.DateFormat;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.widget.TextView;
-import android.content.Context;
 
 import com.android.systemui.R;
 

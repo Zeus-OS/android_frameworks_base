@@ -30,7 +30,7 @@ import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
-import com.android.internal.util.zenx.Utils;
+import com.android.internal.util.zenx.ZenxUtils;
 
 import java.util.TimeZone;
 import static com.android.systemui.statusbar.phone
@@ -191,7 +191,7 @@ public class TypeClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
-        if(Utils.useLockscreenClockAccentColor(mContext)) {
+        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
             mTypeClock.setTextColor(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
             mLockClock.setTextColor(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
         } else {
@@ -207,7 +207,7 @@ public class TypeClockController implements ClockPlugin {
             return;
         }
         final int color = colorPalette[Math.max(0, colorPalette.length - 5)];
-        if(Utils.useLockscreenClockAccentColor(mContext)) {
+        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
             mTypeClock.setClockColor(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
         } else {
             mTypeClock.setClockColor(color);
