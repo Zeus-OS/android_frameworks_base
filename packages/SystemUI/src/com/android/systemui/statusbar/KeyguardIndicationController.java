@@ -109,6 +109,17 @@ public class KeyguardIndicationController implements StateListener,
     private LottieAnimationView mChargingIndicationWater;
     private LottieAnimationView mChargingIndicationColorful;
     private LottieAnimationView mChargingIndicationProgress;
+
+    private int mIndicationAnimation;
+    private LottieAnimationView mIndicationSiri;
+    private LottieAnimationView mIndicationHorizontalLoad;
+    private LottieAnimationView mIndicationLoader;
+    private LottieAnimationView mIndicationPulse;
+    private LottieAnimationView mIndicationBall;
+    private LottieAnimationView mIndicationBlueLoading;
+    private LottieAnimationView mIndicationLoadSmile;
+    private LottieAnimationView mIndicationEqualizer;
+
     private int mChargingIndication;
     private final UserManager mUserManager;
     private final IBatteryStats mBatteryInfo;
@@ -246,6 +257,24 @@ public class KeyguardIndicationController implements StateListener,
               R.id.charging_indication_5);
         mChargingIndicationProgress = (LottieAnimationView) indicationArea.findViewById(
               R.id.charging_indication_6);
+
+        mIndicationSiri = (LottieAnimationView) indicationArea.findViewById(
+              R.id.charging_indication_7);
+        mIndicationHorizontalLoad = (LottieAnimationView) indicationArea.findViewById(
+              R.id.charging_indication_8);
+        mIndicationLoader = (LottieAnimationView) indicationArea.findViewById(
+              R.id.charging_indication_9);
+        mIndicationPulse = (LottieAnimationView) indicationArea.findViewById(
+              R.id.charging_indication_10);
+        mIndicationBall = (LottieAnimationView) indicationArea.findViewById(
+              R.id.charging_indication_11);
+        mIndicationBlueLoading = (LottieAnimationView) indicationArea.findViewById(
+              R.id.charging_indication_12);
+        mIndicationLoadSmile = (LottieAnimationView) indicationArea.findViewById(
+              R.id.charging_indication_13);
+        mIndicationEqualizer = (LottieAnimationView) indicationArea.findViewById(
+              R.id.charging_indication_14);
+
         updateIndication(false /* animate */);
     }
 
@@ -431,6 +460,11 @@ public class KeyguardIndicationController implements StateListener,
         }
     }
 
+    private boolean showLockscreenAnimationsOnDoze() {
+       return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_ANIMATION_ON_DOZE, 0) != 0;
+    }
+
     private boolean showBatteryBarOnDoze() {
         return Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.SHOW_BATTERY_BAR_ON_DOZE, 0) != 0;
@@ -497,6 +531,7 @@ public class KeyguardIndicationController implements StateListener,
                     }
                 }
                 updateChargingIndication();
+                updateLockscreenAnimation();
                 return;
             }
 
@@ -565,6 +600,9 @@ public class KeyguardIndicationController implements StateListener,
                             mBatteryBar.setVisibility(View.VISIBLE);
                             mBatteryBar.setBatteryPercent(mBatteryLevel);
                 }
+                 String indication = computePowerIndication();
+                        animateText(mTextView, indication);
+                        mTextView.switchIndication(indication);
             }
 
             if (showBatteryBarOnKeyguard() && !mPowerPluggedIn )  {
@@ -574,7 +612,226 @@ public class KeyguardIndicationController implements StateListener,
                             mBatteryBar.setBatteryPercent(mBatteryLevel);
             }
             updateChargingIndication();
+            updateLockscreenAnimation();
         }
+    }
+
+    public void updateLockscreenAnimation() {
+       mIndicationAnimation = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.LOCKSCREEN_ANIMATION, 0, UserHandle.USER_CURRENT);
+
+    if(!mPowerPluggedIn && !mDozing) {
+        switch (mIndicationAnimation) {
+            case 0: // hidden
+                mIndicationSiri.setVisibility(View.GONE);
+                mIndicationHorizontalLoad.setVisibility(View.GONE);
+                mIndicationLoader.setVisibility(View.GONE);
+                mIndicationPulse.setVisibility(View.GONE);
+                mIndicationBall.setVisibility(View.GONE);
+                mIndicationBlueLoading.setVisibility(View.GONE);
+                mIndicationLoadSmile.setVisibility(View.GONE);
+                mIndicationEqualizer.setVisibility(View.GONE);
+                break;
+            case 1: // siri
+                mIndicationSiri.setVisibility(View.VISIBLE);
+                mIndicationSiri.playAnimation();
+                mIndicationHorizontalLoad.setVisibility(View.GONE);
+                mIndicationLoader.setVisibility(View.GONE);
+                mIndicationPulse.setVisibility(View.GONE);
+                mIndicationBall.setVisibility(View.GONE);
+                mIndicationBlueLoading.setVisibility(View.GONE);
+                mIndicationLoadSmile.setVisibility(View.GONE);
+                mIndicationEqualizer.setVisibility(View.GONE);
+                break;
+            case 2: // horizontal load
+                mIndicationSiri.setVisibility(View.GONE);
+                mIndicationHorizontalLoad.setVisibility(View.VISIBLE);
+                mIndicationHorizontalLoad.playAnimation();
+                mIndicationLoader.setVisibility(View.GONE);
+                mIndicationPulse.setVisibility(View.GONE);
+                mIndicationBall.setVisibility(View.GONE);
+                mIndicationBlueLoading.setVisibility(View.GONE);
+                mIndicationLoadSmile.setVisibility(View.GONE);
+                mIndicationEqualizer.setVisibility(View.GONE);
+                break;
+            case 3: // Loader
+                mIndicationSiri.setVisibility(View.GONE);
+                mIndicationHorizontalLoad.setVisibility(View.GONE);
+                mIndicationLoader.setVisibility(View.VISIBLE);
+                mIndicationLoader.playAnimation();
+                mIndicationPulse.setVisibility(View.GONE);
+                mIndicationBall.setVisibility(View.GONE);
+                mIndicationBlueLoading.setVisibility(View.GONE);
+                mIndicationLoadSmile.setVisibility(View.GONE);
+                mIndicationEqualizer.setVisibility(View.GONE);
+                break;
+            case 4: // Pulse
+                mIndicationSiri.setVisibility(View.GONE);
+                mIndicationHorizontalLoad.setVisibility(View.GONE);
+                mIndicationLoader.setVisibility(View.GONE);
+                mIndicationPulse.setVisibility(View.VISIBLE);
+                mIndicationPulse.playAnimation();
+                mIndicationBall.setVisibility(View.GONE);
+                mIndicationBlueLoading.setVisibility(View.GONE);
+                mIndicationLoadSmile.setVisibility(View.GONE);
+                mIndicationEqualizer.setVisibility(View.GONE);
+                break;
+            case 5: // Ball
+                mIndicationSiri.setVisibility(View.GONE);
+                mIndicationHorizontalLoad.setVisibility(View.GONE);
+                mIndicationLoader.setVisibility(View.GONE);
+                mIndicationPulse.setVisibility(View.GONE);
+                mIndicationBall.setVisibility(View.VISIBLE);
+                mIndicationBall.playAnimation();
+                mIndicationBlueLoading.setVisibility(View.GONE);
+                mIndicationLoadSmile.setVisibility(View.GONE);
+                mIndicationEqualizer.setVisibility(View.GONE);
+                break;
+            case 6: // BlueLoading
+                mIndicationSiri.setVisibility(View.GONE);
+                mIndicationHorizontalLoad.setVisibility(View.GONE);
+                mIndicationLoader.setVisibility(View.GONE);
+                mIndicationPulse.setVisibility(View.GONE);
+                mIndicationBall.setVisibility(View.GONE);
+                mIndicationBlueLoading.setVisibility(View.VISIBLE);
+                mIndicationBlueLoading.playAnimation();
+                mIndicationLoadSmile.setVisibility(View.GONE);
+                mIndicationEqualizer.setVisibility(View.GONE);
+                break;
+            case 7: // loading smile
+                mIndicationSiri.setVisibility(View.GONE);
+                mIndicationHorizontalLoad.setVisibility(View.GONE);
+                mIndicationLoader.setVisibility(View.GONE);
+                mIndicationPulse.setVisibility(View.GONE);
+                mIndicationBall.setVisibility(View.GONE);
+                mIndicationBlueLoading.setVisibility(View.GONE);
+                mIndicationLoadSmile.setVisibility(View.VISIBLE);
+                mIndicationLoadSmile.playAnimation();
+                mIndicationEqualizer.setVisibility(View.GONE);
+                break;
+            case 8: // Equalizer
+                mIndicationSiri.setVisibility(View.GONE);
+                mIndicationHorizontalLoad.setVisibility(View.GONE);
+                mIndicationLoader.setVisibility(View.GONE);
+                mIndicationPulse.setVisibility(View.GONE);
+                mIndicationBall.setVisibility(View.GONE);
+                mIndicationBlueLoading.setVisibility(View.GONE);
+                mIndicationLoadSmile.setVisibility(View.GONE);
+                mIndicationEqualizer.setVisibility(View.VISIBLE);
+                mIndicationEqualizer.playAnimation();
+                break;
+            }
+        } else if (!mPowerPluggedIn && mDozing && showLockscreenAnimationsOnDoze()) {
+        switch (mIndicationAnimation) {
+                               case 0: // hidden
+                mIndicationSiri.setVisibility(View.GONE);
+                mIndicationHorizontalLoad.setVisibility(View.GONE);
+                mIndicationLoader.setVisibility(View.GONE);
+                mIndicationPulse.setVisibility(View.GONE);
+                mIndicationBall.setVisibility(View.GONE);
+                mIndicationBlueLoading.setVisibility(View.GONE);
+                mIndicationLoadSmile.setVisibility(View.GONE);
+                mIndicationEqualizer.setVisibility(View.GONE);
+                break;
+            case 1: // siri
+                mIndicationSiri.setVisibility(View.VISIBLE);
+                mIndicationSiri.playAnimation();
+                mIndicationHorizontalLoad.setVisibility(View.GONE);
+                mIndicationLoader.setVisibility(View.GONE);
+                mIndicationPulse.setVisibility(View.GONE);
+                mIndicationBall.setVisibility(View.GONE);
+                mIndicationBlueLoading.setVisibility(View.GONE);
+                mIndicationLoadSmile.setVisibility(View.GONE);
+                mIndicationEqualizer.setVisibility(View.GONE);
+                break;
+            case 2: // horizontal load
+                mIndicationSiri.setVisibility(View.GONE);
+                mIndicationHorizontalLoad.setVisibility(View.VISIBLE);
+                mIndicationHorizontalLoad.playAnimation();
+                mIndicationLoader.setVisibility(View.GONE);
+                mIndicationPulse.setVisibility(View.GONE);
+                mIndicationBall.setVisibility(View.GONE);
+                mIndicationBlueLoading.setVisibility(View.GONE);
+                mIndicationLoadSmile.setVisibility(View.GONE);
+                mIndicationEqualizer.setVisibility(View.GONE);
+                break;
+            case 3: // Loader
+                mIndicationSiri.setVisibility(View.GONE);
+                mIndicationHorizontalLoad.setVisibility(View.GONE);
+                mIndicationLoader.setVisibility(View.VISIBLE);
+                mIndicationLoader.playAnimation();
+                mIndicationPulse.setVisibility(View.GONE);
+                mIndicationBall.setVisibility(View.GONE);
+                mIndicationBlueLoading.setVisibility(View.GONE);
+                mIndicationLoadSmile.setVisibility(View.GONE);
+                mIndicationEqualizer.setVisibility(View.GONE);
+                break;
+            case 4: // Pulse
+                mIndicationSiri.setVisibility(View.GONE);
+                mIndicationHorizontalLoad.setVisibility(View.GONE);
+                mIndicationLoader.setVisibility(View.GONE);
+                mIndicationPulse.setVisibility(View.VISIBLE);
+                mIndicationPulse.playAnimation();
+                mIndicationBall.setVisibility(View.GONE);
+                mIndicationBlueLoading.setVisibility(View.GONE);
+                mIndicationLoadSmile.setVisibility(View.GONE);
+                mIndicationEqualizer.setVisibility(View.GONE);
+                break;
+            case 5: // Ball
+                mIndicationSiri.setVisibility(View.GONE);
+                mIndicationHorizontalLoad.setVisibility(View.GONE);
+                mIndicationLoader.setVisibility(View.GONE);
+                mIndicationPulse.setVisibility(View.GONE);
+                mIndicationBall.setVisibility(View.VISIBLE);
+                mIndicationBall.playAnimation();
+                mIndicationBlueLoading.setVisibility(View.GONE);
+                mIndicationLoadSmile.setVisibility(View.GONE);
+                mIndicationEqualizer.setVisibility(View.GONE);
+                break;
+            case 6: // BlueLoading
+                mIndicationSiri.setVisibility(View.GONE);
+                mIndicationHorizontalLoad.setVisibility(View.GONE);
+                mIndicationLoader.setVisibility(View.GONE);
+                mIndicationPulse.setVisibility(View.GONE);
+                mIndicationBall.setVisibility(View.GONE);
+                mIndicationBlueLoading.setVisibility(View.VISIBLE);
+                mIndicationBlueLoading.playAnimation();
+                mIndicationLoadSmile.setVisibility(View.GONE);
+                mIndicationEqualizer.setVisibility(View.GONE);
+                break;
+            case 7: // loading smile
+                mIndicationSiri.setVisibility(View.GONE);
+                mIndicationHorizontalLoad.setVisibility(View.GONE);
+                mIndicationLoader.setVisibility(View.GONE);
+                mIndicationPulse.setVisibility(View.GONE);
+                mIndicationBall.setVisibility(View.GONE);
+                mIndicationBlueLoading.setVisibility(View.GONE);
+                mIndicationLoadSmile.setVisibility(View.VISIBLE);
+                mIndicationLoadSmile.playAnimation();
+                mIndicationEqualizer.setVisibility(View.GONE);
+                break;
+            case 8: // Equalizer
+                mIndicationSiri.setVisibility(View.GONE);
+                mIndicationHorizontalLoad.setVisibility(View.GONE);
+                mIndicationLoader.setVisibility(View.GONE);
+                mIndicationPulse.setVisibility(View.GONE);
+                mIndicationBall.setVisibility(View.GONE);
+                mIndicationBlueLoading.setVisibility(View.GONE);
+                mIndicationLoadSmile.setVisibility(View.GONE);
+                mIndicationEqualizer.setVisibility(View.VISIBLE);
+                mIndicationEqualizer.playAnimation();
+                break;
+            }
+        } else {
+                mIndicationSiri.setVisibility(View.GONE);
+                mIndicationHorizontalLoad.setVisibility(View.GONE);
+                mIndicationLoader.setVisibility(View.GONE);
+                mIndicationPulse.setVisibility(View.GONE);
+                mIndicationBall.setVisibility(View.GONE);
+                mIndicationBlueLoading.setVisibility(View.GONE);
+                mIndicationLoadSmile.setVisibility(View.GONE);
+                mIndicationEqualizer.setVisibility(View.GONE);
+            }
     }
 
     public void updateChargingIndication() {
@@ -592,6 +849,12 @@ public class KeyguardIndicationController implements StateListener,
                     mChargingIndicationWater.setVisibility(View.GONE);
                     mChargingIndicationColorful.setVisibility(View.GONE);
                     mChargingIndicationProgress.setVisibility(View.GONE);
+                    mIndicationSiri.setVisibility(View.GONE);
+                    mIndicationHorizontalLoad.setVisibility(View.GONE);
+                    mIndicationLoader.setVisibility(View.GONE);
+                    mIndicationPulse.setVisibility(View.GONE);
+                    mIndicationBall.setVisibility(View.GONE);
+                    mIndicationBlueLoading.setVisibility(View.GONE);
                     break;
                 case 1: // Flash
                     mChargingIndicationView.setVisibility(View.VISIBLE);
@@ -602,6 +865,12 @@ public class KeyguardIndicationController implements StateListener,
                     mChargingIndicationWater.setVisibility(View.GONE);
                     mChargingIndicationColorful.setVisibility(View.GONE);
                     mChargingIndicationProgress.setVisibility(View.GONE);
+                    mIndicationSiri.setVisibility(View.GONE);
+                    mIndicationHorizontalLoad.setVisibility(View.GONE);
+                    mIndicationLoader.setVisibility(View.GONE);
+                    mIndicationPulse.setVisibility(View.GONE);
+                    mIndicationBall.setVisibility(View.GONE);
+                    mIndicationBlueLoading.setVisibility(View.GONE);
                     break;
                 case 2: // Battery
                     mChargingIndicationBat.setVisibility(View.VISIBLE);
@@ -612,6 +881,12 @@ public class KeyguardIndicationController implements StateListener,
                     mChargingIndicationWater.setVisibility(View.GONE);
                     mChargingIndicationColorful.setVisibility(View.GONE);
                     mChargingIndicationProgress.setVisibility(View.GONE);
+                    mIndicationSiri.setVisibility(View.GONE);
+                    mIndicationHorizontalLoad.setVisibility(View.GONE);
+                    mIndicationLoader.setVisibility(View.GONE);
+                    mIndicationPulse.setVisibility(View.GONE);
+                    mIndicationBall.setVisibility(View.GONE);
+                    mIndicationBlueLoading.setVisibility(View.GONE);
                     break;
                 case 3: // Drop
                     mChargingIndicationDrop.setVisibility(View.VISIBLE);
@@ -622,6 +897,12 @@ public class KeyguardIndicationController implements StateListener,
                     mChargingIndicationWater.setVisibility(View.GONE);
                     mChargingIndicationColorful.setVisibility(View.GONE);
                     mChargingIndicationProgress.setVisibility(View.GONE);
+                    mIndicationSiri.setVisibility(View.GONE);
+                    mIndicationHorizontalLoad.setVisibility(View.GONE);
+                    mIndicationLoader.setVisibility(View.GONE);
+                    mIndicationPulse.setVisibility(View.GONE);
+                    mIndicationBall.setVisibility(View.GONE);
+                    mIndicationBlueLoading.setVisibility(View.GONE);
                     break;
                 case 4: // Explosion
                     mChargingIndicationExplosion.setVisibility(View.VISIBLE);
@@ -632,6 +913,12 @@ public class KeyguardIndicationController implements StateListener,
                     mChargingIndicationWater.setVisibility(View.GONE);
                     mChargingIndicationColorful.setVisibility(View.GONE);
                     mChargingIndicationProgress.setVisibility(View.GONE);
+                    mIndicationSiri.setVisibility(View.GONE);
+                    mIndicationHorizontalLoad.setVisibility(View.GONE);
+                    mIndicationLoader.setVisibility(View.GONE);
+                    mIndicationPulse.setVisibility(View.GONE);
+                    mIndicationBall.setVisibility(View.GONE);
+                    mIndicationBlueLoading.setVisibility(View.GONE);
                     break;
                 case 5: // Water
                     mChargingIndicationWater.setVisibility(View.VISIBLE);
@@ -642,6 +929,12 @@ public class KeyguardIndicationController implements StateListener,
                     mChargingIndicationExplosion.setVisibility(View.GONE);
                     mChargingIndicationColorful.setVisibility(View.GONE);
                     mChargingIndicationProgress.setVisibility(View.GONE);
+                    mIndicationSiri.setVisibility(View.GONE);
+                    mIndicationHorizontalLoad.setVisibility(View.GONE);
+                    mIndicationLoader.setVisibility(View.GONE);
+                    mIndicationPulse.setVisibility(View.GONE);
+                    mIndicationBall.setVisibility(View.GONE);
+                    mIndicationBlueLoading.setVisibility(View.GONE);
                     break;
                 case 6: // Colorful
                     mChargingIndicationWater.setVisibility(View.GONE);
@@ -652,6 +945,12 @@ public class KeyguardIndicationController implements StateListener,
                     mChargingIndicationColorful.setVisibility(View.VISIBLE);
                     mChargingIndicationColorful.playAnimation();
                     mChargingIndicationProgress.setVisibility(View.GONE);
+                    mIndicationSiri.setVisibility(View.GONE);
+                    mIndicationHorizontalLoad.setVisibility(View.GONE);
+                    mIndicationLoader.setVisibility(View.GONE);
+                    mIndicationPulse.setVisibility(View.GONE);
+                    mIndicationBall.setVisibility(View.GONE);
+                    mIndicationBlueLoading.setVisibility(View.GONE);
                     break;
                 case 7: // Progress
                     mChargingIndicationWater.setVisibility(View.GONE);
@@ -662,6 +961,12 @@ public class KeyguardIndicationController implements StateListener,
                     mChargingIndicationColorful.setVisibility(View.GONE);
                     mChargingIndicationProgress.setVisibility(View.VISIBLE);
                     mChargingIndicationProgress.playAnimation();
+                    mIndicationSiri.setVisibility(View.GONE);
+                    mIndicationHorizontalLoad.setVisibility(View.GONE);
+                    mIndicationLoader.setVisibility(View.GONE);
+                    mIndicationPulse.setVisibility(View.GONE);
+                    mIndicationBall.setVisibility(View.GONE);
+                    mIndicationBlueLoading.setVisibility(View.GONE);
                     break;
             }
         } else {
@@ -672,8 +977,9 @@ public class KeyguardIndicationController implements StateListener,
             mChargingIndicationWater.setVisibility(View.GONE);
             mChargingIndicationColorful.setVisibility(View.GONE);
             mChargingIndicationProgress.setVisibility(View.GONE);
+            }
 	    }
-    }
+
 
     // animates textView - textView moves up and bounces down
     private void animateText(KeyguardIndicationTextView textView, String indication) {

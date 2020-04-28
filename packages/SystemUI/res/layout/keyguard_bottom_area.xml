@@ -102,23 +102,84 @@
              app:lottie_loop="true"
              android:visibility="gone" />
 
+         <!-- Always show animations on lockscreen -->
         <com.airbnb.lottie.LottieAnimationView
              android:id="@+id/charging_indication_7"
-             android:layout_width="120dp"
+             android:layout_width="185dp"
              android:layout_height="120dp"
              android:layout_gravity="center_horizontal"
              android:clickable="false"
-             app:lottie_fileName="keyguard_charge_loader.json"
+             app:lottie_fileName="keyguard_siri.json"
              app:lottie_loop="true"
              android:visibility="gone" />
 
         <com.airbnb.lottie.LottieAnimationView
              android:id="@+id/charging_indication_8"
              android:layout_width="145dp"
-             android:layout_height="80dp"
+             android:layout_height="120dp"
              android:layout_gravity="center_horizontal"
              android:clickable="false"
-             app:lottie_fileName="keyguard_charge_loading.json"
+             app:lottie_fileName="keyguard_horizontal_load.json"
+             app:lottie_loop="true"
+             android:visibility="gone" />
+
+        <com.airbnb.lottie.LottieAnimationView
+             android:id="@+id/charging_indication_9"
+             android:layout_width="145dp"
+             android:layout_height="120dp"
+             android:layout_gravity="center_horizontal"
+             android:clickable="false"
+             app:lottie_fileName="keyguard_loader.json"
+             app:lottie_loop="true"
+             android:visibility="gone" />
+
+        <com.airbnb.lottie.LottieAnimationView
+             android:id="@+id/charging_indication_10"
+             android:layout_width="145dp"
+             android:layout_height="120dp"
+             android:layout_gravity="center_horizontal"
+             android:clickable="false"
+             app:lottie_fileName="keyguard_pulse.json"
+             app:lottie_loop="true"
+             android:visibility="gone" />
+
+        <com.airbnb.lottie.LottieAnimationView
+             android:id="@+id/charging_indication_11"
+             android:layout_width="145dp"
+             android:layout_height="120dp"
+             android:layout_gravity="center_horizontal"
+             android:clickable="false"
+             app:lottie_fileName="keyguard_ball.json"
+             app:lottie_loop="true"
+             android:visibility="gone" />
+
+        <com.airbnb.lottie.LottieAnimationView
+             android:id="@+id/charging_indication_12"
+             android:layout_width="145dp"
+             android:layout_height="120dp"
+             android:layout_gravity="center_horizontal"
+             android:clickable="false"
+             app:lottie_fileName="keyguard_blue_loading.json"
+             app:lottie_loop="true"
+             android:visibility="gone" />
+
+        <com.airbnb.lottie.LottieAnimationView
+             android:id="@+id/charging_indication_13"
+             android:layout_width="145dp"
+             android:layout_height="120dp"
+             android:layout_gravity="center_horizontal"
+             android:clickable="false"
+             app:lottie_fileName="keyguard_load_smile.json"
+             app:lottie_loop="true"
+             android:visibility="gone" />
+
+        <com.airbnb.lottie.LottieAnimationView
+             android:id="@+id/charging_indication_14"
+             android:layout_width="145dp"
+             android:layout_height="120dp"
+             android:layout_gravity="center_horizontal"
+             android:clickable="false"
+             app:lottie_fileName="keyguard_equalizer.json"
              app:lottie_loop="true"
              android:visibility="gone" />
 
@@ -131,7 +192,6 @@
             android:paddingEnd="@dimen/keyguard_indication_text_padding"
             android:textAppearance="@style/TextAppearance.Keyguard.BottomArea"
             android:visibility="gone"/>
-
 
         <com.android.systemui.omni.BatteryBarView
             android:id="@+id/battery_bar_view"
