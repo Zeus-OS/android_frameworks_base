@@ -5376,6 +5376,16 @@ public final class Settings {
          */
         public static final String SYSUI_KEYGUARD_SHOW_BATTERY_BAR_ALWAYS = "sysui_keyguard_show_battery_bar_always";
 
+        /**
+         * Battery bar color
+         *
+         * @hide
+         */
+        public static final String SYSUI_KEYGUARD_BATTERY_BAR_COLOR = "sysui_keyguard_battery_bar_color";
+        /** @hide */
+        private static final Validator SYSUI_KEYGUARD_BATTERY_BAR_COLOR_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
          /**
          * Network traffic layout
          * @hide
