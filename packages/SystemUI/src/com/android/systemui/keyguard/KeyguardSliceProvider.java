@@ -42,6 +42,7 @@ import android.provider.Settings;
 import android.service.notification.ZenModeConfig;
 import android.text.TextUtils;
 import android.text.style.StyleSpan;
+import android.os.UserHandle;
 
 import androidx.core.graphics.drawable.IconCompat;
 import androidx.slice.Slice;
@@ -65,6 +66,7 @@ import com.android.systemui.statusbar.policy.ZenModeController;
 import com.android.systemui.statusbar.policy.ZenModeControllerImpl;
 import com.android.systemui.util.wakelock.SettableWakeLock;
 import com.android.systemui.util.wakelock.WakeLock;
+import android.database.ContentObserver;
 
 import java.util.Date;
 import java.util.Locale;
@@ -138,6 +140,7 @@ public class KeyguardSliceProvider extends SliceProvider implements
     private boolean mMediaIsVisible;
     private boolean mPulseOnNewTracks;
     private static final String PULSE_ACTION = "com.android.systemui.doze.pulse";
+    private boolean mDndEnabled, mAlarmEnabled;
 
     /**
      * Receiver responsible for time ticking and updating the date format.
@@ -244,6 +247,12 @@ public class KeyguardSliceProvider extends SliceProvider implements
             mContentResolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.LOCKSCREEN_DATE_SELECTION),
                     false, this, UserHandle.USER_ALL);
+            mContentResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SHOW_DND_ON_LOCKSCREEN),
+                    false, this, UserHandle.USER_ALL);
+            mContentResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SHOW_ALARM_ON_LOCKSCREEN),
+                    false, this, UserHandle.USER_ALL);
             mHandler.post(KeyguardSliceProvider.this::updateSettings);
         }
 
@@ -278,6 +287,11 @@ public class KeyguardSliceProvider extends SliceProvider implements
     }
 
     public void updateSettings() {
+        mDndEnabled = Settings.System.getIntForUser(mContentResolver,
+            Settings.System.SHOW_DND_ON_LOCKSCREEN, 1, UserHandle.USER_CURRENT) != 0;
+        mAlarmEnabled = Settings.System.getIntForUser(mContentResolver,
+            Settings.System.SHOW_ALARM_ON_LOCKSCREEN, 0, UserHandle.USER_CURRENT) != 0;
+
         mContentResolver.notifyChange(mSliceUri, null /* observer */);
     }
 
@@ -328,12 +342,15 @@ public class KeyguardSliceProvider extends SliceProvider implements
         if (TextUtils.isEmpty(mNextAlarm)) {
             return;
         }
-        IconCompat alarmIcon = IconCompat.createWithResource(getContext(),
-                R.drawable.ic_access_alarms_big);
-        RowBuilder alarmRowBuilder = new RowBuilder(mAlarmUri)
-                .setTitle(mNextAlarm)
-                .addEndItem(alarmIcon, ListBuilder.ICON_IMAGE);
-        builder.addRow(alarmRowBuilder);
+
+        if(mAlarmEnabled) {
+            IconCompat alarmIcon = IconCompat.createWithResource(getContext(),
+            R.drawable.ic_access_alarms_big);
+            RowBuilder alarmRowBuilder = new RowBuilder(mAlarmUri)
+                    .setTitle(mNextAlarm)
+                    .addEndItem(alarmIcon, ListBuilder.ICON_IMAGE);
+            builder.addRow(alarmRowBuilder);
+        }
     }
 
     /**
@@ -344,13 +361,15 @@ public class KeyguardSliceProvider extends SliceProvider implements
         if (!isDndOn()) {
             return;
         }
-        RowBuilder dndBuilder = new RowBuilder(mDndUri)
-                .setContentDescription(getContext().getResources()
-                        .getString(R.string.accessibility_quick_settings_dnd))
-                .addEndItem(
-                    IconCompat.createWithResource(getContext(), R.drawable.stat_sys_dnd),
-                    ListBuilder.ICON_IMAGE);
-        builder.addRow(dndBuilder);
+        if(mDndEnabled) {
+            RowBuilder dndBuilder = new RowBuilder(mDndUri)
+            .setContentDescription(getContext().getResources()
+                    .getString(R.string.accessibility_quick_settings_dnd))
+            .addEndItem(
+                IconCompat.createWithResource(getContext(), R.drawable.stat_keyguard_sys_dnd),
+                ListBuilder.ICON_IMAGE);
+            builder.addRow(dndBuilder);
+        }
     }
 
     /**
@@ -374,6 +393,8 @@ public class KeyguardSliceProvider extends SliceProvider implements
             mNextAlarmController.addCallback(this);
             mZenModeController = new ZenModeControllerImpl(getContext(), mHandler);
             mZenModeController.addCallback(this);
+            mZenxSettingsObserver = new ZenxSettingsObserver(mHandler);
+            mZenxSettingsObserver.observe();
             mDatePattern = getContext().getString(R.string.system_ui_aod_date_pattern);
             mZenxSettingsObserver = new ZenxSettingsObserver(mHandler);
             mZenxSettingsObserver.observe();

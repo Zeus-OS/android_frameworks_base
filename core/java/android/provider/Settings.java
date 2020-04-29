@@ -4724,6 +4724,18 @@ public final class Settings {
         private static final Validator QS_SHOW_BATTERY_ESTIMATE_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+        * Show or hide dnd on lockscreen
+        * @hide
+        */
+        public static final String SHOW_DND_ON_LOCKSCREEN = "show_dnd_on_lockscreen";
+
+        /**
+         * Show or hide alarm on lockscreen
+         * @hide
+         */
+        public static final String SHOW_ALARM_ON_LOCKSCREEN = "show_alarm_on_lockscreen";
+
+        /**
          * Whether the user has already accepted MediaProjection permission for the built-in screenrecorder
          * @hide
          */
