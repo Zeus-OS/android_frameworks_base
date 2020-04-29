@@ -76,6 +76,11 @@ public class BinaryClockController implements ClockPlugin {
     private TextClock mLockClock;
 
     /**
+     * Helper to extract colors from wallpaper palette for clock face.
+     */
+    private final ClockPalette mPalette = new ClockPalette();
+
+    /**
      * Create a BinaryClockController instance.
      *
      * @param res Resources contains title and thumbnail.
@@ -163,11 +168,21 @@ public class BinaryClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
-        mBinaryClock.setTintColor(color);
+        updateColor();
     }
 
     @Override
-    public void setColorPalette(boolean supportsDarkText, int[] colorPalette) {}
+    public void setColorPalette(boolean supportsDarkText, int[] colorPalette) {
+        mPalette.setColorPalette(supportsDarkText, colorPalette);
+        updateColor();
+    }
+
+    private void updateColor() {
+        final int primary = mPalette.getPrimaryColor();
+        final int secondary = mPalette.getSecondaryColor();
+        mLockClock.setTextColor(secondary);
+        mBinaryClock.setTintColor(primary);
+    }
 
     @Override
     public void onTimeTick() {
@@ -178,6 +193,7 @@ public class BinaryClockController implements ClockPlugin {
 
     @Override
     public void setDarkAmount(float darkAmount) {
+        mPalette.setDarkAmount(darkAmount);
         mClockPosition.setDarkAmount(darkAmount);
         mBigClockView.setDarkAmount(darkAmount);
         boolean dark = darkAmount == 1;
