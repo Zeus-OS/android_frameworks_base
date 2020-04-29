@@ -373,8 +373,13 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         }
     }
 
+    public boolean showPrivacyChip() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.SHOW_PRIVACY_CHIP, 0) == 1;
+    }
+
     private void setChipVisibility(boolean chipVisible) {
-        if (chipVisible && mPermissionsHubEnabled && mBatteryInQS) {
+        if (chipVisible && mPermissionsHubEnabled && showPrivacyChip()) {
             mPrivacyChip.setVisibility(View.VISIBLE);
             mSystemInfoLayout.setVisibility(View.GONE);
             // Makes sure that the chip is logged as viewed at most once each time QS is opened
@@ -392,7 +397,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     private int getQsSystemInfoMode() {
         return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_SYSTEM_INFO, 0);
+                Settings.System.QS_SYSTEM_INFO, 2);
     }
 
     public boolean isQsSystemInfoIconEnabled() {

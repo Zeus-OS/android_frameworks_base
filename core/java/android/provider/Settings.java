@@ -4418,6 +4418,12 @@ public final class Settings {
         public static final Validator SHOW_WEB_SUGGESTIONS_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Whether to show privacy ship
+         * @hide
+         */
+        public static final String SHOW_PRIVACY_CHIP = "show_privacy_chip";
+
+        /**
          * Whether to enable Smart Pixels
          * @hide
          */
