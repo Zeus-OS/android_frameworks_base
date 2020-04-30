@@ -65,12 +65,6 @@
         android:orientation="horizontal"
         android:gravity="center_vertical|end" >
 
-        <com.android.systemui.statusbar.policy.NetworkTraffic
-            android:id="@+id/networkTraffic"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingStart="1dp" />
-
         <include layout="@layout/ongoing_privacy_chip" />
 
         <LinearLayout
