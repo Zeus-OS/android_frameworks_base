@@ -55,7 +55,7 @@
     <string name="global_action_restart_recovery">Recovery</string>
     <string name="global_action_restart_bootloader">Bootloader</string>
     <string name="global_action_restart_ui">System-UI</string>
-    <string name="global_action_restart_hot">Beliebt</string>
+    <string name="global_action_restart_hot">Schnellstart</string>
     <!-- QS Config -->
     <string name="qs_menu_item_columns">Spalten</string>
     <string name="qs_menu_item_columns_landscape">Spalten (Querformat)</string>
@@ -217,4 +217,6 @@
     <string name="app_picker_dialog_title">App auswählen</string>
     <string name="recents_app_killed">Anwendung beendet</string>
     <string name="nope_cant_kill">Launcher kann nicht beendet werden</string>
+    
+    <string name="usage_data">verbraucht</string>
 </resources>
