@@ -4813,6 +4813,16 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+        /**
+        * Wether to enable Thermal profiles
+        * @hide
+        */
+        public static final String THERMAL_PROFILE_MODE = "thermal_profile_mode";
+        /** @hide */
+        private static final Validator THERMAL_PROFILE_MODE_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Manual display color adjustments (RGB values as floats, separated by spaces)
          */
         public static final String DISPLAY_COLOR_ADJUSTMENT = "display_color_adjustment";
@@ -4891,6 +4901,11 @@ public final class Settings {
         /**
          * @hide
          */
+        public static final String ULTRA_POWER_SAVE = "ultra_power_save";
+
+        /**
+         * @hide
+         */
         public static final String SMART_CHARGING = "smart_charging";
 
         /**
@@ -4919,7 +4934,7 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
-         * Clock font style  QS 
+         * Clock font style  QS
          * @hide
          */
         public static final String QS_HEADER_CLOCK_FONT_STYLE = "qs_header_clock_font_style";
@@ -5680,6 +5695,12 @@ public final class Settings {
          * @hide
          */
         public static final String NOTIFICATION_SOUND_VIB_SCREEN_ON = "notification_sound_vib_screen_on";
+
+        /**
+         * Last Performance mode
+         * @hide
+         */
+        public static final String LAST_PERFORMANCE_PROFILE= "last_performance_profile";
 
         /**
          * Show or hide clock

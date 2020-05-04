@@ -318,4 +318,16 @@
         <item>com.whatsapp.Whatsapp</item>
         <item>org.telegram.messenger.Telegram</item>
     </string-array> 
+    
+    <!-- Whether or not to use intelligent profiles -->
+    <bool name="config_intelligent_performance_profile">false</bool>
+
+    <!-- Initially set all to balanced with persist.spectrum.profile=0
+    For example if you want to change performance profile from balanced to performance (in my case performance profile is persist.spectrum.profile=1 )
+    then set <string name="config_performance_profile" translatable="false">1</string>, override these config via device tree.
+    -->
+    <string name="config_balanced_profile" translatable="false">0</string>
+    <string name="config_performance_profile" translatable="false">0</string>
+    <string name="config_powersave_profile" translatable="false">0</string>
+    <string name="config_screen_off_profile" translatable="false">0</string>
 </resources>

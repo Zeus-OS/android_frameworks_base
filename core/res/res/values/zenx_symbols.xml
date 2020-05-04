@@ -267,4 +267,9 @@
     <!-- Enable face auth when swiping security view -->
     <java-symbol type="bool" name="config_faceAuthOnSecurityView" />
 
+  <java-symbol type="bool" name="config_intelligent_performance_profile" />
+  <java-symbol type="string" name="config_balanced_profile" />
+  <java-symbol type="string" name="config_performance_profile" />
+  <java-symbol type="string" name="config_powersave_profile" />
+  <java-symbol type="string" name="config_screen_off_profile"/>
 </resources>

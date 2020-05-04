@@ -44,6 +44,7 @@ import android.os.RemoteException;
 import android.os.Process;
 import android.os.UserHandle;
 import android.text.TextUtils;
+import android.os.SystemProperties;
 
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -51,6 +52,7 @@ import java.util.List;
 
 import com.android.internal.R;
 import com.android.internal.notification.SystemNotificationChannels;
+import com.android.internal.util.zenx.ZenxUtils;
 
 import android.provider.Settings;
 import android.provider.Settings.Global;
@@ -70,6 +72,7 @@ public class GamingModeController {
     private ArrayList<String> mGameApp = new ArrayList<String>();
 
     private boolean mGamingModeActivated;
+    private String mCurrentPerformanceProfileState;
     private static int mRingerState;
     private static int mZenState;
     private static int mHwKeysState;
@@ -80,6 +83,8 @@ public class GamingModeController {
 
     private static final String TAG = "GamingModeController";
     private static final int GAMING_NOTIFICATION_ID = 420;
+
+    public static final String SPECTRUM_SYSTEM_PROPERTY = "persist.spectrum.profile";
 
     public GamingModeController(Context context) {
         mContext = context;
@@ -347,9 +352,24 @@ public class GamingModeController {
             return;
         mGamingModeActivated = enabled && mGamingModeEnabled;
         if (mGamingModeActivated) {
+            if(ZenxUtils.IntelligentPerformanceProfileAvailable()){
+                deviceSpecificPerfermanceModeHandler(mGamingModeActivated);
+            }
             enableGamingFeatures();
         } else {
+            if(ZenxUtils.IntelligentPerformanceProfileAvailable()) {
+                deviceSpecificPerfermanceModeHandler(mGamingModeActivated);
+            }
             disableGamingFeatures();
+        }
+    }
+
+    private void deviceSpecificPerfermanceModeHandler(boolean enabled) {
+        if(enabled) {
+            ZenxUtils.SetLastPerformanceProfileToSettings(mContext, SystemProperties.get(SPECTRUM_SYSTEM_PROPERTY, Resources.getSystem().getString(R.string.config_balanced_profile)));
+            SystemProperties.set(SPECTRUM_SYSTEM_PROPERTY, Resources.getSystem().getString(R.string.config_performance_profile));
+        } else {
+                SystemProperties.set(SPECTRUM_SYSTEM_PROPERTY, ZenxUtils.GetLastPerformanceProfileFromSettings(mContext));
         }
     }
 

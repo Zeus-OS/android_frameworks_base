@@ -20,15 +20,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Resources;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.os.PowerSaveState;
 import android.util.Log;
+import android.os.SystemProperties;
 
 import androidx.annotation.Nullable;
 
+import com.android.internal.R;
+import com.android.internal.util.zenx.ZenxUtils;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.settingslib.fuelgauge.BatterySaverUtils;
 import com.android.settingslib.fuelgauge.Estimate;
@@ -53,6 +57,7 @@ public class BatteryControllerImpl extends BroadcastReceiver implements BatteryC
     private static final String TAG = "BatteryController";
 
     public static final String ACTION_LEVEL_TEST = "com.android.systemui.BATTERY_LEVEL_TEST";
+    public static final String SPECTRUM_SYSTEM_PROPERTY = "persist.spectrum.profile";
 
     private static final boolean DEBUG = Log.isLoggable(TAG, Log.DEBUG);
     private static final int UPDATE_GRANULARITY_MSEC = 1000 * 60;
@@ -115,6 +120,16 @@ public class BatteryControllerImpl extends BroadcastReceiver implements BatteryC
     @Override
     public void setPowerSaveMode(boolean powerSave) {
         BatterySaverUtils.setPowerSaveMode(mContext, powerSave, /*needFirstTimeWarning*/ true);
+    }
+
+
+    private void deviceSpecificPerfermanceModeHandler(boolean enabled) {
+        if(enabled && ZenxUtils.IntelligentPerformanceProfileAvailable()) {
+            ZenxUtils.SetLastPerformanceProfileToSettings(mContext, SystemProperties.get(SPECTRUM_SYSTEM_PROPERTY, Resources.getSystem().getString(R.string.config_balanced_profile)));
+            SystemProperties.set(SPECTRUM_SYSTEM_PROPERTY, Resources.getSystem().getString(R.string.config_powersave_profile));
+        } else {
+            SystemProperties.set(SPECTRUM_SYSTEM_PROPERTY, ZenxUtils.GetLastPerformanceProfileFromSettings(mContext));
+        }
     }
 
     @Override
@@ -273,6 +288,12 @@ public class BatteryControllerImpl extends BroadcastReceiver implements BatteryC
     private void setPowerSave(boolean powerSave) {
         if (powerSave == mPowerSave) return;
         mPowerSave = powerSave;
+
+        if(powerSave) {
+            deviceSpecificPerfermanceModeHandler(true);
+        } else {
+            deviceSpecificPerfermanceModeHandler(false);
+        }
 
         // AOD power saving setting might be different from PowerManager power saving mode.
         PowerSaveState state = mPowerManager.getPowerSaveState(PowerManager.ServiceType.AOD);
