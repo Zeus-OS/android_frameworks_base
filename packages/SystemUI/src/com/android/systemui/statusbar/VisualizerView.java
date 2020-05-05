@@ -195,12 +195,11 @@ public class VisualizerView extends View
 
     private void updateViewVisibility() {
         final int curVis = getVisibility();
-        final int newVis = mVisible && mStatusBarState != StatusBarState.SHADE
-                && mVisualizerEnabled ? View.VISIBLE : View.GONE;
+        final int newVis = mVisible ? View.VISIBLE : View.GONE;
         if (curVis != newVis) {
             setVisibility(newVis);
-            checkStateChanged();
         }
+        checkStateChanged();
     }
 
     @Override
@@ -296,7 +295,8 @@ public class VisualizerView extends View
 
     private void setVisualizerEnabled() {
         mVisualizerEnabled = Settings.Secure.getInt(mContext.getContentResolver(),
-                Settings.Secure.LOCKSCREEN_VISUALIZER_ENABLED, 0) == 1;
+                Settings.Secure.LOCKSCREEN_VISUALIZER_ENABLED, 0) == 1 || Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.SYNTHOS_VISUALIZER_QSPANEL, 1, UserHandle.USER_CURRENT) == 1;
     }
 
     private void setAmbientVisualizerEnabled() {
@@ -371,8 +371,12 @@ public class VisualizerView extends View
                 Log.i(TAG, "setPlaying() called with playing = [" + playing + "]");
             }
             mPlaying = playing;
-            checkStateChanged();
+            updateViewVisibility();
         }
+    }
+
+    public boolean getPlaying(){
+        return mPlaying;
     }
 
     public void setPowerSaveMode(boolean powerSaveMode) {

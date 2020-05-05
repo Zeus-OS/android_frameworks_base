@@ -7245,6 +7245,13 @@ public final class Settings {
                 ANY_INTEGER_VALIDATOR;
 
         /**
+        * Visualizer in QSPanel
+        * by.tikkiX2
+        * @hide
+        */
+        public static final String SYNTHOS_VISUALIZER_QSPANEL = "synthos_visualizer_qspanel";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
