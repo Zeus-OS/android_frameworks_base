@@ -1223,6 +1223,53 @@ public class StatusBar extends SystemUI implements DemoMode,
         mFlashlightController = Dependency.get(FlashlightController.class);
     }
 
+    public void updateVisualizerVisibility(boolean state, boolean ambient) {
+        float visualizerAlpha = mNotificationPanel.getExpandedFraction();
+        boolean isCollapsed = mNotificationPanel.isFullyCollapsed();
+        boolean isExpanded = mNotificationPanel.isFullyExpanded();
+        boolean isPlaying = mVisualizerView.getPlaying();
+
+        if (state && mState != StatusBarState.KEYGUARD && !mDozing && !ambient) {
+            if (!isCollapsed && isQSVisualizerEnable()) {
+                mVisualizerView.setAlpha(visualizerAlpha);
+                mVisualizerView.setVisible(true);
+                return;
+            } else if (!isExpanded) {
+                mVisualizerView.setAlpha(0);
+                mVisualizerView.setVisible(false);
+            } else {
+                mVisualizerView.setAlpha(0);
+                mVisualizerView.setVisible(false);
+            }
+        } else if (state && isPlaying && mState != StatusBarState.SHADE && !ambient) {
+            if (isVisualizerEnable()) {
+                mVisualizerView.setAlpha(1);
+                mVisualizerView.setVisible(true);
+            } else {
+                mVisualizerView.setAlpha(0);
+                mVisualizerView.setVisible(false);
+            }
+        } else if (state && isPlaying && mState != StatusBarState.SHADE && ambient) {
+            if (mAmbientVisualizer) {
+                mVisualizerView.setAlpha(1);
+                mVisualizerView.setVisible(true);
+            }
+        } else if (!state || !ambient) {
+            mVisualizerView.setAlpha(0);
+            mVisualizerView.setVisible(false);
+        }
+    }
+
+    private boolean isQSVisualizerEnable() {
+        return Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.SYNTHOS_VISUALIZER_QSPANEL, 1,
+                UserHandle.USER_CURRENT) == 1;
+    }
+
+    private boolean isVisualizerEnable() {
+        return Settings.Secure.getInt(mContext.getContentResolver(),
+                Settings.Secure.LOCKSCREEN_VISUALIZER_ENABLED, 0) != 0;
+    }
+
     public void updateBlurVisibility() {
         int QSUserAlpha = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_BACKGROUND_BLUR_ALPHA, 100);
@@ -3844,6 +3891,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private boolean updateIsKeyguard() {
         updateBlurVisibility();
+        updateVisualizerVisibility(true, mAmbientVisualizer);
         boolean wakeAndUnlocking = mBiometricUnlockController.getMode()
                 == BiometricUnlockController.MODE_WAKE_AND_UNLOCK;
 
@@ -4401,6 +4449,10 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
 
         mStatusBarStateController.setIsDozing(dozing);
+
+        if (mAmbientVisualizer && mDozing) {
+            updateVisualizerVisibility(true, mAmbientVisualizer);
+        }
     }
 
     private void updateKeyguardState() {
@@ -4654,7 +4706,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         @Override
         public void onScreenTurnedOn() {
             mScrimController.onScreenTurnedOn();
-            mVisualizerView.setVisible(true);
+            updateVisualizerVisibility(true, false);
         }
 
         @Override
@@ -4662,7 +4714,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateDozing();
             mFalsingManager.onScreenOff();
             mScrimController.onScreenTurnedOff();
-            mVisualizerView.setVisible(false);
+            updateVisualizerVisibility(false, false);
             updateIsKeyguard();
         }
     };
