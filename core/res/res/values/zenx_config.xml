@@ -333,4 +333,7 @@
     <!-- Custom proximity sensor to be used for pocket detection -->
     <string name="config_customProximitySensor"></string>
 
+    <!-- Whether device has a notch -->
+    <bool name="config_haveNotch">false</bool>
+
 </resources>
