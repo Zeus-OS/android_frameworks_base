@@ -115,6 +115,8 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
     public static final int STYLE_DATE_LEFT = 0;
     public static final int STYLE_DATE_RIGHT = 1;
 
+    public int DEFAULT_CLOCK_SIZE = 14;
+
     private int mClockFontStyle = GOOGLESANS;
     private int mQsClockFontStyle = GOOGLESANS;
     public static final int FONT_NORMAL = 0;
@@ -154,6 +156,8 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
     protected int mClockStyle = STYLE_CLOCK_LEFT;
     protected boolean mShowClock = true;
     protected int mClockDatePosition;
+    private int mClockSizeStatusBar = 14;
+    private int mClockSizeQsHeader = 14;
     private int mAmPmStyle;
     private final boolean mShowDark;
     protected boolean mQsHeader;
@@ -223,12 +227,19 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_CLOCK_FONT_STYLE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_CLOCK_SIZE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CLOCK_SIZE),
+                    false, this, UserHandle.USER_ALL);
             updateSettings();
         }
 
         @Override
         public void onChange(boolean selfChange) {
             updateSettings();
+            updateClockSize();
             updateClockFontStyle();
         }
     }
@@ -334,6 +345,7 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
         mSettingsObserver.observe();
         updateSettings();
         updateShowSeconds();
+        updateClockSize();
         updateClockFontStyle();
     }
 
@@ -693,6 +705,7 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
         if (mAttached) {
             updateClockVisibility();
             updateClockFontStyle();
+            updateClockSize();
             updateClock();
             updateShowSeconds();
         }
@@ -763,6 +776,21 @@ public class Clock extends TextView implements DemoMode, CommandQueue.Callbacks,
             mSecondsHandler.postAtTime(this, SystemClock.uptimeMillis() / 1000 * 1000 + 1000);
         }
     };
+
+    public void updateClockSize() {
+        mClockSizeStatusBar = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.STATUS_BAR_CLOCK_SIZE, DEFAULT_CLOCK_SIZE,
+		UserHandle.USER_CURRENT);
+        mClockSizeQsHeader = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QS_HEADER_CLOCK_SIZE, DEFAULT_CLOCK_SIZE,
+        UserHandle.USER_CURRENT);
+        if(mQsHeader) {
+            setTextSize(mClockSizeQsHeader);
+        } else {
+            setTextSize(mClockSizeStatusBar);
+        }
+		updateClock();
+    }
 
     private void updateClockFontStyle() {
         mClockFontStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
