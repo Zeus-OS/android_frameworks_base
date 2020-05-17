@@ -180,6 +180,7 @@ public class VolumeDialogImpl implements VolumeDialog,
     private boolean mLeftVolumeRocker;
     private boolean mHideThings;
     private View mBackgroundThings;
+    private int mVolumePanelStyle;
 
     private boolean mHasAlertSlider;
 
@@ -203,6 +204,7 @@ public class VolumeDialogImpl implements VolumeDialog,
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.AUDIO_PANEL_VIEW_VOICE), false, this, UserHandle.USER_ALL);
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.AUDIO_PANEL_VIEW_BT_SCO), false, this, UserHandle.USER_ALL);
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.SYNTHOS_HIDE_THINGS_VOLUMEPANEL), false, this, UserHandle.USER_ALL);
+            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.SYNTHOS_VOLUME_PANEL_THEME), false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -219,6 +221,7 @@ public class VolumeDialogImpl implements VolumeDialog,
              isVoiceShowing = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.AUDIO_PANEL_VIEW_VOICE, 0, UserHandle.USER_CURRENT) == 1;
              isBTSCOShowing = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.AUDIO_PANEL_VIEW_BT_SCO, 0, UserHandle.USER_CURRENT) == 1;
              mHideThings = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.SYNTHOS_HIDE_THINGS_VOLUMEPANEL, 1, UserHandle.USER_CURRENT) == 1;
+             mVolumePanelStyle = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.SYNTHOS_VOLUME_PANEL_THEME, 0, UserHandle.USER_CURRENT);
              updateRowsH(getActiveRow());
              hideThings();
         }
@@ -301,9 +304,18 @@ public class VolumeDialogImpl implements VolumeDialog,
         mWindow.setAttributes(lp);
         mWindow.setLayout(WRAP_CONTENT, WRAP_CONTENT);
 
-        mDialog.setContentView(R.layout.volume_dialog);
-
-        mDialogView = mDialog.findViewById(R.id.volume_dialog);
+        switch (mVolumePanelStyle) {
+            case 0:
+            default:
+                mDialog.setContentView(R.layout.volume_dialog);
+                mDialogView = mDialog.findViewById(R.id.volume_dialog);
+                mBackgroundThings = mDialog.findViewById(R.id.things);
+                break;
+            case 1:
+                mDialog.setContentView(R.layout.volume_dialog_aosp);
+                mDialogView = mDialog.findViewById(R.id.volume_dialog_aosp);
+                break;
+        }
         mDialogView.setAlpha(0);
         mDialog.setCanceledOnTouchOutside(true);
         mDialog.setOnShowListener(dialog -> {
@@ -416,8 +428,6 @@ public class VolumeDialogImpl implements VolumeDialog,
             addExistingRows();
         }
 
-        mBackgroundThings = mDialog.findViewById(R.id.things);
-
         hideThings();
 
         updateRowsH(getActiveRow());
@@ -433,13 +443,26 @@ public class VolumeDialogImpl implements VolumeDialog,
     }
 
     private void hideThings() {
-      if (mHideThings){
-        mRinger.setVisibility(View.GONE);
-        mBackgroundThings.setVisibility(View.GONE);
-      } else {
-        mRinger.setVisibility(View.VISIBLE);
-        mBackgroundThings.setVisibility(View.VISIBLE);
-      }
+
+    switch (mVolumePanelStyle) {
+        case 0:
+        default:
+          if (mHideThings){
+            mRinger.setVisibility(View.GONE);
+            mBackgroundThings.setVisibility(View.GONE);
+          } else {
+            mRinger.setVisibility(View.VISIBLE);
+            mBackgroundThings.setVisibility(View.VISIBLE);
+          }
+            break;
+        case 1:
+          if (mHideThings){
+            mRinger.setVisibility(View.GONE);
+          } else {
+            mRinger.setVisibility(View.VISIBLE);
+          }
+            break;
+    }
     }
 
     protected ViewGroup getDialogView() {
@@ -546,7 +569,17 @@ public class VolumeDialogImpl implements VolumeDialog,
         row.iconMuteRes = iconMuteRes;
         row.important = important;
         row.defaultStream = defaultStream;
-        row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_row, null);
+
+        switch (mVolumePanelStyle) {
+            case 0:
+            default:
+                row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_row, null);
+                break;
+            case 1:
+                row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_row_aosp, null);
+                break;
+        }
+
         row.view.setId(row.stream);
         row.view.setTag(row);
         row.header = row.view.findViewById(R.id.volume_row_header);
