@@ -240,4 +240,6 @@
     <dimen name="volume_panel_padding_99">99dp</dimen>
     <dimen name="volume_panel_padding_100">100dp</dimen>
 
+    <!-- Biometric Prompt -->
+    <dimen name="biometric_dialog_fod_margin">44dp</dimen>
 </resources>
