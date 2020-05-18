@@ -127,6 +127,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private boolean mExpanded;
     private boolean mListening;
     private boolean mQsDisabled;
+    private boolean isAlwaysShowSettings;
+    private boolean isShowDragHandle;
 
     private QSCarrierGroup mCarrierGroup;
     protected QuickQSPanel mHeaderQsPanel;
@@ -164,8 +166,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private boolean mLandscape;
     private boolean mHeaderImageEnabled;
     private boolean mForceHideQsStatusBar;
-    private boolean mBatteryInQS;
     private BatteryMeterView mBatteryMeterView;
+    private int mQSBatteryMode = 0;
+    private int mSysBatteryMode = 0;
 
     private SettingsObserver mSettingsObserver = new SettingsObserver(mHandler);
 
@@ -220,6 +223,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mDualToneHandler = new DualToneHandler(
                 new ContextThemeWrapper(context, R.style.QSHeaderTheme));
         mSystemInfoMode = getQsSystemInfoMode();
+        mQSBatteryMode = getQSBatteryMode();
+        mSysBatteryMode = getSysBatteryMode();
         mSettingsObserver.observe();
     }
 
@@ -291,21 +296,61 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mRingerModeTextView.setSelected(true);
         mNextAlarmTextView.setSelected(true);
 
-        mPermissionsHubEnabled = PrivacyItemControllerKt.isPermissionsHubEnabled();
+        mPermissionsHubEnabled = PrivacyItemControllerKt.isPermissionsHubEnabled();;
         // Change the ignored slots when DeviceConfig flag changes
         DeviceConfig.addOnPropertyChangedListener(DeviceConfig.NAMESPACE_PRIVACY,
                 mContext.getMainExecutor(), mPropertyListener);
 
-        mBatteryInQS = getResources().getBoolean(R.bool.config_batteryInQSPanel);
-        mBatteryMeterView.setVisibility(mBatteryInQS ? View.GONE : View.VISIBLE);
-        mBatteryRemainingIcon.setVisibility(mBatteryInQS ? View.VISIBLE : View.GONE);
-
+        setQSBatteryVisibility();
+        setSysBatteryVisibility();
         updateSettings();
+    }
+
+    private void setQSBatteryVisibility() {
+        mQSBatteryMode = getQSBatteryMode();
+        switch(mQSBatteryMode) {
+            case 0:
+                mBatteryRemainingIcon.setVisibility(View.GONE);
+                break;
+            case 1:
+                mBatteryRemainingIcon.setVisibility(View.VISIBLE);
+                mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ESTIMATE);
+                break;
+            case 2:
+                mBatteryRemainingIcon.setVisibility(View.VISIBLE);
+                mBatteryRemainingIcon.setPercentShowMode(BatteryMeterView.MODE_ON);
+        }
+    }
+
+    private int getQSBatteryMode() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_BATTERY_MODE, 0);
+    }
+
+    private void setSysBatteryVisibility() {
+        mSysBatteryMode = getSysBatteryMode();
+        switch(mSysBatteryMode) {
+            case 0:
+                mBatteryMeterView.setVisibility(View.GONE);
+                break;
+            case 1:
+                mBatteryMeterView.setVisibility(View.VISIBLE);
+                mBatteryMeterView.setPercentShowMode(BatteryMeterView.MODE_ESTIMATE);
+                break;
+            case 2:
+                mBatteryMeterView.setVisibility(View.VISIBLE);
+                mBatteryMeterView.setPercentShowMode(BatteryMeterView.MODE_ON);
+        }
+    }
+
+    private int getSysBatteryMode() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_SYS_BATTERY_MODE, 0);
     }
 
     private List<String> getIgnoredIconSlots() {
         ArrayList<String> ignored = new ArrayList<>();
-        if (mBatteryInQS) {
+        if (mQSBatteryMode == 1 || mQSBatteryMode == 2) {
             ignored.add(mContext.getResources().getString(
                     com.android.internal.R.string.status_bar_camera));
             ignored.add(mContext.getResources().getString(
@@ -532,7 +577,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             }
             lp.height = Math.max(getMinimumHeight(), qsHeight);
         }
-
         setLayoutParams(lp);
 
         updateStatusIconAlphaAnimator();
@@ -547,6 +591,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         updateResources();
         updateStatusbarProperties();
         mSystemInfoMode = getQsSystemInfoMode();
+        mQSBatteryMode = getQSBatteryMode();
+        mSysBatteryMode = getSysBatteryMode();
+        setQSBatteryVisibility();
+        setSysBatteryVisibility();
         updateSystemInfoText();
     }
 
@@ -849,11 +897,20 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_SYSTEM_INFO), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.QS_BATTERY_MODE), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.QS_SYS_BATTERY_MODE), false,
+                    this, UserHandle.USER_ALL);
         }
 
         @Override
         public void onChange(boolean selfChange) {
             updateSettings();
+            updateSystemInfoText();
+            setQSBatteryVisibility();
+            setSysBatteryVisibility();
         }
     }
 

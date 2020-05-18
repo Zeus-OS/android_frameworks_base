@@ -110,6 +110,7 @@ public class BatteryMeterView extends LinearLayout implements
     private boolean mCharging;
     public int mBatteryStyle = BATTERY_STYLE_PORTRAIT;
     public int mShowBatteryPercent;
+    private int mShowBatteryEstimate;
 
     private DualToneHandler mDualToneHandler;
     private int mUser;
@@ -292,6 +293,16 @@ public class BatteryMeterView extends LinearLayout implements
         }
     }
 
+    private void updateQsBatteryEstimate() {
+        mShowBatteryEstimate = getBatteryMode();
+        updatePercentView();
+    }
+
+    private int getBatteryMode() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_BATTERY_MODE, 0);
+    }
+
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -377,10 +388,22 @@ public class BatteryMeterView extends LinearLayout implements
                 setPercentTextAtCurrentLevel();
             }
         } else {
-            setContentDescription(
-                    getContext().getString(mCharging ? R.string.accessibility_battery_level_charging
-                            : R.string.accessibility_battery_level, mLevel));
+            if(getQSBatteryMode() != 2 || getSysBatteryMode() != 2) {
+                setContentDescription(
+                        getContext().getString(mCharging ? R.string.accessibility_battery_level_charging
+                                : R.string.accessibility_battery_level, mLevel));
+            }
         }
+    }
+
+    private int getSysBatteryMode() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_SYS_BATTERY_MODE, 0);
+    }
+
+    private int getQSBatteryMode() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_BATTERY_MODE, 0);
     }
 
     private void setPercentTextAtCurrentLevel() {
@@ -561,6 +584,9 @@ public class BatteryMeterView extends LinearLayout implements
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_BATTERY_MODE),
                     false, this, UserHandle.USER_ALL);
         }
 

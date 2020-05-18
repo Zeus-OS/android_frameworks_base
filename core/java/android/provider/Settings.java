@@ -3572,6 +3572,16 @@ public final class Settings {
         public static final String QS_SYSTEM_INFO = "qs_system_info";
 
         /**
+         * Shows system info in QS OFF:0, BatteryMeter: 1 , BatteryRemaining: 2
+         */
+        public static final String QS_BATTERY_MODE = "qs_battery_mode";
+
+        /**
+         * Shows system info in QS OFF:0, BatteryMeter: 1 , BatteryRemaining: 2
+         */
+        public static final String QS_SYS_BATTERY_MODE = "qs_sys_battery_mode";
+
+        /**
          * Shows system info in QS OFF:0, CPU temp:1, battery temp:2, cpu speed: 3 , gpu clock: 4, gpu busy: 5
          */
         public static final String QS_SYSTEM_INFO_TILE_MODE = "qs_system_info_tile_mode";
