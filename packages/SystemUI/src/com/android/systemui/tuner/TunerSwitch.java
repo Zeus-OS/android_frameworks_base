@@ -10,7 +10,7 @@ import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.tuner.TunerService.Tunable;
 
-import com.havoc.support.preferences.SwitchPreference;
+import com.zenx.support.preferences.SwitchPreference;
 
 public class TunerSwitch extends SwitchPreference implements Tunable {
 

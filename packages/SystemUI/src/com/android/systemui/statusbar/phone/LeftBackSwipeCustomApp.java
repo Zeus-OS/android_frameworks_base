@@ -22,8 +22,8 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.ListView;
 
-import com.havoc.support.R;
-import com.havoc.support.preferences.AppPicker;
+import com.zenx.support.R;
+import com.zenx.support.preferences.AppPicker;
 
 public class LeftBackSwipeCustomApp extends AppPicker {
 

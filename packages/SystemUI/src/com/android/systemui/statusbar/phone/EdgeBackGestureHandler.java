@@ -64,8 +64,8 @@ import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
 
-import com.android.internal.util.havoc.ActionUtils;
-import com.android.internal.util.havoc.Utils;
+import com.android.internal.util.zenx.ActionUtils;
+import com.android.internal.util.zenx.Utils;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.assist.AssistManager;

@@ -32,7 +32,7 @@ import androidx.preference.TwoStatePreference;
 
 import com.android.settingslib.core.ConfirmationDialogController;
 
-import com.havoc.support.preferences.SwitchPreference;
+import com.zenx.support.preferences.SwitchPreference;
 
 public abstract class AbstractEnableAdbPreferenceController extends
         DeveloperOptionsPreferenceController implements ConfirmationDialogController {

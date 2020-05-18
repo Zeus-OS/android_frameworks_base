@@ -48,7 +48,7 @@ import com.android.systemui.statusbar.policy.ExtensionController.TunerFactory;
 import com.android.systemui.tuner.ShortcutParser.Shortcut;
 import com.android.systemui.tuner.TunerService.Tunable;
 
-import com.havoc.support.preferences.SwitchPreference;
+import com.zenx.support.preferences.SwitchPreference;
 
 import java.util.ArrayList;
 import java.util.Map;

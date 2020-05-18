@@ -30,7 +30,7 @@ import androidx.core.content.res.TypedArrayUtils;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceViewHolder;
 
-import com.havoc.support.preferences.SwitchPreference;
+import com.zenx.support.preferences.SwitchPreference;
 
 /**
  * Version of SwitchPreference that can be disabled by a device admin

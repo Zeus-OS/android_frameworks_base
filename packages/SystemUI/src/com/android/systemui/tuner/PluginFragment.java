@@ -42,7 +42,7 @@ import com.android.systemui.shared.plugins.PluginInstanceManager;
 import com.android.systemui.shared.plugins.PluginManager;
 import com.android.systemui.shared.plugins.PluginPrefs;
 
-import com.havoc.support.preferences.SwitchPreference;
+import com.zenx.support.preferences.SwitchPreference;
 
 import java.util.List;
 import java.util.Set;

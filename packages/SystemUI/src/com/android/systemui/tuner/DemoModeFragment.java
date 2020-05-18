@@ -35,7 +35,7 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.systemui.DemoMode;
 import com.android.systemui.R;
 
-import com.havoc.support.preferences.SwitchPreference;
+import com.zenx.support.preferences.SwitchPreference;
 
 public class DemoModeFragment extends PreferenceFragment implements OnPreferenceChangeListener {
 

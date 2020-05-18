@@ -28,7 +28,7 @@ import com.android.systemui.Dependency;
 import com.android.systemui.statusbar.phone.StatusBarIconController;
 import com.android.systemui.tuner.TunerService.Tunable;
 
-import com.havoc.support.preferences.SwitchPreference;
+import com.zenx.support.preferences.SwitchPreference;
 
 import java.util.Set;
 
