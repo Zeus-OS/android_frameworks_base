@@ -13,26 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.systemui.havoc.screenstate;
+package com.android.systemui.zenx.screenstate;
 
 import android.content.Context;
-import android.location.LocationManager;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.net.ConnectivityManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-public class GpsToggle extends ScreenStateToggle {
-    private static final String TAG = "ScreenStateService_GpsToggle";
+public class MobileDataToggle extends ScreenStateToggle {
+    private static final String TAG = "ScreenStateService_MobileDataToggle";
 
-    public GpsToggle(Context context){
+    public MobileDataToggle(Context context){
         super(context);
     }
 
     protected boolean isEnabled(){
+        ConnectivityManager cm = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (!cm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE)){
+            return false;
+        }
         int s = Settings.System.getIntForUser(mContext.getContentResolver(),
-                    Settings.System.SCREEN_STATE_GPS, 0, UserHandle.USER_CURRENT);
-        if(s != 0)
+                    Settings.System.SCREEN_STATE_MOBILE_DATA, 0, UserHandle.USER_CURRENT);
+        if(s!=0)
             return true;
         else
             return false;
@@ -43,7 +47,7 @@ public class GpsToggle extends ScreenStateToggle {
     }
 
     protected boolean doScreenOffAction(){
-        if (isGpsEnabled()){
+        if (isMobileDataEnabled()){
             mDoAction = true;
         } else {
             mDoAction = false;
@@ -51,20 +55,22 @@ public class GpsToggle extends ScreenStateToggle {
         return mDoAction;
     }
 
-    private boolean isGpsEnabled(){
-        // TODO: check if gps is available on this device?
-        return Settings.Secure.isLocationProviderEnabled(
-                mContext.getContentResolver(), LocationManager.GPS_PROVIDER);
+    private boolean isMobileDataEnabled(){
+            TelephonyManager telephonyService = (TelephonyManager)mContext.getSystemService(Context.TELEPHONY_SERVICE);
+            return telephonyService.getDataEnabled();
+    }
 
+    private void setMobileDataState(boolean mobileDataEnabled){
+        TelephonyManager telephonyService = (TelephonyManager)mContext.getSystemService(Context.TELEPHONY_SERVICE);
+        telephonyService.setDataEnabled(mobileDataEnabled);
     }
 
     protected Runnable getScreenOffAction(){
         return new Runnable() {
             @Override
             public void run() {
-                Settings.Secure.setLocationProviderEnabled(mContext.getContentResolver(),
-                        LocationManager.GPS_PROVIDER, false);
-                Log.d(TAG, "gps = false");
+                setMobileDataState(false);
+                Log.d(TAG, "mobileData = false");
             }
         };
     }
@@ -72,9 +78,8 @@ public class GpsToggle extends ScreenStateToggle {
         return new Runnable() {
             @Override
             public void run() {
-                Settings.Secure.setLocationProviderEnabled(mContext.getContentResolver(),
-                        LocationManager.GPS_PROVIDER, true);
-                Log.d(TAG, "gps = true");
+                setMobileDataState(true);
+                Log.d(TAG, "mobileData = true");
             }
         };
     }

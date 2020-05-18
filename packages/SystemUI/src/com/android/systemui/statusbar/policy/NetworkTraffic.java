@@ -31,7 +31,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.internal.util.havoc.CutoutUtils;
+import com.android.internal.util.zenx.CutoutUtils;
 
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
