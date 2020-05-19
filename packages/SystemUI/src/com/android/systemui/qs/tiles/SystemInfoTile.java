@@ -28,9 +28,14 @@ import android.os.Handler;
 import android.os.ServiceManager;
 import android.os.SystemClock;
 import android.content.res.Resources;
+import android.os.UserHandle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.ViewConfiguration;
+import android.graphics.drawable.Icon;
+import android.provider.Settings;
+import com.android.systemui.Dependency;
+import com.android.systemui.plugins.ActivityStarter;
 
 import android.service.quicksettings.Tile;
 import com.android.systemui.R;
@@ -51,9 +56,15 @@ public class SystemInfoTile extends QSTileImpl<BooleanState> {
 
     private int mTap = 0;
 
+    private final ActivityStarter mActivityStarter;
+    private int mBatteryLevel = 0;
+    private int lastMode = 0;
+
     @Inject
     public SystemInfoTile(QSHost host) {
         super(host);
+        mActivityStarter = Dependency.get(ActivityStarter.class);
+        lastMode = getQsSystemInfoMode();
     }
 
     @Override
@@ -67,16 +78,21 @@ public class SystemInfoTile extends QSTileImpl<BooleanState> {
 
     @Override
     public void handleClick() {
-      mTap++;
-      if(mTap == 5) {
-        mTap = 0;
-      }
+
+     lastMode++;
+     if(lastMode == 6) {
+        lastMode = 0;
+     }
       refreshState();
     }
 
+
     @Override
     public void handleLongClick() {
-        // do nothing
+        if(lastMode == 2) {
+            mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
+                Intent.ACTION_POWER_USAGE_SUMMARY), 0);
+        }
     }
 
     @Override
@@ -94,6 +110,11 @@ public class SystemInfoTile extends QSTileImpl<BooleanState> {
         return MetricsEvent.ZENX_SETTINGS;
     }
 
+    private int getQsSystemInfoMode() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_SYSTEM_INFO_TILE_MODE, 0);
+    }
+
     @Override
     protected void handleUpdateState(BooleanState state, Object arg) {
 
@@ -101,13 +122,15 @@ public class SystemInfoTile extends QSTileImpl<BooleanState> {
             state.slash = new SlashState();
         }
 
-        switch (mTap) {
+        switch (lastMode) {
             case 0:
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_system_info);
                 state.label = "System info";
                 state.state = Tile.STATE_INACTIVE;
                 state.secondaryLabel = " ";
                 state.slash.isSlashed = false;
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                    Settings.System.QS_SYSTEM_INFO_TILE_MODE, 0 , UserHandle.USER_CURRENT);
                 break;
             case 1:
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_battery_info);
@@ -115,13 +138,17 @@ public class SystemInfoTile extends QSTileImpl<BooleanState> {
                 state.secondaryLabel = getBatteryTemp();
                 state.state = Tile.STATE_ACTIVE;
                 state.slash.isSlashed = true;
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                    Settings.System.QS_SYSTEM_INFO_TILE_MODE, 1 , UserHandle.USER_CURRENT);
                 break;
             case 2:
-                state.icon = ResourceIcon.get(R.drawable.ic_qs_cpu_info);
-                state.label = "CPU temp ";
-                state.secondaryLabel = getCPUTemp();
+                state.icon = getBatteryLevelIcon();
+                state.label = "Battery Level";
+                state.secondaryLabel = getBatteryLevel();
                 state.state = Tile.STATE_ACTIVE;
                 state.slash.isSlashed = true;
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                    Settings.System.QS_SYSTEM_INFO_TILE_MODE, 2 , UserHandle.USER_CURRENT);
                 break;
             case 3:
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_gpu_info);
@@ -129,6 +156,8 @@ public class SystemInfoTile extends QSTileImpl<BooleanState> {
                 state.secondaryLabel = getGPUClock();
                 state.state = Tile.STATE_ACTIVE;
                 state.slash.isSlashed = true;
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                    Settings.System.QS_SYSTEM_INFO_TILE_MODE, 3 , UserHandle.USER_CURRENT);
                 break;
             case 4:
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_gpu_info);
@@ -136,6 +165,17 @@ public class SystemInfoTile extends QSTileImpl<BooleanState> {
                 state.secondaryLabel = getGPUBusy();
                 state.state = Tile.STATE_ACTIVE;
                 state.slash.isSlashed = true;
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                    Settings.System.QS_SYSTEM_INFO_TILE_MODE, 4 , UserHandle.USER_CURRENT);
+                break;
+            case 5:
+                state.icon = ResourceIcon.get(R.drawable.ic_qs_cpu_info);
+                state.label = "CPU temp ";
+                state.secondaryLabel = getCPUTemp();
+                state.state = Tile.STATE_ACTIVE;
+                state.slash.isSlashed = true;
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                    Settings.System.QS_SYSTEM_INFO_TILE_MODE, 5 , UserHandle.USER_CURRENT);
                 break;
         }
     }
@@ -163,6 +203,62 @@ public class SystemInfoTile extends QSTileImpl<BooleanState> {
         String value = readOneLine(mContext.getResources().getString(
                      com.android.internal.R.string.config_gpu_clock_path));
         return String.format("%s", Integer.parseInt(value)) + "Mhz";
+    }
+
+    private String getBatteryLevel() {
+        String value = readOneLine(mContext.getResources().getString(
+                     com.android.internal.R.string.config_battery_level_path));
+        mBatteryLevel = Integer.parseInt(value);
+        return String.format("%s", Integer.parseInt(value)) + "\u0025";
+    }
+
+    private Icon getBatteryLevelIcon() {
+
+        if(mBatteryLevel < 5) {
+            return ResourceIcon.get(R.drawable.ic_qs_battery_info_empty_warning);
+        }
+
+        if(mBatteryLevel > 5 && mBatteryLevel <= 10 ) {
+            return ResourceIcon.get(R.drawable.ic_qs_battery_info_10);
+        }
+
+        if(mBatteryLevel > 10 && mBatteryLevel <= 20) {
+            return ResourceIcon.get(R.drawable.ic_qs_battery_info_20);
+        }
+
+        if(mBatteryLevel > 20 && mBatteryLevel <= 30 ) {
+            return ResourceIcon.get(R.drawable.ic_qs_battery_info_30);
+        }
+
+        if(mBatteryLevel > 30 && mBatteryLevel <= 40 ) {
+            return ResourceIcon.get(R.drawable.ic_qs_battery_info_40);
+        }
+
+        if(mBatteryLevel > 40 && mBatteryLevel <= 50 ) {
+            return ResourceIcon.get(R.drawable.ic_qs_battery_info_50);
+        }
+
+        if(mBatteryLevel > 50 && mBatteryLevel <= 60) {
+            return ResourceIcon.get(R.drawable.ic_qs_battery_info_60);
+        }
+
+        if(mBatteryLevel > 60 && mBatteryLevel <= 70) {
+            return ResourceIcon.get(R.drawable.ic_qs_battery_info_70);
+        }
+
+        if(mBatteryLevel > 70 && mBatteryLevel <= 80 ) {
+            return ResourceIcon.get(R.drawable.ic_qs_battery_info_80);
+        }
+
+        if(mBatteryLevel > 80 && mBatteryLevel <= 90 ) {
+            return ResourceIcon.get(R.drawable.ic_qs_battery_info_90);
+        }
+
+        if(mBatteryLevel > 90 && mBatteryLevel <= 100 ) {
+            return ResourceIcon.get(R.drawable.ic_qs_battery_info);
+        }
+
+        return ResourceIcon.get(R.drawable.ic_qs_battery_info);
     }
 
     private static String readOneLine(String fname) {

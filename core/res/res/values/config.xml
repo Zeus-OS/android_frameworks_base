@@ -4296,5 +4296,6 @@
     <string name="config_battery_temp_path" translatable="false"></string>
     <string name="config_gpu_clock_path" translatable="false"></string>
     <string name="config_gpu_busy_path" translatable="false"></string>
+    <string name="config_battery_level_path" translatable="false"></string>
 
 </resources>

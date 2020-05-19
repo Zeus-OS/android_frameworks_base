@@ -3872,5 +3872,6 @@
   <java-symbol type="string" name="config_battery_temp_path" />
   <java-symbol type="string" name="config_gpu_clock_path" />
   <java-symbol type="string" name="config_gpu_busy_path" />
+  <java-symbol type="string" name="config_battery_level_path" />
 
 </resources>
