@@ -274,4 +274,9 @@
     <string name="quick_settings_locale_more_locales_toast">Please configure multiple languages to enable toggle functionality</string>
 
     <string name="usage_data">used</string>
+
+    <!-- Lockscreen tuner -->
+    <string name="lockscreen_default">Default</string>
+    <string name="lockscreen_hidden">None</string>
+
 </resources>
