@@ -73,6 +73,7 @@ import com.android.systemui.qs.tiles.UserTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.qs.tiles.SystemInfoTile;
+import com.android.systemui.qs.tiles.GoogleAmbientModeTile;
 import com.android.systemui.util.leak.GarbageMonitor;
 
 import javax.inject.Inject;
@@ -131,6 +132,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<CallTile> mCallTileProvider;
     private final Provider<CameraTile> mCameraTileProvider;
     private final Provider<LocaleTile> mLocaleTileProvider;
+    private final Provider<GoogleAmbientModeTile> mGoogleAmbientModeTileProvider;
 
     private QSTileHost mHost;
 
@@ -181,7 +183,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<CalendarTile> calendarTileProvider,
             Provider<CallTile> callTileProvider,
             Provider<CameraTile> cameraTileProvider,
-            Provider<LocaleTile> localeTileProvider
+            Provider<LocaleTile> localeTileProvider,
+            Provider<GoogleAmbientModeTile> googleAmbientModeTileProvider,
             ) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
@@ -230,6 +233,7 @@ public class QSFactoryImpl implements QSFactory {
         mCallTileProvider = callTileProvider;
         mCameraTileProvider = cameraTileProvider;
         mLocaleTileProvider = localeTileProvider;
+        mGoogleAmbientModeTileProvider = googleAmbientModeTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -339,6 +343,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mCameraTileProvider.get();
             case "locale":
                 return mLocaleTileProvider.get();
+            case "googleambientmode":
+                return mGoogleAmbientModeTileProvider.get();
         }
 
         // Intent tiles.
