@@ -18,6 +18,7 @@
 <!-- Extends FrameLayout -->
 <com.android.systemui.qs.QSFooterImpl
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"
     android:id="@+id/qs_footer"
     android:layout_width="match_parent"
     android:layout_height="@dimen/qs_footer_height"
@@ -34,6 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical"
+        android:paddingTop="2dp"
         android:gravity="end" >
 
         <com.android.keyguard.AlphaOptimizedLinearLayout
@@ -176,9 +178,26 @@
     <View
         android:id="@+id/qs_drag_handle_view"
         android:layout_width="24dp"
-        android:layout_height="4dp"
-        android:layout_marginBottom="16dp"
+        android:layout_height="3dp"
+        android:layout_marginBottom="12dp"
         android:layout_gravity="center_horizontal|bottom"
         android:background="@drawable/qs_footer_drag_handle" />
+
+
+        <com.android.systemui.statusbar.policy.BatteryBarController
+            android:id="@+id/qs_batterybar"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="21dp"
+            systemui:viewLocation="5"/>
+
+        <com.android.systemui.statusbar.policy.BatteryBarController
+            android:id="@+id/qs_batterybar_expanded"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="38dp"
+            systemui:viewLocation="6"/>
 
 </com.android.systemui.qs.QSFooterImpl>

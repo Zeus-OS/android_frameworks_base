@@ -62,6 +62,7 @@ import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.qs.TouchAnimator.Builder;
 import com.android.systemui.statusbar.phone.MultiUserSwitch;
 import com.android.systemui.statusbar.phone.SettingsButton;
+import com.android.systemui.statusbar.policy.BatteryBarController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserInfoController.OnUserInfoChangedListener;
@@ -83,6 +84,9 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     private PageIndicator mPageIndicator;
     private View mRunningServicesButton;
     private DataUsageView mDataUsage;
+    private int mIsBatteryBarEnabled;
+    private BatteryBarController mBatteryBar; //view location 5
+    private BatteryBarController mBatteryBarExpanded; //view location 6
 
     private boolean mQsDisabled;
     private QSPanel mQsPanel;
@@ -163,6 +167,9 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
         mMultiUserSwitch = findViewById(R.id.multi_user_switch);
         mMultiUserAvatar = mMultiUserSwitch.findViewById(R.id.multi_user_avatar);
+
+        mBatteryBar = findViewById(R.id.qs_batterybar);
+        mBatteryBarExpanded = findViewById(R.id.qs_batterybar_expanded);
 
         mDragHandle = findViewById(R.id.qs_drag_handle_view);
         mActionsContainer = findViewById(R.id.qs_footer_actions_container);
@@ -246,16 +253,46 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
     @Nullable
     private TouchAnimator createFooterAnimator() {
-        return new TouchAnimator.Builder()
-                .addFloat(mActionsContainer, "alpha", 0, 1) // contains mRunningServicesButton
-                .addFloat(mMultiUserAvatar, "alpha", 0, 1)
+        if(isBatteryBarInQsFooterEnabled() == 5) {
+            return new TouchAnimator.Builder()
+                    .addFloat(mActionsContainer, "alpha", 0, 1)
+                    .addFloat(mEditContainer, "alpha", 0, 1)
+                    .addFloat(mPageIndicator, "alpha", 0, 1)
+                    .addFloat(mDragHandle, "alpha", 1, 0, 0)
+                    .addFloat(mDataUsage, "alpha", 0, 1)
+                    .addFloat(mNetworkTraffic, "alpha", 0, 1)
+                    .addFloat(mBatteryBar, "alpha", 1, 1)
+                    .addFloat(mBatteryBarExpanded, "alpha", 0, 1)
+                    .addFloat(mMultiUserAvatar, "alpha", 0, 1)
+                    .setStartDelay(0.15f)
+                    .build();
+        }else if(isBatteryBarInQsFooterEnabled() == 6) {
+            return new TouchAnimator.Builder()
+                    .addFloat(mActionsContainer, "alpha", 0, 1)
+                    .addFloat(mEditContainer, "alpha", 0, 1)
+                    .addFloat(mPageIndicator, "alpha", 0, 1)
+                    .addFloat(mDragHandle, "alpha", 1, 0, 0)
+                    .addFloat(mDataUsage, "alpha", 0, 1)
+                    .addFloat(mNetworkTraffic, "alpha", 0, 1)
+                    .addFloat(mBatteryBar, "alpha", 0, 1)
+                    .addFloat(mBatteryBarExpanded, "alpha", 1, 1)
+                    .addFloat(mMultiUserAvatar, "alpha", 0, 1)
+                    .setStartDelay(0.15f)
+                    .build();
+        } else {
+            return new TouchAnimator.Builder()
+                .addFloat(mActionsContainer, "alpha", 0, 1)
                 .addFloat(mEditContainer, "alpha", 0, 1)
-                .addFloat(mDragHandle, "alpha", 1, 0, 0)
                 .addFloat(mPageIndicator, "alpha", 0, 1)
-                .addFloat(mNetworkTraffic, "alpha", 0, 1)
+                .addFloat(mDragHandle, "alpha", 1, 0, 0)
                 .addFloat(mDataUsage, "alpha", 0, 1)
+                .addFloat(mNetworkTraffic, "alpha", 0, 1)
+                .addFloat(mBatteryBar, "alpha", 0, 1)
+                .addFloat(mBatteryBarExpanded, "alpha", 0, 1)
+                .addFloat(mMultiUserAvatar, "alpha", 0, 1)
                 .setStartDelay(0.15f)
                 .build();
+        }
     }
 
     @Override
@@ -360,6 +397,8 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mEdit.setVisibility(isEditEnabled() ? View.VISIBLE : View.GONE);
         mNetworkTraffic.setVisibility(isNetworkTrafficInQsFooterEnabled() ? View.VISIBLE : View.GONE);
         mDataUsage.setVisibility(isDataUsageEnabled() ? View.VISIBLE : View.GONE);
+        mBatteryBar.setVisibility(isBatteryBarInQsFooterEnabled() == 5 && !mExpanded ? View.VISIBLE : View.GONE);
+        mBatteryBarExpanded.setVisibility(isBatteryBarInQsFooterEnabled() == 6 && mExpanded ? View.VISIBLE : View.GONE);
     }
 
     private boolean showUserSwitcher() {
@@ -383,6 +422,12 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
             return true;
         }
         return false;
+    }
+
+    public int isBatteryBarInQsFooterEnabled() {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.STATUSBAR_BATTERY_BAR_LOCATION, 0,
+            UserHandle.USER_CURRENT);
     }
 
 

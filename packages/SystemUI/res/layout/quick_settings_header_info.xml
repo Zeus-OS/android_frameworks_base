@@ -15,6 +15,7 @@
   ~ limitations under the License
   -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:systemui="http://schemas.android.com/apk/res/com.android.systemui"
     android:id="@+id/header_text_container"
     android:layout_width="match_parent"
     android:layout_height="@dimen/qs_header_tooltip_height"
