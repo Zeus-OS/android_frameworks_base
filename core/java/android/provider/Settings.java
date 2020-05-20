@@ -6913,6 +6913,9 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_ANIMATION_ON_DOZE = "lockscreen_animation_on_doze";
 
+        /** @hide */
+        private static final Validator QS_PANEL_BG_USE_NEW_TINT_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
         /**
          * Change font size for the system lockscreen date
          *

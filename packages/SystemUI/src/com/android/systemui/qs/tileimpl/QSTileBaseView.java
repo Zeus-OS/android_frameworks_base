@@ -20,6 +20,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.drawable.AdaptiveIconDrawable;
@@ -80,6 +81,8 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
     private int mCircleColor;
     private int mBgSize;
 
+    private int setQsUseNewTint;
+
     public QSTileBaseView(Context context, QSIconView icon) {
         this(context, icon, false);
     }
@@ -133,16 +136,15 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
         setBackground(mTileBackground);
 
-        mColorActive = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
-        mColorActiveAlpha = adjustAlpha(mColorActive, 0.2f);
-        boolean setQsUseNewTint = Settings.System.getIntForUser(context.getContentResolver(),
-                    Settings.System.QS_PANEL_BG_USE_NEW_TINT, 0, UserHandle.USER_CURRENT) == 1;
-        if (setQsUseNewTint) {
+        setQsUseNewTint = Settings.System.getIntForUser(context.getContentResolver(),
+                  Settings.System.QS_PANEL_BG_USE_NEW_TINT, 0, UserHandle.USER_CURRENT);
+        if (setQsUseNewTint != 0) {
             mColorActive = mColorActiveAlpha;
         }
         mColorDisabled = Utils.getDisabled(context,
                 Utils.getColorAttrDefaultColor(context, android.R.attr.textColorTertiary));
         mColorInactive = Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
+        mColorActive = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
 
         setPadding(0, 0, 0, 0);
         setClipChildren(false);
