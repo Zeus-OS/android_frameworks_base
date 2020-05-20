@@ -92,7 +92,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     private QSPanel mQsPanel;
     private QuickQSPanel mQuickQSPanel;
     private QSFooterNetworkTraffic mNetworkTraffic;
-    private int mIsEnabled;
+    private int mLocation;
 
     private boolean mExpanded;
 
@@ -414,11 +414,15 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     }
 
     public boolean isNetworkTrafficInQsFooterEnabled() {
-        mIsEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+        mLocation = Settings.System.getIntForUser(mContext.getContentResolver(),
             Settings.System.NETWORK_TRAFFIC_LOCATION, 0,
             UserHandle.USER_CURRENT);
 
-        if(mIsEnabled == 2) {
+        boolean mIsEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.NETWORK_TRAFFIC_STATE, 0,
+                UserHandle.USER_CURRENT) == 1;
+
+        if(mLocation == 2 && mIsEnabled) {
             return true;
         }
         return false;

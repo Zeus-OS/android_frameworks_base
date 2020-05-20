@@ -51,7 +51,8 @@ public class QSFooterNetworkTraffic extends TextView {
         decimalFormat.setMaximumFractionDigits(1);
     }
 
-    protected int mIsEnabled;
+    protected boolean mIsEnabled;
+    protected int mLocation;
     private boolean mAttached;
     private long totalRxBytes;
     private long totalTxBytes;
@@ -65,7 +66,7 @@ public class QSFooterNetworkTraffic extends TextView {
     private boolean mColorIsStatic = false;
     private boolean indicatorUp = false;
     private boolean indicatorDown = false;
-    private boolean mShowArrow;
+    private boolean mShowArrow = true;
     private String txtFont;
 
     private boolean mScreenOn = true;
@@ -179,13 +180,13 @@ public class QSFooterNetworkTraffic extends TextView {
         void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.NETWORK_TRAFFIC_STATE), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.NETWORK_TRAFFIC_LOCATION), false,
                     this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD), false,
-                    this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System
-                    .getUriFor(Settings.System.NETWORK_TRAFFIC_ARROW), false,
                     this, UserHandle.USER_ALL);
         }
 
@@ -221,6 +222,8 @@ public class QSFooterNetworkTraffic extends TextView {
         final Resources resources = getResources();
         txtSize = resources.getDimensionPixelSize(R.dimen.net_traffic_multi_text_size);
         txtImgPadding = resources.getDimensionPixelSize(R.dimen.net_traffic_txt_img_padding);
+        mTintColor = resources.getColor(android.R.color.white);
+        setTextColor(mTintColor);
         Handler mHandler = new Handler();
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
@@ -278,7 +281,7 @@ public class QSFooterNetworkTraffic extends TextView {
 
     private void updateSettings() {
         updateVisibility();
-        if (mIsEnabled == 3) {
+        if (mLocation == 2 && mIsEnabled) {
             if (mAttached) {
                 totalRxBytes = TrafficStats.getTotalRxBytes();
                 lastUpdateTime = SystemClock.elapsedRealtime();
@@ -294,14 +297,14 @@ public class QSFooterNetworkTraffic extends TextView {
     private void setMode() {
         ContentResolver resolver = mContext.getContentResolver();
         mIsEnabled = Settings.System.getIntForUser(resolver,
+                Settings.System.NETWORK_TRAFFIC_STATE, 0,
+                UserHandle.USER_CURRENT) == 1;
+        mLocation = Settings.System.getIntForUser(resolver,
                 Settings.System.NETWORK_TRAFFIC_LOCATION, 0,
                 UserHandle.USER_CURRENT);
         mAutoHideThreshold = Settings.System.getIntForUser(resolver,
                 Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD, 0,
                 UserHandle.USER_CURRENT);
-        mShowArrow = Settings.System.getIntForUser(resolver,
-                Settings.System.NETWORK_TRAFFIC_ARROW, 1,
-                UserHandle.USER_CURRENT) == 1;
     }
 
     private void clearHandlerCallbacks() {
@@ -312,7 +315,7 @@ public class QSFooterNetworkTraffic extends TextView {
 
     private void updateTrafficDrawable() {
         int indicatorDrawable;
-        if ((mIsEnabled == 3) && mShowArrow) {
+        if ((mLocation == 2) && mShowArrow && mIsEnabled) {
             if (indicatorUp) {
                 indicatorDrawable = R.drawable.stat_sys_network_traffic_up_arrow;
                 Drawable d = getContext().getDrawable(indicatorDrawable);
@@ -346,7 +349,7 @@ public class QSFooterNetworkTraffic extends TextView {
     }
 
     protected void updateVisibility() {
-        if ((mIsEnabled == 3) && mTrafficVisible) {
+        if (mLocation == 2 && mIsEnabled) {
             setVisibility(View.VISIBLE);
         } else {
             setVisibility(View.GONE);
@@ -354,6 +357,7 @@ public class QSFooterNetworkTraffic extends TextView {
     }
     public void onDarkChanged(Rect area, float darkIntensity, int tint) {
         mTintColor = DarkIconDispatcher.getTint(area, this, tint);
+        setTextColor(mTintColor);
         updateTrafficDrawable();
     }
 }
