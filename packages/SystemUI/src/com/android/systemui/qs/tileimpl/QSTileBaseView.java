@@ -89,14 +89,25 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
 
     public QSTileBaseView(Context context, QSIconView icon, boolean collapsedView) {
         super(context);
+
+        mIcon = icon;
+        mColorActive = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
+        mColorInactive = Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
+        mColorDisabled = Utils.getDisabled(context,
+                Utils.getColorAttrDefaultColor(context, android.R.attr.textColorTertiary));
+
         // Default to Quick Tile padding, and QSTileView will specify its own padding.
         int padding = context.getResources().getDimensionPixelSize(R.dimen.qs_quick_tile_padding);
         mIconFrame = new FrameLayout(context);
         int size = context.getResources().getDimensionPixelSize(R.dimen.qs_quick_tile_size);
         addView(mIconFrame, new LayoutParams(size, size));
         mBg = new ImageView(getContext());
-         int qsTileStyle = Settings.System.getInt(context.getContentResolver(),
+        int qsTileStyle = Settings.System.getInt(context.getContentResolver(),
                  Settings.System.QS_TILE_STYLE, 0);
+
+        setQsUseNewTint = Settings.System.getIntForUser(context.getContentResolver(),
+                 Settings.System.QS_PANEL_BG_USE_NEW_TINT, 0, UserHandle.USER_CURRENT);
+
         if (qsTileStyle == 0) {
             if (context.getResources().getBoolean(R.bool.config_useMaskForQs)) {
                 Path path = new Path(PathParser.createPathFromPathData(
@@ -121,7 +132,6 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
                mBg.setImageResource(R.drawable.ic_qs_circle);
                mIconFrame.addView(mBg);
         }
-        mIcon = icon;
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,
                 Gravity.CENTER);
@@ -135,22 +145,27 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         }
         setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
         setBackground(mTileBackground);
-
-        setQsUseNewTint = Settings.System.getIntForUser(context.getContentResolver(),
-                  Settings.System.QS_PANEL_BG_USE_NEW_TINT, 0, UserHandle.USER_CURRENT);
-        if (setQsUseNewTint != 0) {
-            mColorActive = mColorActiveAlpha;
-        }
-        mColorDisabled = Utils.getDisabled(context,
-                Utils.getColorAttrDefaultColor(context, android.R.attr.textColorTertiary));
-        mColorInactive = Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary);
-        mColorActive = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
-
         setPadding(0, 0, 0, 0);
         setClipChildren(false);
         setClipToPadding(false);
         mCollapsedView = collapsedView;
         setFocusable(true);
+        setActiveColor(context);
+        final float[] hsl = {0f, 1f, 0.5f};
+    }
+
+    private void setActiveColor(Context context) {
+        if (setQsUseNewTint == 3) {
+            mColorActive = randomColor(isThemeDark(context), (long) mIcon.toString().hashCode());
+        } else if (setQsUseNewTint == 1) {
+            mColorActive = randomColor(isThemeDark(context));
+            mColorActiveAlpha = adjustAlpha(mColorActive, 0.2f);
+            mColorActive = mColorActiveAlpha;
+        } else if (setQsUseNewTint == 2) {
+            mColorActive = Utils.getColorAttrDefaultColor(context, android.R.attr.colorAccent);
+            mColorActiveAlpha = adjustAlpha(mColorActive, 0.2f);
+            mColorActive = mColorActiveAlpha;
+        }
     }
 
     public static int randomColor(boolean isThemeDark, Random r) {
@@ -280,6 +295,7 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         setLongClickable(state.handlesLongClick);
         mIcon.setIcon(state, allowAnimations);
         setContentDescription(state.contentDescription);
+        setActiveColor(mContext);
 
         mAccessibilityClass =
                 state.state == Tile.STATE_UNAVAILABLE ? null : state.expandedAccessibilityClassName;
