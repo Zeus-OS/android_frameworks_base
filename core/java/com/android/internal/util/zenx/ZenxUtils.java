@@ -19,8 +19,10 @@ package com.android.internal.util.zenx;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.BatteryManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Resources;
 import android.hardware.fingerprint.FingerprintManager;
@@ -34,6 +36,7 @@ import android.os.SystemClock;
 import android.net.NetworkInfo;
 import android.net.ConnectivityManager;
 import android.os.SystemProperties;
+import android.text.format.Time;
 import android.os.UserHandle;
 import android.provider.Settings;
 import android.view.IWindowManager;
@@ -54,11 +57,15 @@ import android.hardware.SensorManager;
 import android.graphics.Color;
 import android.content.DialogInterface;
 import android.app.AlertDialog;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
+import java.util.Arrays;
 
 import com.android.internal.R;
 import com.android.internal.statusbar.IStatusBarService;
 
 import java.util.Locale;
+
 
 public class ZenxUtils {
 
@@ -70,6 +77,15 @@ public class ZenxUtils {
         ConnectivityManager cm = (ConnectivityManager)context.getSystemService(
                 Context.CONNECTIVITY_SERVICE);
         return (cm.isNetworkSupported(ConnectivityManager.TYPE_MOBILE) == false);
+    }
+
+	// Returns today's passed time in Millisecond
+    public static long getTodayMillis() {
+        final long passedMillis;
+        Time time = new Time();
+        time.set(System.currentTimeMillis());
+        passedMillis = ((time.hour * 60 * 60) + (time.minute * 60) + time.second) * 1000;
+        return passedMillis;
     }
 
 	// Check if device is connected to the internet
