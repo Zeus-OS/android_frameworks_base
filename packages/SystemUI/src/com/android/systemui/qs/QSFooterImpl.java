@@ -449,12 +449,12 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     }
 
     private void updateDataUsageView() {
-        if (mDataUsageView.isDataUsageEnabled())
+        if (mDataUsageView.isDataUsageEnabled() != 0)
             mDataUsageView.setVisibility(View.VISIBLE);
         else
             mDataUsageView.setVisibility(View.GONE);
     }
-
+    
     private void updateSettings() {
         isAlwaysShowSettings = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.QS_ALWAYS_SHOW_SETTINGS, 0,
