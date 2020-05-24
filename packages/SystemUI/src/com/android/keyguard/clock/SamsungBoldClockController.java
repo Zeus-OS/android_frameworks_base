@@ -21,6 +21,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint.Style;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextClock;
@@ -38,7 +39,7 @@ import static com.android.systemui.statusbar.phone
 /**
  * Plugin for the default clock face used only to provide a preview.
  */
-public class SamsungClockController implements ClockPlugin {
+public class SamsungBoldClockController implements ClockPlugin {
 
     /**
      * Resources used to get title and thumbnail.
@@ -77,7 +78,7 @@ public class SamsungClockController implements ClockPlugin {
      * @param inflater Inflater used to inflate custom clock views.
      * @param colorExtractor Extracts accent color from wallpaper.
      */
-    public SamsungClockController(Resources res, LayoutInflater inflater,
+    public SamsungBoldClockController(Resources res, LayoutInflater inflater,
             SysuiColorExtractor colorExtractor) {
         mResources = res;
         mLayoutInflater = inflater;
@@ -88,8 +89,8 @@ public class SamsungClockController implements ClockPlugin {
         mView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.digital_clock_custom, null);
         mClock = mView.findViewById(R.id.clock);
-        mClock.setFormat12Hour("hh\nmm");
-        mClock.setFormat24Hour("kk\nmm");
+        mClock.setFormat12Hour(Html.fromHtml("<strong>hh</strong><br>mm"));
+        mClock.setFormat24Hour(Html.fromHtml("<strong>kk</strong><br>mm"));
     }
 
     @Override
@@ -100,17 +101,17 @@ public class SamsungClockController implements ClockPlugin {
 
     @Override
     public String getName() {
-        return "samsung";
+        return "samsung_bold";
     }
 
     @Override
     public String getTitle() {
-        return mResources.getString(R.string.clock_title_samsung);
+        return mResources.getString(R.string.clock_title_samsung_bold);
     }
 
     @Override
     public Bitmap getThumbnail() {
-        return BitmapFactory.decodeResource(mResources, R.drawable.samsung_thumbnail);
+        return BitmapFactory.decodeResource(mResources, R.drawable.samsung_bold_thumbnail);
     }
 
     @Override
@@ -118,8 +119,8 @@ public class SamsungClockController implements ClockPlugin {
 
         View previewView = mLayoutInflater.inflate(R.layout.default_clock_preview, null);
         TextClock previewTime = previewView.findViewById(R.id.time);
-        previewTime.setFormat12Hour("hh\nmm");
-        previewTime.setFormat24Hour("kk\nmm");
+        previewTime.setFormat12Hour(Html.fromHtml("<strong>hh</strong><br>mm"));
+        previewTime.setFormat24Hour(Html.fromHtml("<strong>kk</strong><br>mm"));
         TextClock previewDate = previewView.findViewById(R.id.date);
 
         // Initialize state of plugin before generating preview.
