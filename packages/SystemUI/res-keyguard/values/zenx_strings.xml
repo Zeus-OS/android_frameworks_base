@@ -17,8 +17,10 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <string name="clock_title_binary" translatable="false">Binary</string>
+    <string name="clock_title_default_bold" translatable="false">Default (bold)</string>
     <string name="clock_title_samsung" translatable="false">Samsung</string>
-    <string name="clock_title_samsung_accent" translatable="false">Samsung (Colored)</string>
     <string name="date_long_title_today">Today is %s</string>
+    <string name="clock_title_samsung_bold" translatable="false">Samsung (bold)</string>
+    <string name="clock_title_samsung_accent" translatable="false">Sammy (colored)</string>
 
 </resources>

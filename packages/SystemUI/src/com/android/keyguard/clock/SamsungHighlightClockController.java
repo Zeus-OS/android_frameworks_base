@@ -98,7 +98,6 @@ public class SamsungHighlightClockController implements ClockPlugin {
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);
         setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
-        mClock.setLineSpacing(0, 0.8f);
         mClock.setFormat12Hour(Html.fromHtml("hh<br><font color=" + mAccentColor + ">mm</font>"));
         mClock.setFormat24Hour(Html.fromHtml("kk<br><font color=" + mAccentColor + ">mm</font>"));
         onTimeTick();
@@ -122,7 +121,7 @@ public class SamsungHighlightClockController implements ClockPlugin {
 
     @Override
     public Bitmap getThumbnail() {
-        return BitmapFactory.decodeResource(mResources, R.drawable.samsung_thumbnail);
+        return BitmapFactory.decodeResource(mResources, R.drawable.samsung_bold_thumbnail);
     }
 
     @Override
@@ -138,7 +137,6 @@ public class SamsungHighlightClockController implements ClockPlugin {
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);
         setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
-        previewTime.setLineSpacing(0, 0.8f);
         previewTime.setFormat12Hour(Html.fromHtml("hh<br><font color=" + mAccentColor + ">mm</font>"));
         previewTime.setFormat24Hour(Html.fromHtml("kk<br><font color=" + mAccentColor + ">mm</font>"));
         onTimeTick();
