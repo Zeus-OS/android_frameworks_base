@@ -30,6 +30,7 @@ import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
 import static com.android.settingslib.media.MediaOutputSliceConstants.ACTION_MEDIA_OUTPUT;
 import static com.android.systemui.volume.Events.DISMISS_REASON_SETTINGS_CLICKED;
@@ -88,6 +89,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -102,10 +104,13 @@ import com.android.systemui.plugins.VolumeDialog;
 import com.android.systemui.plugins.VolumeDialogController;
 import com.android.systemui.plugins.VolumeDialogController.State;
 import com.android.systemui.plugins.VolumeDialogController.StreamState;
+import com.android.systemui.statusbar.NotificationMediaManager;
 import com.android.systemui.statusbar.phone.ExpandableIndicator;
 import com.android.systemui.statusbar.policy.AccessibilityManagerWrapper;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
+
+import com.android.systemui.synth.MusicText;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -184,6 +189,10 @@ public class VolumeDialogImpl implements VolumeDialog,
 
     private boolean mHasAlertSlider;
 
+    private MusicText mMusicText;
+    private int mVolumeDialogID;
+    private NotificationMediaManager mMediaManager;
+
     private boolean isMediaShowing = true;
     private boolean isRingerShowing = false;
     private boolean isNotificationShowing = false;
@@ -239,6 +248,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         mActivityManager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         mAccessibilityMgr = Dependency.get(AccessibilityManagerWrapper.class);
         mDeviceProvisionedController = Dependency.get(DeviceProvisionedController.class);
+        mMediaManager = Dependency.get(NotificationMediaManager.class);
         mShowActiveStreamOnly = showActiveStreamOnly();
         mHasSeenODICaptionsTooltip =
                 Prefs.getBoolean(context, Prefs.Key.HAS_SEEN_ODI_CAPTIONS_TOOLTIP, false);
@@ -302,7 +312,7 @@ public class VolumeDialogImpl implements VolumeDialog,
             lp.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
         }
         mWindow.setAttributes(lp);
-        mWindow.setLayout(WRAP_CONTENT, WRAP_CONTENT);
+        mWindow.setLayout(WRAP_CONTENT, MATCH_PARENT);
 
         switch (mVolumePanelStyle) {
             case 0:
@@ -310,10 +320,26 @@ public class VolumeDialogImpl implements VolumeDialog,
                 mDialog.setContentView(R.layout.volume_dialog);
                 mDialogView = mDialog.findViewById(R.id.volume_dialog);
                 mBackgroundThings = mDialog.findViewById(R.id.things);
+                mMusicText = mDialog.findViewById(R.id.music_container);
+                mVolumeDialogID = R.id.volume_dialog;
+                if (mMediaManager == null) {
+                    mMediaManager = Dependency.get(NotificationMediaManager.class);
+                    mMusicText.initDependencies(mMediaManager);
+                } else {
+                    mMusicText.initDependencies(mMediaManager);
+                }
                 break;
             case 1:
                 mDialog.setContentView(R.layout.volume_dialog_aosp);
                 mDialogView = mDialog.findViewById(R.id.volume_dialog_aosp);
+                mMusicText = mDialog.findViewById(R.id.music_container);
+                mVolumeDialogID = R.id.volume_dialog_aosp;
+                if (mMediaManager == null) {
+                    mMediaManager = Dependency.get(NotificationMediaManager.class);
+                    mMusicText.initDependencies(mMediaManager);
+                } else {
+                    mMusicText.initDependencies(mMediaManager);
+                }
                 break;
         }
         mDialogView.setAlpha(0);
@@ -334,6 +360,14 @@ public class VolumeDialogImpl implements VolumeDialog,
                             }
                         }
                     })
+                    .start();
+            if (!isLandscape()) mMusicText.setTranslationX((mMusicText.getWidth() / 2.0f)*(isAudioPanelOnLeftSide() ? -1 : 1));
+            mMusicText.setAlpha(0);
+            mMusicText.animate()
+                    .alpha(1)
+                    .translationX(0)
+                    .setDuration(DIALOG_SHOW_ANIMATION_DURATION)
+                    .setInterpolator(new SystemUIInterpolators.LogDecelerateInterpolator())
                     .start();
         });
 
@@ -462,7 +496,11 @@ public class VolumeDialogImpl implements VolumeDialog,
             mRinger.setVisibility(View.VISIBLE);
           }
             break;
+      }
     }
+
+    public void initText (NotificationMediaManager mediaManager) {
+        mMediaManager = mediaManager;
     }
 
     protected ViewGroup getDialogView() {
@@ -944,6 +982,12 @@ public class VolumeDialogImpl implements VolumeDialog,
         }
         mDialogView.setTranslationX(0);
         mDialogView.setAlpha(1);
+        mMusicText.setTranslationX(0);
+        mMusicText.setAlpha(1);
+        ViewPropertyAnimator musicAnimator = mMusicText.animate()
+                .alpha(0)
+                .setDuration(DIALOG_HIDE_ANIMATION_DURATION)
+                .setInterpolator(new SystemUIInterpolators.LogAccelerateInterpolator());
         ViewPropertyAnimator animator = mDialogView.animate()
                 .alpha(0)
                 .setDuration(DIALOG_HIDE_ANIMATION_DURATION)
@@ -957,7 +1001,9 @@ public class VolumeDialogImpl implements VolumeDialog,
                     mMusicHidden = false;
                 }, 50));
         if (!isLandscape()) animator.translationX((mDialogView.getWidth() / 2.0f)*(isAudioPanelOnLeftSide() ? -1 : 1));
+        if (!isLandscape()) musicAnimator.translationX((mMusicText.getWidth() / 2.0f)*(isAudioPanelOnLeftSide() ? -1 : 1));
         animator.start();
+        musicAnimator.start();
         checkODICaptionsTooltip(true);
         mController.notifyVisible(false);
         synchronized (mSafetyWarningLock) {
