@@ -4970,6 +4970,18 @@ public final class Settings {
         public static final String STATUS_BAR_CLOCK_SIZE = "status_bar_clock_size";
 
         /**
+         * Wheater to enable blur powermenu background
+         * @hide
+         */
+        public static final String BLUR_POWERMENU_BACKGROUND = "blur_powermenu_background";
+
+        /**
+         * Blur powermenu background intensity
+         * @hide
+         */
+        public static final String POWERMENU_BACKGROUND_BLUR_INTENSITY = "powermenu_background_blur_intensity";
+
+        /**
          * Volume rocker wake
          * @hide
          */
