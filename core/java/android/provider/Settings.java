@@ -7186,6 +7186,18 @@ public final class Settings {
         public static final String UI_STYLE = "ui_style";
 
         /**
+        * Whether show/hide ringer in volume panel by.tikkiX2
+        * @hide
+        */
+        public static final String SYNTHOS_HIDE_RINGER_VOLUMEPANEL = "synthos_hide_ringer_volumepanel";
+
+        /**
+        * Whether show/hide extended in volume panel by.tikkiX2
+        * @hide
+        */
+        public static final String SYNTHOS_HIDE_EXTENDED_VOLUMEPANEL = "synthos_hide_extended_volumepanel";
+
+        /**
          * @hide
          */
         public static final String BRIGHTNESS_SLIDER_STYLE = "brightness_slider_style";
@@ -7282,6 +7294,9 @@ public final class Settings {
         */
         public static final String SYNTHOS_VOLUME_PANEL_THEME = "synthos_volume_panel_theme";
 
+        public static final String SYNTHOS_VOLUME_PANEL_PADDING_TOP = "synthos_volume_panel_padding_top";
+        public static final String SYNTHOS_VOLUME_PANEL_PADDING_BOTTOM = "synthos_volume_panel_padding_bottom";
+
         /**
          * Controls whether to center R style notification headers
          * by.tikkiX2
@@ -7290,6 +7305,15 @@ public final class Settings {
         public static final String SYNTHOS_CENTER_NOTIFICATION_HEADERS = "synthos_center_notification_headers";
 
         private static final Validator SYNTHOS_CENTER_NOTIFICATION_HEADERS_VALIDATOR = BOOLEAN_VALIDATOR;
+
+        /**
+         * Volume Panel alignment
+         * 0 - TOP
+         * 1 - CENTER_VERTICAL
+         * 2 - BOTTOM
+         * @hide
+         */
+        public static final String VOLUME_PANEL_ALIGNMENT = "volume_panel_alignment";
 
         /**
         * Music Text in VolumePanel
