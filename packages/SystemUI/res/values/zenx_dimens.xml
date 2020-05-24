@@ -121,4 +121,11 @@
     <dimen name="net_traffic_multi_text_size">14dp</dimen>
     <dimen name="net_traffic_txt_img_padding">5dp</dimen>
 
+    <dimen name="custom_clock_left_padding">50dp</dimen>
+    <dimen name="clock_oronos_outline_size">4dp</dimen>
+    <dimen name="binary_clock_dot_size">8dp</dimen>
+    <dimen name="binary_clock_stroke_width">2dp</dimen>
+    <dimen name="binary_clock_width">100dp</dimen>
+    <dimen name="binary_clock_height">100dp</dimen>
+
 </resources>
