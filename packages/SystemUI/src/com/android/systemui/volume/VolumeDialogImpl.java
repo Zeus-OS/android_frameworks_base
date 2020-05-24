@@ -350,6 +350,18 @@ public class VolumeDialogImpl implements VolumeDialog,
                     mMusicText.initDependencies(mMediaManager);
                 }
                 break;
+            case 2:
+                mDialog.setContentView(R.layout.volume_dialog_aosp_rounded);
+                mDialogView = mDialog.findViewById(R.id.volume_dialog_aosp_rounded);
+                mMusicText = mDialog.findViewById(R.id.music_container);
+                mVolumeDialogID = R.id.volume_dialog_aosp_rounded;
+                if (mMediaManager == null) {
+                    mMediaManager = Dependency.get(NotificationMediaManager.class);
+                    mMusicText.initDependencies(mMediaManager);
+                } else {
+                    mMusicText.initDependencies(mMediaManager);
+                }
+                break;
         }
         mDialogView.setAlpha(0);
         mDialog.setCanceledOnTouchOutside(true);
@@ -1104,6 +1116,7 @@ public class VolumeDialogImpl implements VolumeDialog,
                 row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_row, null);
                 break;
             case 1:
+            case 2:
                 row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_row_aosp, null);
                 break;
         }
