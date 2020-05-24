@@ -202,6 +202,9 @@ public class MobileSignalController extends SignalController<
             resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.SHOW_HD_ICON), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.USE_OLD_MOBILETYPE), false,
+                    this, UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -236,6 +239,7 @@ public class MobileSignalController extends SignalController<
 
         mapIconSets();
         updateTelephony();
+        notifyListeners();
     }
 
     @Override
