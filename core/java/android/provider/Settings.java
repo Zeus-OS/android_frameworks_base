@@ -7292,6 +7292,13 @@ public final class Settings {
         private static final Validator SYNTHOS_CENTER_NOTIFICATION_HEADERS_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+        * Music Text in VolumePanel
+        * by.tikkiX2
+        * @hide
+        */
+        public static final String SYNTHOS_MUSIC_VOLUME_PANEL_TEXT = "synthos_music_volume_panel_text";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
