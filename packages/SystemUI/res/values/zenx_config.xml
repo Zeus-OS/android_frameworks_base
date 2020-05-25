@@ -45,4 +45,7 @@
     <!-- The CPU temperature divider, if needed -->
     <integer name="config_cpuTempDivider" translatable="false">1</integer>
 
+     <!-- Whether to use the mask for the quicksettings icons-->
+    <bool name="config_useMaskForQs">true</bool>
+
 </resources>
