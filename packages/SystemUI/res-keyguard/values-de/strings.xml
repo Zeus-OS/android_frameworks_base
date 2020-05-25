@@ -155,6 +155,7 @@
     <string name="clock_title_bubble" msgid="2204559396790593213">"Bubble"</string>
     <string name="clock_title_analog" msgid="8409262532900918273">"Analog"</string>
     <string name="date_long_title_today">Heute ist %s</string>
+    <string name="date_long_title_today_the">der</string>
 
         <!-- Time displayed on typographic clock face, which displays the time in words.
              Example:

@@ -24,5 +24,6 @@
     <string name="date_long_title_today">Today is %s</string>
     <string name="clock_title_samsung_bold" translatable="false">Samsung (bold)</string>
     <string name="clock_title_samsung_accent" translatable="false">Sammy (colored)</string>
+    <string name="date_long_title_today_the">the</string>
 
 </resources>

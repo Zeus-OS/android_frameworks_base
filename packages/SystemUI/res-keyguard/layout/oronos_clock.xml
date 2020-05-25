@@ -24,8 +24,8 @@
 
         <TextClock
             android:id="@+id/clockHr"
-            android:layout_width="84dp"
-            android:layout_height="84dp"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:gravity="center"
@@ -33,12 +33,13 @@
             android:format12Hour="hh"
             android:format24Hour="kk"
             android:letterSpacing="0.1"
-            android:textSize="36sp" />
+            android:layout_marginRight="6dp"
+            android:textSize="58sp" />
 
         <TextClock
             android:id="@+id/clockMin"
-            android:layout_width="84dp"
-            android:layout_height="84dp"
+            android:layout_width="94dp"
+            android:layout_height="94dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:background="@drawable/oronos_roundbg"
@@ -46,24 +47,26 @@
             android:format24Hour="mm"
             android:layout_weight="1"
             android:letterSpacing="0.1"
-            android:textSize="36sp" />
+            android:textSize="46sp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/longDate"
+    <TextClock
+        android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:layout_weight="1"
-        layout_marginTop="4dp"
-        android:paddingTop="8dp"
+        android:letterSpacing="0.02"
         android:background="@drawable/oronos_roundbg"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:textSize="14sp"
-        android:textAllCaps="true"
-        android:letterSpacing="0.2" />
+        android:textSize="19sp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="22dp"
+        android:paddingRight="22dp"
+        android:textAllCaps="false"
+        android:format12Hour="EEEE, d. MMMM"
+        android:format24Hour="EEEE, d. MMMM"
+        />
 
 </LinearLayout>
 
