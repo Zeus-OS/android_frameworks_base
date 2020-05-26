@@ -127,8 +127,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private boolean mExpanded;
     private boolean mListening;
     private boolean mQsDisabled;
-    private boolean isAlwaysShowSettings;
     private boolean isShowDragHandle;
+    private boolean isAlwaysShowSettings;
 
     private QSCarrierGroup mCarrierGroup;
     protected QuickQSPanel mHeaderQsPanel;
@@ -591,6 +591,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             }
             lp.height = Math.max(getMinimumHeight(), qsHeight);
         }
+
+        if (isAlwaysShowSettings) {
+            lp.height += 30;
+        }
+
         setLayoutParams(lp);
 
         updateStatusIconAlphaAnimator();
@@ -601,6 +606,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private void updateSettings() {
         mHeaderImageEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.STATUS_BAR_CUSTOM_HEADER, 0,
+                UserHandle.USER_CURRENT) == 1;
+         isAlwaysShowSettings = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.QS_ALWAYS_SHOW_SETINGS, 0,
                 UserHandle.USER_CURRENT) == 1;
         updateResources();
         updateStatusbarProperties();
@@ -919,6 +927,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                     this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_SYSTEM_INFO_ICON), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.QS_ALWAYS_SHOW_SETINGS), false,
                     this, UserHandle.USER_ALL);
         }
 
