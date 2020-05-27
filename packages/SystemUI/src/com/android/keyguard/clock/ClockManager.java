@@ -149,7 +149,8 @@ public final class ClockManager {
         Resources res = context.getResources();
         LayoutInflater layoutInflater = injectionInflater.injectable(LayoutInflater.from(context));
 
-        addBuiltinClock(() -> new DefaultClockController(res, layoutInflater, colorExtractor));
+        addBuiltinClock(() -> new DefaultClockController(res, layoutInflater, colorExtractor, context));
+        addBuiltinClock(() -> new DefaultBoldMinuteClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new SamsungClockController(res, layoutInflater, colorExtractor));
         addBuiltinClock(() -> new SamsungHighlightClockController(res, layoutInflater, colorExtractor));
         //addBuiltinClock(() -> new BubbleClockController(res, layoutInflater, colorExtractor));
