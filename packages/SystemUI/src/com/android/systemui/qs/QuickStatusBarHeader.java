@@ -364,6 +364,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mMicCameraIndicatorsEnabled = mPrivacyItemController.getMicCameraAvailable();
 
         updateResources();
+        updateSettings();
 
         Dependency.get(TunerService.class).addTunable(this,
                 QS_SHOW_AUTO_BRIGHTNESS,
@@ -375,6 +376,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 QS_BATTERY_STYLE,
                 QS_BATTERY_LOCATION,
                 STATUS_BAR_CUSTOM_HEADER);
+
     }
 
     public QuickQSPanel getHeaderQsPanel() {
@@ -483,6 +485,12 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         super.onRtlPropertiesChanged(layoutDirection);
         updateResources();
     }
+
+    private void updateSettings() {
+        updateResources();
+	    updateDataUsageView();
+     }
+
 
     /**
      * The height of QQS should always be the status bar height + 128dp. This is normally easy, but
