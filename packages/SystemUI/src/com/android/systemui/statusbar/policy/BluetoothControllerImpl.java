@@ -77,7 +77,7 @@ public class BluetoothControllerImpl implements BluetoothController, BluetoothCa
     @Inject
     public BluetoothControllerImpl(Context context, @Background Looper bgLooper,
             @Main Looper mainLooper, @Nullable LocalBluetoothManager localBluetoothManager) {
-        mLocalBluetoothManager = localBluetoothManager;
+        mLocalBluetoothManager = LocalBluetoothManager.getInstance(context, null);
         mBgHandler = new Handler(bgLooper);
         mHandler = new H(mainLooper);
         if (mLocalBluetoothManager != null) {
@@ -240,7 +240,7 @@ public class BluetoothControllerImpl implements BluetoothController, BluetoothCa
             if (maxDeviceState > state) {
                 state = maxDeviceState;
             }
-            if (state == BluetoothProfile.STATE_CONNECTED) {
+            if (maxDeviceState == BluetoothProfile.STATE_CONNECTED) {
                 mConnectedDevices.add(device);
             }
         }
