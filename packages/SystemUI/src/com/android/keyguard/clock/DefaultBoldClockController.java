@@ -89,8 +89,8 @@ public class DefaultBoldClockController implements ClockPlugin {
         mView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.digital_clock_custom, null);
         mClock = mView.findViewById(R.id.clock);
-        mClock.setFormat12Hour(Html.fromHtml("<strong>h</strong>:mm"));
-        mClock.setFormat24Hour(Html.fromHtml("<strong>kk</strong>:mm"));
+        mClock.setFormat12Hour(Html.fromHtml("<strong>h</strong>:<strong>mm</strong>"));
+        mClock.setFormat24Hour(Html.fromHtml("<strong>kk</strong>:<strong>mm</strong>"));
     }
 
     @Override
@@ -119,8 +119,8 @@ public class DefaultBoldClockController implements ClockPlugin {
 
         View previewView = mLayoutInflater.inflate(R.layout.default_clock_preview, null);
         TextClock previewTime = previewView.findViewById(R.id.time);
-        previewTime.setFormat12Hour(Html.fromHtml("<strong>h</strong>:mm"));
-        previewTime.setFormat24Hour(Html.fromHtml("<strong>kk</strong>:mm"));
+        previewTime.setFormat12Hour(Html.fromHtml("<strong>h</strong>:<strong>mm</strong>"));
+        previewTime.setFormat24Hour(Html.fromHtml("<strong>kk</strong>:<strong>mm</strong>"));
         TextClock previewDate = previewView.findViewById(R.id.date);
 
         // Initialize state of plugin before generating preview.
