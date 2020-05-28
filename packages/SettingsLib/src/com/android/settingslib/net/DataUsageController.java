@@ -44,7 +44,7 @@ import android.util.Range;
 import com.android.internal.R;
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.util.ArrayUtils;
-import com.android.internal.util.aosip.aosipUtils;
+import com.android.internal.util.zenx.ZenxUtils;
 
 import java.time.ZonedDateTime;
 import java.util.Iterator;
@@ -298,14 +298,18 @@ public class DataUsageController {
 
     public DataUsageInfo getDailyDataUsageInfo() {
         NetworkTemplate template = DataUsageUtils.getMobileTemplate(mContext, mSubscriptionId);
+        return getDailyDataUsageInfo(template);
+    }
 
+    public DataUsageInfo getDailyWifiDataUsageInfo() {
+        NetworkTemplate template = NetworkTemplate.buildTemplateWifiWildcard();
         return getDailyDataUsageInfo(template);
     }
 
     public DataUsageInfo getDailyDataUsageInfo(NetworkTemplate template) {
         final NetworkPolicy policy = findNetworkPolicy(template);
         final long end = System.currentTimeMillis();
-        long start = end - aosipUtils.getTodayMillis();
+        long start = end - ZenxUtils.getTodayMillis();
 
         final long totalBytes = getUsageLevel(template, start, end);
         if (totalBytes < 0L) {
