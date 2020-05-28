@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.provider.Settings;
 import android.view.View;
 
+import com.android.internal.util.zenx.ZenxUtils;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.policy.NetworkController;
@@ -59,8 +60,12 @@ public class DataUsageView extends TextView {
         mobileDataController.setSubscriptionId(
             SubscriptionManager.getDefaultDataSubscriptionId());
         final DataUsageController.DataUsageInfo info = isDataUsageEnabled() == 1 ?
-                mobileDataController.getDailyDataUsageInfo()
-                : mobileDataController.getDataUsageInfo();
+                (ZenxUtils.isWiFiConnected(mContext) ?
+                        mobileDataController.getDailyWifiDataUsageInfo()
+                        : mobileDataController.getDailyDataUsageInfo())
+                : (ZenxUtils.isWiFiConnected(mContext) ?
+                        mobileDataController.getWifiDataUsageInfo()
+                        : mobileDataController.getDataUsageInfo());
 
         formatedinfo = formatDataUsage(info.usageLevel);
     }
