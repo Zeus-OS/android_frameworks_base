@@ -16737,6 +16737,13 @@ public final class Settings {
         public static final String ANIMATION_CONTROLS_DURATION = "animation_controls_duration";
 
         /**
+         * Toast animations
+         * @hide
+         */
+        public static final String TOAST_ANIMATION = "toast_animation";
+
+        /**
+         * The TCP/IP port to run ADB on, or 0 for USB
          * @hide
          */
         public static final String SHOW_CPU_OVERLAY = "show_cpu_overlay";
