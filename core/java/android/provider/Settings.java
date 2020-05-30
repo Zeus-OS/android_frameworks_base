@@ -6657,13 +6657,6 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
-	 ** Change fonts for the system lockscreen clock widget
-	 **
-	 ** @hide
-	 **/
-        public static final String LOCK_CLOCK_FONTS = "lock_clock_fonts";
-
-        /**
          * Change fonts for the system lockscreen date
          *
          * @hide
@@ -6703,13 +6696,6 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKDATE_FONT_SIZE= "lockdate_font_size";
-
-        /**
-         * Change font size for the system lockscreen clock widget
-         *
-         * @hide
-         */
-        public static final String LOCKCLOCK_FONT_SIZE = "lockclock_font_size";
 
         /**
          * DismissAll Button
