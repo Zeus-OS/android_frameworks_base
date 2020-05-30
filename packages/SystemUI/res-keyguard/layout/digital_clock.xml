@@ -28,6 +28,7 @@
       android:gravity="center_horizontal"
       android:paddingBottom="@dimen/widget_vertical_padding_clock"
       android:letterSpacing="0.03"
+      android:textSize="74sp"
       android:textColor="?attr/wallpaperTextColor"
       android:singleLine="true"
       style="@style/widget_small_bold"
