@@ -152,6 +152,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
                 }
             } else if (mBurnInProtectionTimer != null) {
                 mBurnInProtectionTimer.cancel();
+                updatePosition();
             }
 
             if (mShouldRemoveIconOnAOD && !dreaming) {
@@ -391,6 +392,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
         setImageDrawable(null);
         mPressedView.setImageResource(R.drawable.fod_icon_pressed);
+        updatePosition();
         invalidate();
     }
 
@@ -497,9 +499,12 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         mPressedParams.x = mParams.x = x;
         mPressedParams.y = mParams.y = y;
 
-        if (mIsDreaming) {
-            mParams.y += mDreamingOffsetY;
+        if (mFODAnimation != null) {
             mFODAnimation.updateParams(mParams.y);
+        }
+
+        if (mIsDreaming && !mIsCircleShowing) {
+            mParams.y += mDreamingOffsetY;
         }
 
         mWindowManager.updateViewLayout(this, mParams);
@@ -635,8 +640,8 @@ class FODAnimation extends ImageView {
         recognizingAnim = (AnimationDrawable) this.getBackground();
     }
 
-    public void updateParams(int mDreamingOffsetY) {
-        mAnimationPositionY = (int) Math.round(mDreamingOffsetY - (mContext.getResources().getDimensionPixelSize(R.dimen.fod_animation_size) / 2));
+    public void updateParams(int positionY) {
+        mAnimationPositionY = (int) Math.round(positionY - (mContext.getResources().getDimensionPixelSize(R.dimen.fod_animation_size) / 2));
         mAnimParams.y = mAnimationPositionY;
     }
 
