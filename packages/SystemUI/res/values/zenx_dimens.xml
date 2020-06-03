@@ -137,4 +137,6 @@
     <!-- QS footer data usage -->
     <dimen name="qs_datausage_icon_size">16sp</dimen>
 
+    <dimen name="volume_dialog_panel_land_margin">68dp</dimen>
+
 </resources>
