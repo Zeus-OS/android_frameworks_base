@@ -41,4 +41,6 @@
          value in landscape since we have limited vertical space-->
     <dimen name="bubble_padding_top">4dp</dimen>
     <dimen name="custom_volume_dialog_seekbar_height">200dip</dimen>
+
+    <dimen name="volume_dialog_icon_padding">17dp</dimen>
 </resources>
