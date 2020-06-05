@@ -1220,4 +1220,18 @@
     <dimen name="volume_dialog_aosp_tap_target_size">48dp</dimen>
     <dimen name="volume_dialog_aosp_row_margin_bottom">8dp</dimen>
 
+    <!-- Volume Panel AOSP Theme -->
+    <dimen name="volume_dialog_aospa_panel_transparent_padding_left_right">8dp</dimen>
+    <dimen name="volume_dialog_aospa_panel_width">58dp</dimen>
+    <dimen name="volume_dialog_aospa_slider_height">210dp</dimen>
+    <dimen name="volume_dialog_aospa_icon_padding">14dp</dimen>
+    <dimen name="volume_dialog_aospa_tap_target_size">@dimen/volume_dialog_aospa_panel_width</dimen>
+    <dimen name="volume_dialog_aospa_button_height">45dp</dimen>
+    <dimen name="volume_dialog_aospa_row_icon_size">24dp</dimen>
+    <dimen name="volume_dialog_aospa_row_spacer">@dimen/volume_dialog_spacer</dimen>
+    <dimen name="volume_tool_tip_aospa_arrow_height">8dp</dimen>
+    <dimen name="volume_tool_tip_aospa_arrow_width">10dp</dimen>
+    <dimen name="volume_tool_tip_aospa_arrow_margin_container">-2dp</dimen>
+    <dimen name="volume_tool_tip_aospa_arrow_margin_start">24dp</dimen>
+
 </resources>
