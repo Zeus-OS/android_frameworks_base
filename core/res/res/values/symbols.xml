@@ -3874,4 +3874,8 @@
   <java-symbol type="string" name="config_gpu_busy_path" />
   <java-symbol type="string" name="config_battery_level_path" />
 
+  <!-- Sets the package name for device parts-->
+  <java-symbol type="string" name="config_device_parts_package_name" />
+  <java-symbol type="string" name="config_device_parts_package_activity" />
+
 </resources>

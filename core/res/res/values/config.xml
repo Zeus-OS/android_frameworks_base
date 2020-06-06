@@ -4298,4 +4298,8 @@
     <string name="config_gpu_busy_path" translatable="false"></string>
     <string name="config_battery_level_path" translatable="false"></string>
 
+     <!-- Sets the package name for device parts-->
+    <string name="config_device_parts_package_name" translatable="false"></string>
+    <string name="config_device_parts_package_activity" translatable="false"></string>
+
 </resources>
