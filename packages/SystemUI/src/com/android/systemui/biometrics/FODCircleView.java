@@ -27,6 +27,7 @@ import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.hardware.biometrics.BiometricSourceType;
+import android.hardware.display.DisplayManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.RemoteException;
@@ -69,10 +70,14 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
     private final WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();
     private final WindowManager.LayoutParams mPressedParams = new WindowManager.LayoutParams();
     private final WindowManager mWindowManager;
+    private final DisplayManager mDisplayManager;
 
     private IFingerprintInscreen mFingerprintInscreenDaemon;
 
     private int mDreamingOffsetY;
+
+    private int mColor;
+    private int mColorBackground;
 
     private boolean mIsBouncer;
     private boolean mIsDreaming;
@@ -184,6 +189,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         }
     };
 
+    private boolean mCutoutMasked;
     private int mStatusbarHeight;
 
     public FODCircleView(Context context) {
@@ -205,9 +211,16 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
         Resources res = context.getResources();
 
-        mPaintFingerprint.setAntiAlias(true);
-        mPaintFingerprint.setColor(res.getColor(R.color.config_fodColor));
 
+        mPaintFingerprint.setColor(res.getColor(R.color.config_fodColor));
+        mColor = res.getColor(R.color.config_fodColor);
+        mPaintFingerprint.setColor(mColor);
+        mPaintFingerprint.setAntiAlias(true);
+
+        mPaintFingerprintBackground.setColor(mColorBackground);
+        mPaintFingerprintBackground.setAntiAlias(true);
+
+        mDisplayManager = context.getSystemService(DisplayManager.class);
         mWindowManager = context.getSystemService(WindowManager.class);
 
         mNavigationBarSize = res.getDimensionPixelSize(R.dimen.navigation_bar_size);
@@ -241,6 +254,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         };
 
         mWindowManager.addView(this, mParams);
+        mWindowManager.addView(mPressedView, mPressedParams);
 
         mFODAnimation = new FODAnimation(context, mPositionX, mPositionY);
 
@@ -253,12 +267,17 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         mUpdateMonitor = KeyguardUpdateMonitor.getInstance(context);
         mUpdateMonitor.registerCallback(mMonitorCallback);
 
+        updateCutoutFlags();
+
         Dependency.get(ConfigurationController.class).addCallback(this);
+
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
+        canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprintBackground);
         super.onDraw(canvas);
+
         if (mIsCircleShowing) {
             canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
         }
@@ -353,12 +372,15 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
             return;
         }
 
+        mIsCircleShowing = true;
+
         setKeepScreenOn(true);
 
         setDim(true);
         dispatchPress();
 
-        setImageResource(R.drawable.fod_icon_pressed);
+        setImageDrawable(null);
+        mPressedView.setImageResource(R.drawable.fod_icon_pressed);
         invalidate();
     }
 
@@ -392,7 +414,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
     }
 
     public void show() {
-
         if (!mUpdateMonitor.isScreenOn()) {
             // Keyguard is shown just after screen turning off
             return;
@@ -403,6 +424,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
             return;
         }
 
+        mIsShowing = true;
         mIsAuthenticated = false;
 
         updatePosition();
@@ -412,6 +434,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
     }
 
     public void hide() {
+        mIsShowing = false;
+
         setVisibility(View.GONE);
         hideCircle();
         dispatchHide();
@@ -459,10 +483,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         }
 
         mWindowManager.updateViewLayout(this, mParams);
-
-        if (mPressedView.getParent() != null) {
-            mWindowManager.updateViewLayout(mPressedView, mPressedParams);
-        }
+        mWindowManager.updateViewLayout(mPressedView, mPressedParams);
     }
 
     private void setDim(boolean dim) {
@@ -483,17 +504,13 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
             }
 
             mPressedParams.dimAmount = dimAmount / 255.0f;
-            if (mPressedView.getParent() == null) {
-                mWindowManager.addView(mPressedView, mPressedParams);
-            } else {
-                mWindowManager.updateViewLayout(mPressedView, mPressedParams);
-            }
+            mPressedView.setVisibility(View.VISIBLE);
+            mWindowManager.updateViewLayout(mPressedView, mPressedParams);
         } else {
             mPressedParams.screenBrightness = 0.0f;
             mPressedParams.dimAmount = 0.0f;
-            if (mPressedView.getParent() != null) {
-                mWindowManager.removeView(mPressedView);
-            }
+            mPressedView.setVisibility(View.GONE);
+            mWindowManager.updateViewLayout(mPressedView, mPressedParams);
         }
     }
 
@@ -522,6 +539,22 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
             mHandler.post(() -> updatePosition());
         }
     };
+
+    @Override
+    public void onOverlayChanged() {
+        updateCutoutFlags();
+    }
+
+    private void updateCutoutFlags() {
+        mStatusbarHeight = getContext().getResources().getDimensionPixelSize(
+                com.android.internal.R.dimen.status_bar_height_portrait);
+        boolean cutoutMasked = getContext().getResources().getBoolean(
+                com.android.internal.R.bool.config_maskMainBuiltInDisplayCutout);
+        if (mCutoutMasked != cutoutMasked) {
+            mCutoutMasked = cutoutMasked;
+            updatePosition();
+        }
+    }
 
     private void updateSettings() {
         mIsRecognizingAnimEnabled = Settings.System.getInt(mContext.getContentResolver(),
