@@ -26,7 +26,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
-import android.graphics.drawable.AnimationDrawable;
 import android.hardware.biometrics.BiometricSourceType;
 import android.os.Handler;
 import android.os.UserHandle;
@@ -35,7 +34,6 @@ import android.os.RemoteException;
 import android.provider.Settings;
 import android.view.Display;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
@@ -78,7 +76,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
     private boolean mIsBouncer;
     private boolean mIsDreaming;
-    private boolean mIsKeyguard;
     private boolean mIsShowing;
     private boolean mIsCircleShowing;
     private boolean mIsAuthenticated;
@@ -91,7 +88,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
     private Timer mBurnInProtectionTimer;
 
-    private FODAnimation mFODAnimation;
     private boolean mIsRecognizingAnimEnabled;
     private boolean mShouldRemoveIconOnAOD;
     private boolean mScreenOffFodEnabled;
@@ -130,17 +126,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
             
             if (mShouldRemoveIconOnAOD && !dreaming) {
                 resetFODIcon(true);
-            }
-        }
-
-        @Override
-        public void onKeyguardVisibilityChanged(boolean showing) {
-            mIsKeyguard = showing;
-
-            updateSettings();
-
-            if (mFODAnimation != null) {
-                mFODAnimation.setAnimationKeyguard(mIsKeyguard);
             }
         }
 
@@ -256,6 +241,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
         mUpdateMonitor.registerCallback(mMonitorCallback);
 
         Dependency.get(ConfigurationController.class).addCallback(this);
+
     }
 
     @Override
@@ -275,19 +261,14 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
         if (event.getAction() == MotionEvent.ACTION_DOWN && newIsInside) {
             showCircle();
-            if (mIsRecognizingAnimEnabled) {
-                mHandler.post(() -> mFODAnimation.showFODanimation());
-            }
             return true;
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
             hideCircle();
-            mHandler.post(() -> mFODAnimation.hideFODanimation());
             return true;
         } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
             return true;
         }
 
-        mHandler.post(() -> mFODAnimation.hideFODanimation());
         return false;
     }
 
@@ -513,7 +494,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
 
         if (mIsDreaming) {
             mParams.y += mDreamingOffsetY;
-            mFODAnimation.updateParams(mParams.y);
         }
 
         mWindowManager.updateViewLayout(this, mParams);
