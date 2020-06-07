@@ -39,7 +39,7 @@ import static com.android.systemui.statusbar.phone
 /**
  * Plugin for the default clock face used only to provide a preview.
  */
-public class SamsungBoldClockController implements ClockPlugin {
+public class SamsungBoldHourClockController implements ClockPlugin {
 
     /**
      * Resources used to get title and thumbnail.
@@ -78,7 +78,7 @@ public class SamsungBoldClockController implements ClockPlugin {
      * @param inflater Inflater used to inflate custom clock views.
      * @param colorExtractor Extracts accent color from wallpaper.
      */
-    public SamsungBoldClockController(Resources res, LayoutInflater inflater,
+    public SamsungBoldHourClockController(Resources res, LayoutInflater inflater,
             SysuiColorExtractor colorExtractor) {
         mResources = res;
         mLayoutInflater = inflater;
@@ -106,7 +106,7 @@ public class SamsungBoldClockController implements ClockPlugin {
 
     @Override
     public String getTitle() {
-        return mResources.getString(R.string.clock_title_samsung_bold);
+        return mResources.getString(R.string.clock_title_samsung_bold_hour);
     }
 
     @Override

@@ -21,16 +21,17 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint.Style;
-import android.graphics.Typeface;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextClock;
+import android.content.Context;
 
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
+import com.android.internal.util.zenx.ZenxUtils;
 
 import java.util.TimeZone;
 
@@ -40,7 +41,7 @@ import static com.android.systemui.statusbar.phone
 /**
  * Plugin for the default clock face used only to provide a preview.
  */
-public class SamsungHighlightClockController implements ClockPlugin {
+public class SamsungBoldMinuteClockController implements ClockPlugin {
 
     /**
      * Resources used to get title and thumbnail.
@@ -72,10 +73,7 @@ public class SamsungHighlightClockController implements ClockPlugin {
      */
     private TextClock mClock;
 
-    /**
-     * Accent color for the hour section
-     */
-    private int mAccentColor;
+    private Context mContext;
 
     /**
      * Create a DefaultClockController instance.
@@ -84,23 +82,20 @@ public class SamsungHighlightClockController implements ClockPlugin {
      * @param inflater Inflater used to inflate custom clock views.
      * @param colorExtractor Extracts accent color from wallpaper.
      */
-    public SamsungHighlightClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+    public SamsungBoldMinuteClockController(Resources res, LayoutInflater inflater,
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mColorExtractor = colorExtractor;
+        mContext = context;
     }
 
     private void createViews() {
         mView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.digital_clock_custom, null);
         mClock = mView.findViewById(R.id.clock);
-        ColorExtractor.GradientColors colors = mColorExtractor.getColors(
-                WallpaperManager.FLAG_LOCK);
-        setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
-        mClock.setFormat12Hour(Html.fromHtml("hh<br><font color=" + mAccentColor + ">mm</font>"));
-        mClock.setFormat24Hour(Html.fromHtml("kk<br><font color=" + mAccentColor + ">mm</font>"));
-        onTimeTick();
+        mClock.setFormat12Hour(Html.fromHtml("hh<br><strong>mm</strong>"));
+        mClock.setFormat24Hour(Html.fromHtml("kk<br><strong>mm</strong>"));
     }
 
     @Override
@@ -111,12 +106,12 @@ public class SamsungHighlightClockController implements ClockPlugin {
 
     @Override
     public String getName() {
-        return "samsung_highlight";
+        return "samsung_bold";
     }
 
     @Override
     public String getTitle() {
-        return mResources.getString(R.string.clock_title_samsung_accent);
+        return mResources.getString(R.string.clock_title_samsung_bold_minute);
     }
 
     @Override
@@ -129,6 +124,8 @@ public class SamsungHighlightClockController implements ClockPlugin {
 
         View previewView = mLayoutInflater.inflate(R.layout.default_clock_preview, null);
         TextClock previewTime = previewView.findViewById(R.id.time);
+        previewTime.setFormat12Hour(Html.fromHtml("hh<br><strong>mm</strong>"));
+        previewTime.setFormat24Hour(Html.fromHtml("kk<br><strong>mm</strong>"));
         TextClock previewDate = previewView.findViewById(R.id.date);
 
         // Initialize state of plugin before generating preview.
@@ -137,8 +134,6 @@ public class SamsungHighlightClockController implements ClockPlugin {
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);
         setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
-        previewTime.setFormat12Hour(Html.fromHtml("hh<br><font color=" + mAccentColor + ">mm</font>"));
-        previewTime.setFormat24Hour(Html.fromHtml("kk<br><font color=" + mAccentColor + ">mm</font>"));
         onTimeTick();
 
         return mRenderer.createPreview(previewView, width, height);
@@ -167,17 +162,15 @@ public class SamsungHighlightClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
-        mClock.setTextColor(color);
+        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
+            mClock.setTextColor(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
+        } else {
+             mClock.setTextColor(color);
+        }
     }
 
     @Override
-    public void setColorPalette(boolean supportsDarkText, int[] colorPalette) {
-        if (colorPalette == null || colorPalette.length == 0) {
-            return;
-        }
-        final int color = colorPalette[Math.max(0, colorPalette.length - 5)];
-        mAccentColor = color;
-    }
+    public void setColorPalette(boolean supportsDarkText, int[] colorPalette) {}
 
     @Override
     public void onTimeTick() {

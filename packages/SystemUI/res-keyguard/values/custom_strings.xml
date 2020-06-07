@@ -35,6 +35,7 @@
     <string name="clock_title_default">Default</string>
     <string name="clock_title_default_hour_bold" translatable="false">Default (Hour bold)</string>
     <string name="clock_title_default_minute_bold" translatable="false">Default (Min bold)</string>
-    <string name="clock_title_samsung_bold" translatable="false">Samsung (bold)</string>
+    <string name="clock_title_samsung_bold_hour" translatable="false">Samsung (Hour bold)</string>
+    <string name="clock_title_samsung_bold_minute" translatable="false">Samsung (Minute bold)</string>
 
 </resources>
