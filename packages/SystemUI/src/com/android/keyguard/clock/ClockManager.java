@@ -152,8 +152,8 @@ public final class ClockManager {
         addBuiltinClock(() -> new DefaultBoldMinuteClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new DefaultBoldHourClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new SamsungClockController(res, layoutInflater, colorExtractor, context));
-        addBuiltinClock(() -> new SamsungBoldClockController(res, layoutInflater, colorExtractor, context));
-        addBuiltinClock(() -> new SamsungHighlightClockController(res, layoutInflater, colorExtractor));
+        addBuiltinClock(() -> new SamsungBoldHourClockController(res, layoutInflater, colorExtractor, context));
+        addBuiltinClock(() -> new SamsungBoldMinuteClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new DividedLinesClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new OronosClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new SfunyClockController(res, layoutInflater, colorExtractor, context));

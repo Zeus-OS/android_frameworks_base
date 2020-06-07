@@ -41,7 +41,7 @@ import static com.android.systemui.statusbar.phone
 /**
  * Plugin for the default clock face used only to provide a preview.
  */
-public class SamsungBoldClockController implements ClockPlugin {
+public class SamsungBoldMinuteClockController implements ClockPlugin {
 
     /**
      * Resources used to get title and thumbnail.
@@ -82,7 +82,7 @@ public class SamsungBoldClockController implements ClockPlugin {
      * @param inflater Inflater used to inflate custom clock views.
      * @param colorExtractor Extracts accent color from wallpaper.
      */
-    public SamsungBoldClockController(Resources res, LayoutInflater inflater,
+    public SamsungBoldMinuteClockController(Resources res, LayoutInflater inflater,
             SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
@@ -94,8 +94,8 @@ public class SamsungBoldClockController implements ClockPlugin {
         mView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.digital_clock_custom, null);
         mClock = mView.findViewById(R.id.clock);
-        mClock.setFormat12Hour(Html.fromHtml("<strong>hh</strong><br>mm"));
-        mClock.setFormat24Hour(Html.fromHtml("<strong>kk</strong><br>mm"));
+        mClock.setFormat12Hour(Html.fromHtml("hh<br><strong>mm</strong>"));
+        mClock.setFormat24Hour(Html.fromHtml("kk<br><strong>mm</strong>"));
     }
 
     @Override
@@ -111,7 +111,7 @@ public class SamsungBoldClockController implements ClockPlugin {
 
     @Override
     public String getTitle() {
-        return mResources.getString(R.string.clock_title_samsung_bold);
+        return mResources.getString(R.string.clock_title_samsung_bold_minute);
     }
 
     @Override
@@ -124,8 +124,8 @@ public class SamsungBoldClockController implements ClockPlugin {
 
         View previewView = mLayoutInflater.inflate(R.layout.default_clock_preview, null);
         TextClock previewTime = previewView.findViewById(R.id.time);
-        previewTime.setFormat12Hour(Html.fromHtml("<strong>hh</strong><br>mm"));
-        previewTime.setFormat24Hour(Html.fromHtml("<strong>kk</strong><br>mm"));
+        previewTime.setFormat12Hour(Html.fromHtml("hh<br><strong>mm</strong>"));
+        previewTime.setFormat24Hour(Html.fromHtml("kk<br><strong>mm</strong>"));
         TextClock previewDate = previewView.findViewById(R.id.date);
 
         // Initialize state of plugin before generating preview.
