@@ -7203,7 +7203,12 @@ public final class Settings {
         public static final String BRIGHTNESS_SLIDER_STYLE = "brightness_slider_style";
 
         /**
-         * Switch between different navbar styles
+         * Holds current enabled volume panel implementation
+         * @hide
+         */
+        public static final String SYSTEMUI_PLUGIN_VOLUME = "systemui_plugin_volume";
+
+        /**
          * @hide
          */
         public static final String NAVBAR_STYLE = "navbar_style";
@@ -7773,6 +7778,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(UI_STYLE);
             PRIVATE_SETTINGS.add(BRIGHTNESS_SLIDER_STYLE);
             PRIVATE_SETTINGS.add(VOLUME_DIALOG_TIMEOUT);
+            PRIVATE_SETTINGS.add(SYSTEMUI_PLUGIN_VOLUME);
         }
 
         /**
