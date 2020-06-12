@@ -97,13 +97,10 @@ public class MNMLMinimalClockController implements ClockPlugin {
         mView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.digital_mnml_minimal, null);
         mClock = mView.findViewById(R.id.clock);
-        mDate = mView.findViewById(R.id.date);
         if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
             mClock.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
         } else {
-           ColorExtractor.GradientColors colors = mColorExtractor.getColors(
-                WallpaperManager.FLAG_LOCK);
-        setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
+           mClock.setTextColor(Color.WHITE);
         }
     }
 
@@ -111,7 +108,6 @@ public class MNMLMinimalClockController implements ClockPlugin {
     public void onDestroyView() {
         mView = null;
         mClock = null;
-        mDate = null;
     }
 
     @Override
@@ -134,22 +130,8 @@ public class MNMLMinimalClockController implements ClockPlugin {
 
         View previewView = mLayoutInflater.inflate(R.layout.digital_mnml_minimal, null);
         TextClock previewTime = previewView.findViewById(R.id.clock);
-        TextClock previewDate = previewView.findViewById(R.id.date);
 
         previewTime.setTextColor(Color.WHITE);
-        previewDate.setTextColor(Color.BLACK);
-
-        // Initialize state of plugin before generating preview.
-        ColorExtractor.GradientColors colors = mColorExtractor.getColors(
-                WallpaperManager.FLAG_LOCK);
-        int[] colorPalette = colors.getColorPalette();
-        int accentColor = mResources.getColor(R.color.typeClockAccentColor, null);
-        if (colorPalette != null) {
-            accentColor = colorPalette[Math.max(0, colorPalette.length - 5)];
-        }
-        GradientDrawable dateBg = (GradientDrawable) previewDate.getBackground();
-        dateBg.setColor(accentColor);
-        dateBg.setStroke(0,Color.TRANSPARENT);
 
         return mRenderer.createPreview(previewView, width, height);
     }
@@ -180,23 +162,6 @@ public class MNMLMinimalClockController implements ClockPlugin {
     }
 
     @Override
-    public void setColorPalette(boolean supportsDarkText, int[] colorPalette) {
-        if (colorPalette == null || colorPalette.length == 0) {
-            return;
-        }
-        final int accentColor = colorPalette[Math.max(0, colorPalette.length - 5)];
-        GradientDrawable dateBg = (GradientDrawable) mDate.getBackground();
-
-        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
-            dateBg.setColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
-        } else {
-            dateBg.setColor(accentColor);
-        }
-
-        dateBg.setStroke(0,Color.TRANSPARENT);
-    }
-
-    @Override
     public void onTimeTick() {
     }
 
@@ -210,6 +175,6 @@ public class MNMLMinimalClockController implements ClockPlugin {
 
     @Override
     public boolean shouldShowStatusArea() {
-        return false;
+        return true;
     }
 }
