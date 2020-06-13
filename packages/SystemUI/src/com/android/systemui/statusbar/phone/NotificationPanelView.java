@@ -2772,13 +2772,7 @@ public class NotificationPanelView extends PanelView implements
                 mStatusBar.onCustomHintStarted();
             }
         } else {
-            if (mKeyguardBottomArea.isLeftVoiceAssist()) {
-                mStatusBar.onVoiceAssistHintStarted();
-            } else if (mKeyguardBottomArea.getLeftIntent() == KeyguardBottomAreaView.PHONE_INTENT) {
-                mStatusBar.onPhoneHintStarted();
-            } else {
-                mStatusBar.onCustomHintStarted();
-            }
+            mStatusBar.onTorchHintStarted();
         }
     }
 

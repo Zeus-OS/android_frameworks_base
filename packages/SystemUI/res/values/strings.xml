@@ -270,6 +270,8 @@
     <string name="accessibility_camera_button">Camera</string>
     <!-- Content description of the phone button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_phone_button">Phone</string>
+	<!-- Content description of the torch button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
+    <string name="accessibility_torch_button">Torch</string>
     <!-- Content description of the phone button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
     <string name="accessibility_voice_assist_button">Voice Assist</string>
     <!-- Content description of the unlock button for accessibility (not shown on the screen). [CHAR LIMIT=NONE] -->
@@ -286,6 +288,8 @@
     <string name="accessibility_manage_notification">Manage notifications</string>
     <!-- Click action label for accessibility for the phone button. [CHAR LIMIT=NONE] -->
     <string name="phone_label">open phone</string>
+	<!-- Click action label for accessibility for the phone button. [CHAR LIMIT=NONE] -->
+    <string name="torch_label">toggle torch on or off</string>
     <!-- Click action label for accessibility for the voice assist button. This is not shown on-screen and is an accessibility label for the icon which launches the voice assist from the lock screen.[CHAR LIMIT=NONE] -->
     <string name="voice_assist_label">open voice assist</string>
     <!-- Click action label for accessibility for the phone button. [CHAR LIMIT=NONE] -->
@@ -987,6 +991,9 @@
     <!-- Shows when people have clicked on the phone icon [CHAR LIMIT=60] -->
     <string name="phone_hint">Swipe from icon for phone</string>
 
+    <!-- Shows when people have clicked on the phone icon [CHAR LIMIT=60] -->
+    <string name="torch_hint">Swipe from icon to toggle torch</string>
+	
     <!-- Shows when people have clicked on the voice assist icon [CHAR LIMIT=60] -->
     <string name="voice_hint">Swipe from icon for voice assist</string>
 

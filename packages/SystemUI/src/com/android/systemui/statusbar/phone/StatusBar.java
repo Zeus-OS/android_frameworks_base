@@ -4420,14 +4420,9 @@ public class StatusBar extends SystemUI implements DemoMode,
         mKeyguardIndicationController.showTransientIndication(R.string.camera_hint);
     }
 
-    public void onVoiceAssistHintStarted() {
+    public void onTorchHintStarted() {
         mFalsingManager.onLeftAffordanceHintStarted();
-        mKeyguardIndicationController.showTransientIndication(R.string.voice_hint);
-    }
-
-    public void onPhoneHintStarted() {
-        mFalsingManager.onLeftAffordanceHintStarted();
-        mKeyguardIndicationController.showTransientIndication(R.string.phone_hint);
+        mKeyguardIndicationController.showTransientIndication(R.string.torch_hint);
     }
 
     public void onCustomHintStarted() {

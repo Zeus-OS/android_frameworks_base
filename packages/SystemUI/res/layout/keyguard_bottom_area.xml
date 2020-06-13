@@ -249,9 +249,9 @@
         android:padding="@dimen/keyguard_affordance_padding"
         android:layout_margin="@dimen/keyguard_affordance_margin"
         android:background="@drawable/keyguard_affordance_background"
-        android:src="@*android:drawable/ic_phone"
+        android:src="@drawable/ic_torch"
         android:scaleType="center"
-        android:contentDescription="@string/accessibility_phone_button"
+        android:contentDescription="@string/accessibility_torch_button"
         android:tint="@android:color/white" />
 
     <FrameLayout
