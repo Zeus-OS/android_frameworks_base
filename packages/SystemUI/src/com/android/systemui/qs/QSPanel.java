@@ -66,6 +66,7 @@ import com.android.systemui.plugins.qs.DetailAdapter;
 import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.plugins.qs.QSTileView;
 import com.android.systemui.qs.QSHost.Callback;
+import com.android.systemui.qs.QuickStatusBarHeader;
 import com.android.systemui.qs.customize.QSCustomizer;
 import com.android.systemui.qs.external.CustomTile;
 import com.android.systemui.settings.BrightnessController;
@@ -126,6 +127,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     private ImageView mMinBrightness;
     private ImageView mMaxBrightness;
     private int mBrightnessSlider = 1;
+    private int mIsQuickQsBrightnessEnabled = 2;
 
     private final Vibrator mVibrator;
 
@@ -326,6 +328,9 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
         } else if (QS_SHOW_BRIGHTNESS_SLIDER.equals(key)) {
             mBrightnessSlider = TunerService.parseInteger(newValue, 1);
             mBrightnessView.setVisibility(mBrightnessSlider != 0 ? VISIBLE : GONE);
+            restartQSPanel();
+        } else if (QuickStatusBarHeader.QQS_SHOW_BRIGHTNESS_SLIDER.equals(key)) {
+            mIsQuickQsBrightnessEnabled = TunerService.parseInteger(newValue, 2);
             restartQSPanel();
         } else if (QS_SHOW_BRIGHTNESS_BUTTONS.equals(key)) {
             updateViewVisibilityForTuningValue(mMinBrightness, newValue);
