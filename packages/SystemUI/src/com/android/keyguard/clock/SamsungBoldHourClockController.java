@@ -96,6 +96,22 @@ public class SamsungBoldHourClockController implements ClockPlugin {
         mClock = mView.findViewById(R.id.clock);
         mClock.setFormat12Hour(Html.fromHtml("<strong>hh</strong><br>mm"));
         mClock.setFormat24Hour(Html.fromHtml("<strong>kk</strong><br>mm"));
+
+        int mAccentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
+
+        if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext) && ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + "><strong>hh</strong></font><br><font color=" + mAccentColor + ">mm</font>"));
+             mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + "><strong>kk</strong></font><br><font color=" + mAccentColor + ">mm</font>"));
+        } else if(ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + "><strong>hh</strong></font><br>mm"));
+             mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + "><strong>kk</strong></font><br>mm"));
+        } else if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<strong>hh</strong><br><font color=" + mAccentColor + ">mm</font>"));
+             mClock.setFormat24Hour(Html.fromHtml("<strong>kk</strong><br><font color=" + mAccentColor + ">mm</font>"));
+        } else {
+            mClock.setFormat12Hour(Html.fromHtml("<strong>hh</strong><br>mm"));
+            mClock.setFormat24Hour(Html.fromHtml("<strong>kk</strong><br>mm"));
+        }
     }
 
     @Override
@@ -162,11 +178,6 @@ public class SamsungBoldHourClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
-        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
-            mClock.setTextColor(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
-        } else {
-             mClock.setTextColor(color);
-        }
     }
 
     @Override

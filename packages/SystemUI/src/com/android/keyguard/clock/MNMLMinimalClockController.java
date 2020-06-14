@@ -97,7 +97,7 @@ public class MNMLMinimalClockController implements ClockPlugin {
         mView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.digital_mnml_minimal, null);
         mClock = mView.findViewById(R.id.clock);
-        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
+        if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
             mClock.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
         } else {
            mClock.setTextColor(Color.WHITE);

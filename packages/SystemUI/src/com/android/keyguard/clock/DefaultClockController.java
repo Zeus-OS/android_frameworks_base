@@ -160,7 +160,7 @@ public class DefaultClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
-        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
+        if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
             mTextTime.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
         } else {
             mTextTime.setTextColor(color);

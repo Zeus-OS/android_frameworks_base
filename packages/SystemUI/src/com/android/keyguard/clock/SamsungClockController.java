@@ -23,6 +23,7 @@ import android.graphics.Color;
 import android.graphics.Paint.Style;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.text.Html;
 import android.widget.TextClock;
 import android.content.Context;
 import com.android.internal.util.zenx.ZenxUtils;
@@ -95,6 +96,21 @@ public class SamsungClockController implements ClockPlugin {
         mClock = mView.findViewById(R.id.clock);
         mClock.setFormat12Hour("hh\nmm");
         mClock.setFormat24Hour("kk\nmm");
+        int mAccentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
+
+        if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext) && ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + ">hh</font><br><font color=" + mAccentColor + ">mm</font>"));
+             mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + ">kk</font><br><font color=" + mAccentColor + ">mm</font>"));
+        } else if(ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + ">hh</font><br>mm"));
+             mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + ">kk</font><br>mm"));
+        } else if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("hh<br><font color=" + mAccentColor + ">mm</font>"));
+             mClock.setFormat24Hour(Html.fromHtml("kk<br><font color=" + mAccentColor + ">mm</font>"));
+        } else {
+            mClock.setFormat12Hour(Html.fromHtml("hh<br>mm"));
+            mClock.setFormat24Hour(Html.fromHtml("kk<br>mm"));
+        }
     }
 
     @Override
@@ -161,12 +177,6 @@ public class SamsungClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
-        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
-            mClock.setTextColor(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
-        } else {
-            mClock.setTextColor(color);
-        }
-
     }
 
     @Override

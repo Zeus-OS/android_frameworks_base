@@ -265,12 +265,6 @@ public class Utils {
                 Locale.CHINESE.getLanguage());
     }
 
-    // Check for lockscreen accent color
-    public static boolean useLockscreenClockAccentColor(Context context) {
-        return Settings.System.getInt(context.getContentResolver(),
-          Settings.System.LOCKSCREEN_ACCENT_COLOR, 0) == 1;
-    }
-
     // Method to check if device supports flashlight
     public static boolean deviceHasFlashlight(Context ctx) {
         return ctx.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);

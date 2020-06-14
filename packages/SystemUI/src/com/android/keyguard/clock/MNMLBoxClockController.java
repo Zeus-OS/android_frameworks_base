@@ -183,34 +183,33 @@ public class MNMLBoxClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
-        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
-            mDate.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
+        if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
+            mClock.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
         } else {
-            mDate.setTextColor(color);
+            mClock.setTextColor(Color.WHITE);
         }
-        mClock.setTextColor(Color.WHITE);
     }
-
-    @Override
-    public void setColorPalette(boolean supportsDarkText, int[] colorPalette) {}
-
-    @Override
-    public void onTimeTick() {
-        mTime.setTimeInMillis(System.currentTimeMillis());
-        final int hour = mTime.get(Calendar.HOUR) % 12;
-        // lazy and ugly workaround for the it's string
-        String typeHeader = mResources.getQuantityText(
-                R.plurals.type_clock_header, hour).toString();
-        typeHeader = typeHeader.replaceAll("\\n", "");
-        SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm");
-        mClock.setText(typeHeader.substring(0, typeHeader.indexOf("^")) + " " + timeformat.format(mTime.getInstance().getTimeInMillis()));
-        DateFormat dateFormat = DateFormat.getInstanceForSkeleton("EEEEMMMMd", Locale.getDefault());
-        dateFormat.setContext(DisplayContext.CAPITALIZATION_FOR_STANDALONE);
-        mDate.setText(dateFormat.format(mTime.getInstance().getTimeInMillis()));
-
-    }
-
-    @Override
+ 
+    @Override 
+    public void setColorPalette(boolean supportsDarkText, int[] colorPalette) {} 
+ 
+    @Override 
+    public void onTimeTick() { 
+        mTime.setTimeInMillis(System.currentTimeMillis()); 
+        final int hour = mTime.get(Calendar.HOUR) % 12; 
+        // lazy and ugly workaround for the it's string 
+        String typeHeader = mResources.getQuantityText( 
+                R.plurals.type_clock_header, hour).toString(); 
+        typeHeader = typeHeader.replaceAll("\\n", ""); 
+        SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm"); 
+        mClock.setText(typeHeader.substring(0, typeHeader.indexOf("^")) + " " + timeformat.format(mTime.getInstance().getTimeInMillis())); 
+        DateFormat dateFormat = DateFormat.getInstanceForSkeleton("EEEEMMMMd", Locale.getDefault()); 
+        dateFormat.setContext(DisplayContext.CAPITALIZATION_FOR_STANDALONE); 
+        mDate.setText(dateFormat.format(mTime.getInstance().getTimeInMillis())); 
+ 
+    } 
+ 
+    @Override 
     public void setDarkAmount(float darkAmount) {
         mView.setDarkAmount(darkAmount);
     }

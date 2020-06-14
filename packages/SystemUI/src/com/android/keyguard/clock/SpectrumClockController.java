@@ -182,7 +182,7 @@ public class SpectrumClockController implements ClockPlugin {
     private void updateColor() {
         final int primary = mPalette.getPrimaryColor();
         final int secondary = mPalette.getSecondaryColor();
-         if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
+         if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
             mLockClock.setTextColor(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
         } else {
             mLockClock.setTextColor(secondary);
