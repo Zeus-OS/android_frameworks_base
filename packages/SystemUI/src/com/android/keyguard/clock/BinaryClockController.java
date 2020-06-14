@@ -174,11 +174,10 @@ public class BinaryClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
-        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
-            mBinaryClock.setTintColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
+        if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
             mLockClock.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
         } else {
-            mBinaryClock.setTintColor(color);
+           mLockClock.setTextColor(Color.WHITE);
         }
     }
 

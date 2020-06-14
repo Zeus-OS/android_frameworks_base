@@ -29,6 +29,8 @@ import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
+import android.content.Context;
+import com.android.internal.util.zenx.ZenxUtils;
 
 import java.util.TimeZone;
 
@@ -84,6 +86,8 @@ public class TypeClockAltController implements ClockPlugin {
      */
     private CrossFadeDarkController mDarkController;
 
+    private Context mContext;
+
     /**
      * Create a TypeClockAltController instance.
      *
@@ -92,10 +96,11 @@ public class TypeClockAltController implements ClockPlugin {
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     TypeClockAltController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mColorExtractor = colorExtractor;
+        mContext = context;
         mStatusBarHeight = res.getDimensionPixelSize(R.dimen.status_bar_height);
         mKeyguardLockPadding = res.getDimensionPixelSize(R.dimen.keyguard_lock_padding);
         mKeyguardLockHeight = res.getDimensionPixelSize(R.dimen.keyguard_lock_height);
@@ -185,8 +190,13 @@ public class TypeClockAltController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
-        mTypeClock.setTextColor(color);
-        mLockClock.setTextColor(color);
+        if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
+            mTypeClock.setTextColor(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
+            mLockClock.setTextColor(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
+        } else {
+            mTypeClock.setTextColor(color);
+            mLockClock.setTextColor(color);
+        }
     }
 
     @Override

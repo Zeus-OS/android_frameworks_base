@@ -29,6 +29,7 @@ import android.view.View;
 import android.widget.TextClock;
 import android.widget.TextView;
 import android.content.Context;
+import android.text.Html;
 
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
@@ -111,8 +112,21 @@ public class DividedLinesClockController implements ClockPlugin {
         mDate = mView.findViewById(R.id.date);
         mTopLine = mView.findViewById(R.id.topLine);
         mBottomLine = mView.findViewById(R.id.bottomLine);
-        mClock.setFormat12Hour("hh:mm");
-        onTimeTick();
+        int mAccentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
+
+        if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext) && ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + ">h</font>:<font color=" + mAccentColor + ">mm</font>"));
+             mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + ">kk</font>:<font color=" + mAccentColor + ">mm</font>"));
+        } else if(ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + ">h</font>:mm"));
+             mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + ">kk</font>:mm"));
+        } else if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("h:<font color=" + mAccentColor + ">mm</font>"));
+             mClock.setFormat24Hour(Html.fromHtml("kk:<font color=" + mAccentColor + ">mm</font>"));
+        } else {
+            mClock.setFormat12Hour(Html.fromHtml("h:mm"));
+            mClock.setFormat24Hour(Html.fromHtml("kk:mm"));
+        }
     }
 
     @Override
@@ -186,13 +200,10 @@ public class DividedLinesClockController implements ClockPlugin {
     public void setTextColor(int color) {
         mClock.setTextColor(Color.WHITE);
         mDate.setTextColor(Color.WHITE);
-        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
-            mDate.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
-            mTopLine.setBackgroundColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
-            mBottomLine.setBackgroundColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
+        if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
+            mClock.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
         } else {
-            mTopLine.setBackgroundColor(color);
-            mBottomLine.setBackgroundColor(color);
+            mClock.setTextColor(Color.WHITE);
         }
     }
 
