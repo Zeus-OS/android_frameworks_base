@@ -94,9 +94,7 @@ public class NotificationLightsView extends RelativeLayout {
 
     public int getNotificationLightsColor() {
         int color = getDefaultNotificationLightsColor();
-        int lightColor = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.AMBIENT_LIGHT_COLOR, 0,
-                UserHandle.USER_CURRENT);
+        int lightColor = getlightColor();
         int customColor = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.AMBIENT_LIGHT_CUSTOM_COLOR, getDefaultNotificationLightsColor(),
                 UserHandle.USER_CURRENT);
@@ -121,7 +119,9 @@ public class NotificationLightsView extends RelativeLayout {
             color = Utils.getColorAccentDefaultColor(getContext());
         } else if (lightColor == 3) {
             color = customColor;
-        } else {
+        } else if (lightColor == 4) {
+            color = randomColor();
+        }  else {
             color = 0xFFFFFFFF;
         }
         return color;
@@ -136,10 +136,24 @@ public class NotificationLightsView extends RelativeLayout {
         mLightAnimator.removeAllUpdateListeners();
     }
 
+    public int randomColor() {
+        int red = (int) (0xff * Math.random());
+        int green = (int) (0xff * Math.random());
+        int blue = (int) (0xff * Math.random());
+        return Color.argb(255, red, green, blue);
+    }
+
+    public int getlightColor() {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.AMBIENT_LIGHT_COLOR, 0,
+                UserHandle.USER_CURRENT);
+    }
+
     public void animateNotificationWithColor(int color) {
         int layout = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.AMBIENT_LIGHT_LAYOUT, 0,
                 UserHandle.USER_CURRENT);
+        int lightcolor = getlightColor();
         if (mLeftViewSolid == null) {
             mLeftViewSolid = (ImageView) findViewById(R.id.notification_animation_left_solid);
         }
@@ -152,12 +166,22 @@ public class NotificationLightsView extends RelativeLayout {
         if (mRightViewFaded == null) {
             mRightViewFaded = (ImageView) findViewById(R.id.notification_animation_right_faded);
         }
-        mLeftViewSolid.setColorFilter(color);
-        mLeftViewFaded.setColorFilter(color);
+        if (lightcolor == 5) {
+            mLeftViewSolid.setColorFilter(randomColor());
+            mLeftViewFaded.setColorFilter(randomColor());
+        } else {
+            mLeftViewSolid.setColorFilter(color);
+            mLeftViewFaded.setColorFilter(color);
+        }
         mLeftViewSolid.setVisibility(layout == 0 ? View.VISIBLE : View.GONE);
         mLeftViewFaded.setVisibility(layout == 1 ? View.VISIBLE : View.GONE);
-        mRightViewSolid.setColorFilter(color);
-        mRightViewFaded.setColorFilter(color);
+        if (lightcolor == 5) {
+            mRightViewSolid.setColorFilter(randomColor());
+            mRightViewFaded.setColorFilter(randomColor());
+        } else {
+           mRightViewSolid.setColorFilter(color);
+           mRightViewFaded.setColorFilter(color);
+        }
         mRightViewSolid.setVisibility(layout == 0 ? View.VISIBLE : View.GONE);
         mRightViewFaded.setVisibility(layout == 1 ? View.VISIBLE : View.GONE);
         if (!mLightAnimator.isRunning()) {
@@ -182,5 +206,4 @@ public class NotificationLightsView extends RelativeLayout {
             mLightAnimator.start();
         }
     }
-
 }
