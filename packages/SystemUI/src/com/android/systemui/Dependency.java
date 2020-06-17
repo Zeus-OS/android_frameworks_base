@@ -124,6 +124,7 @@ import javax.inject.Named;
 import dagger.Lazy;
 import dagger.Subcomponent;
 
+import com.android.prophet.gamma.Gamma;
 /**
  * Class to handle ugly dependencies throughout sysui until we determine the
  * long-term dependency injection solution.
@@ -303,6 +304,7 @@ public class Dependency {
     @Inject Lazy<CustomSettingsService> mCustomSettingsService;
     @Inject Lazy<PulseController> mPulseController;
     @Inject Lazy<TaskHelper> mTaskHelper;
+    @Inject Lazy<Gamma> mGamma;
 
     @Inject
     public Dependency() {
@@ -494,6 +496,7 @@ public class Dependency {
         mProviders.put(FalsingManager.class, mFalsingManager::get);
         mProviders.put(PulseController.class, mPulseController::get);
         mProviders.put(TaskHelper.class, mTaskHelper::get);
+        mProviders.put(Gamma.class, mGamma::get);
 
         // TODO(b/118592525): to support multi-display , we start to add something which is
         //                    per-display, while others may be global. I think it's time to add
