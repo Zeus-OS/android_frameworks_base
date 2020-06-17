@@ -123,6 +123,7 @@ import javax.inject.Named;
 import dagger.Lazy;
 import dagger.Subcomponent;
 
+import com.android.prophet.iota.Iota;
 import com.android.prophet.gamma.Gamma;
 /**
  * Class to handle ugly dependencies throughout sysui until we determine the
@@ -302,6 +303,7 @@ public class Dependency {
     @Inject Lazy<FalsingManager> mFalsingManager;
     @Inject Lazy<CustomSettingsService> mCustomSettingsService;
     @Inject Lazy<PulseController> mPulseController;
+    @Inject Lazy<Iota> mIota;
     @Inject Lazy<Gamma> mGamma;
 
     @Inject
@@ -493,6 +495,7 @@ public class Dependency {
         mProviders.put(INotificationManager.class, mINotificationManager::get);
         mProviders.put(FalsingManager.class, mFalsingManager::get);
         mProviders.put(PulseController.class, mPulseController::get);
+        mProviders.put(Iota.class, mIota::get);
         mProviders.put(Gamma.class, mGamma::get);
 
         // TODO(b/118592525): to support multi-display , we start to add something which is
