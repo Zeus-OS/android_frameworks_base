@@ -66,6 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="@dimen/volume_dialog_aospa_slider_height"
         android:layout_marginTop="@dimen/volume_dialog_aosp_spacer"
+        android:layout_marginRight="@dimen/volume_dialog_aospa_panel_width"
         android:clipChildren="false"
         android:clipToPadding="false">
 
