@@ -40,7 +40,7 @@ import com.android.systemui.statusbar.NotificationMediaManager;
 import com.android.systemui.statusbar.policy.ExtensionController;
 import com.android.systemui.tuner.TunerService;
 
-import com.android.prophet.iota.Iota;
+import com.android.systemui.synth.iota.Iota;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
