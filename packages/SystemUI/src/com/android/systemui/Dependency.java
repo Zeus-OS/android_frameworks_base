@@ -123,8 +123,9 @@ import javax.inject.Named;
 import dagger.Lazy;
 import dagger.Subcomponent;
 
-import com.android.prophet.iota.Iota;
-import com.android.prophet.gamma.Gamma;
+import com.android.systemui.synth.iota.Iota;
+import com.android.systemui.synth.gamma.Gamma;
+
 /**
  * Class to handle ugly dependencies throughout sysui until we determine the
  * long-term dependency injection solution.

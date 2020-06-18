@@ -16,7 +16,7 @@
 *
 */
 
-package com.android.systemui.synth;
+package com.android.systemui.synth.gamma;
 
 import android.content.ContentResolver;
 import android.content.Context;

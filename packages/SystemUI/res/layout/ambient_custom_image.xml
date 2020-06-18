@@ -10,7 +10,7 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<com.android.systemui.synth.AmbientCustomImage
+<com.android.systemui.synth.gamma.AmbientCustomImage
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ambient_custom_image"
     android:layout_width="match_parent"
@@ -20,6 +20,5 @@
     <ImageView android:id="@+id/custom_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="center"
-        android:background="@drawable/qs_header_image_view_outline" />
-</com.android.systemui.synth.AmbientCustomImage>
+        android:scaleType="center" />
+</com.android.systemui.synth.gamma.AmbientCustomImage>

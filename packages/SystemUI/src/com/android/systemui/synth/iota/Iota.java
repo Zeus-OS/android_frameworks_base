@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.prophet.iota;
+package com.android.systemui.synth.iota;
 
 import android.database.ContentObserver;
 import android.os.UserHandle;
@@ -75,7 +75,7 @@ import android.widget.Toast;
 
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
-import com.android.prophet.gamma.SynthMusic;
+import com.android.systemui.synth.gamma.SynthMusic;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
