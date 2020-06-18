@@ -29,7 +29,7 @@
     android:background="@android:color/transparent"
     android:theme="@style/qs_theme">
 
-    <com.android.prophet.gamma.SynthMusic
+    <com.android.systemui.synth.gamma.SynthMusic
         android:id="@+id/synth_music_main"
         android:layout_width="@dimen/custom_volume_dialog_seekbar_height"
         android:layout_height="@dimen/custom_volume_dialog_seekbar_height"
@@ -117,7 +117,7 @@
 
         </LinearLayout>
 
-    </com.android.prophet.gamma.SynthMusic>
+    </com.android.systemui.synth.gamma.SynthMusic>
 
     <!-- right-aligned to be physically near volume button -->
     <LinearLayout

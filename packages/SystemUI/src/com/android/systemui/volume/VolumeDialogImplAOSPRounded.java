@@ -103,8 +103,8 @@ import com.android.systemui.statusbar.policy.AccessibilityManagerWrapper;
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 
-import com.android.prophet.gamma.SynthMusic;
-import com.android.prophet.iota.Iota;
+import com.android.systemui.synth.gamma.SynthMusic;
+import com.android.systemui.synth.iota.Iota;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
