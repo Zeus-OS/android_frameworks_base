@@ -7316,6 +7316,16 @@ public final class Settings {
         public static final String VOLUME_PANEL_ALIGNMENT = "volume_panel_alignment";
 
         /**
+          * Volume dialog timeout
+          * @hide
+          */
+         public static final String VOLUME_DIALOG_TIMEOUT = "volume_dialog_timeout";
+
+         /** @hide */
+         private static final Validator VOLUME_DIALOG_TIMEOUT_VALIDATOR =
+                new SettingsValidators.InclusiveIntegerRangeValidator(500, 10000);
+
+        /**
         * Music Text in VolumePanel
         * by.tikkiX2
         * @hide
@@ -7502,6 +7512,7 @@ public final class Settings {
             QS_PANEL_BG_USE_NEW_TINT,
             CUSTOM_STATUSBAR_HEIGHT,
             SYNTHOS_CENTER_NOTIFICATION_HEADERS
+            VOLUME_DIALOG_TIMEOUT,
         };
 
         /**
@@ -7761,6 +7772,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(CUSTOM_STATUSBAR_HEIGHT);
             PRIVATE_SETTINGS.add(UI_STYLE);
             PRIVATE_SETTINGS.add(BRIGHTNESS_SLIDER_STYLE);
+            PRIVATE_SETTINGS.add(VOLUME_DIALOG_TIMEOUT);
         }
 
         /**
@@ -7994,6 +8006,7 @@ public final class Settings {
             VALIDATORS.put(QS_PANEL_BG_USE_NEW_TINT, QS_PANEL_BG_USE_NEW_TINT_VALIDATOR);
             VALIDATORS.put(CUSTOM_STATUSBAR_HEIGHT, CUSTOM_STATUSBAR_HEIGHT_VALIDATOR);
             VALIDATORS.put(SYNTHOS_CENTER_NOTIFICATION_HEADERS, SYNTHOS_CENTER_NOTIFICATION_HEADERS_VALIDATOR);
+            VALIDATORS.put(VOLUME_DIALOG_TIMEOUT,VOLUME_DIALOG_TIMEOUT_VALIDATOR);
         }
 
         /**
