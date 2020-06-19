@@ -68,6 +68,8 @@ import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserInfoController.OnUserInfoChangedListener;
 import com.android.systemui.statusbar.policy.QSFooterNetworkTraffic;
 import com.android.systemui.statusbar.info.DataUsageView;
+import com.android.internal.util.zenx.ZenxUtils;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -229,7 +231,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
     private void setSettingsIcon() {
         isAlwaysShowSettings = Settings.System.getIntForUser(mContext.getContentResolver(),
-                        Settings.System.QS_ALWAYS_SHOW_SETINGS, 0,
+                        Settings.System.QS_ALWAYS_SHOW_SETTINGS, 0,
                         UserHandle.USER_CURRENT) == 1;
         createFooterAnimator();
     }
@@ -379,6 +381,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         if (mExpanded == expanded) return;
         mExpanded = expanded;
         updateEverything();
+        updateDataUsageView();
     }
 
     @Override
@@ -398,7 +401,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                 Settings.Global.getUriFor(Settings.Global.DEVELOPMENT_SETTINGS_ENABLED), false,
                 mDeveloperSettingsObserver, UserHandle.USER_ALL);*/
         mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.QS_ALWAYS_SHOW_SETINGS), false,
+                Settings.System.getUriFor(Settings.System.QS_ALWAYS_SHOW_SETTINGS), false,
                 mSettingsObserver, UserHandle.USER_ALL);
     }
 
@@ -455,8 +458,16 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
     private void updateDataUsageView() {
          if (mDataUsageView.isDataUsageEnabled() != 0) {
-            mDataUsageLayout.setVisibility(View.VISIBLE);
-            mDataUsageImage.setVisibility(View.VISIBLE);
+            if (ZenxUtils.isConnected(mContext)) {
+                    DataUsageView.updateUsage();
+                    mDataUsageLayout.setVisibility(View.VISIBLE);
+                    mDataUsageImage.setVisibility(View.VISIBLE);
+                    mDataUsageView.setVisibility(View.VISIBLE);
+                } else {
+                    mDataUsageView.setVisibility(View.GONE);
+                    mDataUsageImage.setVisibility(View.GONE);
+                    mDataUsageLayout.setVisibility(View.GONE);
+                }
         } else {
             mDataUsageView.setVisibility(View.GONE);
             mDataUsageImage.setVisibility(View.GONE);
