@@ -134,4 +134,7 @@
     <dimen name="ticker_icon_end_margin">4dp</dimen>
     <dimen name="ticker_text_end_padding">10dp</dimen>
 
+    <!-- QS footer data usage -->
+    <dimen name="qs_datausage_icon_size">16sp</dimen>
+
 </resources>

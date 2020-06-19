@@ -83,6 +83,9 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     protected View mSettingsContainer;
     private PageIndicator mPageIndicator;
     private View mRunningServicesButton;
+    // Data Usage
+    private View mDataUsageLayout;
+    private ImageView mDataUsageImage;
     private DataUsageView mDataUsageView;
     private int mIsBatteryBarEnabled;
     private BatteryBarController mBatteryBar; //view location 5
@@ -176,6 +179,8 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
         mDataUsageView = findViewById(R.id.data_sim_usage);
         mDataUsageView.setOnClickListener(this);
+        mDataUsageLayout = findViewById(R.id.daily_data_usage_layout);
+        mDataUsageImage = findViewById(R.id.daily_data_usage_icon);
 
         mRunningServicesButton = findViewById(R.id.running_services_button);
         mRunningServicesButton.setOnClickListener(this);
@@ -449,12 +454,16 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     }
 
     private void updateDataUsageView() {
-        if (mDataUsageView.isDataUsageEnabled() != 0)
-            mDataUsageView.setVisibility(View.VISIBLE);
-        else
+         if (mDataUsageView.isDataUsageEnabled() != 0) {
+            mDataUsageLayout.setVisibility(View.VISIBLE);
+            mDataUsageImage.setVisibility(View.VISIBLE);
+        } else {
             mDataUsageView.setVisibility(View.GONE);
+            mDataUsageImage.setVisibility(View.GONE);
+            mDataUsageLayout.setVisibility(View.GONE);
+        }
     }
-    
+
     private void updateSettings() {
         isAlwaysShowSettings = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.QS_ALWAYS_SHOW_SETTINGS, 0,
