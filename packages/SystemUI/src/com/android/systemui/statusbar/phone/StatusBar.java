@@ -4928,7 +4928,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private void setQsBatteryPercentMode() {
         if (mQSBarHeader != null) {
-            ((QuickStatusBarHeader) mQSBarHeader).setBatteryPercentMode();
+            ((QuickStatusBarHeader) mQSBarHeader).setQSBatteryVisibility();
         }
     }
 
