@@ -291,7 +291,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                     .addFloat(mEditContainer, "alpha", 0, 1)
                     .addFloat(mPageIndicator, "alpha", 0, 1)
                     .addFloat(mDragHandle, "alpha", 1, 0, 0)
-                    .addFloat(mDataUsageView, "alpha", 0, 1)
+                    .addFloat(mDataUsageLayout, "alpha", 0, 1)
                     .addFloat(mNetworkTraffic, "alpha", 0, 1)
                     .addFloat(mBatteryBar, "alpha", 1, 1)
                     .addFloat(mBatteryBarExpanded, "alpha", 0, 1)
@@ -304,7 +304,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                     .addFloat(mEditContainer, "alpha", 0, 1)
                     .addFloat(mPageIndicator, "alpha", 0, 1)
                     .addFloat(mDragHandle, "alpha", 1, 0, 0)
-                    .addFloat(mDataUsageView, "alpha", 0, 1)
+                    .addFloat(mDataUsageLayout, "alpha", 0, 1)
                     .addFloat(mNetworkTraffic, "alpha", 0, 1)
                     .addFloat(mBatteryBar, "alpha", 1, 1)
                     .addFloat(mBatteryBarExpanded, "alpha", 0, 1)
@@ -317,7 +317,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                     .addFloat(mEditContainer, "alpha", 0, 1)
                     .addFloat(mPageIndicator, "alpha", 0, 1)
                     .addFloat(mDragHandle, "alpha", 1, 0, 0)
-                    .addFloat(mDataUsageView, "alpha", 0, 1)
+                    .addFloat(mDataUsageLayout, "alpha", 0, 1)
                     .addFloat(mNetworkTraffic, "alpha", 0, 1)
                     .addFloat(mBatteryBar, "alpha", 0, 1)
                     .addFloat(mBatteryBarExpanded, "alpha", 1, 1)
@@ -330,7 +330,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                     .addFloat(mEditContainer, "alpha", 0, 1)
                     .addFloat(mPageIndicator, "alpha", 0, 1)
                     .addFloat(mDragHandle, "alpha", 1, 0, 0)
-                    .addFloat(mDataUsageView, "alpha", 0, 1)
+                    .addFloat(mDataUsageLayout, "alpha", 0, 1)
                     .addFloat(mNetworkTraffic, "alpha", 0, 1)
                     .addFloat(mBatteryBar, "alpha", 0, 1)
                     .addFloat(mBatteryBarExpanded, "alpha", 1, 1)
@@ -343,7 +343,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                 .addFloat(mEditContainer, "alpha", 0, 1)
                 .addFloat(mPageIndicator, "alpha", 0, 1)
                 .addFloat(mDragHandle, "alpha", 1, 0, 0)
-                .addFloat(mDataUsageView, "alpha", 0, 1)
+                .addFloat(mDataUsageLayout, "alpha", 0, 1)
                 .addFloat(mNetworkTraffic, "alpha", 0, 1)
                 .addFloat(mBatteryBar, "alpha", 0, 1)
                 .addFloat(mBatteryBarExpanded, "alpha", 0, 1)
@@ -356,7 +356,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                 .addFloat(mEditContainer, "alpha", 0, 1)
                 .addFloat(mPageIndicator, "alpha", 0, 1)
                 .addFloat(mDragHandle, "alpha", 1, 0, 0)
-                .addFloat(mDataUsageView, "alpha", 0, 1)
+                .addFloat(mDataUsageLayout, "alpha", 0, 1)
                 .addFloat(mNetworkTraffic, "alpha", 0, 1)
                 .addFloat(mBatteryBar, "alpha", 0, 1)
                 .addFloat(mBatteryBarExpanded, "alpha", 0, 1)
@@ -489,7 +489,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mEdit.setClickable(mEdit.getVisibility() == View.VISIBLE);
         if (!isAlwaysShowSettings)
             mSettingsButton.setClickable(mSettingsButton.getVisibility() == View.VISIBLE);
-        mDataUsageView.setClickable(mDataUsageView.getVisibility() == View.VISIBLE);
+        mDataUsageLayout.setClickable(mDataUsageLayout.getVisibility() == View.VISIBLE);
     }
 
     private void updateVisibilities() {
@@ -500,7 +500,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mEditContainer.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
         mEdit.setVisibility(isEditEnabled() ? View.VISIBLE : View.GONE);
         mNetworkTraffic.setVisibility(isNetworkTrafficInQsFooterEnabled() ? View.VISIBLE : View.GONE);
-        mDataUsageView.setVisibility(isDataUsageEnabled() ? View.VISIBLE : View.GONE);
+        mDataUsageLayout.setVisibility(mDataUsageView.isDataUsageEnabled() != 0 ? View.VISIBLE : View.GONE);
         mBatteryBar.setVisibility(isBatteryBarInQsFooterEnabled() == 5 && !mExpanded ? View.VISIBLE : View.GONE);
         mBatteryBarExpanded.setVisibility(isBatteryBarInQsFooterEnabled() == 6 && mExpanded ? View.VISIBLE : View.GONE);
         if (!isAlwaysShowSettings)
@@ -553,11 +553,6 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         }
     }
 
-    public boolean isDataUsageEnabled() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.QS_DATAUSAGE, 1) == 1;
-    }
-
     public boolean isSettingsEnabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
             Settings.System.QS_FOOTER_SHOW_SETTINGS, 1) == 1;
@@ -601,7 +596,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                     mExpanded ? MetricsProto.MetricsEvent.ACTION_QS_EXPANDED_SETTINGS_LAUNCH
                             : MetricsProto.MetricsEvent.ACTION_QS_COLLAPSED_SETTINGS_LAUNCH);
             startRunningServicesActivity();
-        } else if (v == mDataUsageView) {
+        } else if (v == mDataUsageLayout) {
             MetricsLogger.action(mContext,
                     mExpanded ? MetricsProto.MetricsEvent.ACTION_QS_EXPANDED_SETTINGS_LAUNCH
                             : MetricsProto.MetricsEvent.ACTION_QS_COLLAPSED_SETTINGS_LAUNCH);
