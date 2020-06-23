@@ -5977,6 +5977,15 @@ public final class Settings {
         public static final Validator VOWIFI_ICON_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
+         * VoWiFi icon style
+         * @hide
+         */
+        public static final String VOWIFI_ICON_STYLE = "vowifi_icon_style";
+
+        /** @hide */
+        public static final Validator VOWIFI_ICON_STYLE_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
          * Whether to blink flashlight for incoming calls
          * 0 = Disabled (Default)
          * 1 = Blink flashlight only in Ringer mode
@@ -7118,6 +7127,7 @@ public final class Settings {
             VOLTE_ICON_STYLE,
             DATA_DISABLED_ICON,
             VOWIFI_ICON,
+            VOWIFI_ICON_STYLE,
         };
 
         /**
@@ -7371,6 +7381,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(VOLTE_ICON_STYLE);
             PRIVATE_SETTINGS.add(DATA_DISABLED_ICON);
             PRIVATE_SETTINGS.add(VOWIFI_ICON);
+            PRIVATE_SETTINGS.add(VOWIFI_ICON_STYLE);
         }
 
         /**
@@ -7595,6 +7606,7 @@ public final class Settings {
             VALIDATORS.put(VOLTE_ICON_STYLE, VOLTE_ICON_STYLE_VALIDATOR);
             VALIDATORS.put(DATA_DISABLED_ICON, DATA_DISABLED_ICON_VALIDATOR);
             VALIDATORS.put(VOWIFI_ICON, VOWIFI_ICON_VALIDATOR);
+            VALIDATORS.put(VOWIFI_ICON_STYLE, VOWIFI_ICON_STYLE_VALIDATOR);
         }
 
         /**
