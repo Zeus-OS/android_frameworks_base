@@ -5180,6 +5180,12 @@ public final class Settings {
          */
         public static final String DOUBLE_TAP_SLEEP_GESTURE = "double_tap_sleep_gesture";
 
+        /**
+         * Holds current enabled volume panel implementation
+         * @hide
+         */
+        public static final String SYSTEMUI_PLUGIN_VOLUME = "systemui_plugin_volume";
+        
         /** @hide */
         private static final Validator DOUBLE_TAP_SLEEP_GESTURE_VALIDATOR =
                 BOOLEAN_VALIDATOR;
@@ -7702,6 +7708,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(CUSTOM_STATUSBAR_HEIGHT);
             PRIVATE_SETTINGS.add(UI_STYLE);
             PRIVATE_SETTINGS.add(SCREEN_OFF_ANIMATION);
+            PRIVATE_SETTINGS.add(SYSTEMUI_PLUGIN_VOLUME);
         }
 
         /**
