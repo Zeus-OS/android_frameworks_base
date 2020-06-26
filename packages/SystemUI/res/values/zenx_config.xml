@@ -101,7 +101,4 @@
 
     <!-- Whether to show HD icon in the status bar for volte -->
     <bool name="config_display_hd_volte">false</bool>
-
-        <!-- Whether to show VoWiFi icon in the status bar -->
-    <bool name="config_display_vowifi">true</bool>
 </resources>
