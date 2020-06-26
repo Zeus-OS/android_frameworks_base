@@ -1088,15 +1088,21 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     @Override
     public void onTuningChanged(String key, String newValue) {
-        if (QQS_SHOW_BRIGHTNESS_SLIDER.equals(key)) {
-            mBrightnessSlider = TunerService.parseInteger(newValue, 2);
-            updateResources();
-        } else if (QS_SHOW_AUTO_BRIGHTNESS.equals(key)) {
-            mIsQsAutoBrightnessEnabled = TunerService.parseIntegerSwitch(newValue, true);
-            updateResources();
-        } else if (QS_SHOW_BRIGHTNESS_BUTTONS.equals(key)) {
-             mBrightnessButton = TunerService.parseIntegerSwitch(newValue, true);
-             updateResources();
+        switch (key) {
+            case QQS_SHOW_BRIGHTNESS_SLIDER:
+                mBrightnessSlider = TunerService.parseInteger(newValue, 2);
+                updateResources();
+                break;
+            case QS_SHOW_AUTO_BRIGHTNESS:
+                mIsQsAutoBrightnessEnabled = TunerService.parseIntegerSwitch(newValue, true);
+                updateResources();
+                break;
+            case QS_SHOW_BRIGHTNESS_BUTTONS:
+                mBrightnessButton = TunerService.parseIntegerSwitch(newValue, true);
+                updateResources();
+                break;
+            default:
+                break;
         }
     }
 
