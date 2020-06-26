@@ -3566,10 +3566,11 @@ public final class Settings {
 
         private static final Validator SCREEN_BRIGHTNESS_MODE_VALIDATOR = BOOLEAN_VALIDATOR;
 
+
         /**
-         * Weather to enable statusbar dual row
+         * Dual Row in Statusbar Off:0, Notifications: 1 , Notification + System icon (Network speed): 2 , Notification + System icon (Used data)
          */
-        public static final String STATUSBAR_DUAL_ROW = "statusbar_dual_row";
+        public static final String DUAL_STATUSBAR_ROW_MODE = "dual_statusbar_row_mode";
 
         /**
          * Shows system info in QS OFF:0, CPU temp:1, battery temp:2, cpu speed: 3 , gpu clock: 4, gpu busy: 5
@@ -3601,6 +3602,7 @@ public final class Settings {
          * Last mode of RebootTile
          */
         public static final String REBOOT_TILE_LAST_MODE = "reboot_tile_last_mode";
+
 
         /**
          * Adjustment to auto-brightness to make it generally more (>0.0 <1.0)
@@ -5507,6 +5509,17 @@ public final class Settings {
                 new SettingsValidators.InclusiveIntegerRangeValidator(0, 2);
 
         /**
+         * @hide
+         *
+         * Show data usage in dual row
+         * @hide
+         */
+        public static final String DUAL_ROW_DATAUSAGE = "dual_row_datausage";
+
+        private static final Validator DUAL_ROW_DATAUSAGE_VALIDATOR =
+                new SettingsValidators.InclusiveIntegerRangeValidator(0, 1);
+
+        /**
          * Whether the battery light should be enabled (if hardware supports it)
          * The value is boolean (1 or 0).
          * @hide
@@ -6992,6 +7005,7 @@ public final class Settings {
             DISPLAY_CUTOUT_MODE,
             STOCK_STATUSBAR_IN_HIDE,
             QS_DATAUSAGE,
+            DUAL_ROW_DATAUSAGE,
         };
 
         /**
@@ -7231,6 +7245,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DISPLAY_CUTOUT_MODE);
             PRIVATE_SETTINGS.add(STOCK_STATUSBAR_IN_HIDE);
             PRIVATE_SETTINGS.add(QS_DATAUSAGE);
+            PRIVATE_SETTINGS.add(DUAL_ROW_DATAUSAGE);
         }
 
         /**
@@ -7447,6 +7462,7 @@ public final class Settings {
             VALIDATORS.put(DISPLAY_CUTOUT_MODE, DISPLAY_CUTOUT_MODE_VALIDATOR);
             VALIDATORS.put(STOCK_STATUSBAR_IN_HIDE, STOCK_STATUSBAR_IN_HIDE_VALIDATOR);
             VALIDATORS.put(QS_DATAUSAGE, QS_DATAUSAGE_VALIDATOR);
+            VALIDATORS.put(DUAL_ROW_DATAUSAGE, DUAL_ROW_DATAUSAGE_VALIDATOR);
         }
 
         /**
