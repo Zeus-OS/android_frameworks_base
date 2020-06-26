@@ -1563,7 +1563,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                 if (qs instanceof QSFragment) {
                     mQSBarHeader = ((QSFragment) qs).getHeader();
                     mQSPanel = ((QSFragment) qs).getQsPanel();
-                    mQuickQSPanel = ((QSFragment) qs).getQuickQsPanel();
                 }
             });
         }
