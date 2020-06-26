@@ -47,7 +47,6 @@ public class ThemesUtils {
             "com.android.systemui.qstile.default",
             "com.android.systemui.qstile.square",
             "com.android.systemui.qstile.squircletrim",
-            "com.android.systemui.qstile.teardrop",
             "com.android.systemui.qstile.diamond",
             "com.android.systemui.qstile.star",
             "com.android.systemui.qstile.gear",
