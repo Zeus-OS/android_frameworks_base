@@ -3994,6 +3994,13 @@ public final class Settings {
                 "screen_brightness_for_vr_float";
 
         /**
+         * Sensor blocked packages
+         * @hide
+         */
+        public static final String SENSOR_BLOCKED_APP = "sensor_blocked_app";
+        public static final String SENSOR_BLOCKED_APP_DUMMY = "sensor_blocked_app_dummy";
+
+        /**
          * The screen backlight brightness between 0.0f and 1.0f.
          * @hide
          */
