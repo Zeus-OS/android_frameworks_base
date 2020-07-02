@@ -5874,6 +5874,38 @@ public final class Settings {
         public static final String STATUS_BAR_SHOW_CARRIER = "status_bar_show_carrier";
 
         /**
+         * Whether the proximity sensor will adjust call to speaker
+         */
+        public static final String PROXIMITY_AUTO_SPEAKER = "proximity_auto_speaker";
+
+        /**
+         * Time delay to activate speaker after proximity sensor triggered
+         */
+        public static final String PROXIMITY_AUTO_SPEAKER_DELAY = "proximity_auto_speaker_delay";
+
+        /**
+         * Whether the proximity sensor will adjust call to speaker,
+         * only while in call (not while ringing on outgoing call)
+         */
+        public static final String PROXIMITY_AUTO_SPEAKER_INCALL_ONLY = "proximity_auto_speaker_incall_only";
+        
+        /**
+	     * Whether the use proximity sensor for answering incoming ring
+	     */
+        public static final String PROXIMITY_AUTO_ANSWER_INCALL_ONLY = "proximity_auto_answer_incall_only";
+
+        /**
+	     * Time delay to activate auto answer on ring when headset is plugged
+	     */
+        public static final String AUTO_ANSWER_DELAY = "auto_answer_delay";
+
+        /**
+	     * Whether to enable auto answer on ring when headset is plugged
+	     */
+        public static final String AUTO_ANSWER_CALL_KEY = "auto_answer_call_key";
+
+        /**
+         * Whether to display QS min-max brightness button near brightness slider
          * custom carrier label. The value is
          * String.
          * @hide
@@ -7268,6 +7300,9 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_DATAUSAGE);
             PRIVATE_SETTINGS.add(DUAL_ROW_DATAUSAGE);
             PRIVATE_SETTINGS.add(HEADSET_CONNECT_PLAYER);
+            PRIVATE_SETTINGS.add(PROXIMITY_AUTO_SPEAKER);
+            PRIVATE_SETTINGS.add(PROXIMITY_AUTO_SPEAKER_DELAY);
+            PRIVATE_SETTINGS.add(PROXIMITY_AUTO_SPEAKER_INCALL_ONLY);
         }
 
         /**
