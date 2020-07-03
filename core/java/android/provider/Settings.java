@@ -5081,12 +5081,6 @@ public final class Settings {
         public static final String DOZE_TRIGGER_DOUBLETAP = "doze_trigger_doubletap";
 
         /**
-         * Whether to show or hide the settings icon
-         * @hide
-         */
-        public static final String QS_ACCENT_HEADER_SWITCH = "qs_accent_header_switch";
-
-        /**
          * Whether to display the power menu reboot option on a secured lockscreen
          *
          * @hide

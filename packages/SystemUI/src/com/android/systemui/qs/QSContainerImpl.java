@@ -59,13 +59,10 @@ public class QSContainerImpl extends FrameLayout implements
 
     private View mBackground;
     private View mBackgroundGradient;
-    private View mBackgroundGradientAccent;
     private View mStatusBarBackground;
-    private View mStatusBarBackgroundAccent;
 
     private int mSideMargins;
     private boolean mQsDisabled;
-    private boolean mIsAccentQsHeaderEnabled;
 
     private boolean mHeaderImageEnabled;
     private ImageView mBackgroundImage;
@@ -93,9 +90,7 @@ public class QSContainerImpl extends FrameLayout implements
         mQSFooter = findViewById(R.id.qs_footer);
         mBackground = findViewById(R.id.quick_settings_background);
         mStatusBarBackground = findViewById(R.id.quick_settings_status_bar_background);
-        mStatusBarBackgroundAccent = findViewById(R.id.quick_settings_status_bar_background_accent);
         mBackgroundGradient = findViewById(R.id.quick_settings_gradient_view);
-        mBackgroundGradientAccent = findViewById(R.id.quick_settings_gradient_view_accent);
         mSideMargins = getResources().getDimensionPixelSize(R.dimen.notification_side_paddings);
         mBackgroundImage = findViewById(R.id.qs_header_image_view);
         mBackgroundImage.setClipToOutline(true);
@@ -144,12 +139,10 @@ public class QSContainerImpl extends FrameLayout implements
         }
 
         void observe() {
-            getContext().getContentResolver().registerContentObserver(Settings.System
-                            .getUriFor(Settings.System.QS_PANEL_BG_ALPHA), false,
-                    this, UserHandle.USER_ALL);
-            getContext().getContentResolver().registerContentObserver(Settings.System
-                    .getUriFor(Settings.System.QS_ACCENT_HEADER_SWITCH), false,
-            this, UserHandle.USER_ALL);
+            ContentResolver resolver = getContext().getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_PANEL_BG_ALPHA),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -159,11 +152,10 @@ public class QSContainerImpl extends FrameLayout implements
     }
 
     private void updateSettings() {
-        int bgAlpha = Settings.System.getIntForUser(getContext().getContentResolver(),
+        ContentResolver resolver = getContext().getContentResolver();
+        int bgAlpha = Settings.System.getIntForUser(resolver,
                 Settings.System.QS_PANEL_BG_ALPHA, 255,
                 UserHandle.USER_CURRENT);
-        mIsAccentQsHeaderEnabled = isAccentQsHeaderEnabled();
-        setBackgroundGradientVisibility(getResources().getConfiguration());
 
         Drawable bg = mBackground.getBackground();
         if (bgAlpha < 255 ) {
@@ -302,39 +294,14 @@ public class QSContainerImpl extends FrameLayout implements
     }
 
     private void setBackgroundGradientVisibility(Configuration newConfig) {
-
         if (newConfig.orientation == ORIENTATION_LANDSCAPE) {
-            if(mIsAccentQsHeaderEnabled) {
-                mBackgroundGradient.setVisibility(View.GONE);
-                mStatusBarBackground.setVisibility(View.GONE);
-                mBackgroundGradientAccent.setVisibility(View.INVISIBLE);
-                mStatusBarBackgroundAccent.setVisibility(View.INVISIBLE);
-            } else {
-                mBackgroundGradientAccent.setVisibility(View.GONE);
-                mStatusBarBackgroundAccent.setVisibility(View.GONE);
-                mBackgroundGradient.setVisibility(View.INVISIBLE);
-                mStatusBarBackground.setVisibility(View.INVISIBLE);
-            }
+            mBackgroundGradient.setVisibility(View.INVISIBLE);
+            mStatusBarBackground.setVisibility(View.INVISIBLE);
         } else {
-            if(mIsAccentQsHeaderEnabled) {
-                mBackgroundGradient.setVisibility(View.GONE);
-                mStatusBarBackground.setVisibility(View.GONE);
-                mBackgroundGradientAccent.setVisibility(mQsDisabled ? View.INVISIBLE : View.VISIBLE);
-                mStatusBarBackgroundAccent.setVisibility(View.VISIBLE);
-            } else {
-                mBackgroundGradientAccent.setVisibility(View.GONE);
-                mStatusBarBackgroundAccent.setVisibility(View.GONE);
-                mBackgroundGradient.setVisibility(mQsDisabled ? View.INVISIBLE : View.VISIBLE);
-                mStatusBarBackground.setVisibility(View.VISIBLE);
-            }
+            mBackgroundGradient.setVisibility(mQsDisabled ? View.INVISIBLE : View.VISIBLE);
+            mStatusBarBackground.setVisibility(View.VISIBLE);
         }
     }
-
-    public boolean isAccentQsHeaderEnabled() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.QS_ACCENT_HEADER_SWITCH, 1) == 1;
-    }
-
 
     public void setExpansion(float expansion) {
         mQsExpansion = expansion;
