@@ -128,6 +128,7 @@ import android.graphics.Rect;
 import android.graphics.Region;
 import android.hardware.input.InputManager;
 import android.hardware.power.V1_0.PowerHint;
+import android.provider.Settings;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -3697,10 +3698,12 @@ public class DisplayPolicy {
      */
     public void takeScreenshot(int screenshotType) {
         if (mScreenshotHelper != null) {
+            String packageName = mFocusedWindow == null ? "" : mFocusedWindow.getAttrs().packageName;
             mScreenshotHelper.takeScreenshot(screenshotType,
                     mStatusBar != null && mStatusBar.isVisibleLw(),
                     mNavigationBar != null && mNavigationBar.isVisibleLw(),
-                    mHandler, null /* completionConsumer */);
+                    mHandler, null /* completionConsumer */,
+                    packageName);
         }
     }
 
