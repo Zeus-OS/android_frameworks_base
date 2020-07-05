@@ -2,6 +2,7 @@ package com.android.systemui.statusbar.info;
 
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.provider.Settings;
 import android.telephony.SubscriptionManager;
@@ -16,6 +17,9 @@ import com.android.settingslib.net.DataUsageController;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.statusbar.policy.NetworkController;
+import com.android.systemui.plugins.DarkIconDispatcher;
+import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
+import android.graphics.Rect;
 
 public class DualDataUsageView extends TextView {
 
@@ -23,11 +27,13 @@ public class DualDataUsageView extends TextView {
     private NetworkController mNetworkController;
     private static boolean shouldUpdateData;
     private String formatedinfo;
+    private int mNonAdaptedColor;
 
     public DualDataUsageView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         mContext = context;
+        mNonAdaptedColor = getCurrentTextColor();
         mNetworkController = Dependency.get(NetworkController.class);
     }
 
@@ -62,5 +68,11 @@ public class DualDataUsageView extends TextView {
         final BytesResult res = Formatter.formatBytes(mContext.getResources(), byteValue,
                 Formatter.FLAG_IEC_UNITS);
         return BidiFormatter.getInstance().unicodeWrap(res.value + res.units);
+    }
+
+    public void onDarkChanged(Rect area, float darkIntensity, int tint) {
+        mNonAdaptedColor = DarkIconDispatcher.getTint(area, this, tint);
+        setTextColor(mNonAdaptedColor);
+        updateUsageData();
     }
 }
