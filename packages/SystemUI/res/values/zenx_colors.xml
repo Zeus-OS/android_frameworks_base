@@ -26,4 +26,9 @@
     <!-- Screenrecord -->
     <color name="screenrecord_icon_color">#B71C1C</color>
 
+    <color name="qs_header_accent_color">@*android:color/accent_device_default</color>
+    <color name="qs_header_grey_color">#ff212121</color>
+    <color name="qs_header_light_grey_color">#ff757575</color>
+    <color name="qs_header_transparent_color">#00000000</color>
+
 </resources>

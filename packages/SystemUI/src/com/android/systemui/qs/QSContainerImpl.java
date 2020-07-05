@@ -26,6 +26,7 @@ import android.database.ContentObserver;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
 import android.os.Handler;
@@ -46,6 +47,8 @@ import com.android.systemui.qs.customize.QSCustomizer;
  */
 public class QSContainerImpl extends FrameLayout implements
         StatusBarHeaderMachine.IStatusBarHeaderMachineObserver {
+
+    private static final String QS_HEADER_STYLE_COLOR = "qs_header_style_color";
 
     private final Point mSizePoint = new Point();
 
@@ -78,6 +81,10 @@ public class QSContainerImpl extends FrameLayout implements
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
         mStatusBarHeaderMachine = new StatusBarHeaderMachine(context);
+        int qsHeaderStyleColor = Settings.System.getInt(mContext.getContentResolver(),
+                    QS_HEADER_STYLE_COLOR, 0x00000000);
+            qsHeaderStyleColor = Color.argb(255, Color.red(qsHeaderStyleColor), Color.green(qsHeaderStyleColor), Color.blue(qsHeaderStyleColor));
+
     }
 
     @Override
@@ -143,6 +150,12 @@ public class QSContainerImpl extends FrameLayout implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_PANEL_BG_ALPHA),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_STYLE_COLOR),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -169,6 +182,8 @@ public class QSContainerImpl extends FrameLayout implements
             mBackground.setBackground(bg);
             mBackgroundGradient.setVisibility(View.VISIBLE);
         }
+
+        updateQSHeaderStyle();
     }
 
     @Override
@@ -263,7 +278,57 @@ public class QSContainerImpl extends FrameLayout implements
         } else {
             mStatusBarBackground.setBackgroundColor(Color.BLACK);
         }
+
+        updateQSHeaderStyle();
+
     }
+
+    public void updateQSHeaderStyle () {
+
+        switch(getQSHeaderStyle()) {
+            case 0:
+                mStatusBarBackground.setBackgroundColor(Color.BLACK);
+                setQSHeaderGradientStyle(Color.BLACK);
+                break;
+            case 1:
+                mStatusBarBackground.setBackgroundColor(mContext.getResources().getColor(R.color.qs_header_accent_color));
+                setQSHeaderGradientStyle(mContext.getResources().getColor(R.color.qs_header_accent_color));
+                break;
+            case 2:
+                mStatusBarBackground.setBackgroundColor(mContext.getResources().getColor(R.color.qs_header_transparent_color));
+                setQSHeaderGradientStyle(mContext.getResources().getColor(R.color.qs_header_transparent_color));
+                break;
+            case 3:
+                int qsHeaderStyleColor = Settings.System.getInt(mContext.getContentResolver(),
+                    QS_HEADER_STYLE_COLOR, 0x00000000);
+                qsHeaderStyleColor = Color.argb(255, Color.red(qsHeaderStyleColor), Color.green(qsHeaderStyleColor), Color.blue(qsHeaderStyleColor));
+                mStatusBarBackground.setBackgroundColor(qsHeaderStyleColor);
+                setQSHeaderGradientStyle(qsHeaderStyleColor);
+                break;
+            default:
+                break;
+
+        }
+    }
+
+    private void setQSHeaderGradientStyle (int color) {
+        int[] colors = {color, mContext.getResources().getColor(R.color.qs_header_transparent_color)};
+
+        //create a new gradient color
+        GradientDrawable gd = new GradientDrawable(
+        GradientDrawable.Orientation.TOP_BOTTOM, colors);
+
+        gd.setCornerRadius(0f);
+        //apply the button background to newly created drawable gradient
+        mBackgroundGradient.setBackground(gd);
+    }
+
+    // Switches qs header style from stock to custom
+    public int getQSHeaderStyle() {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QS_HEADER_STYLE, 0, UserHandle.USER_CURRENT);
+    }
+
 
     /**
      * Overrides the height of this view (post-layout), so that the content is clipped to that
