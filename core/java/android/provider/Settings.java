@@ -6901,6 +6901,16 @@ public final class Settings {
         public static final String QS_HEADER_STYLE_COLOR = "qs_header_style_color";
 
         /**
+         * @hide
+         */
+        public static final String QS_BACKGROUND_STYLE = "qs_background_style";
+
+        /**
+         * @hide
+         */
+        public static final String QS_BACKGROUND_STYLE_COLOR = "qs_background_style_color";
+
+        /**
          * Settings dashboard icon style
          * @hide
          */
@@ -7326,6 +7336,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(THEMING_SETTINGS_DASHBOARD_ICONS);
             PRIVATE_SETTINGS.add(QS_HEADER_STYLE);
             PRIVATE_SETTINGS.add(QS_HEADER_STYLE_COLOR);
+            PRIVATE_SETTINGS.add(QS_BACKGROUND_STYLE_COLOR);
         }
 
         /**

@@ -49,6 +49,7 @@ public class QSContainerImpl extends FrameLayout implements
         StatusBarHeaderMachine.IStatusBarHeaderMachineObserver {
 
     private static final String QS_HEADER_STYLE_COLOR = "qs_header_style_color";
+    private static final String QS_BACKGROUND_STYLE_COLOR = "qs_background_style_color";
 
     private final Point mSizePoint = new Point();
 
@@ -84,6 +85,9 @@ public class QSContainerImpl extends FrameLayout implements
         int qsHeaderStyleColor = Settings.System.getInt(mContext.getContentResolver(),
                     QS_HEADER_STYLE_COLOR, 0x00000000);
             qsHeaderStyleColor = Color.argb(255, Color.red(qsHeaderStyleColor), Color.green(qsHeaderStyleColor), Color.blue(qsHeaderStyleColor));
+        int qsBackgroundStyleColor = Settings.System.getInt(mContext.getContentResolver(),
+                    QS_BACKGROUND_STYLE_COLOR, 0x00000000);
+            qsBackgroundStyleColor = Color.argb(255, Color.red(qsBackgroundStyleColor), Color.green(qsBackgroundStyleColor), Color.blue(qsBackgroundStyleColor));
 
     }
 
@@ -156,6 +160,12 @@ public class QSContainerImpl extends FrameLayout implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_STYLE_COLOR),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_BACKGROUND_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_BACKGROUND_STYLE_COLOR),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -184,6 +194,7 @@ public class QSContainerImpl extends FrameLayout implements
         }
 
         updateQSHeaderStyle();
+        updateQSBackgroundStyle();
     }
 
     @Override
@@ -280,6 +291,7 @@ public class QSContainerImpl extends FrameLayout implements
         }
 
         updateQSHeaderStyle();
+        updateQSBackgroundStyle();
 
     }
 
@@ -311,6 +323,44 @@ public class QSContainerImpl extends FrameLayout implements
         }
     }
 
+    public void updateQSBackgroundStyle () {
+
+        switch(getQSBackgroundStyle()) {
+            case 0:
+                int bgAlpha = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.QS_PANEL_BG_ALPHA, 255,
+                    UserHandle.USER_CURRENT);
+                Drawable bg = mBackground.getBackground();
+                    if (bgAlpha < 255 ) {
+                        mQsBackgroundAlpha = true;
+                        bg.setAlpha(bgAlpha);
+                        mBackground.setBackground(bg);
+                        mBackgroundGradient.setVisibility(View.INVISIBLE);
+                    } else {
+                        mQsBackgroundAlpha = false;
+                        bg.setAlpha(255);
+                        mBackground.setBackground(bg);
+                        mBackgroundGradient.setVisibility(View.VISIBLE);
+                    }
+                break;
+            case 1:
+                setQSBackgroundGradientStyle(mContext.getResources().getColor(R.color.qs_header_accent_color));
+                break;
+            case 2:
+                setQSBackgroundGradientStyle(mContext.getResources().getColor(R.color.qs_header_transparent_color));
+                break;
+            case 3:
+                int qsBackgroundStyleColor = Settings.System.getInt(mContext.getContentResolver(),
+                    QS_BACKGROUND_STYLE_COLOR, 0x00000000);
+                qsBackgroundStyleColor = Color.argb(255, Color.red(qsBackgroundStyleColor), Color.green(qsBackgroundStyleColor), Color.blue(qsBackgroundStyleColor));
+                setQSBackgroundGradientStyle(qsBackgroundStyleColor);
+                break;
+            default:
+                break;
+
+        }
+    }
+
     private void setQSHeaderGradientStyle (int color) {
         int[] colors = {color, mContext.getResources().getColor(R.color.qs_header_transparent_color)};
 
@@ -323,10 +373,27 @@ public class QSContainerImpl extends FrameLayout implements
         mBackgroundGradient.setBackground(gd);
     }
 
-    // Switches qs header style from stock to custom
+    private void setQSBackgroundGradientStyle (int color) {
+        int[] colors = {color, mContext.getResources().getColor(R.color.qs_header_transparent_color)};
+
+        //create a new gradient color
+        GradientDrawable gd = new GradientDrawable(
+        GradientDrawable.Orientation.TOP_BOTTOM, colors);
+
+        gd.setCornerRadius(0f);
+        //apply the button background to newly created drawable gradient
+        mBackground.setBackground(gd);
+    }
+
+
     public int getQSHeaderStyle() {
         return Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.QS_HEADER_STYLE, 0, UserHandle.USER_CURRENT);
+    }
+
+    public int getQSBackgroundStyle() {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QS_BACKGROUND_STYLE, 0, UserHandle.USER_CURRENT);
     }
 
 
