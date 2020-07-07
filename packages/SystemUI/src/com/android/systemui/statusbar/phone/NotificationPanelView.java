@@ -3474,7 +3474,8 @@ public class NotificationPanelView extends PanelView implements
                 if (pulseLights && lightColor == 0) {
                     int pulseColor = mPulseLightsView.getNotificationLightsColor();
                     if (lightColor == 0 && activeNotif) {
-                        int notificationColor = row.getStatusBarNotification().getNotification().color;
+                        int notificationColor = (row != null) ? row.getStatusBarNotification().getNotification().color
+                                : Notification.COLOR_DEFAULT;
                         if (notificationColor != Notification.COLOR_DEFAULT) {
                             pulseColor = notificationColor;
                         }
