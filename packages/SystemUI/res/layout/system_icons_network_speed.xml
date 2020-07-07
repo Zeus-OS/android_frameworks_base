@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:singleLine="false"
             android:tint="?android:attr/colorForeground"
-            android:textAppearance="@style/TextAppearance.StatusBar.FooterInfo"
+            systemui:textAppearance="@style/TextAppearance.StatusBar.Clock"
             android:layout_marginEnd="8dp"
             android:gravity="center_vertical"/>
 

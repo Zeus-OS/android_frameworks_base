@@ -36,7 +36,7 @@
             android:paddingStart="@dimen/qs_footer_data_used_start_padding"
             android:paddingEnd="16dp"
             android:singleLine="true"
-            android:textAppearance="@style/TextAppearance.StatusBar.FooterInfo" />
+            systemui:textAppearance="@style/TextAppearance.StatusBar.Clock"/>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -61,7 +61,6 @@ public class QSFooterNetworkTraffic extends TextView {
     private int txtImgPadding;
     private boolean mHideArrow;
     private int mAutoHideThreshold;
-    protected int mTintColor;
     protected boolean mTrafficVisible = false;
     private boolean mColorIsStatic = false;
     private boolean indicatorUp = false;
@@ -222,8 +221,6 @@ public class QSFooterNetworkTraffic extends TextView {
         final Resources resources = getResources();
         txtSize = resources.getDimensionPixelSize(R.dimen.net_traffic_multi_text_size);
         txtImgPadding = resources.getDimensionPixelSize(R.dimen.net_traffic_txt_img_padding);
-        mTintColor = resources.getColor(android.R.color.white);
-        setTextColor(mTintColor);
         Handler mHandler = new Handler();
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
@@ -319,13 +316,11 @@ public class QSFooterNetworkTraffic extends TextView {
             if (indicatorUp) {
                 indicatorDrawable = R.drawable.stat_sys_network_traffic_up_arrow;
                 Drawable d = getContext().getDrawable(indicatorDrawable);
-                d.setColorFilter(mTintColor, Mode.MULTIPLY);
                 setCompoundDrawablePadding(txtImgPadding);
                 setCompoundDrawablesWithIntrinsicBounds(null, null, d, null);
             } else if (indicatorDown) {
                 indicatorDrawable = R.drawable.stat_sys_network_traffic_down_arrow;
                 Drawable d = getContext().getDrawable(indicatorDrawable);
-                d.setColorFilter(mTintColor, Mode.MULTIPLY);
                 setCompoundDrawablePadding(txtImgPadding);
                 setCompoundDrawablesWithIntrinsicBounds(null, null, d, null);
             } else {
@@ -356,8 +351,6 @@ public class QSFooterNetworkTraffic extends TextView {
         }
     }
     public void onDarkChanged(Rect area, float darkIntensity, int tint) {
-        mTintColor = DarkIconDispatcher.getTint(area, this, tint);
-        setTextColor(mTintColor);
         updateTrafficDrawable();
     }
 }
