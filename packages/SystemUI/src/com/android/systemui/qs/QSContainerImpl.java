@@ -78,6 +78,7 @@ public class QSContainerImpl extends FrameLayout implements
     private boolean mForceHideQsStatusBar;
     private int bgAlpha;
     private Drawable bgDefault;
+    private boolean mImmerseMode;
 
     public QSContainerImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -113,11 +114,11 @@ public class QSContainerImpl extends FrameLayout implements
                 Settings.System.QS_PANEL_BG_ALPHA, 255,
                 UserHandle.USER_CURRENT);
         bgDefault = mBackground.getBackground();
-        updateSettings();
         updateResources();
 
         setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
         setMargins();
+        updateSettings();
     }
 
     @Override
@@ -176,6 +177,9 @@ public class QSContainerImpl extends FrameLayout implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_STYLE_GRADIENT),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DISPLAY_CUTOUT_MODE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -189,6 +193,9 @@ public class QSContainerImpl extends FrameLayout implements
         bgAlpha = Settings.System.getIntForUser(resolver,
                 Settings.System.QS_PANEL_BG_ALPHA, 255,
                 UserHandle.USER_CURRENT);
+        mImmerseMode = Settings.System.getIntForUser(resolver,
+                Settings.System.DISPLAY_CUTOUT_MODE, 0,
+                UserHandle.USER_CURRENT) == 1;
 
         Drawable bg = mBackground.getBackground();
         if (bgAlpha < 255 ) {
@@ -436,7 +443,7 @@ public class QSContainerImpl extends FrameLayout implements
     }
 
     private void setBackgroundGradientVisibility(Configuration newConfig) {
-        if (newConfig.orientation == ORIENTATION_LANDSCAPE) {
+        if (newConfig.orientation == ORIENTATION_LANDSCAPE || mImmerseMode) {
             mBackgroundGradient.setVisibility(View.INVISIBLE);
             mStatusBarBackground.setVisibility(View.INVISIBLE);
         } else {
