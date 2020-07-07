@@ -75,6 +75,7 @@ import android.content.pm.IPackageManager;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
+import android.content.res.AccentUtils;
 import android.database.ContentObserver;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -252,6 +253,7 @@ import com.android.systemui.statusbar.policy.RemoteInputQuickSettingsDisabler;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
 import com.android.systemui.tuner.TunerService;
+import com.android.systemui.util.leak.RotationUtils;
 import com.android.systemui.volume.VolumeComponent;
 
 import lineageos.providers.LineageSettings;
@@ -314,6 +316,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             Settings.Secure.PULSE_ON_NEW_TRACKS;
     private static final String NOTIFICATION_MATERIAL_DISMISS =
             "system:" + Settings.System.NOTIFICATION_MATERIAL_DISMISS;
+    private static final String DISPLAY_CUTOUT_MODE =
+            "system:" + Settings.System.DISPLAY_CUTOUT_MODE;
+    private static final String STOCK_STATUSBAR_IN_HIDE =
+            "system:" + Settings.System.STOCK_STATUSBAR_IN_HIDE;
 
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
@@ -774,6 +780,10 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private ActivityIntentHelper mActivityIntentHelper;
 
+    private int mImmerseMode;
+    private boolean mStockStatusBar = true;
+    private boolean mPortrait = true;
+
     /**
      * Public constructor for StatusBar.
      *
@@ -985,6 +995,8 @@ public class StatusBar extends SystemUI implements DemoMode,
         mTunerService.addTunable(this, GAMING_MODE_HEADSUP_TOGGLE);
         mTunerService.addTunable(this, PULSE_ON_NEW_TRACKS);
         mTunerService.addTunable(this, NOTIFICATION_MATERIAL_DISMISS);
+        mTunerService.addTunable(this, DISPLAY_CUTOUT_MODE);
+        mTunerService.addTunable(this, STOCK_STATUSBAR_IN_HIDE);
 
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         mDreamManager = IDreamManager.Stub.asInterface(
@@ -1255,6 +1267,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     checkBarModes();
                     mBurnInProtectionController =
                         new BurnInProtectionController(mContext, this, mStatusBarView);
+                    handleCutout();
                 }).getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.status_bar_container, new CollapsedStatusBarFragment(),
@@ -2773,14 +2786,10 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     }
 
-    protected BarTransitions getStatusBarTransitions() {
-        return mNotificationShadeWindowViewController.getBarTransitions();
-    }
-
     void checkBarModes() {
         if (mDemoMode) return;
-        if (mNotificationShadeWindowViewController != null && getStatusBarTransitions() != null) {
-            checkBarMode(mStatusBarMode, mStatusBarWindowState, getStatusBarTransitions());
+        if (mNotificationShadeWindowViewController != null && mNotificationShadeWindowViewController.getBarTransitions() != null) {
+            checkBarMode(mStatusBarMode, mStatusBarWindowState, mNotificationShadeWindowViewController.getBarTransitions());
         }
         mNavigationBarController.checkNavBarModes(mDisplayId);
         mNoAnimationOnNextBarModeChange = false;
@@ -3236,12 +3245,18 @@ public class StatusBar extends SystemUI implements DemoMode,
         updateResources();
         updateDisplaySize(); // populates mDisplayMetrics
 
+        mPortrait = RotationUtils.getExactRotation(mContext) == RotationUtils.ROTATION_NONE;
+
         if (DEBUG) {
             Log.v(TAG, "configuration changed: " + mContext.getResources().getConfiguration());
         }
 
         mViewHierarchyManager.updateRowStates();
         mScreenPinningRequest.onConfigurationChanged();
+
+        if (mImmerseMode == 1) {
+            setBlackStatusBar(mPortrait);
+        }
     }
 
     /**
@@ -5024,6 +5039,22 @@ public class StatusBar extends SystemUI implements DemoMode,
                         TunerService.parseIntegerSwitch(newValue, false);
                 updateDismissAllVisibility(true);
                 break;
+            case DISPLAY_CUTOUT_MODE:
+                int immerseMode =
+                        TunerService.parseInteger(newValue, 0);
+                if (mImmerseMode != immerseMode) {
+                    mImmerseMode = immerseMode;
+                    handleCutout();
+                }
+                break;
+            case STOCK_STATUSBAR_IN_HIDE:
+                boolean stockStatusBar =
+                        TunerService.parseIntegerSwitch(newValue, true);
+                if (mStockStatusBar != stockStatusBar) {
+                    mStockStatusBar = stockStatusBar;
+                    handleCutout();
+                }
+                break;
             default:
                 break;
          }
@@ -5055,5 +5086,25 @@ public class StatusBar extends SystemUI implements DemoMode,
                   currentActivity.getShortClassName().trim();
         }
         return null;
+    }
+
+    private void setBlackStatusBar(boolean enable) {
+        if (mNotificationShadeWindowViewController == null ||
+            mNotificationShadeWindowViewController.getBarTransitions() == null) return;
+        if (enable) {
+            mNotificationShadeWindowViewController.getBarTransitions().getBackground().setColorOverride(new Integer(0xFF000000));
+        } else {
+            mNotificationShadeWindowViewController.getBarTransitions().getBackground().setColorOverride(null);
+        }
+    }
+
+    private void handleCutout() {
+        final boolean immerseMode = mImmerseMode == 1;
+        final boolean hideCutoutMode = mImmerseMode == 2;
+
+        setBlackStatusBar(mPortrait && immerseMode);
+        AccentUtils.setImmersiveOverlay(mOverlayManager, immerseMode || hideCutoutMode);
+        AccentUtils.setCutoutOverlay(mOverlayManager, hideCutoutMode);
+        AccentUtils.setStatusBarStockOverlay(mOverlayManager, hideCutoutMode && mStockStatusBar);
     }
 }

@@ -4,6 +4,11 @@ import android.graphics.Color;
 import android.os.SystemProperties;
 import android.util.Log;
 
+import android.content.om.OverlayManager;
+import android.content.om.OverlayInfo;
+import android.os.UserHandle;
+import android.app.ActivityManager;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -76,6 +81,31 @@ public class AccentUtils {
             Log.e(TAG, "Failed to set accent: " + e.getMessage() +
                     "\nSetting default: " + defaultColor);
             return defaultColor;
+        }
+    }
+
+    public static void setCutoutOverlay(OverlayManager om, boolean enable) {
+        UserHandle userId = UserHandle.of(ActivityManager.getCurrentUser());
+        try {
+            om.setEnabled("com.android.overlay.hidecutout", enable, userId);
+        } catch (Exception e) {
+        }
+    }
+
+    public static void setStatusBarStockOverlay(OverlayManager om, boolean enable) {
+        UserHandle userId = UserHandle.of(ActivityManager.getCurrentUser());
+        try {
+            om.setEnabled("com.android.overlay.statusbarstock", enable, userId);
+            om.setEnabled("com.android.overlay.statusbarstocksysui", enable, userId);
+        } catch (Exception e) {
+        }
+    }
+
+    public static void setImmersiveOverlay(OverlayManager om, boolean enable) {
+        UserHandle userId = UserHandle.of(ActivityManager.getCurrentUser());
+        try {
+            om.setEnabled("com.android.overlay.immersive", enable, userId);
+        } catch (Exception e) {
         }
     }
 }
