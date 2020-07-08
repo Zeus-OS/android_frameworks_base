@@ -6955,6 +6955,12 @@ public final class Settings {
         private static final Validator DATA_DISABLED_ICON_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Whether to tint the QS tiles with accent color
+         * @hide
+         */
+        public static final String QS_TILE_ACCENT_TINT = "qs_tile_accent_tint";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
