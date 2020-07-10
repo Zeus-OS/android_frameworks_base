@@ -31,6 +31,8 @@ import com.android.systemui.FontSizeUtils;
 import com.android.systemui.R;
 import com.android.systemui.plugins.qs.QSIconView;
 import com.android.systemui.plugins.qs.QSTile;
+import android.os.UserHandle;
+import android.provider.Settings;
 
 import java.util.Objects;
 
@@ -68,7 +70,7 @@ public class QSTileView extends QSTileBaseView {
         setOrientation(VERTICAL);
         setGravity(Gravity.CENTER_HORIZONTAL | Gravity.TOP);
         mColorLabelActive = Utils.getColorAttr(getContext(), android.R.attr.colorAccent);
-        mColorLabelActiveRandom = QSTileBaseView.randomColor(isThemeDark(context));
+        mColorLabelActiveRandom = QSTileBaseView.randomColor(QSTileBaseView.isThemeDark(context));
         mColorLabelDefault = Utils.getColorAttr(getContext(), android.R.attr.textColorPrimary);
         // The text color for unavailable tiles is textColorSecondary, same as secondaryLabel for
         // contrast purposes
@@ -132,34 +134,30 @@ public class QSTileView extends QSTileBaseView {
         }
         if (!Objects.equals(mSecondLine.getText(), state.secondaryLabel)) {
 
-            if (state.state == Tile.STATE_ACTIVE) {
-                mSecondLine.setTextColor(mColorLabelActive);
-            } else if (state.state == Tile.STATE_INACTIVE) {
-                mSecondLine.setTextColor(mColorLabelDefault);
-            }
-
             mSecondLine.setText(state.secondaryLabel);
             mSecondLine.setVisibility(TextUtils.isEmpty(state.secondaryLabel) ? View.GONE
                     : View.VISIBLE);
         }
 
         if (state.state == Tile.STATE_ACTIVE) {
-            mLabel.setTextColor(mColorLabelActive);
-            mExpandIndicator.setImageTintList(mColorLabelActive);
-        } else if (state.state == Tile.STATE_INACTIVE) {
-            mLabel.setTextColor(mColorLabelDefault);
-            mExpandIndicator.setImageTintList(mColorLabelDefault);
-        }
-        if (state.state == Tile.STATE_ACTIVE) {
             if (setQsLabelUseNewTint == 1) {
                 mLabel.setTextColor(mColorLabelActiveRandom);
+                mSecondLine.setTextColor(mColorLabelActiveRandom);
+                mExpandIndicator.setImageTintList(mColorLabelDefault);
             } else if (setQsLabelUseNewTint == 2) {
                 mLabel.setTextColor(mColorLabelActive);
+                mSecondLine.setTextColor(mColorLabelActive);
+                mExpandIndicator.setImageTintList(mColorLabelActive);
             } else {
                 mLabel.setTextColor(mColorLabelDefault);
+                mSecondLine.setTextColor(mColorLabelDefault);
+                mLabel.setTextColor(mColorLabelDefault);
+                mExpandIndicator.setImageTintList(mColorLabelDefault);
             }
         } else if (state.state == Tile.STATE_INACTIVE) {
             mLabel.setTextColor(mColorLabelDefault);
+            mExpandIndicator.setImageTintList(mColorLabelDefault);
+            mSecondLine.setTextColor(mColorLabelDefault);
         }
         boolean dualTarget = DUAL_TARGET_ALLOWED && state.dualTarget;
         mExpandIndicator.setVisibility(View.GONE);
