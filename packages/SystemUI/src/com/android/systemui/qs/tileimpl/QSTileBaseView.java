@@ -51,6 +51,8 @@ import com.android.systemui.plugins.qs.QSTile.BooleanState;
 
 import android.provider.Settings;
 
+import java.util.Random;
+
 public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
 
     private static final String TAG = "QSTileBaseView";
@@ -137,6 +139,33 @@ public class QSTileBaseView extends com.android.systemui.plugins.qs.QSTileView {
         setClipToPadding(false);
         mCollapsedView = collapsedView;
         setFocusable(true);
+    }
+
+    public static int randomColor(boolean isThemeDark, Random r) {
+        float hsl[] = new float[3];
+        hsl[0] = r.nextInt(360);
+        hsl[1] = r.nextFloat();
+        hsl[2] = (isThemeDark ? 0.575f : 0.3f) + (r.nextFloat() * 0.125f);
+        return com.android.internal.graphics.ColorUtils.HSLToColor(hsl);
+    }
+
+    public static int randomColor(boolean isThemeDark, long seed) {
+        return randomColor(isThemeDark, new Random(seed));
+    }
+
+    public static int randomColor(boolean isThemeDark) {
+        return randomColor(isThemeDark, new Random());
+    }
+
+    public static Boolean isThemeDark(Context context) {
+        switch (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+            case Configuration.UI_MODE_NIGHT_YES:
+              return true;
+            case Configuration.UI_MODE_NIGHT_NO:
+              return false;
+            default:
+              return false;
+        }
     }
 
     public View getBgCircle() {
