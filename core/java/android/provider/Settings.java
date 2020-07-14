@@ -5670,6 +5670,30 @@ public final class Settings {
         public static final String STATUS_BAR_QUICK_QS_PULLDOWN = "status_bar_quick_qs_pulldown";
 
         /**
+         * Switch position of Title in Zenhub
+         * @hide
+         */
+        public static final String ZENHUB_TITLE_CENTER = "zenhub_title_center";
+
+        /**
+         * Switch position of Description in Zenhub
+         * @hide
+         */
+        public static final String ZENHUB_DESCRIPTION_CENTER = "zenhub_description_center";
+
+        /**
+         * Whether to show zenhub card description
+         * @hide
+         */
+        public static final String ZENHUB_SHOW_DESCRIPTION = "zenhub_show_description";
+
+        /**
+         * Zenhub card icon size
+         * @hide
+         */
+        public static final String ZENHUB_ICON_SIZE = "zenhub_icon_size";
+
+        /**
          * Gaming mode master switch
          * @hide
          */
