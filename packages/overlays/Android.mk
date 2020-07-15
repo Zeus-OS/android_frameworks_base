@@ -30,7 +30,6 @@ LOCAL_REQUIRED_MODULES := \
 	FontArbutusSourceOverlay \
 	FontArvoLatoOverlay \
 	FontGoogleSansOverlay \
-	FontNotoSerifSourceOverlay \
 	FontRubikRubikOverlay \
     FontAclonicaSourceOverlay \
     FontAmaranteSourceOverlay \
@@ -43,7 +42,6 @@ LOCAL_REQUIRED_MODULES := \
     FontSonySketchSourceOverlay \
     FontSurferSourceOverlay \
     FontFiraSansSourceOverlay \
-    FontSamsungOneSourceOverlay \
     FontBigNoodle \
     FontBikoHanken \
     FontComicNeue \
@@ -67,6 +65,23 @@ LOCAL_REQUIRED_MODULES := \
     FontSofiaSans \
     FontSofiaSansSemiCondensed \
 	FontLinotte \
+	FontComfortaaSourceOverlay \
+	FontExotwoSourceOverlay \
+	FontStoropiaSourceOverlay \
+	FontUbuntuSourceOverlay \
+	FontComicSansSourceOverlay \
+	FontGoogleSansSourceOverlay \
+	FontOneplusSlateSource \
+	FontReemKufiSourceOverlay \
+	FontRosemarySourceOverlay \
+	FontSamsungOneSourceOverlay \
+	FontNokiaPureSourceOverlay \
+	FontNunitoSourceOverlay \
+	FontFifa2018SourceOverlay \
+	FontCoconSourceOverlay \
+	FontQuandoSourceOverlay \
+	FontGrandHotelSourceOverlay \
+	FontRedressedSourceOverlay \
 	IconPackCircularAndroidOverlay \
 	IconPackCircularPixelLauncherOverlay \
 	IconPackCircularPixelThemePickerOverlay \

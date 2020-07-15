@@ -1,6 +1,6 @@
 <!--
 /**
- * Copyright (c) 2019, The Android Open Source Project
+ * Copyright (c) 2020, Xtended Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +16,16 @@
  */
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.theme.font.notoserifsource"
+    package="com.android.theme.font.reemkufi"
     android:versionCode="1"
     android:versionName="1.0">
     <overlay android:targetPackage="android"
         android:category="android.theme.customization.font"
         android:priority="1"/>
 
-    <application android:label="@string/font_notoserif_source_overlay" android:hasCode="false">
+    <application android:label="@string/font_reemkufi_source_overlay" android:hasCode="false">
         <meta-data
             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
-            android:value="serif,serif-bold,source-sans-pro,source-sans-pro-semi-bold" />
+            android:value="reemkufi,reemkufi-bold,reemkufi-medium" />
     </application>
 </manifest>

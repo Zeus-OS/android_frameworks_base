@@ -16,12 +16,6 @@
  */
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-     <!-- Name of a font family to use for body text. -->
-    <string name="config_bodyFontFamily" translatable="false">bariol</string>
-    <!-- Name of a font family to use for medium body text. -->
-    <string name="config_bodyFontFamilyMedium" translatable="false">bariol-bold</string>
-    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
-    <string name="config_headlineFontFamily" translatable="false">bariol</string>
-    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
-    <string name="config_headlineFontFamilyMedium" translatable="false">bariol-bold</string>
+    <!-- Headline / Body font Quando overlay -->
+    <string name="font_quando_source_overlay" translatable="false">Quando</string>
 </resources>
