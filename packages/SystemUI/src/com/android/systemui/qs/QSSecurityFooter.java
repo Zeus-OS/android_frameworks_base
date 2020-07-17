@@ -150,8 +150,8 @@ public class QSSecurityFooter implements OnClickListener, DialogInterface.OnClic
         final CharSequence organizationName = mSecurityController.getDeviceOwnerOrganizationName();
         final CharSequence workProfileName = mSecurityController.getWorkProfileOrganizationName();
         // Update visibility of footer
-        mIsVisible = (isDeviceManaged && !isDemoDevice) || hasCACerts || hasCACertsInWorkProfile ||
-            vpnName != null || vpnNameWorkProfile != null;
+        mIsVisible = ((isDeviceManaged && !isDemoDevice) || hasCACerts || hasCACertsInWorkProfile ||
+            vpnName != null || vpnNameWorkProfile != null) && isQSFooterSecurityInformationEnabled();
         // Update the string
         mFooterTextContent = getFooterText(isDeviceManaged, hasWorkProfile,
                 hasCACerts, hasCACertsInWorkProfile, isNetworkLoggingEnabled, vpnName,
@@ -170,6 +170,12 @@ public class QSSecurityFooter implements OnClickListener, DialogInterface.OnClic
             mMainHandler.post(mUpdateIcon);
         }
         mMainHandler.post(mUpdateDisplayState);
+    }
+
+
+    private boolean isQSFooterSecurityInformationEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.QS_FOOTER_SECURITY_INFORMATION, 1) == 1;
     }
 
     protected CharSequence getFooterText(boolean isDeviceManaged, boolean hasWorkProfile,

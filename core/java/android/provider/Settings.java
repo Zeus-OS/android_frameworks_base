@@ -5670,6 +5670,12 @@ public final class Settings {
         public static final String STATUS_BAR_QUICK_QS_PULLDOWN = "status_bar_quick_qs_pulldown";
 
         /**
+         * Weather to show QS footer security information
+         * @hide
+         */
+        public static final String QS_FOOTER_SECURITY_INFORMATION = "qs_footer_security_information";
+
+        /**
          * Switch position of Title in Zenhub
          * @hide
          */
