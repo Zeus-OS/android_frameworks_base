@@ -4895,6 +4895,18 @@ public final class Settings {
         public static final String LOCKSCREEN_MEDIA_BLUR = "lockscreen_media_blur";
 
         /**
+         * Weather to show QS footer security information
+         * @hide
+         */
+        public static final String QS_FOOTER_SECURITY_INFORMATION = "qs_footer_security_information";
+        
+        /**
+         * Whether to use accent lock clock colors hour
+         * @hide	         
+         */	        
+        public static final String LOCKSCREEN_ACCENT_COLOR_HOUR = "lockscreen_accent_color_hour";
+
+        /**
          * @hide
          */
         public static final String SENSOR_BLOCK = "sensor_block";
