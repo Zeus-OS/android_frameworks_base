@@ -4817,6 +4817,17 @@ public final class Settings {
                 BOOLEAN_VALIDATOR;
 
         /**
+         * The amount of time in milliseconds before the device goes to sleep or begins
+         * to dream after a period of inactivity in the keyguard.
+         * @hide
+         */
+        public static final String LOCKSCREEN_TIMEOUT = "lockscreen_timeout";
+
+        /** @hide */
+        private static Validator LOCKSCREEN_TIMEOUT_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
+         * @hide
          * Use color enhancement feature of display
          * 0 = 0ff, 1 = on
          */
@@ -7167,6 +7178,7 @@ public final class Settings {
             STATUSBAR_BATTERY_BAR_ENABLE_CHARGING_COLOR,
             STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE,
             STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE,
+            LOCKSCREEN_TIMEOUT,
             DISPLAY_CUTOUT_MODE,
             STOCK_STATUSBAR_IN_HIDE,
             QS_DATAUSAGE,
@@ -7649,6 +7661,7 @@ public final class Settings {
             VALIDATORS.put(STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE, STATUSBAR_BATTERY_BAR_BLEND_DARK_COLORS_REVERSE_VALIDATOR);
             VALIDATORS.put(ENABLE_CONDITIONS, ENABLE_CONDITIONS_VALIDATOR);
             VALIDATORS.put(ENABLE_SUGGESTIONS, ENABLE_SUGGESTIONS_VALIDATOR);
+            VALIDATORS.put(LOCKSCREEN_TIMEOUT, LOCKSCREEN_TIMEOUT_VALIDATOR);
             VALIDATORS.put(DISPLAY_CUTOUT_MODE, DISPLAY_CUTOUT_MODE_VALIDATOR);
             VALIDATORS.put(STOCK_STATUSBAR_IN_HIDE, STOCK_STATUSBAR_IN_HIDE_VALIDATOR);
             VALIDATORS.put(QS_DATAUSAGE, QS_DATAUSAGE_VALIDATOR);

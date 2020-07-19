@@ -22,6 +22,7 @@ import static com.android.systemui.statusbar.NotificationRemoteInputManager.ENAB
 
 import android.app.ActivityManager;
 import android.app.IActivityManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
@@ -32,6 +33,7 @@ import android.os.Handler;
 import android.os.RemoteException;
 import android.os.SystemProperties;
 import android.os.Trace;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.Display;
@@ -90,6 +92,7 @@ public class StatusBarWindowController implements Callback, Dumpable, Configurat
     private boolean mHasTopUiChanged;
     private int mBarHeight;
     private float mScreenBrightnessDoze;
+    private long mCurrentTimeout;
     private final State mCurrentState = new State();
     private OtherwisedCollapsedListener mListener;
     private ForcePluginOpenListener mForcePluginOpenListener;
@@ -336,7 +339,7 @@ public class StatusBarWindowController implements Callback, Dumpable, Configurat
                 && state.statusBarState == StatusBarState.KEYGUARD
                 && !state.qsExpanded) {
             mLpChanged.userActivityTimeout = state.bouncerShowing
-                    ? KeyguardViewMediator.AWAKE_INTERVAL_BOUNCER_MS : mLockScreenDisplayTimeout;
+                    ? KeyguardViewMediator.AWAKE_INTERVAL_BOUNCER_MS : mCurrentTimeout;
         } else {
             mLpChanged.userActivityTimeout = -1;
         }
@@ -770,6 +773,9 @@ public class StatusBarWindowController implements Callback, Dumpable, Configurat
             context.getContentResolver().registerContentObserver(
                     Settings.System.getUriFor(Settings.System.LOCKSCREEN_ROTATION),
                     false, this);
+            context.getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_TIMEOUT),
+                    false, this, UserHandle.USER_ALL);
         }
 
         public void unobserve(Context context) {
@@ -779,6 +785,9 @@ public class StatusBarWindowController implements Callback, Dumpable, Configurat
         @Override
         public void onChange(boolean selfChange) {
             mKeyguardScreenRotation = shouldEnableKeyguardScreenRotation();
+            mCurrentTimeout = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_TIMEOUT, 15000,
+                UserHandle.USER_CURRENT);
             // update the state
             apply(mCurrentState);
         }
