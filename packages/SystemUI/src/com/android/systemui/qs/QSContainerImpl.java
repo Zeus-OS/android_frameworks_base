@@ -37,6 +37,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import com.android.internal.graphics.ColorUtils;
 
 import com.android.systemui.R;
 import com.android.systemui.zenx.header.StatusBarHeaderMachine;
@@ -75,6 +76,7 @@ public class QSContainerImpl extends FrameLayout implements
     private boolean mLandscape;
     private boolean mQsBackgroundAlpha;
     private boolean mForceHideQsStatusBar;
+    private int bgAlpha;
 
     public QSContainerImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -106,6 +108,9 @@ public class QSContainerImpl extends FrameLayout implements
         mBackgroundImage = findViewById(R.id.qs_header_image_view);
         mBackgroundImage.setClipToOutline(true);
         mForceHideQsStatusBar = mContext.getResources().getBoolean(R.bool.qs_status_bar_hidden);
+        bgAlpha = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QS_PANEL_BG_ALPHA, 255,
+                UserHandle.USER_CURRENT);
         updateSettings();
         updateResources();
 
@@ -176,7 +181,7 @@ public class QSContainerImpl extends FrameLayout implements
 
     private void updateSettings() {
         ContentResolver resolver = getContext().getContentResolver();
-        int bgAlpha = Settings.System.getIntForUser(resolver,
+        bgAlpha = Settings.System.getIntForUser(resolver,
                 Settings.System.QS_PANEL_BG_ALPHA, 255,
                 UserHandle.USER_CURRENT);
 
@@ -195,6 +200,7 @@ public class QSContainerImpl extends FrameLayout implements
 
         updateQSHeaderStyle();
         updateQSBackgroundStyle();
+        updateResources();
     }
 
     @Override
@@ -327,33 +333,22 @@ public class QSContainerImpl extends FrameLayout implements
 
         switch(getQSBackgroundStyle()) {
             case 0:
-                int bgAlpha = Settings.System.getIntForUser(mContext.getContentResolver(),
+                bgAlpha = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.QS_PANEL_BG_ALPHA, 255,
                     UserHandle.USER_CURRENT);
-                Drawable bg = mBackground.getBackground();
-                    if (bgAlpha < 255 ) {
-                        mQsBackgroundAlpha = true;
+                        Drawable bg = mBackground.getBackground();
                         bg.setAlpha(bgAlpha);
                         mBackground.setBackground(bg);
                         mBackgroundGradient.setVisibility(View.INVISIBLE);
-                    } else {
-                        mQsBackgroundAlpha = false;
-                        bg.setAlpha(255);
-                        mBackground.setBackground(bg);
-                        mBackgroundGradient.setVisibility(View.VISIBLE);
-                    }
                 break;
             case 1:
-                setQSBackgroundGradientStyle(mContext.getResources().getColor(R.color.qs_header_accent_color));
+                setQSBackgroundGradientStyle(mContext.getResources().getColor(R.color.qs_header_accent_color), mContext.getResources().getColor(R.color.qs_header_accent_color));
                 break;
             case 2:
-                setQSBackgroundGradientStyle(mContext.getResources().getColor(R.color.qs_header_transparent_color));
-                break;
-            case 3:
                 int qsBackgroundStyleColor = Settings.System.getInt(mContext.getContentResolver(),
                     QS_BACKGROUND_STYLE_COLOR, 0x00000000);
                 qsBackgroundStyleColor = Color.argb(255, Color.red(qsBackgroundStyleColor), Color.green(qsBackgroundStyleColor), Color.blue(qsBackgroundStyleColor));
-                setQSBackgroundGradientStyle(qsBackgroundStyleColor);
+                setQSBackgroundGradientStyle(qsBackgroundStyleColor, qsBackgroundStyleColor);
                 break;
             default:
                 break;
@@ -373,8 +368,12 @@ public class QSContainerImpl extends FrameLayout implements
         mBackgroundGradient.setBackground(gd);
     }
 
-    private void setQSBackgroundGradientStyle (int color) {
-        int[] colors = {color, mContext.getResources().getColor(R.color.qs_header_transparent_color)};
+    private void setQSBackgroundGradientStyle (int startColor, int endColor) {
+        bgAlpha = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.QS_PANEL_BG_ALPHA, 255,
+                    UserHandle.USER_CURRENT);
+
+        int[] colors = {ColorUtils.setAlphaComponent(startColor, bgAlpha), ColorUtils.setAlphaComponent(endColor, bgAlpha)};
 
         //create a new gradient color
         GradientDrawable gd = new GradientDrawable(
