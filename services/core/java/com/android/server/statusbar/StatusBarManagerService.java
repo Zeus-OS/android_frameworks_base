@@ -466,6 +466,16 @@ public class StatusBarManagerService extends IStatusBarService.Stub implements D
             }
 
         }
+
+        @Override
+        public void leftInLandscapeChanged(boolean isLeft) {
+            if (mBar != null) {
+                try {
+                    mBar.leftInLandscapeChanged(isLeft);
+                } catch (RemoteException ex) {
+                }
+            }
+        }
     };
 
     private final GlobalActionsProvider mGlobalActionsProvider = new GlobalActionsProvider() {
@@ -728,7 +738,23 @@ public class StatusBarManagerService extends IStatusBarService.Stub implements D
         }
     }
 
-    // TODO(b/117478341): make it aware of multi-display if needed.
+    /**
+     * Let systemui know screen pinning state change. This is independent of the
+     * showScreenPinningRequest() call as it does not reflect state
+     *
+     * @hide
+     */
+    @Override
+    public void screenPinningStateChanged(boolean enabled) {
+        enforceStatusBar();
+        if (mBar != null) {
+            try {
+                mBar.screenPinningStateChanged(enabled);
+            } catch (RemoteException ex) {
+            }
+        }
+    }
+
     @Override
     public void disable(int what, IBinder token, String pkg) {
         disableForUser(what, token, pkg, mCurrentUserId);
