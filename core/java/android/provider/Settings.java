@@ -7067,6 +7067,11 @@ public final class Settings {
         /**
          * @hide
          */
+        public static final String QS_HEADER_STYLE_GRADIENT = "qs_header_style_gradient";
+
+        /**
+         * @hide
+         */
         public static final String QS_BACKGROUND_STYLE = "qs_background_style";
 
         /**

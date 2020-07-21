@@ -336,10 +336,17 @@ public class QSContainerImpl extends FrameLayout implements
                 bgAlpha = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.QS_PANEL_BG_ALPHA, 255,
                     UserHandle.USER_CURRENT);
-                        Drawable bg = mBackground.getBackground();
-                        bg.setAlpha(bgAlpha);
-                        mBackground.setBackground(bg);
-                        mBackgroundGradient.setVisibility(View.INVISIBLE);
+                if (bgAlpha < 255 ) {
+                    mQsBackgroundAlpha = true;
+                    bg.setAlpha(bgAlpha);
+                    mBackground.setBackground(bg);
+                    mBackgroundGradient.setVisibility(View.INVISIBLE);
+                } else {
+                    mQsBackgroundAlpha = false;
+                    bg.setAlpha(255);
+                    mBackground.setBackground(bg);
+                    mBackgroundGradient.setVisibility(View.VISIBLE);
+                }
                 break;
             case 1:
                 setQSBackgroundGradientStyle(mContext.getResources().getColor(R.color.qs_header_accent_color), mContext.getResources().getColor(R.color.qs_header_accent_color));
@@ -356,6 +363,12 @@ public class QSContainerImpl extends FrameLayout implements
         }
     }
 
+    private boolean isQSHeaderStyleGradientEnabled() {
+        return Settings.System.getInt(getContext().getContentResolver(),
+            Settings.System.QS_HEADER_STYLE_GRADIENT, 0) = 1;
+    }
+
+
     private void setQSHeaderGradientStyle (int color) {
         int[] colors = {color, mContext.getResources().getColor(R.color.qs_header_transparent_color)};
 
@@ -366,6 +379,19 @@ public class QSContainerImpl extends FrameLayout implements
         gd.setCornerRadius(0f);
         //apply the button background to newly created drawable gradient
         mBackgroundGradient.setBackground(gd);
+        if(isQSHeaderStyleGradientEnabled()) {
+            if (bgAlpha < 255 ) {
+                mQsBackgroundAlpha = true;
+                bg.setAlpha(bgAlpha);
+                mBackground.setBackground(bg);
+                mBackgroundGradient.setVisibility(View.INVISIBLE);
+            } else {
+                mQsBackgroundAlpha = false;
+                bg.setAlpha(255);
+                mBackground.setBackground(bg);
+                mBackgroundGradient.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     private void setQSBackgroundGradientStyle (int startColor, int endColor) {
