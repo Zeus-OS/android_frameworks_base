@@ -7113,12 +7113,6 @@ public final class Settings {
         private static final Validator DATA_DISABLED_ICON_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
-         * Whether to tint the QS tiles with accent color
-         * @hide
-         */
-        public static final String QS_TILE_ACCENT_TINT = "qs_tile_accent_tint";
-
-        /**
          * Ambient Edge Light Layout
          * @hide
          */

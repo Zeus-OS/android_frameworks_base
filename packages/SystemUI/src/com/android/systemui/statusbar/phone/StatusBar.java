@@ -4791,9 +4791,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.SWITCH_STYLE),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.QS_TILE_ACCENT_TINT),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.QS_TILE_STYLE),
                     false, this, UserHandle.USER_ALL);
         }
@@ -4870,7 +4867,6 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private void setQsColumns() {
         if (mQSPanel != null) {
-            mQSPanel.getHost().reloadAllTiles();
             mQSPanel.updateResources();
             mQSPanel.updateSettings();
         }
