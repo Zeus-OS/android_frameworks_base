@@ -194,6 +194,7 @@
     </string-array>
 
   <string-array name="type_clock_minutes">
+      <item>"Null"</item>
       <item>"Eins"</item>
       <item>"Zwei"</item>
       <item>"Drei"</item>
