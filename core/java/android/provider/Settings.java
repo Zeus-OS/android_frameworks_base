@@ -5800,6 +5800,12 @@ public final class Settings {
         public static final String ZENHUB_ICON_SIZE = "zenhub_icon_size";
 
         /**
+         * Zenhub card icon type
+         * @hide
+         */
+        public static final String ZENHUB_ICON_TYPE = "zenhub_icon_type";
+
+        /**
          * Gaming mode master switch
          * @hide
          */
