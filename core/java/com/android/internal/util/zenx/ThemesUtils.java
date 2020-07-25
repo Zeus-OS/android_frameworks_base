@@ -63,7 +63,8 @@ public class ThemesUtils {
             "com.android.systemui.qstile.inktober",
             "com.android.systemui.qstile.neonlike",
             "com.android.systemui.qstile.triangles",
-            "com.android.systemui.qstile.deletround", 
+            "com.android.systemui.qstile.deletround",
+            "com.android.systemui.qstile.bottom_triangle",
     };
 
 
