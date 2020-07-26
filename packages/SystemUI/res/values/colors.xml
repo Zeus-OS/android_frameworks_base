@@ -227,7 +227,4 @@
    <color name="row_icon_dark">@color/ringer_icon_normal</color>
    <color name="row_icon_white">@android:color/white</color>
 
-    <color name="volume_background_tint_aospa">#f2f2f2</color>
-    <color name="divider_stroke_color">#E0E0E0</color>
-
 </resources>
