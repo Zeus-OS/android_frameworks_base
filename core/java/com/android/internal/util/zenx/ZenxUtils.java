@@ -128,4 +128,11 @@ public class ZenxUtils {
         return wifi.isConnected();
     }
 
+    public static boolean fileExists(String filename) {
+        if (filename == null) {
+            return false;
+        }
+        return new File(filename).exists();
+    }
+
 }

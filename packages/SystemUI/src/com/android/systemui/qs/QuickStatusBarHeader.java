@@ -64,6 +64,7 @@ import android.os.UserHandle;
 import androidx.annotation.VisibleForTesting;
 
 import com.android.internal.config.sysui.SystemUiDeviceConfigFlags;
+import com.android.internal.util.zenx.ZenxUtils;
 import com.android.settingslib.Utils;
 import com.android.systemui.BatteryMeterView;
 import com.android.systemui.DualToneHandler;
@@ -402,7 +403,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     private int getQsSystemInfoMode() {
         return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_SYSTEM_INFO, 2);
+                Settings.System.QS_SYSTEM_INFO, 0);
     }
 
     public boolean isQsSystemInfoIconEnabled() {
@@ -449,27 +450,55 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     }
 
     private String getBatteryTemp() {
-         String value = readOneLine(getContext().getResources().getString(
-                     com.android.internal.R.string.config_battery_temp_path));
-        return String.format("%s", Integer.parseInt(value) / 10) + "\u2103";
+        String value;
+        if(ZenxUtils.fileExists(getContext().getResources().getString(
+                     com.android.internal.R.string.config_battery_temp_path))) {
+                        value = readOneLine(getContext().getResources().getString(
+                            com.android.internal.R.string.config_battery_temp_path));
+                     } else {
+                         value = "Error";
+                     }
+
+        return value == "Error" ? "N/A" : String.format("%s", Integer.parseInt(value) / 10) + "\u2103";
     }
 
     private String getCPUTemp() {
-        String value = readOneLine(getContext().getResources().getString(
-                     com.android.internal.R.string.config_cpu_temp_path));
-        return String.format("%s", Integer.parseInt(value) / 1000) + "\u2103";
+        String value;
+        if(ZenxUtils.fileExists(getContext().getResources().getString(
+                     com.android.internal.R.string.config_cpu_temp_path))) {
+                        value = readOneLine(getContext().getResources().getString(
+                            com.android.internal.R.string.config_cpu_temp_path));
+                     } else {
+                         value = "Error";
+                     }
+
+        return value == "Error" ? "N/A" : String.format("%s", Integer.parseInt(value) / 1000) + "\u2103";
     }
 
     private String getGPUBusy() {
-        String value = readOneLine(getContext().getResources().getString(
-                     com.android.internal.R.string.config_gpu_busy_path));
-        return value;
+        String value;
+        if(ZenxUtils.fileExists(getContext().getResources().getString(
+                     com.android.internal.R.string.config_gpu_busy_path))) {
+                        value = readOneLine(getContext().getResources().getString(
+                            com.android.internal.R.string.config_gpu_busy_path));
+                     } else {
+                         value = "Error";
+                     }
+
+        return value == "Error" ? "N/A" : value;
     }
 
     private String getGPUClock() {
-         String value = readOneLine(getContext().getResources().getString(
-                     com.android.internal.R.string.config_gpu_clock_path));
-        return String.format("%s", Integer.parseInt(value)) + "Mhz";
+        String value;
+        if(ZenxUtils.fileExists(getContext().getResources().getString(
+                     com.android.internal.R.string.config_gpu_clock_path))) {
+                        value = readOneLine(getContext().getResources().getString(
+                            com.android.internal.R.string.config_gpu_clock_path));
+                     } else {
+                         value = "Error";
+                     }
+
+        return value == "Error" ? "N/A" : String.format("%s", Integer.parseInt(value)) + "Mhz";
     }
     
     private static String readOneLine(String fname) {
