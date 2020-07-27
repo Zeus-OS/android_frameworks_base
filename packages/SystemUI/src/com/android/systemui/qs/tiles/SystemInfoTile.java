@@ -45,6 +45,7 @@ import com.android.systemui.qs.tileimpl.QSTileImpl;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
+import com.android.internal.util.zenx.ZenxUtils;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
@@ -182,34 +183,69 @@ public class SystemInfoTile extends QSTileImpl<BooleanState> {
 
     
     private String getBatteryTemp() {
-         String value = readOneLine(mContext.getResources().getString(
-                        com.android.internal.R.string.config_battery_temp_path));
-        return String.format("%s", Integer.parseInt(value) / 10) + "\u2103";
+        String value;
+        if(ZenxUtils.fileExists(mContext.getResources().getString(
+                     com.android.internal.R.string.config_battery_temp_path))) {
+                        value = readOneLine(mContext.getResources().getString(
+                            com.android.internal.R.string.config_battery_temp_path));
+                     } else {
+                         value = "Error";
+                     }
+
+        return value == "Error" ? "N/A" : String.format("%s", Integer.parseInt(value) / 10) + "\u2103";
     }
 
     private String getCPUTemp() {
-        String value = readOneLine(mContext.getResources().getString(
-                        com.android.internal.R.string.config_cpu_temp_path));
-        return String.format("%s", Integer.parseInt(value) / 1000) + "\u2103";
+        String value;
+        if(ZenxUtils.fileExists(mContext.getResources().getString(
+                     com.android.internal.R.string.config_cpu_temp_path))) {
+                        value = readOneLine(mContext.getResources().getString(
+                            com.android.internal.R.string.config_cpu_temp_path));
+                     } else {
+                         value = "Error";
+                     }
+
+        return value == "Error" ? "N/A" : String.format("%s", Integer.parseInt(value) / 1000) + "\u2103";
     }
 
     private String getGPUBusy() {
-        String value = readOneLine(mContext.getResources().getString(
-                     com.android.internal.R.string.config_gpu_busy_path));
-        return value;
+        String value;
+        if(ZenxUtils.fileExists(mContext.getResources().getString(
+                     com.android.internal.R.string.config_gpu_busy_path))) {
+                        value = readOneLine(mContext.getResources().getString(
+                            com.android.internal.R.string.config_gpu_busy_path));
+                     } else {
+                         value = "Error";
+                     }
+
+        return value == "Error" ? "N/A" : value;
     }
 
     private String getGPUClock() {
-        String value = readOneLine(mContext.getResources().getString(
-                     com.android.internal.R.string.config_gpu_clock_path));
-        return String.format("%s", Integer.parseInt(value)) + "Mhz";
+        String value;
+        if(ZenxUtils.fileExists(mContext.getResources().getString(
+                     com.android.internal.R.string.config_gpu_clock_path))) {
+                        value = readOneLine(mContext.getResources().getString(
+                            com.android.internal.R.string.config_gpu_clock_path));
+                     } else {
+                         value = "Error";
+                     }
+
+        return value == "Error" ? "N/A" : String.format("%s", Integer.parseInt(value)) + "Mhz";
     }
 
     private String getBatteryLevel() {
-        String value = readOneLine(mContext.getResources().getString(
-                     com.android.internal.R.string.config_battery_level_path));
+        String value;
+        if(ZenxUtils.fileExists(mContext.getResources().getString(
+                     com.android.internal.R.string.config_battery_level_path))) {
+                        value = readOneLine(mContext.getResources().getString(
+                            com.android.internal.R.string.config_battery_level_path));
+                     } else {
+                         value = "Error";
+                     }
         mBatteryLevel = Integer.parseInt(value);
-        return String.format("%s", Integer.parseInt(value)) + "\u0025";
+        return value == "Error" ? "N/A" :  String.format("%s", Integer.parseInt(value)) + "\u0025";
+
     }
 
     private Icon getBatteryLevelIcon() {
