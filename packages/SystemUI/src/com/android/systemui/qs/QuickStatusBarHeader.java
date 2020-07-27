@@ -402,7 +402,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     private int getQsSystemInfoMode() {
         return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_SYSTEM_INFO, 2);
+                Settings.System.QS_SYSTEM_INFO, 0);
     }
 
     public boolean isQsSystemInfoIconEnabled() {
