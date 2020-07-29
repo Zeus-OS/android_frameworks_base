@@ -40,5 +40,6 @@
     <string name="clock_title_samsung_big_hours" translatable="false">Sasmung (Big Hour)</string>
     <string name="clock_title_swing" translatable="false">Swing animation</string>
     <string name="clock_title_loading" translatable="false">Loading animation</string>
+    <string name="clock_title_bubble_animation" translatable="false">Bubble animation</string>
 
 </resources>
