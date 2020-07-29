@@ -38,5 +38,6 @@
     <string name="clock_title_samsung_bold_hour" translatable="false">Samsung (Hour bold)</string>
     <string name="clock_title_samsung_bold_minute" translatable="false">Samsung (Minute bold)</string>
     <string name="clock_title_samsung_big_hours" translatable="false">Sasmung (Big Hour)</string>
+    <string name="clock_title_swing" translatable="false">Swing animation</string>
 
 </resources>
