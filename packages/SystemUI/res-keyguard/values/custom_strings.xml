@@ -45,5 +45,6 @@
     <string name="clock_title_blue_circle_animation" translatable="false">Blue circle</string>
     <string name="clock_title_bluev2_circle_animation" translatable="false">Color circle</string>
     <string name="clock_title_explosion_animation" translatable="false">Explosion circle</string>
+    <string name="clock_title_tux" translatable="false">Tux</string>
 
 </resources>
