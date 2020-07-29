@@ -160,6 +160,7 @@ public final class ClockManager {
         addBuiltinClock(() -> new SfunyClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new MNMLMinimalClockController(res, layoutInflater, colorExtractor,context));
         addBuiltinClock(() -> new MNMLBoxClockController(res, layoutInflater, colorExtractor, context));
+        addBuiltinClock(() -> new SwingClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new TuxClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new TypeClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new TypeClockAltController(res, layoutInflater, colorExtractor, context));

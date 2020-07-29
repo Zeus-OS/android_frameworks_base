@@ -30,4 +30,6 @@
     <string name="date_long_title_today_the">the</string>
     <!-- Tux clock -->
     <string name="clock_title_tux" translatable="false">Tux</string>
+
+    <string name="clock_title_swing" translatable="false">Swing animation</string>
 </resources>
