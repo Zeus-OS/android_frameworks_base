@@ -28,5 +28,6 @@
     <string name="clock_title_samsung_bold_hour" translatable="false">Samsung (Hour bold)</string>
     <string name="clock_title_samsung_bold_minute" translatable="false">Samsung (Minute bold)</string>
     <string name="date_long_title_today_the">the</string>
-
+    <!-- Tux clock -->
+    <string name="clock_title_tux" translatable="false">Tux</string>
 </resources>
