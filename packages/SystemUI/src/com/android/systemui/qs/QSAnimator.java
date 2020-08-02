@@ -281,7 +281,7 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
         View brightnessPlaceholder = mQsPanel.getBrightnessPlaceholder();
         if (mAllowFancy) {
             // Make brightness appear static position and alpha in through second half.
-            if (brightness != null) {
+            if (brightness != null && !mQsPanel.isBrightnessViewBottom()) {
                 firstPageBuilder.addFloat(brightness, "translationY", heightDiff, 0);
                 firstPageBuilder.addFloat(brightnessPlaceholder, "translationY", heightDiff, 0);
                 mBrightnessAnimator = new TouchAnimator.Builder()
@@ -304,7 +304,7 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
                     .addFloat(mQsPanel.getFooter().getView(), "alpha", 0, 1);
             mAllViews.add(mQsPanel.getDivider());
             mAllViews.add(mQsPanel.getFooter().getView());
-            if (brightness != null) {
+            if (brightness != null && mQsPanel.isBrightnessViewBottom()) {
                 firstPageBuilder.addFloat(brightnessPlaceholder, "translationY", heightDiff, 0);
                 builder.addFloat(mQsPanel.getBrightnessView(), "alpha", 0, 1);
                 mAllViews.add(mQsPanel.getBrightnessView());
