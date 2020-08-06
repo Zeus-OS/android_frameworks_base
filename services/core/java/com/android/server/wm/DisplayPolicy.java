@@ -2874,7 +2874,7 @@ public class DisplayPolicy {
         if (hasStatusBar()) {
             mStatusBarHeightForRotation[portraitRotation] =
                     mStatusBarHeightForRotation[upsideDownRotation] =
-                            res.getDimensionPixelSize(R.dimen.status_bar_height_portrait);
+                            getCustomStatusBarHeight();
             mStatusBarHeightForRotation[landscapeRotation] =
                     mStatusBarHeightForRotation[seascapeRotation] =
                             res.getDimensionPixelSize(R.dimen.status_bar_height_landscape);
@@ -2947,6 +2947,12 @@ public class DisplayPolicy {
                         && res.getBoolean(R.bool.config_navBarCanMove);
         mAllowSeamlessRotationDespiteNavBarMoving =
                 res.getBoolean(R.bool.config_allowSeamlessRotationDespiteNavBarMoving);
+    }
+
+    private int getCustomStatusBarHeight() {
+        final Resources res = mContext.getResources();
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.CUSTOM_STATUSBAR_HEIGHT, res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height));
     }
 
     /**
