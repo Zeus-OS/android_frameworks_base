@@ -19,7 +19,7 @@
 
     <style name="Theme.DeviceDefault.QuickSettings" parent="@*android:Theme.DeviceDefault">
         <!-- QS panel background -->
-        <item name="android:colorBackgroundFloating">@*android:color/primary_dark_device_default_settings</item>
+        <item name="android:colorBackgroundFloating">#80000000</item>
 
         <!-- volume background -->
         <item name="android:panelColorBackground">#aa000000</item>
