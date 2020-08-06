@@ -24,6 +24,7 @@ import android.graphics.Rect;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnComputeInternalInsetsListener;
+import android.provider.Settings;
 
 import com.android.systemui.Dependency;
 import com.android.systemui.bubbles.BubbleController;
@@ -163,7 +164,12 @@ public final class StatusBarTouchableRegionManager implements
 
     private void initResources() {
         Resources resources = mContext.getResources();
-        mStatusBarHeight = resources.getDimensionPixelSize(
-                com.android.internal.R.dimen.status_bar_height);
+        mStatusBarHeight = getCustomStatusBarHeight();
+    }
+
+    private int getCustomStatusBarHeight() {
+        final Resources res = mContext.getResources();
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.CUSTOM_STATUSBAR_HEIGHT, res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height));
     }
 }

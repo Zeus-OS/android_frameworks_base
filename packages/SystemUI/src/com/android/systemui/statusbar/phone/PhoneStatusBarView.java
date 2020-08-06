@@ -42,6 +42,7 @@ import android.view.WindowInsets;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.provider.Settings;
 
 import com.android.systemui.Dependency;
 import com.android.systemui.EventLogTags;
@@ -336,7 +337,7 @@ public class PhoneStatusBarView extends PanelBar {
                 R.dimen.status_bar_padding_end);
 
         ViewGroup.LayoutParams layoutParams = getLayoutParams();
-        mStatusBarHeight = getResources().getDimensionPixelSize(R.dimen.status_bar_height);
+        mStatusBarHeight = getCustomStatusBarHeight();
         layoutParams.height = mStatusBarHeight;
 
         View sbContents = findViewById(R.id.status_bar_contents);
@@ -356,6 +357,12 @@ public class PhoneStatusBarView extends PanelBar {
                 getDisplay(), mRotationOrientation, mStatusBarHeight);
         updateCutoutLocation(cornerCutoutMargins);
         updateSafeInsets(cornerCutoutMargins);
+    }
+
+    private int getCustomStatusBarHeight() {
+        final Resources res = mContext.getResources();
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.CUSTOM_STATUSBAR_HEIGHT, res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height));
     }
 
     private void updateCutoutLocation(Pair<Integer, Integer> cornerCutoutMargins) {

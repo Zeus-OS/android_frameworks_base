@@ -6736,6 +6736,17 @@ public final class Settings {
         private static final Validator AUTO_BRIGHTNESS_MIN_VALUE_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
+         * Statusbar hight value for manual mode
+         *
+         * @hide
+         */
+        public static final String CUSTOM_STATUSBAR_HEIGHT = "custom_statusbar_height";
+
+        /** @hide */
+        private static final Validator CUSTOM_STATUSBAR_HEIGHT_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+        /**
          * Gestures nav: left long back swipe action
          * @hide
          */
@@ -7355,6 +7366,7 @@ public final class Settings {
             VOWIFI_ICON_STYLE,
             NOTIFICATION_HEADERS,
             QS_PANEL_BG_USE_NEW_TINT,
+            CUSTOM_STATUSBAR_HEIGHT,
         };
 
         /**
@@ -7612,6 +7624,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(VOWIFI_ICON);
             PRIVATE_SETTINGS.add(VOWIFI_ICON_STYLE);
             PRIVATE_SETTINGS.add(QS_TILE_STYLE);
+            PRIVATE_SETTINGS.add(CUSTOM_STATUSBAR_HEIGHT);
         }
 
         /**
@@ -7842,6 +7855,7 @@ public final class Settings {
             VALIDATORS.put(VOWIFI_ICON_STYLE, VOWIFI_ICON_STYLE_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_HEADERS, NOTIFICATION_HEADERS_VALIDATOR);
             VALIDATORS.put(QS_PANEL_BG_USE_NEW_TINT, QS_PANEL_BG_USE_NEW_TINT_VALIDATOR);
+            VALIDATORS.put(CUSTOM_STATUSBAR_HEIGHT, CUSTOM_STATUSBAR_HEIGHT_VALIDATOR);
         }
 
         /**
