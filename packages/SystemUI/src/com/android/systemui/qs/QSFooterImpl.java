@@ -607,7 +607,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     @Override
     public boolean onLongClick(View v) {
         if (v == mSettingsButton) {
-            startConfigCenterActivity();
+            startZenHubActivity();
             vibrateheader();
         }
         return false;
@@ -620,10 +620,10 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 
-    private void startConfigCenterActivity() {
+    private void startZenHubActivity() {
         Intent nIntent = new Intent(Intent.ACTION_MAIN);
         nIntent.setClassName("com.android.settings",
-            "com.android.settings.Settings$ConfigCenterActivity");
+            "com.android.settings.Settings$ZenHubActivity");
         mActivityStarter.startActivity(nIntent, true /* dismissShade */);
     }
 
