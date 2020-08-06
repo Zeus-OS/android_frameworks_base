@@ -42,6 +42,7 @@
             android:id="@+id/qs_footer_actions_edit_datausage"
             android:layout_width="@integer/qs_footer_actions_width"
             android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
             android:layout_weight="@integer/qs_footer_actions_weight"
             android:gravity="center_vertical|start" >
 
@@ -79,7 +80,7 @@
     <LinearLayout
         android:id="@+id/daily_data_usage_layout"
         android:layout_height="match_parent"
-        android:layout_width="wrap_content" 
+        android:layout_width="wrap_content"
         android:layout_marginStart="4dp"
         android:orientation="horizontal" 
         android:gravity="center_vertical|end"
@@ -140,6 +141,7 @@
             <com.android.keyguard.AlphaOptimizedLinearLayout
                     android:id="@+id/network_traffic_container"
                     android:layout_width="wrap_content"
+                    android:layout_marginTop="3dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|end" >
 
@@ -166,6 +168,7 @@
                 android:clickable="true"
                 android:clipToPadding="false"
                 android:focusable="true"
+                android:layout_marginTop="3dp"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_settings_memory"
                 android:tint="?android:attr/colorForeground"
@@ -175,6 +178,7 @@
                 android:id="@+id/settings_button_container"
                 android:layout_width="@dimen/qs_footer_action_button_size"
                 android:layout_height="@dimen/qs_footer_action_button_size"
+                android:layout_marginTop="3dp"
                 android:clipChildren="false"
                 android:clipToPadding="false">
                 
@@ -199,6 +203,7 @@
         android:layout_width="24dp"
         android:layout_height="3dp"
         android:layout_marginBottom="12dp"
+        android:layout_marginTop="2dp"
         android:layout_gravity="center_horizontal|bottom"
         android:background="@drawable/qs_footer_drag_handle" />
 
