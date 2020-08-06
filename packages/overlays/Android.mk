@@ -115,7 +115,9 @@ LOCAL_REQUIRED_MODULES := \
 	NavigationBarModeGesturalOverlayExtraWideBack \
 	PrimaryColorBlackOverlay \
 	PrimaryColorDarkBlueOverlay \
-	PrimaryColorDarkOverlay 
+	PrimaryColorDarkOverlay  \
+	PrimaryColorDerpClearOverlay \
+	PrimaryColorOneplusDark
 
 include $(BUILD_PHONY_PACKAGE)
 include $(CLEAR_VARS)
