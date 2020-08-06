@@ -376,6 +376,20 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         }
     }
 
+    public boolean onLongClick(View v) {
+        if (v == mSettingsButton) {
+            startZenHubActivity();
+        }
+        return false;
+    }
+    
+    private void startZenHubActivity() {
+        Intent nIntent = new Intent(Intent.ACTION_MAIN);
+        nIntent.setClassName("com.android.settings",
+            "com.android.settings.Settings$ZenHubActivity");
+        mActivityStarter.startActivity(nIntent, true /* dismissShade */);
+    }
+
     private void startSettingsActivity() {
         mActivityStarter.startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS),
                 true /* dismissShade */);
