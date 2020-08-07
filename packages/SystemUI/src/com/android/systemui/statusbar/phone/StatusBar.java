@@ -70,6 +70,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.om.IOverlayManager;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -96,6 +97,7 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.os.ServiceManager;
 import android.provider.Settings;
 import android.service.dreams.DreamService;
 import android.service.dreams.IDreamManager;
@@ -151,6 +153,7 @@ import com.android.systemui.EventLogTags;
 import com.android.systemui.InitController;
 import com.android.systemui.Prefs;
 import com.android.systemui.R;
+import com.android.systemui.Dependency;
 import com.android.systemui.SystemUI;
 import com.android.systemui.SystemUIFactory;
 import com.android.systemui.assist.AssistManager;
@@ -648,6 +651,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     protected final BatteryController mBatteryController;
     protected boolean mPanelExpanded;
     private UiModeManager mUiModeManager;
+    private IOverlayManager mOverlayManager;
     protected boolean mIsKeyguard;
     private LogMaker mStatusBarStateLog;
     protected NotificationIconAreaController mNotificationIconAreaController;
@@ -873,8 +877,15 @@ public class StatusBar extends SystemUI implements DemoMode,
         DateTimeView.setReceiverHandler(timeTickHandler);
     }
 
+    protected void getDependencies() {
+        // Others
+        mOverlayManager = IOverlayManager.Stub.asInterface(
+                ServiceManager.getService(Context.OVERLAY_SERVICE));
+    }
+
     @Override
     public void start() {
+        getDependencies();
         mScreenLifecycle.addObserver(mScreenObserver);
         mWakefulnessLifecycle.addObserver(mWakefulnessObserver);
         mUiModeManager = mContext.getSystemService(UiModeManager.class);
@@ -4118,6 +4129,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                      Settings.System.QS_TILE_STYLE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.UI_STYLE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4128,6 +4142,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 updateSwitchStyle();
 	        }
             updateTileStyle();
+            updateGModStyle();
             update();
         }
 
@@ -4151,6 +4166,12 @@ public class StatusBar extends SystemUI implements DemoMode,
          int qsTileStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
                  Settings.System.QS_TILE_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
      }
+
+     public void updateGModStyle() {
+         int gModStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
+                 Settings.System.UI_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
+     }
+
     public int getWakefulnessState() {
         return mWakefulnessLifecycle.getWakefulness();
     }
