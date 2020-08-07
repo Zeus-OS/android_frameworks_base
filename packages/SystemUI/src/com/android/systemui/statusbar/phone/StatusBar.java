@@ -4811,6 +4811,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.CUSTOM_STATUSBAR_HEIGHT),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.UI_STYLE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4836,6 +4839,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 updateResources();
             }
             updateTileStyle();
+            updateGModStyle();
             update();
         }
 
@@ -4890,6 +4894,11 @@ public class StatusBar extends SystemUI implements DemoMode,
      public void updateTileStyle() {
          int qsTileStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
                  Settings.System.QS_TILE_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
+     }
+
+     public void updateGModStyle() {
+         int gModStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
+                 Settings.System.UI_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
      }
 
     private void setQsColumns() {
