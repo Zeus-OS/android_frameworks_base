@@ -67,6 +67,14 @@ public class ThemesUtils {
             "com.android.systemui.qstile.bottom_triangle",
     };
 
+    public static final String[] UI_THEMES = {
+            "com.android.systemui.ui.default",
+            "com.android.systemui.ui.nocornerradius",
+            "com.android.systemui.ui.rectangle",
+            "com.android.systemui.ui.roundlarge",
+            "com.android.systemui.ui.roundmedium",
+    };
+
 
     public static void updateSwitchStyle(IOverlayManager om, int userId, int switchStyle) {
         if (switchStyle == 0) {
@@ -86,6 +94,31 @@ public class ThemesUtils {
             String switchtheme = SWITCH_THEMES[i];
             try {
                 om.setEnabled(switchtheme,
+                        false /*disable*/, userId);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void updateUIStyle(IOverlayManager om, int userId, int uiStyle) {
+        if (uiStyle == 0) {
+            stockUIStyle(om, userId);
+        } else {
+            try {
+                om.setEnabled(UI_THEMES[uiStyle],
+                        true, userId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change switch theme", e);
+            }
+        }
+    }
+
+    public static void stockUIStyle(IOverlayManager om, int userId) {
+        for (int i = 0; i < UI_THEMES.length; i++) {
+            String uitheme = UI_THEMES[i];
+            try {
+                om.setEnabled(uitheme,
                         false /*disable*/, userId);
             } catch (RemoteException e) {
                 e.printStackTrace();
