@@ -7252,6 +7252,47 @@ public final class Settings {
         public static final String SYNTHOS_VISUALIZER_QSPANEL = "synthos_visualizer_qspanel";
 
         /**
+        * Visualizer in QSPanel
+        * by.tikkiX2
+        * @hide
+        */
+        public static final String SYNTHOS_AMBIENT_TEXT = "synthos_ambient_text";
+
+        public static final String SYNTHOS_AMBIENT_TEXT_STRING = "synthos_ambient_text_string";
+
+        public static final String SYNTHOS_AMBIENT_TEXT_ANIMATION = "synthos_ambient_text_animation";
+
+        public static final String SYNTHOS_AMBIENT_TEXT_SIZE = "synthos_ambient_text_size";
+
+        public static final String SYNTHOS_AMBIENT_TEXT_FONT = "synthos_ambient_text_font";
+
+        public static final String SYNTHOS_AMBIENT_TEXT_ALIGNMENT = "synthos_ambient_text_alignment";
+
+        /**
+         * Ambient text color
+         * @hide
+         */
+        public static final String SYNTHOS_AMBIENT_TEXT_COLOR = "synthos_ambient_text_color";
+
+        private static final Validator SYNTHOS_AMBIENT_TEXT_COLOR_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+        public static final String SYNTHOS_AMBIENT_TEXT_TYPE_COLOR = "synthos_ambient_text_type_color";
+
+        /** @hide */
+        private static final Validator SYNTHOS_AMBIENT_TEXT_TYPE_COLOR_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+        /**
+        * Visualizer in QSPanel
+        * by.tikkiX2
+        * @hide
+        */
+        public static final String SYNTHOS_AMBIENT_IMAGE = "synthos_ambient_image";
+
+        public static final String SYNTHOS_AMBIENT_CUSTOM_IMAGE = "synthos_ambient_custom_image";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -7432,6 +7473,8 @@ public final class Settings {
             QS_PANEL_BG_USE_NEW_TINT,
             CUSTOM_STATUSBAR_HEIGHT,
             SCREEN_OFF_ANIMATION
+            SYNTHOS_AMBIENT_TEXT_COLOR,
+            SYNTHOS_AMBIENT_TEXT_TYPE_COLOR,
         };
 
         /**
@@ -7692,6 +7735,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(CUSTOM_STATUSBAR_HEIGHT);
             PRIVATE_SETTINGS.add(UI_STYLE);
             PRIVATE_SETTINGS.add(SCREEN_OFF_ANIMATION);
+            PRIVATE_SETTINGS.add(SYNTHOS_AMBIENT_TEXT_COLOR);
+            PRIVATE_SETTINGS.add(SYNTHOS_AMBIENT_TEXT_TYPE_COLOR);
         }
 
         /**
@@ -7924,6 +7969,8 @@ public final class Settings {
             VALIDATORS.put(QS_PANEL_BG_USE_NEW_TINT, QS_PANEL_BG_USE_NEW_TINT_VALIDATOR);
             VALIDATORS.put(CUSTOM_STATUSBAR_HEIGHT, CUSTOM_STATUSBAR_HEIGHT_VALIDATOR);
             VALIDATORS.put(SCREEN_OFF_ANIMATION, SCREEN_OFF_ANIMATION_VALIDATOR);
+            VALIDATORS.put(SYNTHOS_AMBIENT_TEXT_COLOR, SYNTHOS_AMBIENT_TEXT_COLOR_VALIDATOR);
+            VALIDATORS.put(SYNTHOS_AMBIENT_TEXT_TYPE_COLOR, SYNTHOS_AMBIENT_TEXT_TYPE_COLOR_VALIDATOR);
         }
 
         /**
