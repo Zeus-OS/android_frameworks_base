@@ -158,7 +158,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
         mIconSize = mRowTextSize;
         mIconSizeWithHeader = (int) mContext.getResources().getDimension(R.dimen.header_icon_size);
         mRowTextSize = mContext.getResources().getDimensionPixelSize(
-                R.dimen.lock_date_font_size_20);
+                R.dimen.lock_date_font_size_18);
         mRowWithHeaderTextSize = mContext.getResources().getDimensionPixelSize(
                 R.dimen.header_row_font_size);
         mTitle.setOnClickListener(this);
@@ -197,7 +197,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
 
     private int getLockDateSize() {
         return Settings.System.getInt(mContext.getContentResolver(),
-               Settings.System.LOCKDATE_FONT_SIZE, 20);
+               Settings.System.LOCKDATE_FONT_SIZE, 24);
     }
 
     /**
