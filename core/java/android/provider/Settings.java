@@ -7284,13 +7284,25 @@ public final class Settings {
                 ANY_INTEGER_VALIDATOR;
 
         /**
-        * Visualizer in QSPanel
+        * Ambient Image
         * by.tikkiX2
         * @hide
         */
         public static final String SYNTHOS_AMBIENT_IMAGE = "synthos_ambient_image";
 
         public static final String SYNTHOS_AMBIENT_CUSTOM_IMAGE = "synthos_ambient_custom_image";
+
+        /**
+        * Ambient Video
+        * by.tikkiX2
+        * @hide
+        */
+        public static final String SYNTHOS_AMBIENT_VIDEO = "synthos_ambient_video";
+
+        public static final String SYNTHOS_AMBIENT_CUSTOM_VIDEO = "synthos_ambient_custom_video";
+
+        public static final String SYNTHOS_AMBIENT_VIDEO_LOOPING = "synthos_ambient_video_looping";
+
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
@@ -7472,7 +7484,7 @@ public final class Settings {
             NOTIFICATION_HEADERS,
             QS_PANEL_BG_USE_NEW_TINT,
             CUSTOM_STATUSBAR_HEIGHT,
-            SCREEN_OFF_ANIMATION
+            SCREEN_OFF_ANIMATION,
             SYNTHOS_AMBIENT_TEXT_COLOR,
             SYNTHOS_AMBIENT_TEXT_TYPE_COLOR,
         };
