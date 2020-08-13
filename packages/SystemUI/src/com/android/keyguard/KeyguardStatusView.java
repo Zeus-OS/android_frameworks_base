@@ -110,8 +110,10 @@ public class KeyguardStatusView extends GridLayout implements
                 refreshTime();
                 updateOwnerInfo();
                 updateLogoutView();
+                mClockView.refreshLockFont();
                 updateDateStyles();
 		        refreshLockDateFont();
+		        mClockView.refreshclocksize();
 		        mKeyguardSlice.refreshdatesize();
             }
         }
@@ -131,8 +133,10 @@ public class KeyguardStatusView extends GridLayout implements
             refreshFormat();
             updateOwnerInfo();
             updateLogoutView();
+            mClockView.refreshLockFont();
             refreshLockDateFont();
             updateDateStyles();
+	        mClockView.refreshclocksize();
 	        mKeyguardSlice.refreshdatesize();
 	}
 
@@ -211,6 +215,8 @@ public class KeyguardStatusView extends GridLayout implements
         mOwnerInfo = findViewById(R.id.owner_info);
         mKeyguardSlice = findViewById(R.id.keyguard_status_area);
         mKeyguardSliceView = findViewById(R.id.keyguard_status_area);
+        mClockView.refreshLockFont();
+        mClockView.refreshclocksize();
 	    mKeyguardSlice.refreshdatesize();
 	    refreshLockDateFont();
 
@@ -261,8 +267,7 @@ public class KeyguardStatusView extends GridLayout implements
     @Override
     public void onDensityOrFontScaleChanged() {
         if (mClockView != null) {
-            mClockView.setTextSize(TypedValue.COMPLEX_UNIT_PX,
-                    getResources().getDimensionPixelSize(R.dimen.widget_big_font_size));
+            mClockView.refreshclocksize();
         }
         if (mOwnerInfo != null) {
             mOwnerInfo.setTextSize(TypedValue.COMPLEX_UNIT_PX,
