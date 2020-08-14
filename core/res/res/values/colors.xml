@@ -225,6 +225,6 @@
     <!-- Resolver/Chooser -->
     <color name="resolver_text_color_secondary_dark">#ffC4C6C6</color>
 
-    <color name="gradient_start">#ffe70e0e</color>
-    <color name="gradient_end">#ff11b411</color>
+    <color name="gradient_start_ls_bar">#ffe70e0e</color>
+    <color name="gradient_end_ls_bar">#ff11b411</color>
 </resources>

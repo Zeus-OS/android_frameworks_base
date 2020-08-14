@@ -1181,7 +1181,7 @@ public class VolumeDialogImplAOSPRounded implements VolumeDialog,
                         (isSystemStream && mState.disallowSystem))
                 : isVibrate ? isNotificationStream
                 : false;
-        final boolean routedToSubmixAndEarphone = isMusicStream && mState.routedToSubmixAndEarphone;
+        final boolean routedToSubmixAndEarphone = isMusicStream;
 
         // update slider max
         final int max = ss.levelMax * 100;

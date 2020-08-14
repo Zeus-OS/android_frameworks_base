@@ -78,7 +78,6 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.internal.util.aosip.aosipUtils;
 import com.android.settingslib.Utils;
 import com.android.systemui.R;
 

@@ -22,4 +22,8 @@
     <!-- Power menu -->
     <color name="power_menu_icon_color">#FFE8EAED</color>
 
+    <!-- Gradient Shit -->
+    <color name="gradient_start">#ff8ab4f8</color>
+    <color name="gradient_end">#ff8ab4f8</color>
+
 </resources>

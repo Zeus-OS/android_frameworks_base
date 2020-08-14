@@ -30,10 +30,13 @@
                 <item android:state_enabled="false"
                     android:drawable="@android:color/transparent" />
                 <item>
-                    <shape android:shape="rectangle"
+                    <shape android:shape="rectangle">
                         <corners android:radius="4dp"/>
                         <size android:height="@dimen/custom_volume_dialog_seekbar_width" />
-                        <solid android:color="?android:attr/colorAccent" />
+                        <gradient
+                            android:startColor="@*android:color/gradient_start"
+                            android:endColor="@*android:color/gradient_end"
+                            android:angle="45" />
                     </shape>
                 </item>
             </selector>
