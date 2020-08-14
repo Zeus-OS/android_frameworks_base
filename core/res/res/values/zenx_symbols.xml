@@ -296,4 +296,8 @@
   <java-symbol type="style" name="Animation.Toast.Translucent" />
   <java-symbol type="style" name="Animation.Toast.SlideRightLeft" />
   <java-symbol type="style" name="Animation.Toast.SlideLeftRight" />
+
+    <!-- Gradients Shit -->
+  <java-symbol type="color" name="gradient_start" />
+  <java-symbol type="color" name="gradient_end" />
 </resources>
