@@ -10064,6 +10064,18 @@ public final class Settings {
         public static final String LOCKSCREEN_DATE_SELECTION = "lockscreen_date_selection";
 
         /**
+         * Lockscreen Weather Alignment
+         * @hide
+         */
+        public static final String LOCKSCREEN_WEATHER_ALIGNMENT = "lockscreen_weather_alignment";
+
+        /**
+         * Lockscreen Items padding
+         * @hide
+         */
+        public static final String LOCKSCREEN_ITEM_PADDING = "lockscreen_item_padding";
+
+        /**
          * Whether the Lockdown button should be shown in the power menu.
          * @hide
          */
