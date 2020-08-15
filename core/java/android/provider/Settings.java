@@ -7142,6 +7142,7 @@ public final class Settings {
          * @hide
          */
         public static final String THEMING_SETTINGS_DASHBOARD_ICONS =
+
                 "theming_settings_dashboard_icons";
 
         /** @hide */
@@ -7315,6 +7316,8 @@ public final class Settings {
 
         /*
         * Ambient Image
+        /**
+        * Visualizer in QSPanel
         * by.tikkiX2
         * @hide
         */
@@ -7541,7 +7544,7 @@ public final class Settings {
             NOTIFICATION_HEADERS,
             QS_PANEL_BG_USE_NEW_TINT,
             CUSTOM_STATUSBAR_HEIGHT,
-            SCREEN_OFF_ANIMATION,
+            SCREEN_OFF_ANIMATION
             SYNTHOS_AMBIENT_TEXT_COLOR,
             SYNTHOS_AMBIENT_TEXT_TYPE_COLOR,
         };
