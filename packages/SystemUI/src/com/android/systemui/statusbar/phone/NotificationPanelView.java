@@ -118,10 +118,6 @@ import com.android.systemui.statusbar.policy.OnHeadsUpChangedListener;
 import com.android.systemui.statusbar.policy.ZenModeController;
 import com.android.systemui.util.InjectionInflationController;
 
-
-import com.android.systemui.synth.AmbientText;
-import com.android.systemui.synth.AmbientCustomImage;
-
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -486,9 +482,6 @@ public class NotificationPanelView extends PanelView implements
     private boolean mDelayShowingKeyguardStatusBar;
     private ScreenDecorations mScreenDecorations;
 
-    private AmbientText mAmbientText;
-    private AmbientCustomImage mAmbientCustomImage;
-
     @Inject
     public NotificationPanelView(@Named(VIEW_CONTEXT) Context context, AttributeSet attrs,
             InjectionInflationController injectionInflationController,
@@ -589,8 +582,6 @@ public class NotificationPanelView extends PanelView implements
         mKeyguardBottomArea = findViewById(R.id.keyguard_bottom_area);
         mLastOrientation = getResources().getConfiguration().orientation;
         mPulseLightsView = (NotificationLightsView) findViewById(R.id.lights_container);
-        mAmbientText = (AmbientText) findViewById(R.id.text_container);
-        mAmbientCustomImage = (AmbientCustomImage) findViewById(R.id.image_container);
 
         initBottomArea();
 
@@ -1880,24 +1871,8 @@ public class NotificationPanelView extends PanelView implements
                     .setDuration(160)
                     .setInterpolator(Interpolators.ALPHA_OUT)
                     .withEndAction(mAnimateKeyguardStatusViewGoneEndRunnable);
-            mAmbientCustomImage.animate()
-                    .alpha(0f)
-                    .setStartDelay(0)
-                    .setDuration(160);
-            mAmbientText.animate()
-                    .alpha(0f)
-                    .setStartDelay(0)
-                    .setDuration(160);
             if (keyguardFadingAway) {
                 mKeyguardStatusView.animate()
-                        .setStartDelay(mKeyguardMonitor.getKeyguardFadingAwayDelay())
-                        .setDuration(mKeyguardMonitor.getShortenedFadingAwayDuration())
-                        .start();
-                mAmbientCustomImage.animate()
-                        .setStartDelay(mKeyguardMonitor.getKeyguardFadingAwayDelay())
-                        .setDuration(mKeyguardMonitor.getShortenedFadingAwayDuration())
-                        .start();
-                mAmbientText.animate()
                         .setStartDelay(mKeyguardMonitor.getKeyguardFadingAwayDelay())
                         .setDuration(mKeyguardMonitor.getShortenedFadingAwayDuration())
                         .start();
@@ -1913,16 +1888,6 @@ public class NotificationPanelView extends PanelView implements
                     .setDuration(320)
                     .setInterpolator(Interpolators.ALPHA_IN)
                     .withEndAction(mAnimateKeyguardStatusViewVisibleEndRunnable);
-            mAmbientCustomImage.setAlpha(0f);
-            mAmbientCustomImage.animate()
-                    .alpha(1f)
-                    .setStartDelay(0)
-                    .setDuration(320);
-            mAmbientText.setAlpha(0f);
-            mAmbientText.animate()
-                    .alpha(1f)
-                    .setStartDelay(0)
-                    .setDuration(320);
         } else if (statusBarState == StatusBarState.KEYGUARD) {
             if (keyguardFadingAway) {
                 mKeyguardStatusViewAnimating = true;
@@ -1934,27 +1899,13 @@ public class NotificationPanelView extends PanelView implements
                         .setStartDelay(0)
                         .withEndAction(mAnimateKeyguardStatusViewInvisibleEndRunnable)
                         .start();
-                mAmbientCustomImage.animate()
-                        .alpha(0)
-                        .setDuration(125)
-                        .setStartDelay(0)
-                        .start();
-                mAmbientText.animate()
-                        .alpha(0)
-                        .setDuration(125)
-                        .setStartDelay(0)
-                        .start();
             } else {
                 mKeyguardStatusView.setVisibility(View.VISIBLE);
                 mKeyguardStatusView.setAlpha(1f);
-                mAmbientCustomImage.setAlpha(1f);
-                mAmbientText.setAlpha(1f);
             }
         } else {
             mKeyguardStatusView.setVisibility(View.GONE);
             mKeyguardStatusView.setAlpha(1f);
-            mAmbientCustomImage.setAlpha(1f);
-            mAmbientText.setAlpha(1f);
         }
     }
 
@@ -3525,58 +3476,8 @@ public class NotificationPanelView extends PanelView implements
                 || mBarState == StatusBarState.SHADE_LOCKED) {
             updateDozingVisibilities(animate);
         }
-        if (mAmbientText != null) {
-            updateAmbientTextState(dozing);
-        }
-
-        if (mAmbientCustomImage != null) {
-            updateAmbientCustomImageState(dozing);
-        }
-
         final float dozeAmount = dozing ? 1 : 0;
         mStatusBarStateController.setDozeAmount(dozeAmount, animate);
-    }
-
-    private void updateAmbientTextState(boolean dozing) {
-        boolean mAmbientTextEnable = Settings.System.getIntForUser(
-                mContext.getContentResolver(), Settings.System.SYNTHOS_AMBIENT_TEXT,
-                0, UserHandle.USER_CURRENT) != 0;
-
-        if (mAmbientTextEnable) {
-            if (dozing) {
-                // TODO on screen off should we restart pulse?
-                // if that should work we need to decide at this point
-                // if the current notifications "would" turn the screen on
-                // just checking hasActiveClearableNotifications is obviusly not
-                // enough here - so for now dont even try to do it
-                mAmbientText.update();
-            } else {
-                // screen on!
-                mAmbientText.setVisibility(View.GONE);
-            }
-        }
-    }
-
-    private void updateAmbientCustomImageState(boolean dozing) {
-        boolean mAmbientCustomImageEnable = Settings.System.getIntForUser(
-                mContext.getContentResolver(), Settings.System.SYNTHOS_AMBIENT_IMAGE,
-                0, UserHandle.USER_CURRENT) != 0;
-
-        if (mAmbientCustomImageEnable) {
-            if (dozing) {
-                // TODO on screen off should we restart pulse?
-                // if that should work we need to decide at this point
-                // if the current notifications "would" turn the screen on
-                // just checking hasActiveClearableNotifications is obviusly not
-                // enough here - so for now dont even try to do it
-                mAmbientCustomImage.update();
-                mAmbientCustomImage.setVisibility(View.VISIBLE);
-            } else {
-                // screen on!
-                mAmbientCustomImage.setVisibility(View.GONE);
-                mAmbientCustomImage.update();
-            }
-        }
     }
 
     @Override
@@ -3638,14 +3539,6 @@ public class NotificationPanelView extends PanelView implements
         int lightColor = Settings.System.getIntForUser(resolver,
                 Settings.System.AMBIENT_LIGHT_COLOR, 0, UserHandle.USER_CURRENT);
 
-        boolean ambientText = Settings.System.getIntForUser(resolver,
-                Settings.System.SYNTHOS_AMBIENT_TEXT, 0, UserHandle.USER_CURRENT) != 0;
-        boolean ambientTextAnimated = Settings.System.getIntForUser(resolver,
-                Settings.System.SYNTHOS_AMBIENT_TEXT_ANIMATION, 0, UserHandle.USER_CURRENT) != 0;
-
-        boolean ambientImage = Settings.System.getIntForUser(resolver,
-                Settings.System.SYNTHOS_AMBIENT_IMAGE, 0, UserHandle.USER_CURRENT) != 0;
-
         if (animatePulse) {
             mAnimateNextPositionUpdate = true;
         }
@@ -3689,44 +3582,6 @@ public class NotificationPanelView extends PanelView implements
                 mPulseLightsView.endAnimation();
                 mPulseLightsView.setVisibility(View.GONE);
             }
-        }
-        if (mAmbientText != null && ambientText) {
-          if (mPulsing) {
-              if (!activeNotif) {
-                  mAmbientText.animateText(ambientTextAnimated);
-                  mAmbientText.update();
-                  mAmbientText.setVisibility(View.VISIBLE);
-              } else {
-                  mAmbientText.update();
-                  mAmbientText.setVisibility(View.GONE);
-              }
-          } else {
-              if (!activeNotif && mDozing) {
-                  mAmbientText.animateText(ambientTextAnimated);
-                  mAmbientText.update();
-                  mAmbientText.setVisibility(View.VISIBLE);
-              } else {
-                  mAmbientText.update();
-                  mAmbientText.setVisibility(View.GONE);
-              }
-          }
-        }
-          if (mAmbientCustomImage != null && ambientImage) {
-            if (mPulsing) {
-                mAmbientCustomImage.setVisibility(View.VISIBLE);
-                mAmbientCustomImage.update();
-            } else {
-                if (mDozing) {
-                    mAmbientCustomImage.update();
-                    mAmbientCustomImage.setVisibility(View.VISIBLE);
-                } else {
-                    mAmbientCustomImage.update();
-                    mAmbientCustomImage.setVisibility(View.GONE);
-                }
-            }
-        } else {
-            mAmbientCustomImage.setVisibility(View.GONE);
-            mAmbientCustomImage.update();
         }
 
         mNotificationStackScroller.setPulsing(pulsing, animatePulse);
