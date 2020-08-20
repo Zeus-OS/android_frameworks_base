@@ -4413,13 +4413,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
         // Apply custom policy for supported key codes.
         if (NavbarUtilities.canApplyCustomPolicy(keyCode) && !isCustomSource) {
-            if (mNavBarEnabled && !navBarKey /* TODO> && !isADBVirtualKeyOrAnyOtherKeyThatWeNeedToHandleAKAWhenMonkeyTestOrWHATEVER! */) {
-                if (DEBUG_INPUT) {
-                    Log.d(TAG, "interceptKeyBeforeQueueing(): key policy: mNavBarEnabled, discard hw event.");
-                }
-                // Don't allow key events from hw keys when navbar is enabled.
-                return 0;
-            } else if (!interactive) {
+            if (!interactive) {
                 if (DEBUG_INPUT) {
                     Log.d(TAG, "interceptKeyBeforeQueueing(): key policy: screen not interactive, discard hw event.");
                 }
