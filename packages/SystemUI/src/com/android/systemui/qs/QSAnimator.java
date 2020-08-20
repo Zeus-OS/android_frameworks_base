@@ -14,6 +14,11 @@
 
 package com.android.systemui.qs;
 
+import android.os.Handler;
+import android.database.ContentObserver;
+import android.os.UserHandle;
+import android.provider.Settings;
+
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnAttachStateChangeListener;
@@ -74,6 +79,30 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
     private float mLastPosition;
     private QSTileHost mHost;
     private boolean mShowCollapsedOnKeyguard;
+
+    private boolean mIsQuickQsBrightnessEnabled;
+
+    private class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            mQs.getContext().getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.QS_SHOW_BRIGHTNESS_SLIDER_EXTEND), false, this, UserHandle.USER_ALL);
+            update();
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            update();
+        }
+
+        public void update() {
+             quickSettingsBrightness();
+        }
+    }
+
+    private SettingsObserver settingsObserver;
 
     public QSAnimator(QS qs, QuickQSPanel quickPanel, QSPanel panel) {
         mQs = qs;
@@ -166,6 +195,20 @@ public class QSAnimator implements Callback, PageListener, Listener, OnLayoutCha
             clearAnimationState();
         }
         mOnFirstPage = isFirst;
+    }
+
+    private int getQsBrightnessMode() {
+        return Settings.System.getIntForUser(mQs.getContext().getContentResolver(),
+                Settings.System.QS_SHOW_BRIGHTNESS_SLIDER_EXTEND, 0,
+                UserHandle.USER_CURRENT);
+    }
+
+    private void quickSettingsBrightness() {
+        if(getQsBrightnessMode() > 1) {
+            mIsQuickQsBrightnessEnabled = true;
+        } else {
+            mIsQuickQsBrightnessEnabled = false;
+        }
     }
 
     private void updateAnimators() {

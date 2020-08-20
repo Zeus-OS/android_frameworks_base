@@ -7345,6 +7345,14 @@ public final class Settings {
         private static final Validator SYNTHOS_CENTER_NOTIFICATION_HEADERS_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Quick QS brightness slider
+         * @hide
+         */
+        public static final String QS_SHOW_BRIGHTNESS_SLIDER_EXTEND = "qs_show_brightness_slider_extend";
+
+        private static final Validator QS_SHOW_BRIGHTNESS_SLIDER_EXTEND_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -7525,7 +7533,8 @@ public final class Settings {
             QS_PANEL_BG_USE_NEW_TINT,
             CUSTOM_STATUSBAR_HEIGHT,
             SCREEN_OFF_ANIMATION,
-            SYNTHOS_CENTER_NOTIFICATION_HEADERS
+            SYNTHOS_CENTER_NOTIFICATION_HEADERS,
+            QS_SHOW_BRIGHTNESS_SLIDER_EXTEND
         };
 
         /**
@@ -8019,6 +8028,7 @@ public final class Settings {
             VALIDATORS.put(CUSTOM_STATUSBAR_HEIGHT, CUSTOM_STATUSBAR_HEIGHT_VALIDATOR);
             VALIDATORS.put(SCREEN_OFF_ANIMATION, SCREEN_OFF_ANIMATION_VALIDATOR);
             VALIDATORS.put(SYNTHOS_CENTER_NOTIFICATION_HEADERS, SYNTHOS_CENTER_NOTIFICATION_HEADERS_VALIDATOR);
+            VALIDATORS.put(QS_SHOW_BRIGHTNESS_SLIDER_EXTEND, QS_SHOW_BRIGHTNESS_SLIDER_EXTEND_VALIDATOR);
         }
 
         /**
