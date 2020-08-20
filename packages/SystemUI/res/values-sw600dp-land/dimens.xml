@@ -40,4 +40,7 @@
     <dimen name="qs_tile_margin_top">32dp</dimen>
     <dimen name="qs_brightness_padding_top">6dp</dimen>
     <dimen name="qs_detail_margin_top">28dp</dimen>
+
+        <!-- How far the quick-quick settings panel extends below the status bar -->
+    <dimen name="qs_quick_header_panel_height">140dp</dimen>
 </resources>
