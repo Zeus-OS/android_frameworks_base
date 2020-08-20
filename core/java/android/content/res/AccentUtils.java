@@ -24,6 +24,9 @@ public class AccentUtils {
                     "dialer_theme_color",
                     "dialer_theme_color_dark",
                     "dialer_theme_color_20pct",
+                    "qs_header_accent_color",
+                    "lockscreen_clock_accent_color",
+                    "recents_dismiss_all_background_color",
                     "gradient_start"));
 
     private static final String ACCENT_COLOR_PROP = "persist.sys.theme.accentcolor";
