@@ -4058,4 +4058,9 @@
   <java-symbol type="string" name="config_gpu_clock_path" />
   <java-symbol type="string" name="config_gpu_busy_path" />
 
+  <!-- QS Inset -->
+  <java-symbol type="dimen" name="qs_background_inset" />
+
+  <java-symbol type="attr" name="colorBackgroundFloating" />
+
 </resources>
