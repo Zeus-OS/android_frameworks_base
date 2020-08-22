@@ -593,11 +593,13 @@ class FODAnimation extends ImageView {
     private final int[] ANIMATION_STYLES = {
         R.drawable.fod_miui_normal_recognizing_anim,
         R.drawable.fod_miui_aod_recognizing_anim,
+        R.drawable.fod_miui_aurora_cas_recognizing_anim,
         R.drawable.fod_miui_light_recognizing_anim,
         R.drawable.fod_miui_pop_recognizing_anim,
         R.drawable.fod_miui_pulse_recognizing_anim,
         R.drawable.fod_miui_pulse_recognizing_white_anim,
         R.drawable.fod_miui_rhythm_recognizing_anim,
+        R.drawable.fod_miui_star_cas_recognizing_anim,
         R.drawable.fod_op_cosmos_recognizing_anim,
         R.drawable.fod_op_mclaren_recognizing_anim,
         R.drawable.fod_pureview_future_recognizing_anim,
