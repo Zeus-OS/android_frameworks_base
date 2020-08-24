@@ -6886,12 +6886,6 @@ public final class Settings {
         public static final String ADAPTIVE_PLAYBACK_TIMEOUT = "adaptive_playback_timeout";
 
         /**
-         * Screen off FOD
-         * @hide
-         */
-        public static final String SCREEN_OFF_FOD = "screen_off_fod";
-
-        /**
          * Whether to show icon when Screen off FODis enabled
          * @hide
          */
