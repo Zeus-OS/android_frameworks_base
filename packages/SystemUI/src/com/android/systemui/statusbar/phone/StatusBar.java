@@ -218,7 +218,6 @@ import com.android.systemui.statusbar.NotificationShelf;
 import com.android.systemui.statusbar.NotificationViewHierarchyManager;
 import com.android.systemui.statusbar.PulseExpansionHandler;
 import com.android.systemui.statusbar.ScrimView;
-import com.android.systemui.statusbar.AODDimView;
 import com.android.systemui.statusbar.StatusBarState;
 import com.android.systemui.statusbar.SysuiStatusBarStateController;
 import com.android.systemui.statusbar.VibratorHelper;
@@ -541,7 +540,6 @@ public class StatusBar extends SystemUI implements DemoMode,
     public ImageView mQSBlurView;
     private boolean blurperformed = false;
 
-    private AODDimView mAODDimView;
 
     private static Context mStaticContext;
     private static ImageButton mDismissAllButton;
@@ -711,10 +709,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                 public void onDreamingStateChanged(boolean dreaming) {
                     if (dreaming) {
                         maybeEscalateHeadsUp();
-                    }
-                    if (mAODDimView != null) {
-                        if (dreaming) mAODDimView.setVisible(true, true);
-                        if (!dreaming) mAODDimView.setVisible(false);
                     }
                 }
 
@@ -955,7 +949,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         mStackScroller = mStatusBarWindow.findViewById(R.id.notification_stack_scroller);
         mZenController.addCallback(this);
         mQSBlurView = mStatusBarWindow.findViewById(R.id.qs_blur);
-        mAODDimView = mStatusBarWindow.findViewById(R.id.aod_screen_dim);
         NotificationListContainer notifListContainer = (NotificationListContainer) mStackScroller;
         mNotificationLogger.setUpWithContainer(notifListContainer);
 
@@ -4682,9 +4675,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.SHOW_MEDIA_HEADS_UP),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.SCREEN_OFF_FOD),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_SHOW_BATTERY_ESTIMATE),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
@@ -4783,7 +4773,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateBlurVisibility();
             setGestureNavOptions();
             updateNavigationBar(getRegisterStatusBarResult(), false);
-            updateAODDimView();
             setMediaHeadsup();
             setQsBatteryPercentMode();
             updateKeyguardStatusSettings();
@@ -4921,10 +4910,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     }
 
-    private void updateAODDimView() {
-        mAODDimView.setEnabled(Settings.System.getIntForUser(mContext.getContentResolver(),
-            Settings.System.SCREEN_OFF_FOD, 0, UserHandle.USER_CURRENT) != 0);
-    }
 
     private void setQsBatteryPercentMode() {
         if (mQSBarHeader != null) {
@@ -5234,7 +5219,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                 public void onPulseStarted() {
                     callback.onPulseStarted();
                     updateNotificationPanelTouchState();
-                    mAODDimView.setVisible(false);
                     setPulsing(true);
                     KeyguardUpdateMonitor.getInstance(mContext).setPulsing(true);
                 }
@@ -5248,7 +5232,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                     if (mStatusBarWindow != null) {
                         mStatusBarWindow.suppressWakeUpGesture(false);
                     }
-                    mAODDimView.setVisible(true);
                     setPulsing(false);
                     KeyguardUpdateMonitor.getInstance(mContext).setPulsing(false);
                 }
