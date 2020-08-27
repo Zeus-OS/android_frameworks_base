@@ -7193,6 +7193,11 @@ public final class Settings {
         public static final String UI_STYLE = "ui_style";
 
         /**
+         * @hide
+         */
+        public static final String BRIGHTNESS_SLIDER_STYLE = "brightness_slider_style";
+
+        /**
          * Controls whether to show R style notification headers
          * @hide
          */
@@ -7695,6 +7700,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_TILE_STYLE);
             PRIVATE_SETTINGS.add(CUSTOM_STATUSBAR_HEIGHT);
             PRIVATE_SETTINGS.add(UI_STYLE);
+            PRIVATE_SETTINGS.add(BRIGHTNESS_SLIDER_STYLE);
         }
 
         /**
