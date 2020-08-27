@@ -75,6 +75,15 @@ public class ThemesUtils {
             "com.android.systemui.ui.roundmedium",
     };
 
+    public static final String[] BRIGHTNESS_SLIDER_THEMES = {
+            "com.android.systemui.brightness.slider.default",
+            "com.android.systemui.brightness.slider.daniel",
+            "com.android.systemui.brightness.slider.mememini",
+            "com.android.systemui.brightness.slider.memeround",
+            "com.android.systemui.brightness.slider.memeroundstroke",
+            "com.android.systemui.brightness.slider.memestroke",
+    };
+
 
     public static void updateSwitchStyle(IOverlayManager om, int userId, int switchStyle) {
         if (switchStyle == 0) {
@@ -119,6 +128,31 @@ public class ThemesUtils {
             String uitheme = UI_THEMES[i];
             try {
                 om.setEnabled(uitheme,
+                        false /*disable*/, userId);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void updateBrightnessSliderStyle(IOverlayManager om, int userId, int brightnessSliderStyle) {
+        if (brightnessSliderStyle == 0) {
+            stockBrightnessSliderStyle(om, userId);
+        } else {
+            try {
+                om.setEnabled(UI_THEMES[brightnessSliderStyle],
+                        true, userId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change brightness slider theme", e);
+            }
+        }
+    }
+
+    public static void stockBrightnessSliderStyle(IOverlayManager om, int userId) {
+        for (int i = 0; i < UI_THEMES.length; i++) {
+            String brightnessSlidertheme = BRIGHTNESS_SLIDER_THEMES[i];
+            try {
+                om.setEnabled(brightnessSlidertheme,
                         false /*disable*/, userId);
             } catch (RemoteException e) {
                 e.printStackTrace();
