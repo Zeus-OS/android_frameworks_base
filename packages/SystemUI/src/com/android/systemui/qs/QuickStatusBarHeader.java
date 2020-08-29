@@ -625,9 +625,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
         if (mBrightnessSlider != 0) {
                qqsHeight += mContext.getResources().getDimensionPixelSize(
-                       R.dimen.brightness_mirror_height)
-                       + mContext.getResources().getDimensionPixelSize(
-                       R.dimen.qs_tile_margin_top);
+                    R.dimen.brightness_mirror_height);
         }
 
         setMinimumHeight(sbHeight + qqsHeight);
