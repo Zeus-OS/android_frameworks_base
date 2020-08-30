@@ -5841,6 +5841,12 @@ public final class Settings {
         public static final String ZENHUB_ICON_TYPE = "zenhub_icon_type";
 
         /**
+         * Zenhub show device parts
+         * @hide
+         */
+        public static final String ZENHUB_SHOW_DEVICE_PARTS = "zenhub_show_device_parts";
+
+        /**
          * Gaming mode master switch
          * @hide
          */
