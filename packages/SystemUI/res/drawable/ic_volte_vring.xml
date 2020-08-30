@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (C) 2020 The ZenX-OS Project
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+      http://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="15dp"
+    android:height="15dp"
+    android:viewportWidth="15"
+    android:viewportHeight="15">
+
+    <path
+        android:fillColor="#000000"
+        android:pathData="M0,2.49744 L2.25,2.49744 L4.5,9.49744 L6.75,2.49744 L8.81836,2.50525
+L5.71289,13.9974 L3.75,13.9974 L0,2.49744 Z" />
+    <path
+        android:fillColor="#000000"
+        android:fillType="evenOdd"
+        android:pathData="M10.125,5.99744 C9.08936,5.99744,8.25,7.1167,8.25,8.49744
+C8.25,9.87817,9.08936,10.9974,10.125,10.9974 L13.125,10.9974
+C14.1606,10.9974,15,9.87817,15,8.49744 C15,7.1167,14.1606,5.99744,13.125,5.99744
+L10.125,5.99744 Z M9.65625,6.99731 L10.0664,6.99731 L10.0664,9.34888
+L10.6641,9.34888 L10.6641,9.87036 L9.65625,9.87036 L9.65625,6.99731 Z
+M10.875,6.99731 L12.0659,6.99731 L12.0659,7.53638 L11.6733,7.53638
+L11.6733,9.87036 L11.2573,9.87036 L11.2573,7.53638 L10.875,7.53638
+L10.875,6.99731 Z M13.6666,6.99744 L12.4904,6.99744 L12.4904,9.87048
+L13.6666,9.87048 L13.6666,9.33337 L12.8976,9.33337 L12.8976,8.57751
+L13.6666,8.57751 L13.6666,8.05212 L12.8976,8.05212 L12.8976,7.53259
+L13.6666,7.53259 L13.6666,6.99744 Z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M8.47778,15 C10.4821,15,12.2421,13.6021,13.2382,11.4974 L11.7847,11.4974
+C10.9607,12.7283,9.76172,13.5032,8.42688,13.5032
+C6.59729,13.5032,5.02258,12.0471,4.31909,9.95667 L4.30371,9.96558
+L2.97839,5.91748 C2.89636,6.42761,2.85278,6.95715,2.85278,7.5
+C2.85278,11.6421,5.37122,15,8.47778,15 Z" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M3.32666,4.4823 C4.19788,1.8429,6.17651,0,8.47778,0
+C10.9263,0,13.0093,2.08582,13.782,4.99744 L12.5167,4.99744
+C11.8048,2.93494,10.2411,1.50317,8.42688,1.50317
+C6.19702,1.50317,4.34546,3.66626,3.98877,6.50476 L3.32666,4.4823 Z" />
+</vector>
