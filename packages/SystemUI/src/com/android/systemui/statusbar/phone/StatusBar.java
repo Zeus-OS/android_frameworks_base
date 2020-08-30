@@ -4735,6 +4735,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.BRIGHTNESS_SLIDER_STYLE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.NAVBAR_STYLE),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4762,6 +4765,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateTileStyle();
             updateGModStyle();
             updateBrightnessSliderStyle();
+            updateNavBarStyle();
             update();
         }
 
@@ -4826,6 +4830,11 @@ public class StatusBar extends SystemUI implements DemoMode,
      public void updateBrightnessSliderStyle() {
          int brighthnessSliderStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
                  Settings.System.BRIGHTNESS_SLIDER_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
+     }
+
+     public void updateNavBarStyle() {
+         int brighthnessSliderStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
+                 Settings.System.NAVBAR_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
      }
 
     private void setQsColumns() {

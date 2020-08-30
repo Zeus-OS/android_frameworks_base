@@ -7204,6 +7204,12 @@ public final class Settings {
         public static final String BRIGHTNESS_SLIDER_STYLE = "brightness_slider_style";
 
         /**
+         * Switch between different navbar styles
+         * @hide
+         */
+        public static final String NAVBAR_STYLE = "navbar_style";
+
+        /**
          * Controls whether to show R style notification headers
          * @hide
          */
