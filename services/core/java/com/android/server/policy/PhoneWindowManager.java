@@ -856,7 +856,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     toggleTorch();
                     break;
                 case MSG_CAMERA_LONG_PRESS:
-                    KeyEvent event = (KeyEvent) msg.obj;
                     mIsLongPress = true;
                     break;
                 case MSG_DISPATCH_VOLKEY_WITH_WAKE_LOCK: {
@@ -4684,10 +4683,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 }
                 if (down) {
                     mIsLongPress = false;
-
-                    KeyEvent newEvent = new KeyEvent(event.getDownTime(), event.getEventTime(),
-                            event.getAction(), keyCode, 0);
-                    Message msg = mHandler.obtainMessage(MSG_CAMERA_LONG_PRESS, newEvent);
+                    Message msg = mHandler.obtainMessage(MSG_CAMERA_LONG_PRESS);
                     msg.setAsynchronous(true);
                     mHandler.sendMessageDelayed(msg, ViewConfiguration.getLongPressTimeout());
                     // Consume key down events of all presses.
