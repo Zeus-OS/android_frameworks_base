@@ -168,10 +168,8 @@ public class DozeParameters implements
      * @return {@code true} if screen needs to be completely black before a power transition.
      */
     public boolean getDisplayNeedsBlanking() {
-        boolean screenOffFod = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.SCREEN_OFF_FOD, 0) != 0;
-        return FORCE_BLANKING || !FORCE_NO_BLANKING && (mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_displayBlanksAfterDoze) || screenOffFod);
+        return FORCE_BLANKING || !FORCE_NO_BLANKING && mContext.getResources().getBoolean(
+                com.android.internal.R.bool.config_displayBlanksAfterDoze);
     }
 
     public boolean shouldControlScreenOff() {
