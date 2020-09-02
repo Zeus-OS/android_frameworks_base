@@ -703,7 +703,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         }
 
         if (isAlwaysShowSettings) {
-            lp.height += 30;
+            lp.height += 28;
         }
 
         setLayoutParams(lp);
@@ -871,9 +871,12 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         final int sp = getResources().getDimensionPixelSize(R.dimen.notification_side_paddings);
         RelativeLayout.LayoutParams lpQuickQsBrightness = (RelativeLayout.LayoutParams)
                 mQuickQsBrightness.getLayoutParams();
-        lpQuickQsBrightness.setMargins(sp - mPaddingLeft, 0, sp - mPaddingRight, 0);
+
+        lpQuickQsBrightness.setMargins(sp - mPaddingLeft, 58, sp - mPaddingRight, 0);
+
         mQuickQsBrightness.setLayoutParams(lpQuickQsBrightness);
         addQuickQSPanel();
+        updateResources();
         return super.onApplyWindowInsets(insets);
     }
 
