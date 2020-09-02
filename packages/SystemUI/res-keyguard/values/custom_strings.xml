@@ -42,5 +42,7 @@
     <string name="clock_title_loading" translatable="false">Loading animation</string>
     <string name="clock_title_bubble_animation" translatable="false">Bubble animation</string>
     <string name="clock_title_rainbow_circle_animation" translatable="false">Rainbow circle</string>
+    <string name="clock_title_blue_circle_animation" translatable="false">Blue circle</string>
+    <string name="clock_title_bluev2_circle_animation" translatable="false">Color circle</string>
 
 </resources>
