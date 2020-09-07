@@ -1225,7 +1225,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     }
 
     private boolean isQSVisualizerEnable() {
-        return Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.SYNTHOS_VISUALIZER_QSPANEL, 1,
+        return Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.SYNTHOS_VISUALIZER_QSPANEL, 0,
                 UserHandle.USER_CURRENT) == 1;
     }
 

@@ -296,7 +296,7 @@ public class VisualizerView extends View
     private void setVisualizerEnabled() {
         mVisualizerEnabled = Settings.Secure.getInt(mContext.getContentResolver(),
                 Settings.Secure.LOCKSCREEN_VISUALIZER_ENABLED, 0) == 1 || Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.SYNTHOS_VISUALIZER_QSPANEL, 1, UserHandle.USER_CURRENT) == 1;
+                Settings.System.SYNTHOS_VISUALIZER_QSPANEL, 0, UserHandle.USER_CURRENT) == 1;
     }
 
     private void setAmbientVisualizerEnabled() {
