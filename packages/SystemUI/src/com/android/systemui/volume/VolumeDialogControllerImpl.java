@@ -33,9 +33,12 @@ import android.media.AudioManager;
 import android.media.AudioSystem;
 import android.media.IAudioService;
 import android.media.IVolumeController;
+import android.media.MediaMetadata;
 import android.media.VolumePolicy;
+import android.media.session.MediaController;
 import android.media.session.MediaController.PlaybackInfo;
 import android.media.session.MediaSession.Token;
+import android.media.session.PlaybackState;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -57,12 +60,14 @@ import android.view.accessibility.AccessibilityManager;
 
 import com.android.internal.annotations.GuardedBy;
 import com.android.settingslib.volume.MediaSessions;
+import com.android.systemui.Dependency;
 import com.android.systemui.Dumpable;
 import com.android.systemui.R;
 import com.android.systemui.SysUiServiceProvider;
 import com.android.systemui.keyguard.WakefulnessLifecycle;
 import com.android.systemui.plugins.VolumeDialogController;
 import com.android.systemui.qs.tiles.DndTile;
+import com.android.systemui.statusbar.NotificationMediaManager;
 import com.android.systemui.statusbar.phone.StatusBar;
 
 import java.io.FileDescriptor;
@@ -82,7 +87,7 @@ import javax.inject.Singleton;
  *  Methods ending in "W" must be called on the worker thread.
  */
 @Singleton
-public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpable {
+public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpable, NotificationMediaManager.MediaListener {
     private static final String TAG = Util.logTag(VolumeDialogControllerImpl.class);
 
     private static final int TOUCH_FEEDBACK_TIMEOUT_MS = 1000;
@@ -142,6 +147,8 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
 
     protected final VC mVolumeController = new VC();
 
+    private NotificationMediaManager mMediaManager;
+
     @Inject
     public VolumeDialogControllerImpl(Context context) {
         mContext = context.getApplicationContext();
@@ -163,6 +170,8 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
         mAudioService = IAudioService.Stub.asInterface(
                 ServiceManager.getService(Context.AUDIO_SERVICE));
         updateStatusBar();
+        mMediaManager = Dependency.get(NotificationMediaManager.class);
+        mMediaManager.addCallback(this);
 
         mMediaStateHandler = new Handler();
 
@@ -175,6 +184,10 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
 
     public AudioManager getAudioManager() {
         return mAudio;
+    }
+
+    public MediaController getMediaController() {
+        return mMediaManager.getMediaController();
     }
 
     public void dismiss() {
@@ -241,6 +254,9 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
         mObserver.destroy();
         mReceiver.destroy();
         mWorkerThread.quitSafely();
+        if (mMediaManager != null) {
+            mMediaManager.removeCallback(this);
+        }
     }
 
     public void dump(FileDescriptor fd, PrintWriter pw, String[] args) {
@@ -271,6 +287,15 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
 
     public void removeCallback(Callbacks callback) {
         mCallbacks.remove(callback);
+    }
+
+    /**
+     * Called whenever new media metadata is available.
+     * @param metadata New metadata.
+     */
+    @Override
+    public void onMetadataOrStateChanged(MediaMetadata metadata, @PlaybackState.State int state) {
+        mCallbacks.onMetadataOrStateChanged(metadata, state, mMediaManager.getMediaController());
     }
 
     public void getState() {
@@ -447,6 +472,8 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
     private void updateStatusBar() {
         if (mStatusBar == null) {
             mStatusBar = SysUiServiceProvider.getComponent(mContext, StatusBar.class);
+        } else {
+            mMediaManager = mStatusBar.getMediaManager();
         }
     }
 
@@ -992,6 +1019,18 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
                 entry.getValue().post(
                         () -> entry.getKey().onCaptionComponentStateChanged(
                                 componentEnabled, fromTooltip));
+            }
+        }
+
+        @Override
+        public void onMetadataOrStateChanged(MediaMetadata metadata, @PlaybackState.State int state, MediaController mediaController) {
+            for (final Map.Entry<Callbacks, Handler> entry : mCallbackMap.entrySet()) {
+                entry.getValue().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        entry.getKey().onMetadataOrStateChanged(metadata, state, mediaController);
+                    }
+                });
             }
         }
     }

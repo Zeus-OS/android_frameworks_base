@@ -58,6 +58,9 @@ import android.graphics.PixelFormat;
 import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
 import android.media.AudioSystem;
+import android.media.MediaMetadata;
+import android.media.session.MediaController;
+import android.media.session.PlaybackState;
 import android.os.Debug;
 import android.os.Handler;
 import android.os.Looper;
@@ -270,6 +273,10 @@ public class VolumeDialogImpl implements VolumeDialog,
 
     public void initDependencies(NotificationMediaManager mediaManager) {
         mMediaManager = mediaManager;
+    }
+
+    @Override
+    public void setMediaController(MediaController controller) {
     }
 
     @Override
@@ -1542,6 +1549,10 @@ public class VolumeDialogImpl implements VolumeDialog,
         public void onCaptionComponentStateChanged(
                 Boolean isComponentEnabled, Boolean fromTooltip) {
             updateODICaptionsH(isComponentEnabled, fromTooltip);
+        }
+
+        @Override
+        public void onMetadataOrStateChanged(MediaMetadata metadata, @PlaybackState.State int state, MediaController mediaController) {
         }
     };
 

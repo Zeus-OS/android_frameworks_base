@@ -89,11 +89,8 @@
     <color name="keyguard_affordance_background_preview_background">#242426</color>
 
     <color name="volume_dialog_background">#141414</color>
-    <color name="volume_background_tint">#0d0d0d</color>
-
     <color name="ringer_icon_normal">@android:color/white</color>
     <color name="volume_background_tint">#141414</color>
     <color name="ringer_icon_mute">@android:color/white</color>
-
 
 </resources>

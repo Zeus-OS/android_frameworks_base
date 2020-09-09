@@ -1275,6 +1275,10 @@ public class StatusBar extends SystemUI implements DemoMode,
                 Settings.System.QS_BACKGROUND_BLUR_INTENSITY, 30); // defaulting to 7.5f radius
     }
 
+    public NotificationMediaManager getMediaManager() {
+        return mMediaManager == null ? null : mMediaManager;
+    }
+
     private void adjustBrightness(int x) {
         mBrightnessChanged = true;
         float raw = ((float) x) / getDisplayWidth();

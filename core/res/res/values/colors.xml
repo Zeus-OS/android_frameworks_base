@@ -227,4 +227,6 @@
 
     <color name="gradient_start">#ffe70e0e</color>
     <color name="gradient_end">#ff11b411</color>
+
+    <color name="accent_color_synth">@*android:color/accent_device_default</color>
 </resources>

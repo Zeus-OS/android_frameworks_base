@@ -14,6 +14,7 @@
 
 package com.android.systemui.plugins;
 
+import android.media.session.MediaController;
 import com.android.systemui.plugins.VolumeDialog.Callback;
 import com.android.systemui.plugins.annotations.DependsOn;
 import com.android.systemui.plugins.annotations.ProvidesInterface;
@@ -29,6 +30,7 @@ public interface VolumeDialog extends Plugin {
     int VERSION = 1;
 
     void init(int windowType, Callback callback);
+    void setMediaController(MediaController controller);
     void destroy();
 
     @ProvidesInterface(version = VERSION)

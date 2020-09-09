@@ -588,6 +588,13 @@ public class NotificationMediaManager implements Dumpable {
         return a.controlsSameSession(b);
     }
 
+    public MediaController getMediaController() {
+        if (mMediaController == null) {
+            return null;
+        }
+        return mMediaController;
+    }
+
     private int getMediaControllerPlaybackState(MediaController controller) {
         if (controller != null) {
             final PlaybackState playbackState = controller.getPlaybackState();

@@ -7045,6 +7045,12 @@ public final class Settings {
          */
         public static final String FOD_ICON = "fod_icon";
 
+        public static final String VOLUME_DIALOG_ROUNDED_VALUE = "volume_dialog_rounded_value";
+
+        public static final String VOLUME_DIALOG_ROUNDED_SYSTEM = "volume_dialog_rounded_system";
+
+        public static final String VOLUME_DIALOG_GRADIENT_STROKE = "volume_dialog_gradient_stroke";
+
         /**
          * FOD recognizing animation
          * @hide
@@ -7094,10 +7100,15 @@ public final class Settings {
          */
         public static final String SENSOR_BLOCKED_APP = "sensor_blocked_app";
         public static final String SENSOR_BLOCKED_APP_DUMMY = "sensor_blocked_app_dummy";
+        
+        /**
+        * Music Text in VolumePanel
+        * by.tikkiX2
+        * @hide
+        */
+        public static final String SYNTHOS_MUSIC_VOLUME_PANEL_TEXT = "synthos_music_volume_panel_text";
 
-        /**********************************
-         * Evolution X System Settings end
-         **********************************/
+        public static final String SYNTHOS_MEDIA_CARD_VOLUME_PANEL_FULL_WIDTH = "synthos_media_card_volume_panel_full_width";
 
         /**
          * Status bar ticker duration in milliseconds.
@@ -7331,13 +7342,6 @@ public final class Settings {
                 new SettingsValidators.InclusiveIntegerRangeValidator(500, 10000);
 
         /**
-        * Music Text in VolumePanel
-        * by.tikkiX2
-        * @hide
-        */
-        public static final String SYNTHOS_MUSIC_VOLUME_PANEL_TEXT = "synthos_music_volume_panel_text";
-
-        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -7516,7 +7520,7 @@ public final class Settings {
             NOTIFICATION_HEADERS,
             QS_PANEL_BG_USE_NEW_TINT,
             CUSTOM_STATUSBAR_HEIGHT,
-            SYNTHOS_CENTER_NOTIFICATION_HEADERS
+            SYNTHOS_CENTER_NOTIFICATION_HEADERS,
             VOLUME_DIALOG_TIMEOUT,
         };
 

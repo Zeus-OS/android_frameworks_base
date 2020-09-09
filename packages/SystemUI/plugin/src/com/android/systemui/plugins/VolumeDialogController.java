@@ -18,6 +18,9 @@ import android.annotation.IntegerRes;
 import android.content.ComponentName;
 import android.media.AudioManager;
 import android.media.AudioSystem;
+import android.media.MediaMetadata;
+import android.media.session.MediaController;
+import android.media.session.PlaybackState;
 import android.os.Handler;
 import android.os.VibrationEffect;
 import android.util.SparseArray;
@@ -49,6 +52,8 @@ public interface VolumeDialogController {
     void scheduleTouchFeedback();
 
     AudioManager getAudioManager();
+
+    MediaController getMediaController();
 
     void notifyVisible(boolean visible);
 
@@ -199,5 +204,6 @@ public interface VolumeDialogController {
         void onShowSafetyWarning(int flags);
         void onAccessibilityModeChanged(Boolean showA11yStream);
         void onCaptionComponentStateChanged(Boolean isComponentEnabled, Boolean fromTooltip);
+        void onMetadataOrStateChanged(MediaMetadata metadata, @PlaybackState.State int state, MediaController mediaController);
     }
 }
