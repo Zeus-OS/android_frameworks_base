@@ -6946,6 +6946,15 @@ public final class Settings {
         private static final Validator HIDE_SMART_REPLIES_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Header height
+         * @hide
+         */
+        public static final String STATUS_BAR_CUSTOM_HEADER_HEIGHT = "status_bar_custom_header_height";
+
+        private static final Validator STATUS_BAR_CUSTOM_HEADER_HEIGHT_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+
+        /**
          * Whether to show charging animation on lock screen
          * @hide
          */
@@ -7522,6 +7531,7 @@ public final class Settings {
             CUSTOM_STATUSBAR_HEIGHT,
             SYNTHOS_CENTER_NOTIFICATION_HEADERS,
             VOLUME_DIALOG_TIMEOUT,
+            STATUS_BAR_CUSTOM_HEADER_HEIGHT,
         };
 
         /**
@@ -7783,6 +7793,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(BRIGHTNESS_SLIDER_STYLE);
             PRIVATE_SETTINGS.add(VOLUME_DIALOG_TIMEOUT);
             PRIVATE_SETTINGS.add(SYSTEMUI_PLUGIN_VOLUME);
+            PRIVATE_SETTINGS.add(STATUS_BAR_CUSTOM_HEADER_HEIGHT);
         }
 
         /**
@@ -8017,6 +8028,7 @@ public final class Settings {
             VALIDATORS.put(CUSTOM_STATUSBAR_HEIGHT, CUSTOM_STATUSBAR_HEIGHT_VALIDATOR);
             VALIDATORS.put(SYNTHOS_CENTER_NOTIFICATION_HEADERS, SYNTHOS_CENTER_NOTIFICATION_HEADERS_VALIDATOR);
             VALIDATORS.put(VOLUME_DIALOG_TIMEOUT,VOLUME_DIALOG_TIMEOUT_VALIDATOR);
+             VALIDATORS.put(STATUS_BAR_CUSTOM_HEADER_HEIGHT, STATUS_BAR_CUSTOM_HEADER_HEIGHT_VALIDATOR);
         }
 
         /**
