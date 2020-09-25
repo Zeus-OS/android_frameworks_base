@@ -17,6 +17,7 @@
     android:height="19dp"
     android:width="19dp"
     android:viewportHeight="24.0"
+    android:tint="?android:attr/colorControlNormal"
     android:viewportWidth="24.0">
 
     <path
