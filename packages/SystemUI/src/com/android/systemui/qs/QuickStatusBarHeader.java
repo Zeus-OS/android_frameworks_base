@@ -177,7 +177,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private BrightnessController mBrightnessController;
     private boolean mIsQsAutoBrightnessEnabled;
     private boolean mBrightnessButton;
-    private int mBrightnessSlider = 2;
+    private int mBrightnessSlider = 1;
     private ImageView mMinBrightness;
     private ImageView mMaxBrightness;
 
@@ -657,6 +657,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             case 2:
             default:
                 headerPanel.addRule(RelativeLayout.BELOW, R.id.quick_qs_status_icons);
+                lpQuickQsBrightness.setMargins(0, 0, 0, -12);
                 lpQuickQsBrightness.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                 break;
         }
