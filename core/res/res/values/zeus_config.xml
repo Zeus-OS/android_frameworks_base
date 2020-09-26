@@ -180,4 +180,7 @@
 
     <!-- Screen off delay -->
     <integer name="config_screen_off_delay">1000</integer>
+
+        <!-- NightLight FOD -->
+    <bool name="disable_fod_night_light">false</bool>
 </resources>

@@ -6506,6 +6506,12 @@ public final class Settings {
          * @hide
          */
         public static final String FOD_COLOR = "fod_color";
+        
+        /**
+         * FOD night light
+         * @hide
+         */
+        public static final String FOD_NIGHT_LIGHT = "fod_night_light";
 
         /**
          * @hide
