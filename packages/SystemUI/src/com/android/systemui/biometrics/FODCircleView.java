@@ -609,7 +609,14 @@ class FODAnimation extends ImageView {
         R.drawable.fod_op_cosmos_recognizing_anim,
         R.drawable.fod_op_mclaren_recognizing_anim,
         R.drawable.fod_pureview_future_recognizing_anim,
-        R.drawable.fod_pureview_molecular_recognizing_anim
+        R.drawable.fod_pureview_molecular_recognizing_anim,
+        R.drawable.fod_miui_neon_recognizing_anim,
+        R.drawable.fod_rogfusion_recognizing_anim,
+        R.drawable.fod_rogpulsar_recognizing_anim,
+        R.drawable.fod_rogsupernova_recognizing_anim,
+        R.drawable.fod_vivoendless_recognizing_anim,
+        R.drawable.fod_realmecloud_recognizing_anim,
+        R.drawable.fod_realmeripple_recognizing_anim
     };
 
     public FODAnimation(Context context, int mPositionX, int mPositionY) {
@@ -638,7 +645,6 @@ class FODAnimation extends ImageView {
     public void update() {
         mSelectedAnime = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.FOD_ANIM, 0);
-
         this.setBackgroundResource(ANIMATION_STYLES[mSelectedAnime]);
         recognizingAnim = (AnimationDrawable) this.getBackground();
     }
