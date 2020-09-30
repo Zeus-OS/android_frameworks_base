@@ -80,7 +80,6 @@ public class QSContainerImpl extends FrameLayout implements
     private boolean mForceHideQsStatusBar;
     private int bgAlpha;
     private Drawable bgDefault;
-
     public QSContainerImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
         Handler mHandler = new Handler();
@@ -178,9 +177,9 @@ public class QSContainerImpl extends FrameLayout implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_HEADER_STYLE_GRADIENT),
                     false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System
-                                .getUriFor(Settings.System.STATUS_BAR_CUSTOM_HEADER_HEIGHT), false,
-                        this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.System
+                            .getUriFor(Settings.System.STATUS_BAR_CUSTOM_HEADER_HEIGHT), false,
+                    this, UserHandle.USER_ALL);
         }
 
         @Override

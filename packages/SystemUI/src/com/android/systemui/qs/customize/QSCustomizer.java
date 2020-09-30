@@ -20,6 +20,7 @@ import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.content.res.Resources;
 import android.content.Intent;
@@ -94,6 +95,7 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
     private int mY;
     private boolean mOpening;
     private boolean mIsShowingNavBackdrop;
+
     private GridLayoutManager mLayout;
     private int mDefaultColumns;
     private Menu mColumnsSubMenu;
@@ -101,6 +103,7 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
     private Menu mQsColumnsSubMenu;
     private Menu mRowsSubMenu;
     private Menu mRowsLandscapeSubMenu;
+    private GridLayoutManager mGlm;
     private boolean mHeaderImageEnabled;
     private int mHeaderImageHeight;
 
@@ -188,7 +191,7 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
         updateResources();
     }
 
-    private void updateResources() {
+    public void updateResources() {
         LayoutParams lp = (LayoutParams) mTransparentView.getLayoutParams();
         lp.height = mContext.getResources().getDimensionPixelSize(
                 com.android.internal.R.dimen.quick_qs_offset_height);
@@ -533,7 +536,7 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
         updateHeaderImage();
     }
 
-     private void updateHeaderImage() {
+    private void updateHeaderImage() {
         mHeaderImageEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.STATUS_BAR_CUSTOM_HEADER, 0,
                 UserHandle.USER_CURRENT) == 1;

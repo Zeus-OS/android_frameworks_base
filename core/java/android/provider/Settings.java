@@ -7358,6 +7358,7 @@ public final class Settings {
         /** @hide */
         private static final Validator NAVIGATION_HANDLE_HEIGHT_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
+
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
@@ -7538,7 +7539,8 @@ public final class Settings {
             SYNTHOS_CENTER_NOTIFICATION_HEADERS,
             VOLUME_DIALOG_TIMEOUT,
             STATUS_BAR_CUSTOM_HEADER_HEIGHT,
-            NAVIGATION_HANDLE_HEIGHT
+            NAVIGATION_HANDLE_HEIGHT,
+            STATUS_BAR_CUSTOM_HEADER_HEIGHT
         };
 
         /**
@@ -8034,6 +8036,7 @@ public final class Settings {
             VALIDATORS.put(VOLUME_DIALOG_TIMEOUT,VOLUME_DIALOG_TIMEOUT_VALIDATOR);
              VALIDATORS.put(STATUS_BAR_CUSTOM_HEADER_HEIGHT, STATUS_BAR_CUSTOM_HEADER_HEIGHT_VALIDATOR);
             VALIDATORS.put(NAVIGATION_HANDLE_HEIGHT, NAVIGATION_HANDLE_HEIGHT_VALIDATOR);
+            VALIDATORS.put(STATUS_BAR_CUSTOM_HEADER_HEIGHT, STATUS_BAR_CUSTOM_HEADER_HEIGHT_VALIDATOR);
         }
 
         /**
