@@ -27,61 +27,6 @@ LOCAL_REQUIRED_MODULES := \
 	DisplayCutoutEmulationCornerOverlay \
 	DisplayCutoutEmulationDoubleOverlay \
 	DisplayCutoutEmulationTallOverlay \
-	FontArbutusSourceOverlay \
-	FontArvoLatoOverlay \
-	FontGoogleSansOverlay \
-	FontRubikRubikOverlay \
-    FontAclonicaSourceOverlay \
-    FontAmaranteSourceOverlay \
-    FontBariolSourceOverlay \
-    FontCagliostroSourceOverlay \
-    FontCoolstorySourceOverlay \
-    FontLGSmartGothicSourceOverlay \
-    FontNotoSerifSourceOverlay \
-    FontRosemarySourceOverlay \
-    FontSonySketchSourceOverlay \
-    FontSurferSourceOverlay \
-    FontFiraSansSourceOverlay \
-    FontBigNoodle \
-    FontBikoHanken \
-    FontComicNeue \
-    FontExo2 \
-    FontFinlandica \
-    FontGoodlight \
-    FontGravity \
-    FontInter \
-    FontLeagueMonoNarrow \
-    FontLeonSans \
-    FontMescla \
-    FontMittelschrift \
-    FontOdibee \
-    FontPanamericana \
-    FontPissel \
-    FontPTSansMono \
-    FontReemKufi \
-    FontRoboto \
-    FontRouterGothicNarrow \
-    FontRoutedGothicRobotoCondensed \
-    FontSofiaSans \
-    FontSofiaSansSemiCondensed \
-	FontLinotte \
-	FontComfortaaSourceOverlay \
-	FontExotwoSourceOverlay \
-	FontStoropiaSourceOverlay \
-	FontUbuntuSourceOverlay \
-	FontComicSansSourceOverlay \
-	FontGoogleSansSourceOverlay \
-	FontOneplusSlateSource \
-	FontReemKufiSourceOverlay \
-	FontRosemarySourceOverlay \
-	FontSamsungOneSourceOverlay \
-	FontNokiaPureSourceOverlay \
-	FontNunitoSourceOverlay \
-	FontFifa2018SourceOverlay \
-	FontCoconSourceOverlay \
-	FontQuandoSourceOverlay \
-	FontGrandHotelSourceOverlay \
-	FontRedressedSourceOverlay \
 	IconPackCircularAndroidOverlay \
 	IconPackCircularPixelLauncherOverlay \
 	IconPackCircularPixelThemePickerOverlay \
