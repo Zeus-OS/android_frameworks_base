@@ -5525,6 +5525,12 @@ public final class Settings {
          */
         public static final String PULSE_TRIGGER_REASON = "pulse_trigger_reason";
 
+         /**
+          * Volume dialog timeout
+          * @hide
+          */
+         public static final String VOLUME_DIALOG_TIMEOUT = "volume_dialog_timeout";
+
         /**
          * Timeout for ambient pulse in seconds - 0 is no timeout
          * @hide
@@ -5850,6 +5856,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(AMBIENT_TEXT_COLOR);
             PRIVATE_SETTINGS.add(AMBIENT_TEXT_TYPE_COLOR);
             PRIVATE_SETTINGS.add(SYSTEMUI_PLUGIN_VOLUME);
+            PRIVATE_SETTINGS.add(VOLUME_DIALOG_TIMEOUT);
         }
 
         /**
