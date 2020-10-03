@@ -99,7 +99,7 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
 
     private Handler mHandler;
 
-    private final ImageView mPressedView;
+    private final ImageView mPressedIconView;
 
     private LockPatternUtils mLockPatternUtils;
 
@@ -109,7 +109,17 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
     private boolean mIsRecognizingAnimEnabled;
     private boolean mScreenOffFodEnabled;
     private boolean mScreenOffFodIconEnabled;
-
+    private int mPressedState;
+    private final int[] PRESSED_STATE = {
+        R.drawable.fod_pressed_state_default_0,
+        R.drawable.fod_pressed_state_default_1,
+        R.drawable.fod_pressed_state_default_2,
+        R.drawable.fod_pressed_state_default_3,
+        R.drawable.fod_pressed_state_default_4,
+        R.drawable.fod_pressed_state_default_5,
+        R.drawable.fod_pressed_state_default_6,
+        R.drawable.fod_pressed_state_default_7
+    };
     private int mSelectedIcon;
     private final int[] ICON_STYLES = {
         R.drawable.fod_icon_default,
@@ -285,11 +295,11 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
         mParams.setTitle("Fingerprint on display");
         mPressedParams.setTitle("Fingerprint on display.touched");
 
-        mPressedView = new ImageView(context)  {
+        mPressedIconView = new ImageView(context)  {
             @Override
             protected void onDraw(Canvas canvas) {
 							if (mIsCircleShowing) {
-                canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
+                setImageResource(PRESSED_STATE[mPressedState]);
 							}
                 super.onDraw(canvas);
             }
@@ -322,13 +332,6 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
         }
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        if (mIsCircleShowing) {
-            canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
-        }
-    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -426,7 +429,7 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
         dispatchPress();
 
         setImageDrawable(null);
-        mPressedView.setImageResource(R.drawable.fod_icon_pressed);
+        mPressedIconView.setImageResource(PRESSED_STATE[mPressedState]);
         invalidate();
     }
 
@@ -469,6 +472,8 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
     }
 
     private void updateStyle() {
+        mPressedState = Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.FOD_PRESSED_ICON, 0);
         mIsRecognizingAnimEnabled = Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.FOD_RECOGNIZING_ANIMATION, 0) != 0;
         mSelectedIcon = Settings.System.getInt(mContext.getContentResolver(),
@@ -517,8 +522,8 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
 
         mWindowManager.updateViewLayout(this, mParams);
 
-        if (mPressedView.getParent() != null) {
-            mWindowManager.updateViewLayout(mPressedView, mPressedParams);
+        if (mPressedIconView.getParent() != null) {
+            mWindowManager.updateViewLayout(mPressedIconView, mPressedParams);
         }
     }
 
@@ -540,16 +545,16 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
             }
 
             mPressedParams.dimAmount = dimAmount / 255.0f;
-            if (mPressedView.getParent() == null) {
-                mWindowManager.addView(mPressedView, mPressedParams);
+            if (mPressedIconView.getParent() == null) {
+                mWindowManager.addView(mPressedIconView, mPressedParams);
             } else {
-                mWindowManager.updateViewLayout(mPressedView, mPressedParams);
+                mWindowManager.updateViewLayout(mPressedIconView, mPressedParams);
             }
         } else {
             mPressedParams.screenBrightness = 0.0f;
             mPressedParams.dimAmount = 0.0f;
-            if (mPressedView.getParent() != null) {
-                mWindowManager.removeView(mPressedView);
+            if (mPressedIconView.getParent() != null) {
+                mWindowManager.removeView(mPressedIconView);
             }
         }
     }

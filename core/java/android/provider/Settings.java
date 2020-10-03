@@ -7059,6 +7059,12 @@ public final class Settings {
 
         public static final String VOLUME_DIALOG_GRADIENT_STROKE = "volume_dialog_gradient_stroke";
 
+         /** 
+         FOD Pressed Icon picker
+         @hide */
+        private static final Validator FOD_PRESSED_ICON_VALIDATOR = new SettingsValidators.InclusiveIntegerRangeValidator(0, 7);
+        public static final String FOD_PRESSED_ICON = "fod_pressed_icon";
+
         /**
          * FOD recognizing animation
          * @hide
@@ -8061,6 +8067,7 @@ public final class Settings {
              VALIDATORS.put(STATUS_BAR_CUSTOM_HEADER_HEIGHT, STATUS_BAR_CUSTOM_HEADER_HEIGHT_VALIDATOR);
             VALIDATORS.put(NAVIGATION_HANDLE_HEIGHT, NAVIGATION_HANDLE_HEIGHT_VALIDATOR);
             VALIDATORS.put(STATUS_BAR_CUSTOM_HEADER_HEIGHT, STATUS_BAR_CUSTOM_HEADER_HEIGHT_VALIDATOR);
+            VALIDATORS.put(FOD_PRESSED_ICON, FOD_PRESSED_ICON_VALIDATOR);
         }
 
         /**
