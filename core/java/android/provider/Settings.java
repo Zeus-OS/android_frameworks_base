@@ -6269,6 +6269,12 @@ public final class Settings {
         public static final String ON_THE_GO_CAMERA = "on_the_go_camera";
 
         /**
+         * Accent Color
+         * @hide
+         */
+        public static final String ACCENT_COLOR = "accent_color";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -6445,11 +6451,12 @@ public final class Settings {
             PRIVATE_SETTINGS.add(AICP_LOCKSCREEN_WEATHER_STYLE);
             PRIVATE_SETTINGS.add(LOCKSCREEN_WEATHER_SHOW_TEMP);
             PRIVATE_SETTINGS.add(LOCKSCREEN_WEATHER_SHOW_CITY);
-	    PRIVATE_SETTINGS.add(LOCKSCREEN_WEATHER_SHOW_IMAGE);
+	        PRIVATE_SETTINGS.add(LOCKSCREEN_WEATHER_SHOW_IMAGE);
             PRIVATE_SETTINGS.add(CENTER_NOTIFICATION_HEADERS);
             PRIVATE_SETTINGS.add(HIDE_SMART_REPLIES);
             PRIVATE_SETTINGS.add(QS_HEADER_STYLE);
             PRIVATE_SETTINGS.add(QS_HEADER_STYLE_COLOR);
+            PRIVATE_SETTINGS.add(ACCENT_COLOR);
         }
 
         /**
