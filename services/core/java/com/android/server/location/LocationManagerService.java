@@ -1706,7 +1706,7 @@ public class LocationManagerService extends ILocationManager.Stub {
          * Note: must be constructed with lock held.
          */
         private UpdateRecord(String provider, LocationRequest request, Receiver receiver) {
-            if (Build.IS_DEBUGGABLE) {
+            if (Build.IS_ENG) {
                 Preconditions.checkState(Thread.holdsLock(mLock));
             }
             mExpirationRealtimeMs = request.getExpirationRealtimeMs(SystemClock.elapsedRealtime());
@@ -1746,7 +1746,7 @@ public class LocationManagerService extends ILocationManager.Stub {
          * Method to be called when a record will no longer be used.
          */
         private void disposeLocked(boolean removeReceiver) {
-            if (Build.IS_DEBUGGABLE) {
+            if (Build.IS_ENG) {
                 Preconditions.checkState(Thread.holdsLock(mLock));
             }
 
