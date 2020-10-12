@@ -5601,6 +5601,13 @@ public final class Settings {
         public static final String QS_BRIGHTNESS_POSITION_BOTTOM = "qs_brightness_position_bottom";
 
         /**
+         * Whether to show QS brightness slider above qs footer
+         * Only applies when {@link QS_BRIGHTNESS_POSITION_BOTTOM} is enabled
+         * @hide
+         */
+        public static final String QS_SHOW_BRIGHTNESS_ABOVE_FOOTER = "qs_show_brightness_above_footer";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
