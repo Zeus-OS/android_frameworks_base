@@ -275,6 +275,15 @@ public class QuickQSPanel extends QSPanel {
         return QSEvent.QQS_TILE_VISIBLE;
     }
 
+
+    public void updateSettings() {
+        if (mFullPanel != null && mFullPanel.getMediaVisible()) {
+            // if the user changed quick columns while media is playing
+            // making sure we redistribute the tiles properly
+            mFullPanel.switchTileLayout(true);
+        }
+    }
+
     private static class HeaderTileLayout extends TileLayout {
 
         private final UiEventLogger mUiEventLogger;
@@ -334,6 +343,7 @@ public class QuickQSPanel extends QSPanel {
         public boolean updateResources() {
             mCellWidth = mContext.getResources().getDimensionPixelSize(R.dimen.qs_quick_tile_size);
             mCellHeight = mCellWidth;
+            updateSettings();
 
             return false;
         }
@@ -412,6 +422,9 @@ public class QuickQSPanel extends QSPanel {
 
         @Override
         public void updateSettings() {
+               if (mPanel != null) {
+                mPanel.updateSettings();
+            }
         }
 
         @Override
