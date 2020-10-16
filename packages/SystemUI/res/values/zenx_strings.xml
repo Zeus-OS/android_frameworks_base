@@ -179,4 +179,7 @@
     <!-- Name of the microphone status bar icon. -->
     <string name="status_bar_microphone">Microphone</string>
 
+    <!-- QS Header data usage info -->
+    <string name="usage_data">used</string>
+
 </resources>
