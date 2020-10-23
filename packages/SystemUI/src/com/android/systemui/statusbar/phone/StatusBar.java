@@ -3910,10 +3910,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         mKeyguardIndicationController.showTransientIndication(R.string.phone_hint);
     }
 
-    public void onCustomHintStarted() {
-        mKeyguardIndicationController.showTransientIndication(R.string.custom_hint);
-    }
-
     public void onTrackingStopped(boolean expand) {
         if (mState == StatusBarState.KEYGUARD || mState == StatusBarState.SHADE_LOCKED) {
             if (!expand && !mKeyguardStateController.canDismissLockScreen()) {
@@ -4278,7 +4274,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             mLaunchCameraOnFinishedGoingToSleep = true;
             return;
         }
-        if (!mNotificationPanelViewController.canCameraGestureBeLaunched(source)) {
+        if (!mNotificationPanelViewController.canCameraGestureBeLaunched()) {
             if (DEBUG_CAMERA_LIFT) Slog.d(TAG, "Can't launch camera right now");
             return;
         }
