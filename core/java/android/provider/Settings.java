@@ -5372,18 +5372,7 @@ public final class Settings {
         public static final String SHOW_FOURG_ICON = "show_fourg_icon";
 
         /**
-         * Whether to show VoLTE icon or not
-         * @hide
-         */
-        public static final String SHOW_VOLTE_ICON = "show_volte_icon";
-
-        /**
-         * VoLTE icon style
-         * @hide
-         */
-        public static final String VOLTE_ICON_STYLE = "volte_icon_style";
-
-        /**
+         * 
         * by.tikkiX2
         * @hide
         */
@@ -5628,8 +5617,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_FONT_SIZE);
             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_VIEW_LOCATION);
             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_LAYOUT);
-            PRIVATE_SETTINGS.add(SHOW_VOLTE_ICON);
-            PRIVATE_SETTINGS.add(VOLTE_ICON_STYLE);
             PRIVATE_SETTINGS.add(QS_PANEL_BG_ALPHA);
             PRIVATE_SETTINGS.add(QS_PANEL_TYPE_BACKGROUND);
             PRIVATE_SETTINGS.add(QS_PANEL_CUSTOM_IMAGE);
