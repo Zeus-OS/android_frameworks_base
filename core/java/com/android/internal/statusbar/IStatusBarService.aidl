@@ -168,4 +168,6 @@ interface IStatusBarService
      * toggle camera flash
      */
     void toggleCameraFlash();
+
+    void screenPinningStateChanged(boolean enabled);
 }
