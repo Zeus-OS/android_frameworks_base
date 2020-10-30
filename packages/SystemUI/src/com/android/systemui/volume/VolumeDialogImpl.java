@@ -901,45 +901,49 @@ public class VolumeDialogImpl implements VolumeDialog,
         }
 
 
-        // handle the remaining devices
-        for (MediaDevice device : mMediaDevices) {
-            if (device.isConnected()) {
-                // This device does not have a corresponding row yet, make one.
-                MediaOutputRow row = new MediaOutputRow();
-                row.device = device;
-                row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_media_output,
-                        mMediaOutputView, false);
-                row.view.setOnClickListener(v -> {
-                        provideTouchHapticH(VibrationEffect.get(VibrationEffect.EFFECT_CLICK));
-                        mLocalMediaManager.connectDevice(device);
-                });
-                row.name = row.view.findViewById(R.id.media_output_text);
-                row.summary = row.view.findViewById(R.id.media_output_summary);
-                row.selected = row.view.findViewById(R.id.media_output_selected);
-                row.icon = row.view.findViewById(R.id.media_output_icon);
-                Drawable drawable = device.getIcon();
-                if (drawable == null) {
-                    drawable = mContext.getDrawable(
-                            com.android.internal.R.drawable.ic_bt_headphones_a2dp);
-                }
-                row.icon.setImageDrawable(drawable);
+        try {
+            // handle the remaining devices
+            for (MediaDevice device : mMediaDevices) {
+                if (device.isConnected()) {
+                    // This device does not have a corresponding row yet, make one.
+                    MediaOutputRow row = new MediaOutputRow();
+                    row.device = device;
+                    row.view = mDialog.getLayoutInflater().inflate(R.layout.volume_dialog_media_output,
+                            mMediaOutputView, false);
+                    row.view.setOnClickListener(v -> {
+                            provideTouchHapticH(VibrationEffect.get(VibrationEffect.EFFECT_CLICK));
+                            mLocalMediaManager.connectDevice(device);
+                    });
+                    row.name = row.view.findViewById(R.id.media_output_text);
+                    row.summary = row.view.findViewById(R.id.media_output_summary);
+                    row.selected = row.view.findViewById(R.id.media_output_selected);
+                    row.icon = row.view.findViewById(R.id.media_output_icon);
+                    Drawable drawable = device.getIcon();
+                    if (drawable == null) {
+                        drawable = mContext.getDrawable(
+                                com.android.internal.R.drawable.ic_bt_headphones_a2dp);
+                    }
+                    row.icon.setImageDrawable(drawable);
 
-                row.name.setText(device.getName());
-                if (device.getSummary() != null) {
-                    Util.setVisOrGone(row.summary, !device.getSummary().equals(""));
-                    row.summary.setText(device.getSummary());
-                    Util.setVisOrGone(row.selected, row.device.getSummary().contains(activeText));
-                } else {
-                    Util.setVisOrGone(row.summary, false);
-                    Util.setVisOrGone(row.selected, false);
-                }
-                row.name.setSelected(true);
-                row.summary.setSelected(true);
+                    row.name.setText(device.getName());
+                    if (device.getSummary() != null) {
+                        Util.setVisOrGone(row.summary, !device.getSummary().equals(""));
+                        row.summary.setText(device.getSummary());
+                        Util.setVisOrGone(row.selected, row.device.getSummary().contains(activeText));
+                    } else {
+                        Util.setVisOrGone(row.summary, false);
+                        Util.setVisOrGone(row.selected, false);
+                    }
+                    row.name.setSelected(true);
+                    row.summary.setSelected(true);
 
-                row.addedToGroup = true;
-                mMediaOutputView.addView(row.view);
-                mMediaOutputRows.add(row);
+                    row.addedToGroup = true;
+                    mMediaOutputView.addView(row.view);
+                    mMediaOutputRows.add(row);
+                }
             }
+        } catch (Exception e) {
+          // nothing to do
         }
         if (mMediaOutputView.getChildCount() == 1) {
             // This means there are no external devices connected
