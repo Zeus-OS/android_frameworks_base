@@ -475,33 +475,33 @@ public class AmbientText extends FrameLayout {
        TextView text = (TextView) findViewById(R.id.ambient_text);
        mTextAnimator = ValueAnimator.ofFloat(new float[]{0.0f, 2.0f});
        mTextAnimator.setDuration(5000);
-       boolean useAccent = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.AMBIENT_TEXT_TYPE_COLOR,
-                0, UserHandle.USER_CURRENT) == 0;
-       int color = useAccent ?
-                Utils.getColorAccentDefaultColor(getContext()) :
-                Settings.System.getIntForUser(mContext.getContentResolver(),
-                        Settings.System.AMBIENT_TEXT_COLOR, 0xFF3980FF,
-                        UserHandle.USER_CURRENT);
-       if (Settings.System.getIntForUser(mContext.getContentResolver(),
-                  Settings.System.AMBIENT_TEXT_TYPE_COLOR, 0,
-                  UserHandle.USER_CURRENT) == 1) {
-            try {
-                WallpaperManager wallpaperManager = WallpaperManager.getInstance(mContext);
-                WallpaperInfo wallpaperInfo = wallpaperManager.getWallpaperInfo();
-                if (wallpaperInfo == null) { // if not a live wallpaper
-                    Drawable wallpaperDrawable = wallpaperManager.getDrawable();
-                    Bitmap bitmap = ((BitmapDrawable)wallpaperDrawable).getBitmap();
-                    if (bitmap != null) { // if wallpaper is not blank
-                        Palette p = Palette.from(bitmap).generate();
-                        int wallColor = p.getDominantColor(color);
-                        if (color != wallColor)
-                            color = wallColor;
-                    }
-                }
-            } catch (Exception e) {
-                // Nothing to do
-            }
+       int textColorType = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.AMBIENT_TEXT_TYPE_COLOR, 0, UserHandle.USER_CURRENT);
+       int color = Utils.getColorAccentDefaultColor(getContext());
+       switch (textColorType) {
+           case 1:
+               try {
+                   WallpaperManager wallpaperManager = WallpaperManager.getInstance(mContext);
+                   WallpaperInfo wallpaperInfo = wallpaperManager.getWallpaperInfo();
+                   if (wallpaperInfo == null) { // if not a live wallpaper
+                       Drawable wallpaperDrawable = wallpaperManager.getDrawable();
+                       Bitmap bitmap = ((BitmapDrawable)wallpaperDrawable).getBitmap();
+                       if (bitmap != null) { // if wallpaper is not blank
+                           Palette p = Palette.from(bitmap).generate();
+                           int wallColor = p.getDominantColor(color);
+                           if (color != wallColor)
+                               color = wallColor;
+                       }
+                   }
+               } catch (Exception e) {
+                   // Nothing to do
+               }
+               break;
+           case 2:
+               color = Settings.System.getIntForUser(mContext.getContentResolver(),
+                       Settings.System.AMBIENT_TEXT_COLOR, 0xFF3980FF,
+                       UserHandle.USER_CURRENT);
+               break;
        }
 
        if (mEnable) {

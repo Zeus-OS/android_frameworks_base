@@ -2992,6 +2992,8 @@ public class NotificationPanelViewController extends PanelViewController {
         boolean mAmbientTextEnable = Settings.System.getIntForUser(
                 mView.getContext().getContentResolver(), Settings.System.AMBIENT_TEXT,
                 0, UserHandle.USER_CURRENT) != 0;
+        boolean ambientTextAnimated = Settings.System.getIntForUser(mView.getContext().getContentResolver(),
+                Settings.System.AMBIENT_TEXT_ANIMATION, 0, UserHandle.USER_CURRENT) != 0;
 
         if (mAmbientTextEnable) {
             if (dozing) {
@@ -3000,7 +3002,9 @@ public class NotificationPanelViewController extends PanelViewController {
                 // if the current notifications "would" turn the screen on
                 // just checking hasActiveClearableNotifications is obviusly not
                 // enough here - so for now dont even try to do it
+                mAmbientText.animateText(ambientTextAnimated);
                 mAmbientText.update();
+                mAmbientText.setVisibility(View.VISIBLE);
             } else {
                 // screen on!
                 mAmbientText.setVisibility(View.GONE);
@@ -3154,16 +3158,11 @@ public class NotificationPanelViewController extends PanelViewController {
         }
         if (mAmbientText != null && ambientText) {
            if (mPulsing) {
-              if (!activeNotif) {
-                  mAmbientText.animateText(ambientTextAnimated);
-                  mAmbientText.update();
-                  mAmbientText.setVisibility(View.VISIBLE);
-              } else {
-                  mAmbientText.update();
-                  mAmbientText.setVisibility(View.GONE);
-              }
+               mAmbientText.animateText(ambientTextAnimated);
+               mAmbientText.update();
+               mAmbientText.setVisibility(View.VISIBLE);
            } else {
-              if (!activeNotif && mDozing) {
+              if (mDozing) {
                   mAmbientText.animateText(ambientTextAnimated);
                   mAmbientText.update();
                   mAmbientText.setVisibility(View.VISIBLE);
@@ -3172,6 +3171,9 @@ public class NotificationPanelViewController extends PanelViewController {
                   mAmbientText.setVisibility(View.GONE);
               }
            }
+        } else {
+            mAmbientText.update();
+            mAmbientText.setVisibility(View.GONE);
         }
         if (mAmbientCustomImage != null && ambientImage) {
             if (mPulsing) {
