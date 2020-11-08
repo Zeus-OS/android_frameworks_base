@@ -535,9 +535,13 @@ public class MobileSignalController extends SignalController<
                 case 7:
                     resId = R.drawable.ic_volte_emui;
                     break;
-                    // VoLTE
+                // Vo
                 case 8:
                     resId = R.drawable.ic_volte_vo;
+                    break;
+                // Android One HD icon
+                case 9:
+                    resId = R.drawable.ic_hd1_volte;
                     break;
                 case 0:
                 default:
