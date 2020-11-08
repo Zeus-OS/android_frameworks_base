@@ -39,6 +39,11 @@ public class KeyguardClockPositionAlgorithm {
     private static float CLOCK_HEIGHT_WEIGHT = 0.7f;
 
     /**
+     * Allow using the default clock Y calculations
+     */
+    public static int CLOCK_USE_DEFAULT_Y = -1;
+
+    /**
      * Margin between the bottom of the clock and the notification shade.
      */
     private int mClockNotificationsMargin;
