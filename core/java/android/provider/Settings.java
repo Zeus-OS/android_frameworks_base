@@ -7790,6 +7790,7 @@ public final class Settings {
          */
         public static final String TTY_MODE_ENABLED = "tty_mode_enabled";
 
+
         /**
          * User-selected RTT mode. When on, outgoing and incoming calls will be answered as RTT
          * calls when supported by the device and carrier. Boolean value.
@@ -7830,6 +7831,12 @@ public final class Settings {
          */
         @UnsupportedAppUsage
         public static final String BACKUP_TRANSPORT = "backup_transport";
+
+        /**
+         * Position of gesture bar length slider.
+         * @hide
+         */
+        public static final String GESTURE_NAVBAR_LENGTH = "gesture_navbar_length";
 
         /**
          * Indicates the version for which the setup wizard was last shown. The version gets
