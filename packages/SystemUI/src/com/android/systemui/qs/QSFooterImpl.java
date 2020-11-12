@@ -108,7 +108,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         @Override
         public void onChange(boolean selfChange, Uri uri) {
             super.onChange(selfChange, uri);
-            setBuildText();
+            //setBuildText();
         }
     };
 
@@ -161,7 +161,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                 oldBottom) -> updateAnimator(right - left));
         setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
         updateEverything();
-        setBuildText();
+        // setBuildText();
     }
 
     private void setBuildText() {
