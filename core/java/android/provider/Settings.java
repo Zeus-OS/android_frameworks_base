@@ -4988,6 +4988,18 @@ public final class Settings {
         /**
          * @hide
          */
+        public static final String LOCKSCREEN_ACCENT_COLOR_MINUTE = "lockscreen_accent_color_minute";
+
+        /**
+         * Whether to use accent lock clock colors custom
+         * @hide
+         */
+        public static final String LOCKSCREEN_ACCENT_COLOR_CUSTOM = "lockscreen_accent_color_custom";
+
+        /**
+         * Whether to use accent lock clock colors minute
+         * @hide
+         */
         public static final String SENSOR_BLOCK = "sensor_block";
 
         /**
