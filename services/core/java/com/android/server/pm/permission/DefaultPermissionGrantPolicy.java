@@ -947,6 +947,10 @@ public final class DefaultPermissionGrantPolicy {
         grantSystemFixedPermissionsToSystemPackage(pm,
                 getDefaultProviderAuthorityPackage("com.google.android.flipendo", userId),
                 userId, SUSPEND_APP_PERMISSIONS);
+
+        // Google Chrome
+        grantSystemFixedPermissionsToSystemPackage(pm, "com.android.chrome", userId, CONTACTS_PERMISSIONS,
+                STORAGE_PERMISSIONS);
     }
 
     private String getDefaultSystemHandlerActivityPackageForCategory(PackageManagerWrapper pm,
