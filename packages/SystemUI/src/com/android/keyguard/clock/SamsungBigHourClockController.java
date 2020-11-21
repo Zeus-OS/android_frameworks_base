@@ -66,7 +66,7 @@ public class SamsungBigHourClockController implements ClockPlugin {
     /**
      * Root view of clock.
      */
-    private ClockLayout mView;
+    private ClockLayout mBigClockView;
 
     /**
      * Text clock in preview view hierarchy.
@@ -91,16 +91,29 @@ public class SamsungBigHourClockController implements ClockPlugin {
     }
 
     private void createViews() {
-        mView = (ClockLayout) mLayoutInflater
+        mBigClockView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.digital_clock_custom, null);
-        mClock = mView.findViewById(R.id.clock);
-        mClock.setFormat12Hour(Html.fromHtml("<big>hh</big><br>mm"));
-        mClock.setFormat24Hour(Html.fromHtml("<big>kk</big><br>mm"));
+        mClock = mBigClockView.findViewById(R.id.clock);
+        int mAccentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
+
+        if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext) && ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + "><big>h</big></font><br><font color=" + mAccentColor + ">mm</font>"));
+             mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + "><big>kk</big></font><br><font color=" + mAccentColor + ">mm</font>"));
+        } else if(ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + "><big>h</big></font><br>mm"));
+             mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + "><big>kk</big></font><br>mm"));
+        } else if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<big>h</big><br><font color=" + mAccentColor + ">mm</font>"));
+             mClock.setFormat24Hour(Html.fromHtml("<big>kk</big><br><font color=" + mAccentColor + ">mm</font>"));
+        } else {
+            mClock.setFormat12Hour(Html.fromHtml("<big>h</big><br>mm"));
+            mClock.setFormat24Hour(Html.fromHtml("<big>kk</big><br>mm"));
+        }
     }
 
     @Override
     public void onDestroyView() {
-        mView = null;
+        mBigClockView = null;
         mClock = null;
     }
 
@@ -141,10 +154,10 @@ public class SamsungBigHourClockController implements ClockPlugin {
 
     @Override
     public View getView() {
-        if (mView == null) {
+        if (mBigClockView == null) {
             createViews();
         }
-        return mView;
+        return mBigClockView;
     }
 
     @Override
@@ -162,11 +175,6 @@ public class SamsungBigHourClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
-        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
-            mClock.setTextColor(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
-        } else {
-             mClock.setTextColor(color);
-        }
     }
 
     @Override
@@ -178,7 +186,7 @@ public class SamsungBigHourClockController implements ClockPlugin {
 
     @Override
     public void setDarkAmount(float darkAmount) {
-        mView.setDarkAmount(darkAmount);
+        mBigClockView.setDarkAmount(darkAmount);
     }
 
     @Override

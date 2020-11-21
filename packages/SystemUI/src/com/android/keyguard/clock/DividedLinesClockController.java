@@ -29,6 +29,10 @@ import android.view.View;
 import android.widget.TextClock;
 import android.widget.TextView;
 
+import android.text.Html;
+import com.android.internal.util.zenx.ZenxUtils;
+import android.content.Context;
+
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
@@ -77,6 +81,8 @@ public class DividedLinesClockController implements ClockPlugin {
     private View mTopLine;
     private View mBottomLine;
 
+    private Context mContext;
+
     /**
      * Helper to extract colors from wallpaper palette for clock face.
      */
@@ -90,16 +96,34 @@ public class DividedLinesClockController implements ClockPlugin {
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     public DividedLinesClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mColorExtractor = colorExtractor;
+        mContext = context;
     }
 
     private void createViews() {
         mBigClockView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.divided_lines_clock, null);
         mClock = mBigClockView.findViewById(R.id.clock);
+
+        int mAccentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
+
+        if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext) && ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + ">h</font>:<font color=" + mAccentColor + ">mm</font>"));
+             mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + ">kk</font>:<font color=" + mAccentColor + ">mm</font>"));
+        } else if(ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + ">h</font>:mm"));
+             mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + ">kk</font>:mm"));
+        } else if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("h:<font color=" + mAccentColor + ">mm</font>"));
+             mClock.setFormat24Hour(Html.fromHtml("kk:<font color=" + mAccentColor + ">mm</font>"));
+        } else {
+            mClock.setFormat12Hour(Html.fromHtml("h:mm"));
+            mClock.setFormat24Hour(Html.fromHtml("kk:mm"));
+        }
+
         onTimeTick();
     }
 
@@ -166,7 +190,6 @@ public class DividedLinesClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
-        mClock.setTextColor(color);
     }
 
     @Override

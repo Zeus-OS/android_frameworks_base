@@ -27,6 +27,9 @@ import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
 
+import android.content.Context;
+import com.android.internal.util.zenx.ZenxUtils;
+
 import java.util.TimeZone;
 
 /**
@@ -60,6 +63,8 @@ public class SpectrumClockController implements ClockPlugin {
     private ClockLayout mBigClockView;
     private ImageClock mSpectrumClock;
 
+    private Context mContext;
+
     /**
      * Helper to extract colors from wallpaper palette for clock face.
      */
@@ -73,10 +78,11 @@ public class SpectrumClockController implements ClockPlugin {
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     public SpectrumClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mColorExtractor = colorExtractor;
+        mContext = context;
     }
 
     private void createViews() {
@@ -154,6 +160,12 @@ public class SpectrumClockController implements ClockPlugin {
     private void updateColor() {
         final int primary = mPalette.getPrimaryColor();
         final int secondary = mPalette.getSecondaryColor();
+
+        if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
+            mSpectrumClock.setClockColors(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color), secondary);
+        } else {
+            mSpectrumClock.setClockColors(primary, secondary);
+        }
         //mSpectrumClock.setClockColors(primary, secondary);
     }
 

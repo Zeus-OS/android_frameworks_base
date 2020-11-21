@@ -36,6 +36,9 @@ import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
 
+import com.android.internal.util.zenx.ZenxUtils;
+import android.content.Context;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -85,6 +88,8 @@ public class XtndMNMLBoxClockController implements ClockPlugin {
     private String mDescFormat;
     private TimeZone mTimeZone;
 
+     private Context mContext;
+
     /**
      * Create a DefaultClockController instance.
      *
@@ -93,10 +98,11 @@ public class XtndMNMLBoxClockController implements ClockPlugin {
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     public XtndMNMLBoxClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mColorExtractor = colorExtractor;
+        mContext = context;
     }
 
     private void createViews() {
@@ -178,7 +184,11 @@ public class XtndMNMLBoxClockController implements ClockPlugin {
     @Override
     public void setTextColor(int color) {
         mDate.setTextColor(color);
-        mDateDay.setTextColor(color);
+        if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
+            mDateDay.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
+        } else {
+             mDateDay.setTextColor(color);
+        }
     }
 
     @Override

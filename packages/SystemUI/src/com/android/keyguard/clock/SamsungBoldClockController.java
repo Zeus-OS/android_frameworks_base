@@ -23,22 +23,26 @@ import android.graphics.Color;
 import android.graphics.Paint.Style;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.TextClock;
 
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
 
+import android.text.Html;
 import android.content.Context;
 import com.android.internal.util.zenx.ZenxUtils;
 
 import java.util.TimeZone;
 
+import static com.android.systemui.statusbar.phone
+        .KeyguardClockPositionAlgorithm.CLOCK_USE_DEFAULT_Y;
+
 /**
  * Plugin for the default clock face used only to provide a preview.
  */
-public class DefaultClockController implements ClockPlugin {
+public class SamsungBoldClockController implements ClockPlugin {
 
     /**
      * Resources used to get title and thumbnail.
@@ -61,14 +65,14 @@ public class DefaultClockController implements ClockPlugin {
     private final ViewPreviewer mRenderer = new ViewPreviewer();
 
     /**
-     * Root view of preview.
+     * Root view of clock.
      */
-    private View mBigClockView;
+    private ClockLayout mBigClockView;
 
     /**
      * Text clock in preview view hierarchy.
      */
-    private TextView mTextTime;
+    private TextClock mClock;
 
     private Context mContext;
 
@@ -79,7 +83,7 @@ public class DefaultClockController implements ClockPlugin {
      * @param inflater Inflater used to inflate custom clock views.
      * @param colorExtractor Extracts accent color from wallpaper.
      */
-    public DefaultClockController(Resources res, LayoutInflater inflater,
+    public SamsungBoldClockController(Resources res, LayoutInflater inflater,
             SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
@@ -88,55 +92,69 @@ public class DefaultClockController implements ClockPlugin {
     }
 
     private void createViews() {
-        mBigClockView = mLayoutInflater.inflate(R.layout.default_clock_preview, null);
-        mTextTime = mBigClockView.findViewById(R.id.time);
+        mBigClockView = (ClockLayout) mLayoutInflater
+                .inflate(R.layout.digital_clock_custom, null);
+        mClock = mBigClockView.findViewById(R.id.clock);
+        int mAccentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
+
+        if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext) && ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + "><strong>hh</strong></font><br><font color=" + mAccentColor + "><strong>mm</strong></font>"));
+             mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + "><strong>kk</strong></font><br><font color=" + mAccentColor + "><strong>mm</strong></font>"));
+        } else if(ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + "><strong>hh</strong></font><br><strong>mm</strong>"));
+             mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + "><strong>kk</strong></font><br><strong>mm</strong>"));
+        } else if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<strong>hh</strong><br><font color=" + mAccentColor + "><strong>mm</strong></font>"));
+             mClock.setFormat24Hour(Html.fromHtml("<strong>kk</strong><br><font color=" + mAccentColor + "><strong>mm</strong></font>"));
+        } else {
+            mClock.setFormat12Hour(Html.fromHtml("<strong>hh</strong><br><strong>mm</strong>"));
+            mClock.setFormat24Hour(Html.fromHtml("<strong>kk</strong><br><strong>mm</strong>"));
+        }
     }
 
     @Override
     public void onDestroyView() {
         mBigClockView = null;
-        mTextTime = null;
+        mClock = null;
     }
 
     @Override
     public String getName() {
-        return "default";
+        return "samsung_bold";
     }
 
     @Override
     public String getTitle() {
-        return mResources.getString(R.string.clock_title_default);
+        return mResources.getString(R.string.clock_title_samsung_bold);
     }
 
     @Override
     public Bitmap getThumbnail() {
-        return BitmapFactory.decodeResource(mResources, R.drawable.default_thumbnail);
+        return BitmapFactory.decodeResource(mResources, R.drawable.samsung_thumbnail);
     }
 
     @Override
     public Bitmap getPreview(int width, int height) {
 
-        // Use the big clock view for the preview
-        View view = getBigClockView();
+        View previewView = mLayoutInflater.inflate(R.layout.default_clock_preview, null);
+        TextClock previewTime = previewView.findViewById(R.id.time);
+        previewTime.setFormat12Hour("<strong>hh</strong><br><strong>mm</strong>");
+        previewTime.setFormat24Hour("<strong>kk</strong><br><strong>mm</strong>");
+        TextClock previewDate = previewView.findViewById(R.id.date);
 
         // Initialize state of plugin before generating preview.
-        setDarkAmount(1f);
-        setTextColor(Color.WHITE);
+        previewTime.setTextColor(Color.WHITE);
+        previewDate.setTextColor(Color.WHITE);
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);
         setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
         onTimeTick();
 
-        return mRenderer.createPreview(view, width, height);
+        return mRenderer.createPreview(previewView, width, height);
     }
 
     @Override
     public View getView() {
-        return null;
-    }
-
-    @Override
-    public View getBigClockView() {
         if (mBigClockView == null) {
             createViews();
         }
@@ -144,21 +162,20 @@ public class DefaultClockController implements ClockPlugin {
     }
 
     @Override
+    public View getBigClockView() {
+        return null;
+    }
+
+    @Override
     public int getPreferredY(int totalHeight) {
-        return totalHeight / 2;
+        return CLOCK_USE_DEFAULT_Y;
     }
 
     @Override
     public void setStyle(Style style) {}
 
     @Override
-    public void setTextColor(int color) {
-        if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
-            mTextTime.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
-        } else {
-            mTextTime.setTextColor(color);
-        }
-    }
+    public void setTextColor(int color) {}
 
     @Override
     public void setColorPalette(boolean supportsDarkText, int[] colorPalette) {}
@@ -168,7 +185,9 @@ public class DefaultClockController implements ClockPlugin {
     }
 
     @Override
-    public void setDarkAmount(float darkAmount) {}
+    public void setDarkAmount(float darkAmount) {
+        mBigClockView.setDarkAmount(darkAmount);
+    }
 
     @Override
     public void onTimeZoneChanged(TimeZone timeZone) {}

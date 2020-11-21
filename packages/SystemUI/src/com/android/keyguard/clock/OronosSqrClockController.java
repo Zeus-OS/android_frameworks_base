@@ -34,6 +34,9 @@ import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
 
+import com.android.internal.util.zenx.ZenxUtils;
+import android.content.Context;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -83,6 +86,8 @@ public class OronosSqrClockController implements ClockPlugin {
     private String mDescFormat;
     private TimeZone mTimeZone;
 
+    private Context mContext;
+
     /**
      * Controller for transition into dark state.
      */
@@ -96,10 +101,11 @@ public class OronosSqrClockController implements ClockPlugin {
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     public OronosSqrClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mColorExtractor = colorExtractor;
+        mContext = context;
     }
 
     private void createViews() {
@@ -215,8 +221,19 @@ public class OronosSqrClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
+
         mHourClock.setTextColor(color);
         mMinuteClock.setTextColor(color);
+
+         if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext)) {
+            mHourClock.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
+            mMinuteClock.setTextColor(color);
+        }
+
+         if(ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+            mHourClock.setTextColor(color);
+            mMinuteClock.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
+        }
     }
 
     @Override

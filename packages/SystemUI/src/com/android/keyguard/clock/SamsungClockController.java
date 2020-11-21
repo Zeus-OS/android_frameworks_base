@@ -25,6 +25,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextClock;
 
+import android.text.Html;
+import android.content.Context;
+import com.android.internal.util.zenx.ZenxUtils;
+
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
@@ -63,12 +67,14 @@ public class SamsungClockController implements ClockPlugin {
     /**
      * Root view of clock.
      */
-    private ClockLayout mView;
+    private ClockLayout mBigClockView;
 
     /**
      * Text clock in preview view hierarchy.
      */
     private TextClock mClock;
+
+    private Context mContext;
 
     /**
      * Create a DefaultClockController instance.
@@ -78,23 +84,37 @@ public class SamsungClockController implements ClockPlugin {
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     public SamsungClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mColorExtractor = colorExtractor;
+        mContext = context;
     }
 
     private void createViews() {
-        mView = (ClockLayout) mLayoutInflater
+        mBigClockView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.digital_clock_custom, null);
-        mClock = mView.findViewById(R.id.clock);
-        mClock.setFormat12Hour("hh\nmm");
-        mClock.setFormat24Hour("kk\nmm");
+        mClock = mBigClockView.findViewById(R.id.clock);
+        int mAccentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
+
+        if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext) && ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + ">hh</font><br><font color=" + mAccentColor + ">mm</font>"));
+             mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + ">kk</font><br><font color=" + mAccentColor + ">mm</font>"));
+        } else if(ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + ">hh</font><br>mm"));
+             mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + ">kk</font><br>mm"));
+        } else if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("hh<br><font color=" + mAccentColor + ">mm</font>"));
+             mClock.setFormat24Hour(Html.fromHtml("kk<br><font color=" + mAccentColor + ">mm</font>"));
+        } else {
+            mClock.setFormat12Hour(Html.fromHtml("hh<br>mm"));
+            mClock.setFormat24Hour(Html.fromHtml("kk<br>mm"));
+        }
     }
 
     @Override
     public void onDestroyView() {
-        mView = null;
+        mBigClockView = null;
         mClock = null;
     }
 
@@ -135,10 +155,10 @@ public class SamsungClockController implements ClockPlugin {
 
     @Override
     public View getView() {
-        if (mView == null) {
+        if (mBigClockView == null) {
             createViews();
         }
-        return mView;
+        return mBigClockView;
     }
 
     @Override
@@ -155,9 +175,7 @@ public class SamsungClockController implements ClockPlugin {
     public void setStyle(Style style) {}
 
     @Override
-    public void setTextColor(int color) {
-        mClock.setTextColor(color);
-    }
+    public void setTextColor(int color) {}
 
     @Override
     public void setColorPalette(boolean supportsDarkText, int[] colorPalette) {}
@@ -168,7 +186,7 @@ public class SamsungClockController implements ClockPlugin {
 
     @Override
     public void setDarkAmount(float darkAmount) {
-        mView.setDarkAmount(darkAmount);
+        mBigClockView.setDarkAmount(darkAmount);
     }
 
     @Override

@@ -31,6 +31,9 @@ import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
 
+import android.content.Context;
+import com.android.internal.util.zenx.ZenxUtils;
+
 import java.util.TimeZone;
 
 import static com.android.systemui.statusbar.phone
@@ -64,12 +67,14 @@ public class DefaultBoldClockController implements ClockPlugin {
     /**
      * Root view of clock.
      */
-    private ClockLayout mView;
+    private ClockLayout mBigClockView;
 
     /**
      * Text clock in preview view hierarchy.
      */
     private TextClock mClock;
+
+    private Context mContext;
 
     /**
      * Create a DefaultClockController instance.
@@ -79,23 +84,37 @@ public class DefaultBoldClockController implements ClockPlugin {
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     public DefaultBoldClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mColorExtractor = colorExtractor;
+        mContext = context;
     }
 
     private void createViews() {
-        mView = (ClockLayout) mLayoutInflater
+        mBigClockView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.digital_clock_custom, null);
-        mClock = mView.findViewById(R.id.clock);
-        mClock.setFormat12Hour(Html.fromHtml("<strong>h</strong>:<strong>mm</strong>"));
-        mClock.setFormat24Hour(Html.fromHtml("<strong>kk</strong>:<strong>mm</strong>"));
+        mClock = mBigClockView.findViewById(R.id.clock);
+        int mAccentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
+
+        if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext) && ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<strong><font color=" + mAccentColor + ">h</font></strong>:<strong><font color=" + mAccentColor + ">mm</font></strong>"));
+             mClock.setFormat24Hour(Html.fromHtml("<strong><font color=" + mAccentColor + ">kk</font></strong>:<strong><font color=" + mAccentColor + ">mm</font></strong>"));
+        } else if(ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<strong><font color=" + mAccentColor + ">h</font></strong>:<strong>mm</strong>"));
+             mClock.setFormat24Hour(Html.fromHtml("<strong><font color=" + mAccentColor + ">kk</font></strong>:<strong>mm</strong>"));
+        } else if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<strong>h</strong>:<strong><font color=" + mAccentColor + ">mm</font></strong>"));
+             mClock.setFormat24Hour(Html.fromHtml("<strong>kk</strong>:<strong><font color=" + mAccentColor + ">mm</font></strong>"));
+        } else {
+            mClock.setFormat12Hour(Html.fromHtml("<strong>h</strong>:<strong>mm</strong>"));
+            mClock.setFormat24Hour(Html.fromHtml("<strong>kk</strong>:<strong>mm</strong>"));
+        }
     }
 
     @Override
     public void onDestroyView() {
-        mView = null;
+        mBigClockView = null;
         mClock = null;
     }
 
@@ -136,10 +155,10 @@ public class DefaultBoldClockController implements ClockPlugin {
 
     @Override
     public View getView() {
-        if (mView == null) {
+        if (mBigClockView == null) {
             createViews();
         }
-        return mView;
+        return mBigClockView;
     }
 
     @Override
@@ -156,9 +175,7 @@ public class DefaultBoldClockController implements ClockPlugin {
     public void setStyle(Style style) {}
 
     @Override
-    public void setTextColor(int color) {
-        mClock.setTextColor(color);
-    }
+    public void setTextColor(int color) {}
 
     @Override
     public void setColorPalette(boolean supportsDarkText, int[] colorPalette) {}
@@ -169,7 +186,7 @@ public class DefaultBoldClockController implements ClockPlugin {
 
     @Override
     public void setDarkAmount(float darkAmount) {
-        mView.setDarkAmount(darkAmount);
+        mBigClockView.setDarkAmount(darkAmount);
     }
 
     @Override

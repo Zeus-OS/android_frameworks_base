@@ -57,7 +57,7 @@ public class TuxClockController implements ClockPlugin {
     /**
      * Root view of clock.
      */
-    private ClockLayout mView;
+    private ClockLayout mBigClockView;
 
     /**
      * Text clock in preview view hierarchy.
@@ -91,10 +91,10 @@ public class TuxClockController implements ClockPlugin {
     }
 
     private void createViews() {
-        mView = (ClockLayout) mLayoutInflater
+        mBigClockView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.tux_clock, null);
-        mClock = (TextClock) mView.findViewById(R.id.clock);
-        mLogo = (ImageView) mView.findViewById(R.id.logo);
+        mClock = (TextClock) mBigClockView.findViewById(R.id.clock);
+        mLogo = (ImageView) mBigClockView.findViewById(R.id.logo);
 
         setClockColors();
     }
@@ -122,7 +122,7 @@ public class TuxClockController implements ClockPlugin {
 
     @Override
     public void onDestroyView() {
-        mView = null;
+        mBigClockView = null;
         mClock = null;
     }
 
@@ -159,10 +159,10 @@ public class TuxClockController implements ClockPlugin {
 
     @Override
     public View getView() {
-        if (mView == null) {
+        if (mBigClockView == null) {
             createViews();
         }
-        return mView;
+        return mBigClockView;
     }
 
     @Override
@@ -185,14 +185,14 @@ public class TuxClockController implements ClockPlugin {
 
     @Override
     public void onTimeTick() {
-        mView.onTimeChanged();
+        mBigClockView.onTimeChanged();
         mClock.refreshTime();
     }
 
     @Override
     public void setDarkAmount(float darkAmount) {
         mPalette.setDarkAmount(darkAmount);
-        mView.setDarkAmount(darkAmount);
+        mBigClockView.setDarkAmount(darkAmount);
     }
 
     @Override

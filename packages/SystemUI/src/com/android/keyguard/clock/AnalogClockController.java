@@ -26,6 +26,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextClock;
 
+import com.android.internal.util.zenx.ZenxUtils;
+import android.content.Context;
+
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
@@ -69,6 +72,8 @@ public class AnalogClockController implements ClockPlugin {
      */
     private final ClockPalette mPalette = new ClockPalette();
 
+    private Context mContext;
+
     /**
      * Create a BubbleClockController instance.
      *
@@ -77,10 +82,11 @@ public class AnalogClockController implements ClockPlugin {
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     public AnalogClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mColorExtractor = colorExtractor;
+        mContext = context;
     }
 
     private void createViews() {
@@ -158,7 +164,11 @@ public class AnalogClockController implements ClockPlugin {
     private void updateColor() {
         final int primary = mPalette.getPrimaryColor();
         final int secondary = mPalette.getSecondaryColor();
-        mAnalogClock.setClockColors(primary, secondary);
+        if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
+            mAnalogClock.setClockColors(primary, mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
+        } else {
+            mAnalogClock.setClockColors(primary, secondary);
+        }
     }
 
     @Override

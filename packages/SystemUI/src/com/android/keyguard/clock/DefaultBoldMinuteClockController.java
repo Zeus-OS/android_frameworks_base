@@ -66,7 +66,7 @@ public class DefaultBoldMinuteClockController implements ClockPlugin {
     /**
      * Root view of clock.
      */
-    private ClockLayout mView;
+    private ClockLayout mBigClockView;
 
     /**
      * Text clock in preview view hierarchy.
@@ -91,16 +91,29 @@ public class DefaultBoldMinuteClockController implements ClockPlugin {
     }
 
     private void createViews() {
-        mView = (ClockLayout) mLayoutInflater
+        mBigClockView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.digital_clock_custom, null);
-        mClock = mView.findViewById(R.id.clock);
-        mClock.setFormat12Hour(Html.fromHtml("h:<strong>mm</strong>"));
-        mClock.setFormat24Hour(Html.fromHtml("kk:<strong>mm</strong>"));
+        mClock = mBigClockView.findViewById(R.id.clock);
+        int mAccentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
+
+        if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext) && ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + ">h</font>:<strong><font color=" + mAccentColor + ">mm</font></strong>"));
+             mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + ">kk</font>:<strong><font color=" + mAccentColor + ">mm</font></strong>"));
+        } else if(ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + ">h</font>:<strong>mm</strong>"));
+             mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + ">kk</font>:<strong>mm</strong>"));
+        } else if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext)) {
+             mClock.setFormat12Hour(Html.fromHtml("h:<strong><font color=" + mAccentColor + ">mm</font></strong>"));
+             mClock.setFormat24Hour(Html.fromHtml("kk:<strong><font color=" + mAccentColor + ">mm</font></strong>"));
+        } else {
+            mClock.setFormat12Hour(Html.fromHtml("h:<strong>mm</strong>"));
+            mClock.setFormat24Hour(Html.fromHtml("kk:<strong>mm</strong>"));
+        }
     }
 
     @Override
     public void onDestroyView() {
-        mView = null;
+        mBigClockView = null;
         mClock = null;
     }
 
@@ -141,10 +154,10 @@ public class DefaultBoldMinuteClockController implements ClockPlugin {
 
     @Override
     public View getView() {
-        if (mView == null) {
+        if (mBigClockView == null) {
             createViews();
         }
-        return mView;
+        return mBigClockView;
     }
 
     @Override
@@ -161,13 +174,7 @@ public class DefaultBoldMinuteClockController implements ClockPlugin {
     public void setStyle(Style style) {}
 
     @Override
-    public void setTextColor(int color) {
-        if(ZenxUtils.useLockscreenClockAccentColor(mContext)) {
-            mClock.setTextColor(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
-        } else {
-            mClock.setTextColor(color);
-        }
-    }
+    public void setTextColor(int color) {}
 
     @Override
     public void setColorPalette(boolean supportsDarkText, int[] colorPalette) {}
@@ -178,7 +185,7 @@ public class DefaultBoldMinuteClockController implements ClockPlugin {
 
     @Override
     public void setDarkAmount(float darkAmount) {
-        mView.setDarkAmount(darkAmount);
+        mBigClockView.setDarkAmount(darkAmount);
     }
 
     @Override

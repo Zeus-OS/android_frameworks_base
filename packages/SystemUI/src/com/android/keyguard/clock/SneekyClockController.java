@@ -27,6 +27,9 @@ import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
 
+import android.content.Context;
+import com.android.internal.util.zenx.ZenxUtils;
+
 import java.util.TimeZone;
 
 /**
@@ -65,6 +68,8 @@ public class SneekyClockController implements ClockPlugin {
      */
     private final ClockPalette mPalette = new ClockPalette();
 
+    private Context mContext;
+
     /**
      * Create a BubbleClockController instance.
      *
@@ -73,10 +78,11 @@ public class SneekyClockController implements ClockPlugin {
      * @param colorExtractor Extracts accent color from wallpaper.
      */
     public SneekyClockController(Resources res, LayoutInflater inflater,
-            SysuiColorExtractor colorExtractor) {
+            SysuiColorExtractor colorExtractor, Context context) {
         mResources = res;
         mLayoutInflater = inflater;
         mColorExtractor = colorExtractor;
+        mContext = context;
     }
 
     private void createViews() {
@@ -155,6 +161,12 @@ public class SneekyClockController implements ClockPlugin {
         final int primary = mPalette.getPrimaryColor();
         final int secondary = mPalette.getSecondaryColor();
         //mSneekyClock.setClockColors(primary, secondary);
+
+        if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
+            mSneekyClock.setClockColors(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color), secondary);
+        } else {
+            mSneekyClock.setClockColors(primary, secondary);
+        }
     }
 
     @Override
