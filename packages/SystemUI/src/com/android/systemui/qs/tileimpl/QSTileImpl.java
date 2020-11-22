@@ -148,6 +148,11 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
 
     protected Vibrator mVibrator;
 
+    @Override
+    public boolean isDualTarget() {
+        return false;
+    }
+
     /**
      * Declare the category of this tile.
      *
@@ -381,8 +386,10 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
      * {@link QSTileImpl#getLongClickIntent}
      */
     protected void handleLongClick() {
-        Dependency.get(ActivityStarter.class).postStartActivityDismissingKeyguard(
-                getLongClickIntent(), 0);
+        if (getLongClickIntent() != null) {
+            Dependency.get(ActivityStarter.class).postStartActivityDismissingKeyguard(
+                    getLongClickIntent(), 0);
+        }
     }
 
     /**

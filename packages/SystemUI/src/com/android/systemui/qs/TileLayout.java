@@ -34,6 +34,7 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
     protected int mRows = 1;
     protected int mDefaultColumns;
     private boolean mLayoutChanged = false;
+    protected boolean mShowTitles = true;
 
     protected final ArrayList<TileRecord> mRecords = new ArrayList<>();
     private int mCellMarginTop;
@@ -250,19 +251,33 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
 
     public void updateSettings() {
         final Resources res = mContext.getResources();
-        mDefaultColumns = Math.max(1, res.getInteger(R.integer.quick_settings_num_columns));
+        int defaultColumns = Math.max(1, res.getInteger(R.integer.quick_settings_num_columns));
         boolean isPortrait = res.getConfiguration().orientation
                 == Configuration.ORIENTATION_PORTRAIT;
         int columns = Settings.System.getIntForUser(
-                mContext.getContentResolver(), Settings.System.OMNI_QS_LAYOUT_COLUMNS, mDefaultColumns,
+                mContext.getContentResolver(), Settings.System.OMNI_QS_LAYOUT_COLUMNS, defaultColumns,
                 UserHandle.USER_CURRENT);
         int columnsLandscape = Settings.System.getIntForUser(
-                mContext.getContentResolver(), Settings.System.OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE, mDefaultColumns,
+                mContext.getContentResolver(), Settings.System.OMNI_QS_LAYOUT_COLUMNS_LANDSCAPE, defaultColumns,
                 UserHandle.USER_CURRENT);
-        if (mColumns != (isPortrait ? columns : columnsLandscape)) {
+        boolean showTitles = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.OMNI_QS_TILE_TITLE_VISIBILITY, 1,
+                UserHandle.USER_CURRENT) == 1;
+         if (showTitles) {
+            mCellHeight = mContext.getResources().getDimensionPixelSize(R.dimen.qs_tile_height);
+        } else {
+            mCellHeight = mContext.getResources().getDimensionPixelSize(R.dimen.qs_tile_height_wo_label);
+        }
+        if (mColumns != (isPortrait ? columns : columnsLandscape) || mShowTitles != showTitles) {
             mColumns = isPortrait ? columns : columnsLandscape;
             mLayoutChanged = true;
+            mShowTitles = showTitles;
             requestLayout();
         }
+    }
+
+    @Override
+    public boolean isShowTitles() {
+        return mShowTitles;
     }
 }
