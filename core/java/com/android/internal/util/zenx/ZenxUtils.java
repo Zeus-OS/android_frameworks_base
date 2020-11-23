@@ -59,18 +59,26 @@ import android.content.DialogInterface;
 import android.app.AlertDialog;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
-import java.util.Arrays;
+
+import android.content.om.IOverlayManager;
+import android.content.om.OverlayInfo;
+import android.os.ServiceManager;
+import android.app.UiModeManager;
 
 import com.android.internal.R;
 import com.android.internal.statusbar.IStatusBarService;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
-
 
 public class ZenxUtils {
 
     public static final String INTENT_SCREENSHOT = "action_take_screenshot";
     public static final String INTENT_REGION_SCREENSHOT = "action_take_region_screenshot";
+
+    private static OverlayManager mOverlayService;
 
     // Check if device is connected to Wi-Fi
     public static boolean isWiFiConnected(Context context) {
@@ -417,5 +425,55 @@ public class ZenxUtils {
             }
             return null;
         }
+    }
+
+    // Method to detect whether an overlay is enabled or not
+    public static boolean isThemeEnabled(String packageName) {
+        if (mOverlayService == null) {
+            mOverlayService = new OverlayManager();
+        }
+        try {
+            ArrayList<OverlayInfo> infos = new ArrayList<OverlayInfo>();
+            infos.addAll(mOverlayService.getOverlayInfosForTarget("android",
+                    UserHandle.myUserId()));
+            infos.addAll(mOverlayService.getOverlayInfosForTarget("com.android.systemui",
+                    UserHandle.myUserId()));
+            for (int i = 0, size = infos.size(); i < size; i++) {
+                if (infos.get(i).packageName.equals(packageName)) {
+                    return infos.get(i).isEnabled();
+                }
+            }
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static class OverlayManager {
+        private final IOverlayManager mService;
+
+        public OverlayManager() {
+            mService = IOverlayManager.Stub.asInterface(
+                    ServiceManager.getService(Context.OVERLAY_SERVICE));
+        }
+
+        public void setEnabled(String pkg, boolean enabled, int userId)
+                throws RemoteException {
+            mService.setEnabled(pkg, enabled, userId);
+        }
+
+        public List<OverlayInfo> getOverlayInfosForTarget(String target, int userId)
+                throws RemoteException {
+            return mService.getOverlayInfosForTarget(target, userId);
+        }
+    }
+
+    // Method to detect whether the system dark theme is enabled or not
+    public static boolean isDarkTheme(Context context) {
+        UiModeManager mUiModeManager =
+                context.getSystemService(UiModeManager.class);
+        if (mUiModeManager == null) return false;
+        int mode = mUiModeManager.getNightMode();
+        return (mode == UiModeManager.MODE_NIGHT_YES);
     }
 }
