@@ -64,4 +64,8 @@
 
         <!-- QS detail view scrolling -->
     <dimen name="qs_detail_item_height_twoline">72dp</dimen>
+
+        <!-- Notification header R -->
+    <dimen name="notification_header_margin_top">0dp</dimen>
+
 </resources>

@@ -22,4 +22,7 @@
     <color name="qs_header_grey_color">#ff212121</color>
     <color name="qs_header_light_grey_color">#ff757575</color>
     <color name="qs_header_transparent_color">@android:color/transparent</color>
+
+        <!-- Notification Header Color-->
+    <color name="notification_header_text">#ffffffff</color>
 </resources>

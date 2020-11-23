@@ -23,6 +23,7 @@
     android:paddingEnd="4dp"
     android:focusable="true"
     android:clickable="true"
+    android:background="@drawable/notification_section_header_background"
     >
 
     <LinearLayout
@@ -31,6 +32,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:layout_marginTop="@dimen/notification_header_margin_top"
         android:forceHasOverlappingRendering="false"
         android:clipChildren="false"
         >
@@ -44,6 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:forceHasOverlappingRendering="false"
+        android:textColor="@color/notification_header_text"
         android:text="@string/notification_section_header_gentle"  />
     </LinearLayout>
 
@@ -52,10 +55,11 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="end|center_vertical"
+            android:layout_marginTop="@dimen/notification_header_margin_top"
             android:src="@drawable/status_bar_notification_section_header_clear_btn"
             android:contentDescription="@string/accessibility_notification_section_header_gentle_clear_all"
             android:scaleType="center"
-            android:tint="?attr/wallpaperTextColor"
+            android:tint="@color/notification_header_text"
             android:tintMode="src_in"
             android:visibility="gone"
             android:forceHasOverlappingRendering="false"

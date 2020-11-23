@@ -23,6 +23,7 @@
     android:paddingEnd="4dp"
     android:focusable="true"
     android:clickable="true"
+    android:background="@drawable/notification_section_header_background"
 >
 
     <LinearLayout
@@ -30,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginEnd="8dp"
+        android:layout_marginTop="@dimen/notification_header_margin_top"
         android:gravity="bottom"
         android:orientation="horizontal"
         android:forceHasOverlappingRendering="false"
@@ -44,6 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/notification_section_header_conversations"
+                android:textColor="@color/notification_header_text"
             />
 
         <ImageView
