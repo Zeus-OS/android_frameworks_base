@@ -150,10 +150,7 @@ public class BubbleClockController implements ClockPlugin {
 
     @Override
     public View getView() {
-        if (mLockClockContainer == null) {
-            createViews();
-        }
-        return mLockClockContainer;
+        return null;
     }
 
     @Override
@@ -166,7 +163,7 @@ public class BubbleClockController implements ClockPlugin {
 
     @Override
     public int getPreferredY(int totalHeight) {
-        return mClockPosition.getPreferredY();
+        return totalHeight / 2;
     }
 
     @Override

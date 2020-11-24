@@ -132,11 +132,6 @@ public class RainbowCircleClockController implements ClockPlugin {
     }
 
     @Override
-    public int getPreferredY(int totalHeight) {
-        return totalHeight / 4;
-    }
-
-    @Override
     public Bitmap getThumbnail() {
         return BitmapFactory.decodeResource(mResources, R.drawable.rainbow_preview);
     }
@@ -154,6 +149,11 @@ public class RainbowCircleClockController implements ClockPlugin {
 
     @Override
     public View getView() {
+        return null;
+    }
+
+    @Override
+    public View getBigClockView() {
         if (mBigClockView == null) {
             createViews();
         }
@@ -161,10 +161,9 @@ public class RainbowCircleClockController implements ClockPlugin {
     }
 
     @Override
-    public View getBigClockView() {
-        return null;
+    public int getPreferredY(int totalHeight) {
+        return totalHeight / 2;
     }
-
     @Override
     public void setStyle(Style style) {}
 

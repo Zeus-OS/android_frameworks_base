@@ -132,11 +132,6 @@ public class ExplosionCircleClockController implements ClockPlugin {
     }
 
     @Override
-    public int getPreferredY(int totalHeight) {
-        return totalHeight / 4;
-    }
-
-    @Override
     public Bitmap getThumbnail() {
         return BitmapFactory.decodeResource(mResources, R.drawable.explosion_thumbnail);
     }
@@ -154,6 +149,11 @@ public class ExplosionCircleClockController implements ClockPlugin {
 
     @Override
     public View getView() {
+        return null;
+    }
+
+    @Override
+    public View getBigClockView() {
         if (mBigClockView == null) {
             createViews();
         }
@@ -161,8 +161,8 @@ public class ExplosionCircleClockController implements ClockPlugin {
     }
 
     @Override
-    public View getBigClockView() {
-        return null;
+    public int getPreferredY(int totalHeight) {
+        return totalHeight / 2;
     }
 
     @Override

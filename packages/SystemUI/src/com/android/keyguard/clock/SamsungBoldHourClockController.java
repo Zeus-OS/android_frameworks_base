@@ -156,6 +156,11 @@ public class SamsungBoldHourClockController implements ClockPlugin {
 
     @Override
     public View getView() {
+        return null;
+    }
+
+    @Override
+    public View getBigClockView() {
         if (mBigClockView == null) {
             createViews();
         }
@@ -163,13 +168,8 @@ public class SamsungBoldHourClockController implements ClockPlugin {
     }
 
     @Override
-    public View getBigClockView() {
-        return null;
-    }
-
-    @Override
     public int getPreferredY(int totalHeight) {
-        return CLOCK_USE_DEFAULT_Y;
+        return totalHeight / 2;
     }
 
     @Override

@@ -132,11 +132,6 @@ public class BlueV2CircleClockController implements ClockPlugin {
     }
 
     @Override
-    public int getPreferredY(int totalHeight) {
-        return totalHeight / 4;
-    }
-
-    @Override
     public Bitmap getThumbnail() {
         return BitmapFactory.decodeResource(mResources, R.drawable.color_circle_preview);
     }
@@ -151,9 +146,14 @@ public class BlueV2CircleClockController implements ClockPlugin {
         onTimeTick();
         return mRenderer.createPreview(previewView, width, height);
     }
-
+    
     @Override
     public View getView() {
+        return null;
+    }
+
+    @Override
+    public View getBigClockView() {
         if (mBigClockView == null) {
             createViews();
         }
@@ -161,8 +161,8 @@ public class BlueV2CircleClockController implements ClockPlugin {
     }
 
     @Override
-    public View getBigClockView() {
-        return null;
+    public int getPreferredY(int totalHeight) {
+        return totalHeight / 2;
     }
 
     @Override

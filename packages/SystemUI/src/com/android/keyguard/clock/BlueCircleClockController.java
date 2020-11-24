@@ -132,11 +132,6 @@ public class BlueCircleClockController implements ClockPlugin {
     }
 
     @Override
-    public int getPreferredY(int totalHeight) {
-        return totalHeight / 4;
-    }
-
-    @Override
     public Bitmap getThumbnail() {
         return BitmapFactory.decodeResource(mResources, R.drawable.blue_circle_preview);
     }
@@ -154,10 +149,20 @@ public class BlueCircleClockController implements ClockPlugin {
 
     @Override
     public View getView() {
+        return null;
+    }
+
+    @Override
+    public View getBigClockView() {
         if (mBigClockView == null) {
             createViews();
         }
         return mBigClockView;
+    }
+
+    @Override
+    public int getPreferredY(int totalHeight) {
+        return totalHeight / 2;
     }
 
     @Override
