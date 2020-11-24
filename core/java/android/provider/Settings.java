@@ -4980,6 +4980,18 @@ public final class Settings {
         public static final String QS_FOOTER_SECURITY_INFORMATION = "qs_footer_security_information";
         
         /**
+         * Dual Row in Statusbar Off:0, Notifications: 1 , Notification + System icon (Network speed): 2 , Notification + System icon (Used data)
+         * @hide
+         */
+        public static final String DUAL_STATUSBAR_ROW_MODE = "dual_statusbar_row_mode";
+
+        /**
+         * Show data usage in dual row
+         * @hide
+         */
+        public static final String DUAL_ROW_DATAUSAGE = "dual_row_datausage";
+
+        /**
          * Whether to use accent lock clock colors hour
          * @hide	         
          */	        

@@ -29,6 +29,7 @@ import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.provider.Settings;
 
 import com.android.keyguard.AlphaOptimizedLinearLayout;
 import com.android.systemui.R;
@@ -72,12 +73,15 @@ public class StatusIconContainer extends AlphaOptimizedLinearLayout {
     // Any ignored icon will never be added as a child
     private ArrayList<String> mIgnoredSlots = new ArrayList<>();
 
+    private Context ctx;
+
     public StatusIconContainer(Context context) {
         this(context, null);
     }
 
     public StatusIconContainer(Context context, AttributeSet attrs) {
         super(context, attrs);
+        ctx = context;
         initDimens();
         setWillNotDraw(!DEBUG_OVERFLOW);
     }
@@ -104,7 +108,17 @@ public class StatusIconContainer extends AlphaOptimizedLinearLayout {
         int radius = getResources().getDimensionPixelSize(R.dimen.overflow_dot_radius);
         mStaticDotDiameter = 2 * radius;
         mUnderflowWidth = mIconDotFrameWidth + (MAX_DOTS - 1) * (mStaticDotDiameter + mDotPadding);
-        mMaxIcons = getResources().getInteger(R.integer.config_maxVisibleStatusIconContainer);
+        if(getDualStatusbarMode() != 0) {
+            mMaxIcons = getResources().getInteger(R.integer.config_maxVisibleDualStatusIconContainer);
+        } else {
+            mMaxIcons = getResources().getInteger(R.integer.config_maxVisibleStatusIconContainer);
+        }
+
+    }
+
+    private int getDualStatusbarMode() {
+        return Settings.System.getInt(ctx.getContentResolver(),
+            Settings.System.DUAL_STATUSBAR_ROW_MODE, 0);
     }
 
     @Override

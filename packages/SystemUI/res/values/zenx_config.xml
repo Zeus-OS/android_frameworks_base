@@ -33,6 +33,9 @@
     <!-- Max visible system icons -->
     <integer name="config_maxVisibleStatusIconContainer">7</integer>
 
+    <!-- Max visible system icons in dualstatusbar mode -->
+    <integer name="config_maxVisibleDualStatusIconContainer">9</integer>
+
      <!-- System icon area layout weight -->
     <item name="system_icon_area_weight" format="float" type="integer">1</item>
 
