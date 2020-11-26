@@ -157,7 +157,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
         mIconSize = mRowTextSize;
         mIconSizeWithHeader = (int) mContext.getResources().getDimension(R.dimen.header_icon_size);
         mRowTextSize = mContext.getResources().getDimensionPixelSize(
-                R.dimen.lock_date_font_size_18);
+                R.dimen.lock_date_font_size_21);
         mRowWithHeaderTextSize = mContext.getResources().getDimensionPixelSize(
                 R.dimen.header_row_font_size);
         mTitle.setOnClickListener(this);
@@ -439,7 +439,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
         mIconSize = mRowTextSize;
         mIconSizeWithHeader = (int) mContext.getResources().getDimension(R.dimen.header_icon_size);
         mRowTextSize = mContext.getResources().getDimensionPixelSize(
-                R.dimen.lock_date_font_size_18);
+                R.dimen.lock_date_font_size_21);
         mRowWithHeaderTextSize = mContext.getResources().getDimensionPixelSize(
                 R.dimen.header_row_font_size);
     }
@@ -467,7 +467,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
     public void refreshdatesize() {
         final Resources res = getContext().getResources();
         boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-        int lockDateSize = isPrimary ? getLockDateSize() : 18;
+        int lockDateSize = isPrimary ? getLockDateSize() : 21;
 
         if (lockDateSize == 10) {
         mRowTextSize = mContext.getResources().getDimensionPixelSize(R.dimen.lock_date_font_size_10);
