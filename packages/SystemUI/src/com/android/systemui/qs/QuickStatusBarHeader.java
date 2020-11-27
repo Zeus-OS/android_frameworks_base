@@ -361,7 +361,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mAllIndicatorsEnabled = mPrivacyItemController.getAllIndicatorsAvailable();
         mMicCameraIndicatorsEnabled = mPrivacyItemController.getMicCameraAvailable();
 
-        updateSettings();
         Dependency.get(TunerService.class).addTunable(this,
                 QS_SHOW_AUTO_BRIGHTNESS,
                 QS_SHOW_BRIGHTNESS_SLIDER,
@@ -546,11 +545,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         updateHeaderTextContainerAlphaAnimator();
         updatePrivacyChipAlphaAnimator();
     }
-
-    private void updateSettings() {
-        updateResources();
-	    updateDataUsageView();
-     }
 
     private void updateDataUsageView() {
         if (mDataUsageView.isDataUsageEnabled() != 0) {

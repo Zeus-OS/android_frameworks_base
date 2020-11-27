@@ -84,9 +84,6 @@ class DoubleLineTileLayout(
         return false
     }
 
-    override fun setSidePadding(paddingStart : Int, paddingEnd : Int) {
-    }
-
     override fun setListening(listening: Boolean) {
         if (_listening == listening) return
         _listening = listening
@@ -114,8 +111,6 @@ class DoubleLineTileLayout(
         updateResources()
     }
 
-    override fun updateSettings() { }
-
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
 
         mRecords.forEach {
@@ -124,14 +119,6 @@ class DoubleLineTileLayout(
 
         val height = twoLineHeight + paddingBottom + paddingTop
         setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), height)
-    }
-
-    override fun isShowTitles(): Boolean {
-        return false
-    }
-
-    override fun getNumColumns(): Int {
-        return 6
     }
 
     private fun calculateMaxColumns(availableWidth: Int): Int {

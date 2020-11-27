@@ -348,12 +348,6 @@ public class PagedTileLayout extends ViewPager implements QSTileLayout {
         return changed;
     }
 
-    public void setSidePadding(int paddingStart, int paddingEnd) {
-        for (TilePage tilePage : mPages) {
-            tilePage.setSidePadding(paddingStart, paddingEnd);
-        }
-    }
-
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
@@ -596,23 +590,5 @@ public class PagedTileLayout extends ViewPager implements QSTileLayout {
 
     public interface PageListener {
         void onPageChanged(boolean isFirst);
-    }
-
-    @Override
-    public void updateSettings() {
-        for (int i = 0; i < mPages.size(); i++) {
-            mPages.get(i).updateSettings();
-        }
-        distributeTiles();
-    }
-
-    @Override
-    public int getNumColumns() {
-        return mPages.get(0).getNumColumns();
-    }
-
-    @Override
-    public boolean isShowTitles() {
-        return mPages.get(0).isShowTitles();
     }
 }
