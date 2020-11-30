@@ -1,5 +1,8 @@
 package com.android.systemui.statusbar.info;
 
+import static com.android.systemui.statusbar.StatusBarIconView.STATE_DOT;
+import static com.android.systemui.statusbar.StatusBarIconView.STATE_HIDDEN;
+import static com.android.systemui.statusbar.StatusBarIconView.STATE_ICON;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -32,20 +35,9 @@ import com.android.systemui.statusbar.policy.NetworkController;
 import com.android.systemui.statusbar.policy.NetworkController.SignalCallback;
 import com.android.settingslib.net.DataUsageController;
 
-public class DualDataUsageView extends TextView implements DarkReceiver {
+public class DualDataUsageView extends TextView  implements StatusIconDisplayable {
 
-
-    /**
-     * Whether we should use colors that adapt based on wallpaper/the scrim behind quick settings
-     * for text.
-     */
-    private boolean mUseWallpaperTextColor;
-
-    /**
-     * Color to be set on this {@link TextView}, when wallpaperTextColor is <b>not</b> utilized.
-     */
-    private int mNonAdaptedColor;
-
+    public static final String SLOT = "DataUsage";
     private final boolean mShowDark;
     private boolean mAttached;
 
@@ -58,6 +50,9 @@ public class DualDataUsageView extends TextView implements DarkReceiver {
     private int mTintColor;
     private final Resources resources;
 
+    private int mVisibleState = -1;
+    private boolean mSystemIconVisible = true;
+
     public DualDataUsageView(Context context, AttributeSet attrs) {
         super(context, attrs);
         resources = getResources();
@@ -68,13 +63,11 @@ public class DualDataUsageView extends TextView implements DarkReceiver {
                 0, 0);
         try {
             mShowDark = a.getBoolean(R.styleable.Clock_showDark, true);
-            mNonAdaptedColor = getCurrentTextColor();
         } finally {
             a.recycle();
         }
 
         mContext = context;
-        mNetworkController = Dependency.get(NetworkController.class);
         mHandler = new Handler();
         mTintColor = resources.getColor(android.R.color.white);
     }
@@ -146,30 +139,64 @@ public class DualDataUsageView extends TextView implements DarkReceiver {
                 com.android.internal.R.string.fileSizeSuffix, res.value, res.units));
     }
 
-        /**
-     * Sets whether the clock uses the wallpaperTextColor. If we're not using it, we'll revert back
-     * to dark-mode-based/tinted colors.
-     *
-     * @param shouldUseWallpaperTextColor whether we should use wallpaperTextColor for text color
-     */
-    public void useWallpaperTextColor(boolean shouldUseWallpaperTextColor) {
-        if (shouldUseWallpaperTextColor == mUseWallpaperTextColor) {
-            return;
-        }
-        mUseWallpaperTextColor = shouldUseWallpaperTextColor;
+    @Override
+    public void onDarkChanged(Rect area, float darkIntensity, int tint) {
+        mTintColor = DarkIconDispatcher.getTint(area, this, tint);
+        setTextColor(mTintColor);
+        updateUsageData();
+    }
 
-        if (mUseWallpaperTextColor) {
-            setTextColor(Utils.getColorAttr(mContext, R.attr.wallpaperTextColor));
+    @Override
+    public String getSlot() {
+        return SLOT;
+    }
+
+    @Override
+    public boolean isIconVisible() {
+        if(isDataUsageEnabled() != 0) {
+            return true;
         } else {
-            setTextColor(mNonAdaptedColor);
+            return false;
         }
     }
 
-    public void onDarkChanged(Rect area, float darkIntensity, int tint) {
-        mNonAdaptedColor = DarkIconDispatcher.getTint(area, this, tint);
-        if (!mUseWallpaperTextColor) {
-            setTextColor(mNonAdaptedColor);
+    @Override
+    public int getVisibleState() {
+        return mVisibleState;
+    }
+
+    @Override
+    public void setVisibleState(int state, boolean animate) {
+        if (state == mVisibleState) {
+            return;
         }
+        mVisibleState = state;
+
+        switch (state) {
+            case STATE_ICON:
+                mSystemIconVisible = true;
+                break;
+            case STATE_DOT:
+            case STATE_HIDDEN:
+            default:
+                mSystemIconVisible = false;
+                break;
+        }
+        updateVisibility();
+    }
+
+    private void updateVisibility() {
+        setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setDecorColor(int color) {
+    }
+
+    @Override
+    public void setStaticDrawableColor(int color) {
+        mTintColor = color;
+        setTextColor(mTintColor);
         updateUsageData();
     }
 
@@ -178,10 +205,8 @@ public class DualDataUsageView extends TextView implements DarkReceiver {
         super.onAttachedToWindow();
         if (!mAttached) {
             mAttached = true;
-            if (mShowDark) {
-                Dependency.get(DarkIconDispatcher.class).addDarkReceiver(this);
-            }
         }
+        Dependency.get(DarkIconDispatcher.class).addDarkReceiver(this);
         updateUsageData();
     }
 
@@ -190,9 +215,7 @@ public class DualDataUsageView extends TextView implements DarkReceiver {
         super.onDetachedFromWindow();
         if (mAttached) {
             mAttached = false;
-            if (mShowDark) {
-                Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(this);
-            }
         }
+        Dependency.get(DarkIconDispatcher.class).removeDarkReceiver(this);
     }
 }
