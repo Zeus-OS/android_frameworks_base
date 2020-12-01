@@ -65,6 +65,7 @@ public class ThemesUtils {
             "com.android.systemui.qstile.triangles",
             "com.android.systemui.qstile.deletround",
             "com.android.systemui.qstile.bottom_triangle",
+            "com.android.systemui.qstile.oos",
     };
 
     public static final String[] UI_THEMES = {
