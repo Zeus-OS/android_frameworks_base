@@ -14669,6 +14669,12 @@ public final class Settings {
                 "enable_adb_incremental_install_default";
 
         /**
+         * Audio focus mode for ringtones when headset is connected
+         * @hide
+         */
+        public static final String RINGTONE_FOCUS_MODE = "ringtone_focus_mode";
+
+        /**
          * The packages whitelisted to be run in autofill compatibility mode. The list
          * of packages is {@code ":"} colon delimited, and each entry has the name of the
          * package and an optional list of url bar resource ids (the list is delimited by
