@@ -5396,7 +5396,7 @@ public final class Settings {
          * @hide
          */
         public static final String SYSUI_KEYGUARD_BATTERY_BAR_COLOR = "sysui_keyguard_battery_bar_color";
-   
+
          /**
          * Network traffic layout
          * @hide
@@ -5456,6 +5456,16 @@ public final class Settings {
          * @hide
          */
         public static final String NOTIFICATION_SOUND_VIB_SCREEN_ON = "notification_sound_vib_screen_on";
+
+        /**
+         * Set edge gesture Y dead zone
+         * 0 - disabled - stock behavior - default
+         * 1 - smaller top area of the screen
+         * 2 - small top area of the screen
+         * 3 - half top of the screen
+         * @hide
+         */
+        public static final String EDGE_GESTURE_Y_DEAD_ZONE = "edge_gesture_y_dead_zone";
 
         /**
         * @hide
