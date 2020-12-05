@@ -697,7 +697,7 @@ final class ColorFade implements ScreenStateAnimator {
     }
 
     private static void logEglError(String func) {
-        Slog.e(TAG, func + " failed: error " + EGL14.eglGetError(), new Throwable());
+        // Slog.e(TAG, func + " failed: error " + EGL14.eglGetError(), new Throwable());
     }
 
     private static boolean checkGlErrors(String func) {
