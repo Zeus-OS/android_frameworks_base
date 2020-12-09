@@ -38,4 +38,6 @@
     <color name="chooser_chip_icon">#8AB4F8</color> <!-- Blue 300 -->
 
     <color name="personal_apps_suspension_notification_color">#8AB4F8</color>
+
+    <color name="gradient_end">#ff8ab4f8</color>
 </resources>

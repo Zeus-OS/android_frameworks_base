@@ -4063,4 +4063,6 @@
 
   <java-symbol type="attr" name="colorBackgroundFloating" />
 
+    <java-symbol type="color" name="gradient_start" />
+  <java-symbol type="color" name="gradient_end" />
 </resources>
