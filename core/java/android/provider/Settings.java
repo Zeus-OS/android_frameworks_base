@@ -5476,12 +5476,6 @@ public final class Settings {
         public static final String ROAMING_INDICATOR_ICON = "roaming_indicator_icon";
 
         /**
-         * Whether footer #DerpFest text shows
-         * @hide
-         */
-        public static final String OMNI_FOOTER_TEXT_SHOW = "omni_footer_text_show";
-
-        /**
          * QS footer text
          * @hide
          */
@@ -5695,6 +5689,18 @@ public final class Settings {
          * @hide
          */
         public static final String QS_DATAUSAGE = "qs_datausage";
+
+	/**
+         * 0: Off, 1: Used Data, 2: NetworkTraffic, 3: Text // Left side
+         * @hide
+         */
+        public static final String QS_FOOTER_INFO = "qs_footer_info";
+
+	/**
+         * 0: Off, 1: Used Data, 2: NetworkTraffic, 3: Text // Right side
+         * @hide
+         */
+        public static final String QS_FOOTER_INFO_RIGHT = "qs_footer_info_right";
 
         /**
          * Custom Ambient tilt gesture
@@ -6317,7 +6323,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_PANEL_TYPE_BACKGROUND);
             PRIVATE_SETTINGS.add(QS_PANEL_CUSTOM_IMAGE);
             PRIVATE_SETTINGS.add(QS_PANEL_CUSTOM_IMAGE_BLUR);
-            PRIVATE_SETTINGS.add(OMNI_FOOTER_TEXT_SHOW);
             PRIVATE_SETTINGS.add(LESS_BORING_HEADS_UP);
             PRIVATE_SETTINGS.add(SHOW_VOLTE_ICON);
             PRIVATE_SETTINGS.add(VOLTE_ICON_STYLE);

@@ -26,7 +26,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical">
-
+        
          <com.android.systemui.statusbar.info.DualDataUsageView
             android:id="@+id/data_sim_usage"
             android:layout_width="match_parent"

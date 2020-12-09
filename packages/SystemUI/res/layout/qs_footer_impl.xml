@@ -36,11 +36,20 @@
         android:gravity="end" >
 
         <com.android.keyguard.AlphaOptimizedLinearLayout
+            android:id="@+id/qs_footer_actions_edit_datausage"
+            android:layout_width="@integer/qs_footer_actions_width"
+            android:layout_height="match_parent"
+            android:layout_marginTop="3dp"
+            android:layout_weight="@integer/qs_footer_actions_weight"
+            android:gravity="center_vertical|start" >
+
+        <com.android.keyguard.AlphaOptimizedLinearLayout
             android:id="@+id/qs_footer_actions_edit_container"
             android:layout_width="@integer/qs_footer_actions_width"
             android:layout_height="match_parent"
             android:layout_weight="@integer/qs_footer_actions_weight"
             android:gravity="center_vertical|start" >
+
             <com.android.systemui.statusbar.AlphaOptimizedImageView
                 android:id="@android:id/edit"
                 android:layout_width="@dimen/qs_footer_action_button_size"
@@ -53,6 +62,55 @@
                 android:padding="@dimen/qs_footer_icon_padding"
                 android:src="@drawable/ic_mode_edit"
                 android:tint="?android:attr/colorForeground"/>
+
+        <LinearLayout
+            android:id="@+id/network_traffic_layout"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="4dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|start"
+            android:clipChildren="false" >
+
+            <com.android.systemui.statusbar.policy.QsFooterNetworkTraffic
+                android:id="@+id/networkTraffic"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:singleLine="false"
+                android:textAppearance="@style/TextAppearance.QS.Status"
+                android:layout_marginEnd="4dp"
+                android:gravity="center_vertical"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/daily_data_usage_layout"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="4dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|start"
+            android:clipChildren="false" >
+
+            <com.android.systemui.statusbar.info.QsFooterDataUsageView
+                android:id="@+id/data_sim_usage"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|start"
+                android:textAppearance="@style/TextAppearance.QS.Status"
+                android:tint="?android:attr/colorForeground"
+                android:singleLine="true"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/daily_data_usage_icon"
+                android:layout_height="16sp"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_data_saver_off"
+                android:tint="?android:attr/colorForeground"
+                android:visibility="gone" />
+
+        </LinearLayout>
 
             <TextView
                 android:id="@+id/build"
@@ -68,6 +126,9 @@
                 android:visibility="gone"/>
          </com.android.keyguard.AlphaOptimizedLinearLayout>
 
+
+    </com.android.keyguard.AlphaOptimizedLinearLayout>
+
         <com.android.systemui.qs.PageIndicator
             android:id="@+id/footer_page_indicator"
             android:layout_width="wrap_content"
@@ -81,6 +142,7 @@
             android:layout_height="match_parent"
             android:layout_weight="@integer/qs_footer_actions_weight"
             android:gravity="center_vertical|end" >
+
             <com.android.systemui.statusbar.phone.MultiUserSwitch
                 android:id="@+id/multi_user_switch"
                 android:layout_width="@dimen/qs_footer_action_button_size"
@@ -96,6 +158,69 @@
                     android:layout_gravity="center"
                     android:scaleType="centerInside"/>
             </com.android.systemui.statusbar.phone.MultiUserSwitch>
+
+                    <LinearLayout
+            android:id="@+id/network_traffic_layout_right"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="4dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|start"
+            android:clipChildren="false" >
+
+            <com.android.systemui.statusbar.policy.QsFooterNetworkTraffic
+                android:id="@+id/networkTraffic_right"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:singleLine="false"
+                android:textAppearance="@style/TextAppearance.QS.Status"
+                android:tint="?android:attr/colorForeground"
+                android:layout_marginEnd="4dp"
+                android:gravity="center_vertical"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/daily_data_usage_layout_right"
+            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="4dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|start"
+            android:clipChildren="false" >
+
+            <com.android.systemui.statusbar.info.QsFooterDataUsageView
+                android:id="@+id/data_sim_usage_right"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|start"
+                android:textAppearance="@style/TextAppearance.QS.Status"
+                android:tint="?android:attr/colorForeground"
+                android:singleLine="true"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/daily_data_usage_icon_right"
+                android:layout_height="16sp"
+                android:layout_width="wrap_content"
+                android:src="@drawable/ic_data_saver_off"
+                android:tint="?android:attr/colorForeground"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+            <TextView
+                android:id="@+id/build_right"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:focusable="true"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textAppearance="@style/TextAppearance.QS.Status"
+                android:layout_marginEnd="4dp"
+                android:visibility="gone"/>
 
             <com.android.keyguard.AlphaOptimizedImageButton
                 android:id="@+id/running_services_button"

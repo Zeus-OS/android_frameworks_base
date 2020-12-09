@@ -60,6 +60,9 @@ import com.android.systemui.statusbar.phone.SettingsButton;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserInfoController.OnUserInfoChangedListener;
+import com.android.systemui.statusbar.info.QsFooterDataUsageView;
+import com.android.systemui.statusbar.policy.QsFooterNetworkTraffic;
+import com.android.internal.util.zenx.ZenxUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -82,6 +85,18 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     private boolean mQsDisabled;
     private QSPanel mQsPanel;
     private QuickQSPanel mQuickQsPanel;
+
+    private QsFooterDataUsageView mQsFooterDataUsageView;
+    private ImageView mQsFooterDataUsageImage;
+    private View mQsFooterDataUsageLayout;
+    private QsFooterNetworkTraffic mQsFooterNetworkTraffic;
+    private View mQsFooterNetworkTrafficLayout;
+
+    private QsFooterDataUsageView mQsFooterDataUsageViewRight;
+    private ImageView mQsFooterDataUsageImageRight;
+    private View mQsFooterDataUsageLayoutRight;
+    private QsFooterNetworkTraffic mQsFooterNetworkTrafficRight;
+    private View mQsFooterNetworkTrafficLayoutRight;
 
     private boolean mExpanded;
 
@@ -107,6 +122,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         public void onChange(boolean selfChange, Uri uri) {
             super.onChange(selfChange, uri);
             setBuildText();
+            updateSettings();
         }
     };
 
@@ -152,6 +168,25 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mEditContainer = findViewById(R.id.qs_footer_actions_edit_container);
         mBuildText = findViewById(R.id.build);
 
+        mQsFooterDataUsageView = findViewById(R.id.data_sim_usage);
+        mQsFooterDataUsageView.setOnClickListener(this);
+        mQsFooterDataUsageImage = findViewById(R.id.daily_data_usage_icon);
+        mQsFooterDataUsageLayout = findViewById(R.id.daily_data_usage_layout);
+
+        mQsFooterNetworkTraffic = findViewById(R.id.networkTraffic);
+        mQsFooterNetworkTrafficLayout = findViewById(R.id.network_traffic_layout);
+
+        mQsFooterDataUsageViewRight = findViewById(R.id.data_sim_usage_right);
+        mQsFooterDataUsageViewRight.setOnClickListener(this);
+        mQsFooterDataUsageImageRight = findViewById(R.id.daily_data_usage_icon_right);
+        mQsFooterDataUsageLayoutRight = findViewById(R.id.daily_data_usage_layout_right);
+
+        mQsFooterNetworkTraffic = findViewById(R.id.networkTraffic);
+        mQsFooterNetworkTrafficLayout = findViewById(R.id.network_traffic_layout);
+
+        mQsFooterNetworkTrafficRight = findViewById(R.id.networkTraffic_right);
+        mQsFooterNetworkTrafficLayoutRight = findViewById(R.id.network_traffic_layout_right);
+
         // RenderThread is doing more harm than good when touching the header (to expand quick
         // settings), so disable it for this view
         ((RippleDrawable) mSettingsButton.getBackground()).setForceSoftware(true);
@@ -164,18 +199,19 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_YES);
         updateEverything();
         setBuildText();
+        updateSettings();
     }
 
     private void setBuildText() {
         TextView v = findViewById(R.id.build);
+        TextView vRight = findViewById(R.id.build_right);
+
         if (v == null) return;
-        boolean isShow = Settings.System.getIntForUser(mContext.getContentResolver(),
-                        Settings.System.OMNI_FOOTER_TEXT_SHOW, 0,
-                        UserHandle.USER_CURRENT) == 1;
         String text = Settings.System.getStringForUser(mContext.getContentResolver(),
                         Settings.System.X_FOOTER_TEXT_STRING,
                         UserHandle.USER_CURRENT);
-        if (isShow) {
+
+        if (getQsFooterInfo() == 3) {
             if (text == null || text == "") {
                 v.setText("ZenX-OS");
                 v.setVisibility(View.VISIBLE);
@@ -185,6 +221,20 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
             }
         } else {
               v.setVisibility(View.GONE);
+        }
+
+        if (vRight == null) return;
+
+        if (getQsFooterInfoRight() == 3) {
+            if (text == null || text == "") {
+                vRight.setText("ZenX-OS");
+                vRight.setVisibility(View.VISIBLE);
+            } else {
+                vRight.setText(text);
+                vRight.setVisibility(View.VISIBLE);
+            }
+        } else {
+              vRight.setVisibility(View.GONE);
         }
     }
 
@@ -230,6 +280,10 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         return new TouchAnimator.Builder()
                 .addFloat(mActionsContainer, "alpha", 0, 1) // contains mRunningServicesButton
                 .addFloat(mEditContainer, "alpha", 0, 1)
+                .addFloat(mQsFooterDataUsageLayout, "alpha", 0, 1)
+                .addFloat(mQsFooterNetworkTrafficLayout, "alpha", 0, 1)
+                .addFloat(mQsFooterDataUsageLayoutRight, "alpha", 0, 1)
+                .addFloat(mQsFooterNetworkTrafficLayoutRight, "alpha", 0, 1)
                 .addFloat(mPageIndicator, "alpha", 0, 1)
                 .setStartDelay(0.9f)
                 .build();
@@ -250,6 +304,12 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         if (mExpanded == expanded) return;
         mExpanded = expanded;
         updateEverything();
+        if(getQsFooterInfo() == 1) {
+            QsFooterDataUsageView.updateUsage();
+        }
+        if(getQsFooterInfoRight() == 1) {
+            QsFooterDataUsageView.updateUsage();
+        }
     }
 
     @Override
@@ -260,15 +320,24 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         if (mFooterAnimator != null) {
             mFooterAnimator.setPosition(headerExpansionFraction);
         }
+
+        if(getQsFooterInfo() == 1) {
+            QsFooterDataUsageView.updateUsage();
+        }
+        if(getQsFooterInfoRight() == 1) {
+            QsFooterDataUsageView.updateUsage();
+        }
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mContext.getContentResolver().registerContentObserver(
-                Settings.System.getUriFor(Settings.System.OMNI_FOOTER_TEXT_SHOW), false,
+                Settings.System.getUriFor(Settings.System.QS_FOOTER_INFO), false,
                 mDeveloperSettingsObserver, UserHandle.USER_ALL);
-
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.QS_FOOTER_INFO_RIGHT), false,
+                mDeveloperSettingsObserver, UserHandle.USER_ALL);
         mContext.getContentResolver().registerContentObserver(
                 Settings.System.getUriFor(Settings.System.X_FOOTER_TEXT_STRING), false,
                 mDeveloperSettingsObserver, UserHandle.USER_ALL);
@@ -316,6 +385,12 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         updateEverything();
     }
 
+    private void updateSettings() {
+        updateResources();
+        updateQsFooterInfoVisibility();
+        updateQsFooterInfoRightVisibility();
+    }
+
     public void updateEverything() {
         post(() -> {
             updateVisibilities();
@@ -328,6 +403,8 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mMultiUserSwitch.setClickable(mMultiUserSwitch.getVisibility() == View.VISIBLE);
         mEdit.setClickable(mEdit.getVisibility() == View.VISIBLE);
         mSettingsButton.setClickable(mSettingsButton.getVisibility() == View.VISIBLE);
+        mQsFooterDataUsageLayout.setClickable(mQsFooterDataUsageLayout.getVisibility() == View.VISIBLE);
+        mQsFooterDataUsageLayoutRight.setClickable(mQsFooterDataUsageLayoutRight.getVisibility() == View.VISIBLE);
     }
 
     private void updateVisibilities() {
@@ -338,6 +415,90 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
         mMultiUserSwitch.setVisibility(isUserEnabled() ? (showUserSwitcher() ? View.VISIBLE : View.INVISIBLE) : View.GONE);
         mEditContainer.setVisibility(isDemo || !mExpanded ? View.INVISIBLE : View.VISIBLE);
         mEdit.setVisibility(isEditEnabled() ? View.VISIBLE : View.GONE);
+        updateQsFooterInfoVisibility();
+        updateQsFooterInfoRightVisibility();
+        updateSettings();
+    }
+
+    private void updateQsFooterInfoVisibility() {
+        TextView buildText = findViewById(R.id.build);
+
+        switch (getQsFooterInfo()) {
+            case 1:
+                mQsFooterDataUsageLayout.setVisibility(View.VISIBLE);
+                mQsFooterDataUsageImage.setVisibility(View.VISIBLE);
+                mQsFooterDataUsageView.setVisibility(View.VISIBLE);
+                mQsFooterNetworkTrafficLayout.setVisibility(View.GONE);
+                buildText.setVisibility(View.GONE);
+                break;
+            case 2:
+                mQsFooterDataUsageLayout.setVisibility(View.GONE);
+                mQsFooterDataUsageImage.setVisibility(View.GONE);
+                mQsFooterDataUsageView.setVisibility(View.GONE);
+                mQsFooterNetworkTrafficLayout.setVisibility(View.VISIBLE);
+                break;
+            case 3:
+                mQsFooterDataUsageLayout.setVisibility(View.GONE);
+                mQsFooterDataUsageImage.setVisibility(View.GONE);
+                mQsFooterDataUsageView.setVisibility(View.GONE);
+                mQsFooterNetworkTrafficLayout.setVisibility(View.GONE);
+                buildText.setVisibility(View.VISIBLE);
+                break;
+            default:
+                mQsFooterDataUsageLayout.setVisibility(View.GONE);
+                mQsFooterDataUsageImage.setVisibility(View.GONE);
+                mQsFooterDataUsageView.setVisibility(View.GONE);
+                mQsFooterNetworkTrafficLayout.setVisibility(View.GONE);
+                buildText.setVisibility(View.GONE);
+                break;
+        }
+
+    }
+
+    public int getQsFooterInfo() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.QS_FOOTER_INFO, 0);
+    }
+
+    private void updateQsFooterInfoRightVisibility() {
+        TextView buildText = findViewById(R.id.build_right);
+
+        switch (getQsFooterInfoRight()) {
+            case 1:
+                mQsFooterDataUsageLayoutRight.setVisibility(View.VISIBLE);
+                mQsFooterDataUsageImageRight.setVisibility(View.VISIBLE);
+                mQsFooterDataUsageViewRight.setVisibility(View.VISIBLE);
+                mQsFooterNetworkTrafficLayoutRight.setVisibility(View.GONE);
+                buildText.setVisibility(View.GONE);
+                break;
+            case 2:
+                mQsFooterNetworkTrafficLayoutRight.setVisibility(View.VISIBLE);
+                mQsFooterDataUsageLayoutRight.setVisibility(View.GONE);
+                mQsFooterDataUsageImageRight.setVisibility(View.GONE);
+                mQsFooterDataUsageViewRight.setVisibility(View.GONE);
+                buildText.setVisibility(View.GONE);
+                break;
+            case 3:
+                mQsFooterDataUsageLayoutRight.setVisibility(View.GONE);
+                mQsFooterDataUsageImageRight.setVisibility(View.GONE);
+                mQsFooterDataUsageViewRight.setVisibility(View.GONE);
+                mQsFooterNetworkTrafficLayoutRight.setVisibility(View.GONE);
+                buildText.setVisibility(View.VISIBLE);
+                break;
+            default:
+                mQsFooterDataUsageLayoutRight.setVisibility(View.GONE);
+                mQsFooterDataUsageImageRight.setVisibility(View.GONE);
+                mQsFooterDataUsageViewRight.setVisibility(View.GONE);
+                mQsFooterNetworkTrafficLayoutRight.setVisibility(View.GONE);
+                buildText.setVisibility(View.GONE);
+                break;
+        }
+
+    }
+
+    public int getQsFooterInfoRight() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.QS_FOOTER_INFO_RIGHT, 0);
     }
 
     private boolean showUserSwitcher() {
@@ -409,7 +570,24 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
                     mExpanded ? MetricsProto.MetricsEvent.ACTION_QS_EXPANDED_SETTINGS_LAUNCH
                             : MetricsProto.MetricsEvent.ACTION_QS_COLLAPSED_SETTINGS_LAUNCH);
             startRunningServicesActivity();
+        } else if (v == mQsFooterDataUsageLayout) {
+            MetricsLogger.action(mContext,
+                    mExpanded ? MetricsProto.MetricsEvent.ACTION_QS_EXPANDED_SETTINGS_LAUNCH
+                            : MetricsProto.MetricsEvent.ACTION_QS_COLLAPSED_SETTINGS_LAUNCH);
+                    startDataUsageActivity();
+        } else if (v == mQsFooterDataUsageLayoutRight) {
+            MetricsLogger.action(mContext,
+                    mExpanded ? MetricsProto.MetricsEvent.ACTION_QS_EXPANDED_SETTINGS_LAUNCH
+                            : MetricsProto.MetricsEvent.ACTION_QS_COLLAPSED_SETTINGS_LAUNCH);
+                    startDataUsageActivity();
         }
+    }
+
+    private void startDataUsageActivity() {
+        Intent intent = new Intent();
+        intent.setClassName("com.android.settings",
+                "com.android.settings.Settings$DataUsageSummaryActivity");
+        mActivityStarter.startActivity(intent, true /* dismissShade */);
     }
 
     public boolean onLongClick(View v) {
