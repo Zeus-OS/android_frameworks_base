@@ -30,24 +30,25 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent" 
         android:layout_weight="1"
         android:orientation="horizontal"
         android:gravity="center_vertical|start" >
 
-    <com.android.systemui.statusbar.policy.Clock
-        android:id="@+id/clock"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:minWidth="48dp"
-        android:gravity="center_vertical|start"
-        android:paddingStart="@dimen/status_bar_left_clock_starting_padding"
-        android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
-        android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.StatusBar.Clock"
-        systemui:showDark="false" />
-    </LinearLayout>
+        <com.android.systemui.statusbar.policy.Clock
+           android:id="@+id/clock"
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:minWidth="48dp"
+           android:gravity="center_vertical|start"
+           android:paddingStart="@dimen/status_bar_left_clock_starting_padding"
+           android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
+           android:singleLine="true"
+           android:textAppearance="@style/TextAppearance.StatusBar.Clock"
+           systemui:showDark="false" />
 
+    </LinearLayout>
+    
     <android.widget.Space
         android:id="@+id/space"
         android:layout_width="0dp"
@@ -58,29 +59,28 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:orientation="horizontal"
         android:gravity="center_vertical|end" >
 
     <include layout="@layout/ongoing_privacy_chip" />
 
-    </LinearLayout>
-
     <LinearLayout
-        android:layout_width="0dp" 
-        android:layout_height="match_parent" 
-        android:layout_weight="2" 
+        android:id="@+id/network_traffic_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal"
         android:gravity="center_vertical|end" >
 
          <com.android.systemui.statusbar.policy.NetworkTraffic
             android:id="@+id/networkTraffic"
-            android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
+            android:paddingEnd="2dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginStart="2dp"
-            android:layout_marginEnd="2dp"
+            android:layout_marginEnd="0dp"
             android:singleLine="false"
+            android:textAppearance="@style/TextAppearance.StatusBar.Clock"
             android:lineSpacingMultiplier="1.2"
             systemui:showDark="false"/>
 
@@ -88,9 +88,9 @@
 
         <LinearLayout
             android:id="@+id/daily_data_usage_layout"
-            android:layout_height="match_parent"
             android:layout_width="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="2dp"
             android:orientation="horizontal"
             android:gravity="center_vertical|end"
             android:clipChildren="false" >
@@ -112,6 +112,35 @@
                 android:visibility="gone" />
         </LinearLayout>
 
+          <LinearLayout
+                android:id="@+id/system_info_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center_vertical|end"
+                android:paddingEnd="2dp"
+                android:clipChildren="false" >
+
+                <ImageView
+                    android:id="@+id/system_info_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="14sp"
+                    android:visibility="gone"
+                    android:paddingEnd="-2dp" />
+
+                <TextView
+                    android:id="@+id/system_info_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:singleLine="true"
+                    android:paddingStart="-1dp"
+                    android:textSize="13sp"
+                    android:paddingEnd="@dimen/status_bar_clock_end_padding"
+                    android:textAppearance="@style/TextAppearance.StatusBar.Clock"
+                    android:gravity="center_vertical|end"
+                    android:visibility="gone"/>
+        </LinearLayout>
+
         <com.android.systemui.BatteryMeterView
             android:id="@+id/batteryIcon"
             android:layout_height="match_parent"
@@ -123,5 +152,5 @@
             android:paddingStart="2dp"
             systemui:showDark="false"
             android:visibility="gone" />
-
+    </LinearLayout>
 </LinearLayout>

@@ -4056,6 +4056,18 @@ public final class Settings {
         public static final String SCREEN_BRIGHTNESS_MODE = "screen_brightness_mode";
 
         /**
+         * Shows system info in QS OFF:0, CPU temp:1, battery temp:2, cpu speed: 3 , gpu clock: 4, gpu busy: 5
+         */
+        public static final String QS_SYSTEM_INFO = "qs_system_info";
+
+        /**
+         * Weather to show SystemInfo icon
+         */
+        public static final String QS_SYSTEM_INFO_ICON = "qs_system_info_icon";
+
+        public static final String SYSTEM_INFO_REFRESH_RATE = "system_info_refresh_rate";
+
+        /**
          * Last mode of RebootTile
          */
         public static final String REBOOT_TILE_LAST_MODE = "reboot_tile_last_mode";

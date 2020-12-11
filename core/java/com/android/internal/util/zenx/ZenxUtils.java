@@ -75,6 +75,7 @@ import android.app.UiModeManager;
 import com.android.internal.R;
 import com.android.internal.statusbar.IStatusBarService;
 
+
 import static android.content.Context.NOTIFICATION_SERVICE;
 import static android.content.Context.VIBRATOR_SERVICE;
 
@@ -82,6 +83,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class ZenxUtils {
 
@@ -639,4 +645,80 @@ public class ZenxUtils {
                 break;
         }
     }
+
+    public static boolean fileExists(String filename) {
+        if (filename == null) {
+            return false;
+        }
+        return new File(filename).exists();
+    }
+
+    public static String getBatteryTemp(Context context) {
+        String value;
+        if(fileExists(context.getResources().getString(
+                     com.android.internal.R.string.config_battery_temp_path))) {
+                        value = readOneLine(context.getResources().getString(
+                            com.android.internal.R.string.config_battery_temp_path));
+                     } else {
+                         value = "Error";
+                     }
+
+        return value == "Error" ? "N/A" : String.format("%s", Integer.parseInt(value) / 10) + "\u2103";
+    }
+
+    public static String getCPUTemp(Context context) {
+        String value;
+        if(fileExists(context.getResources().getString(
+                     com.android.internal.R.string.config_cpu_temp_path))) {
+                        value = readOneLine(context.getResources().getString(
+                            com.android.internal.R.string.config_cpu_temp_path));
+                     } else {
+                         value = "Error";
+                     }
+
+        return value == "Error" ? "N/A" : String.format("%s", Integer.parseInt(value) / 1000) + "\u2103";
+    }
+
+    public static String getGPUBusy(Context context) {
+        String value;
+        if(fileExists(context.getResources().getString(
+                     com.android.internal.R.string.config_gpu_busy_path))) {
+                        value = readOneLine(context.getResources().getString(
+                            com.android.internal.R.string.config_gpu_busy_path));
+                     } else {
+                         value = "Error";
+                     }
+
+        return value == "Error" ? "N/A" : value;
+    }
+
+    public static String getGPUClock(Context context) {
+        String value;
+        if(fileExists(context.getResources().getString(
+                     com.android.internal.R.string.config_gpu_clock_path))) {
+                        value = readOneLine(context.getResources().getString(
+                            com.android.internal.R.string.config_gpu_clock_path));
+                     } else {
+                         value = "Error";
+                     }
+        return value == "Error" ? "N/A" : String.format("%s", Integer.parseInt(value)) + "Mhz";
+    }
+
+    public static String readOneLine(String fname) {
+        BufferedReader br;
+        String line = null;
+        try {
+            br = new BufferedReader(new FileReader(fname), 512);
+            try {
+                line = br.readLine();
+            } finally {
+                br.close();
+            }
+        } catch (Exception e) {
+            return null;
+        }
+        return line;
+    }
+
+
 }

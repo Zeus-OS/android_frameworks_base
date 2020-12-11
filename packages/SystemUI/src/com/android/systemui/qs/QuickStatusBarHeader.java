@@ -94,6 +94,7 @@ import com.android.systemui.statusbar.policy.NextAlarmController;
 import com.android.systemui.statusbar.policy.ZenModeController;
 import com.android.systemui.util.RingerModeTracker;
 import com.android.systemui.tuner.TunerService;
+import com.android.internal.util.zenx.ZenxUtils;
 
 import lineageos.providers.LineageSettings;
 
@@ -141,6 +142,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     public static final String STATUS_BAR_CUSTOM_HEADER =
             "system:" + Settings.System.STATUS_BAR_CUSTOM_HEADER;
 
+    private final Handler mHandler = new Handler();
     private final NextAlarmController mAlarmController;
     private final ZenModeController mZenController;
     private final StatusBarIconController mStatusBarIconController;
@@ -199,6 +201,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     private boolean mLandscape;
     private boolean mHeaderImageEnabled;
+
+    private TextView mSystemInfoText;
+    private int mSystemInfoMode;
+    private View mSystemInfoLayout;
+    private ImageView mSystemInfoIcon;
 
     // Used for RingerModeTracker
     private final LifecycleRegistry mLifecycle = new LifecycleRegistry(this);
@@ -286,6 +293,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mDualToneHandler = new DualToneHandler(
                 new ContextThemeWrapper(context, R.style.QSHeaderTheme));
         mCommandQueue = commandQueue;
+        mSystemInfoMode = getQsSystemInfoMode();
         mRingerModeTracker = ringerModeTracker;
         mUiEventLogger = uiEventLogger;
         mBroadcastDispatcher = broadcastDispatcher;
@@ -362,6 +370,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mNextAlarmTextView.setSelected(true);
         mAllIndicatorsEnabled = mPrivacyItemController.getAllIndicatorsAvailable();
         mMicCameraIndicatorsEnabled = mPrivacyItemController.getMicCameraAvailable();
+
+        mSystemInfoLayout = findViewById(R.id.system_info_layout);
+        mSystemInfoIcon = findViewById(R.id.system_info_icon);
+        mSystemInfoText = findViewById(R.id.system_info_text);
 
         updateResources();
         updateSettings();
@@ -489,8 +501,57 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private void updateSettings() {
         updateResources();
 	    updateDataUsageView();
-     }
+        updateSystemInfoText();
+    }
 
+    private int getQsSystemInfoMode() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_SYSTEM_INFO, 0);
+    }
+
+    public boolean isQsSystemInfoIconEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.QS_SYSTEM_INFO_ICON, 1) == 1;
+    }
+
+    private void updateSystemInfoText() {
+        mSystemInfoMode = getQsSystemInfoMode();
+
+        if (mSystemInfoMode == 0) {
+            mSystemInfoLayout.setVisibility(View.GONE);
+            return;
+        } else {
+            mSystemInfoLayout.setVisibility(View.VISIBLE);
+            mSystemInfoText.setVisibility(View.VISIBLE);
+            if(isQsSystemInfoIconEnabled()) {
+                mSystemInfoIcon.setVisibility(View.VISIBLE);
+            } else {
+                mSystemInfoIcon.setVisibility(View.GONE);
+            }
+        }
+
+        switch (mSystemInfoMode) {
+            case 1:
+                mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_thermometer));
+                mSystemInfoText.setText(ZenxUtils.getCPUTemp(mContext));
+                break;
+            case 2:
+                mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_thermometer));
+                mSystemInfoText.setText(ZenxUtils.getBatteryTemp(mContext));
+                break;
+            case 3:
+                mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_gpu));
+                mSystemInfoText.setText(ZenxUtils.getGPUClock(mContext));
+                break;
+            case 4:
+                mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_gpu_busy));
+                mSystemInfoText.setText(ZenxUtils.getGPUBusy(mContext));
+                break;
+            default:
+                 mSystemInfoLayout.setVisibility(View.GONE);
+            break;
+            }
+    }
 
     /**
      * The height of QQS should always be the status bar height + 128dp. This is normally easy, but
@@ -598,6 +659,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         if (mExpanded == expanded) return;
         mExpanded = expanded;
         mHeaderQsPanel.setExpanded(expanded);
+        updateSystemInfoText();
         updateEverything();
     }
 
@@ -648,6 +710,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 updateResources();
             }
         }
+        updateSystemInfoText();
         mKeyguardExpansionFraction = keyguardExpansionFraction;
     }
 

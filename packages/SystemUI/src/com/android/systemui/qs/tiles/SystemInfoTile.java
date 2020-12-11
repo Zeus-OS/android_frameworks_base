@@ -40,8 +40,7 @@ import com.android.systemui.qs.tileimpl.QSTileImpl;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
-import java.io.BufferedReader;
-import java.io.FileReader;
+import com.android.internal.util.zenx.ZenxUtils;
 
 import javax.inject.Inject;
 
@@ -112,73 +111,32 @@ public class SystemInfoTile extends QSTileImpl<BooleanState> {
             case 1:
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_battery_info);
                 state.label = "Battery temp";
-                state.secondaryLabel = getBatteryTemp();
+                state.secondaryLabel = ZenxUtils.getBatteryTemp(mContext);
                 state.state = Tile.STATE_ACTIVE;
                 state.slash.isSlashed = true;
                 break;
             case 2:
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_cpu_info);
                 state.label = "CPU temp ";
-                state.secondaryLabel = getCPUTemp();
+                state.secondaryLabel = ZenxUtils.getCPUTemp(mContext);
                 state.state = Tile.STATE_ACTIVE;
                 state.slash.isSlashed = true;
                 break;
             case 3:
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_gpu_info);
                 state.label = "GPU freq" ;
-                state.secondaryLabel = getGPUClock();
+                state.secondaryLabel = ZenxUtils.getGPUClock(mContext);
                 state.state = Tile.STATE_ACTIVE;
                 state.slash.isSlashed = true;
                 break;
             case 4:
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_gpu_info);
                 state.label = "GPU busy";
-                state.secondaryLabel = getGPUBusy();
+                state.secondaryLabel = ZenxUtils.getGPUBusy(mContext);
                 state.state = Tile.STATE_ACTIVE;
                 state.slash.isSlashed = true;
                 break;
         }
-    }
-
-    
-    private String getBatteryTemp() {
-         String value = readOneLine(mContext.getResources().getString(
-                        com.android.internal.R.string.config_battery_temp_path));
-        return String.format("%s", Integer.parseInt(value) / 10) + "\u2103";
-    }
-
-    private String getCPUTemp() {
-        String value = readOneLine(mContext.getResources().getString(
-                        com.android.internal.R.string.config_cpu_temp_path));
-        return String.format("%s", Integer.parseInt(value) / 1000) + "\u2103";
-    }
-
-    private String getGPUBusy() {
-        String value = readOneLine(mContext.getResources().getString(
-                     com.android.internal.R.string.config_gpu_busy_path));
-        return value;
-    }
-
-    private String getGPUClock() {
-        String value = readOneLine(mContext.getResources().getString(
-                     com.android.internal.R.string.config_gpu_clock_path));
-        return String.format("%s", Integer.parseInt(value)) + "Mhz";
-    }
-
-    private static String readOneLine(String fname) {
-        BufferedReader br;
-        String line = null;
-        try {
-            br = new BufferedReader(new FileReader(fname), 512);
-            try {
-                line = br.readLine();
-            } finally {
-                br.close();
-            }
-        } catch (Exception e) {
-            return null;
-        }
-        return line;
     }
 
 }
