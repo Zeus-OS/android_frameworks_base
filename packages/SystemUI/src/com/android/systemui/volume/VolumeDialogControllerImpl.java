@@ -55,6 +55,7 @@ import android.util.Log;
 import android.util.Slog;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityManager;
+import com.android.internal.util.zenx.ZenxUtils;
 
 import androidx.lifecycle.Observer;
 
@@ -423,34 +424,33 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
     }
 
     private void onGetCaptionsComponentStateW(boolean fromTooltip) {
-        try {
-            String componentNameString = mContext.getString(
-                    com.android.internal.R.string.config_defaultSystemCaptionsService);
-            if (TextUtils.isEmpty(componentNameString)) {
-                // component doesn't exist
+        if(ZenxUtils.isPackageInstalled(mContext, "com.google.android.as")) {
+            try {
+                String componentNameString = mContext.getString(
+                        com.android.internal.R.string.config_defaultSystemCaptionsService);
+                if (TextUtils.isEmpty(componentNameString)) {
+                    // component doesn't exist
+                    mCallbacks.onCaptionComponentStateChanged(false, fromTooltip);
+                    return;
+                }
+                if (D.BUG) {
+                    Log.i(TAG, String.format(
+                            "isCaptionsServiceEnabled componentNameString=%s", componentNameString));
+                }
+                ComponentName componentName = ComponentName.unflattenFromString(componentNameString);
+                if (componentName == null) {
+                    mCallbacks.onCaptionComponentStateChanged(false, fromTooltip);
+                    return;
+                }
+                PackageManager packageManager = mContext.getPackageManager();
+                mCallbacks.onCaptionComponentStateChanged(
+                        packageManager.getComponentEnabledSetting(componentName)
+                        == PackageManager.COMPONENT_ENABLED_STATE_ENABLED, fromTooltip);
+            } catch (Exception ex) {
+                Log.e(TAG,
+                        "isCaptionsServiceEnabled failed to check for captions component", ex);
                 mCallbacks.onCaptionComponentStateChanged(false, fromTooltip);
-                return;
             }
-
-            if (D.BUG) {
-                Log.i(TAG, String.format(
-                        "isCaptionsServiceEnabled componentNameString=%s", componentNameString));
-            }
-
-            ComponentName componentName = ComponentName.unflattenFromString(componentNameString);
-            if (componentName == null) {
-                mCallbacks.onCaptionComponentStateChanged(false, fromTooltip);
-                return;
-            }
-
-            PackageManager packageManager = mContext.getPackageManager();
-            mCallbacks.onCaptionComponentStateChanged(
-                    packageManager.getComponentEnabledSetting(componentName)
-                    == PackageManager.COMPONENT_ENABLED_STATE_ENABLED, fromTooltip);
-        } catch (Exception ex) {
-            Log.e(TAG,
-                    "isCaptionsServiceEnabled failed to check for captions component", ex);
-            mCallbacks.onCaptionComponentStateChanged(false, fromTooltip);
         }
     }
 
