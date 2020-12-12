@@ -192,6 +192,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     private PrivacyItemController mPrivacyItemController;
     private final UiEventLogger mUiEventLogger;
+    // NetworkTraffic layout
+    private View mNetworkTrafficLayout;
+
     // Data Usage
     private View mDataUsageLayout;
     private ImageView mDataUsageImage;
@@ -206,6 +209,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private int mSystemInfoMode;
     private View mSystemInfoLayout;
     private ImageView mSystemInfoIcon;
+
+    private boolean mPrivacyChipVisible = false;
 
     // Used for RingerModeTracker
     private final LifecycleRegistry mLifecycle = new LifecycleRegistry(this);
@@ -311,6 +316,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         iconContainer.addIgnoredSlots(getIgnoredIconSlots());
         iconContainer.setShouldRestrictIcons(false);
         mIconManager = new TintedIconManager(iconContainer, mCommandQueue);
+
+        mNetworkTrafficLayout = findViewById(R.id.network_traffic_layout);
 
         mQuickQsBrightness = findViewById(R.id.quick_qs_brightness_bar);
         mBrightnessController = new BrightnessController(getContext(),
@@ -424,6 +431,24 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     private void setChipVisibility(boolean chipVisible) {
         if (chipVisible && getChipEnabled()) {
+            mPrivacyChipVisible = chipVisible;
+            if(weatherToShowNetWorkTrafficOnActivePrivacyChip()) {
+                mNetworkTrafficLayout.setVisibility(View.GONE);
+            }
+            if(weatherToShowUsedDataOnActivePrivacyChip()) {
+                mDataUsageLayout.setVisibility(View.GONE);
+            }
+            if(getQsSystemInfoMode() != 0 ) {
+                if(weatherToShowSystemInfoOnActivePrivacyChip()) {
+                    mSystemInfoLayout.setVisibility(View.GONE);
+                    mSystemInfoIcon.setVisibility(View.GONE);
+                }
+                updateSystemInfoText();
+            }
+            if(weatherToShowBatteryOnActivePrivacyChip()) {
+                mBatteryIcon.setVisibility(View.GONE);
+            }
+
             mPrivacyChip.setVisibility(View.VISIBLE);
             // Makes sure that the chip is logged as viewed at most once each time QS is opened
             // mListening makes sure that the callback didn't return after the user closed QS
@@ -434,6 +459,31 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         } else {
             mPrivacyChip.setVisibility(View.GONE);
         }
+    }
+
+    private boolean weatherToShowNetWorkTrafficOnActivePrivacyChip() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.HIDE_NETWORK_TRAFFIC_ON_ACTIVE_PRIVACY_CHIP, 1) == 1;
+    }
+
+    private boolean weatherToShowUsedDataOnActivePrivacyChip() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.HIDE_USED_DATA_ON_ACTIVE_PRIVACY_CHIP, 1) == 1;
+    }
+
+    private boolean weatherToShowSystemInfoOnActivePrivacyChip() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.HIDE_SYSTEM_INFO_ON_ACTIVE_PRIVACY_CHIP, 0) == 1;
+    }
+
+    private boolean weatherToShowBatteryOnActivePrivacyChip() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.HIDE_BATTERY_ICON_ON_ACTIVE_PRIVACY_CHIP, 0) == 1;
+    }
+
+    private boolean handleViewsOnActivePrivateChip() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.SHOW_PRIVACY_CHIP, 1) == 1;
     }
 
     private boolean updateRingerStatus() {
@@ -517,7 +567,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private void updateSystemInfoText() {
         mSystemInfoMode = getQsSystemInfoMode();
 
-        if (mSystemInfoMode == 0) {
+        if (mSystemInfoMode == 0 || mPrivacyChip.getVisibility() == View.VISIBLE) {
             mSystemInfoLayout.setVisibility(View.GONE);
             return;
         } else {
@@ -993,7 +1043,12 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     }
 
     private boolean getChipEnabled() {
-        return mMicCameraIndicatorsEnabled || mAllIndicatorsEnabled;
+        return isPrivacyChipEnabled();
+    }
+
+    public boolean isPrivacyChipEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.SHOW_PRIVACY_CHIP, 1) == 1;
     }
 
     private void updateBatteryStyle() {

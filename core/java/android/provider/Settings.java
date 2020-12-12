@@ -4200,6 +4200,40 @@ public final class Settings {
         public static final String HAPTIC_FEEDBACK_INTENSITY =
                 "haptic_feedback_intensity";
 
+        /*
+         * Weather to show privacy chip
+         * @hide
+         */
+        public static final String SHOW_PRIVACY_CHIP =
+                "show_privacy_chip";
+        /*
+         * Weather NetworkTraffic is shown when privacy chip is visible
+         * @hide
+         */
+        public static final String HIDE_NETWORK_TRAFFIC_ON_ACTIVE_PRIVACY_CHIP =
+                "hide_network_traffic_on_active_privacy_chip";
+
+        /*
+         * Weather UsedData is shown when privacy chip is visible
+         * @hide
+         */
+        public static final String HIDE_USED_DATA_ON_ACTIVE_PRIVACY_CHIP =
+                "hide_used_data_on_active_privacy_chip";
+
+        /*
+         * Weather SystemInfo is shown when privacy chip is visible
+         * @hide
+         */
+        public static final String HIDE_SYSTEM_INFO_ON_ACTIVE_PRIVACY_CHIP =
+                "hide_system_info_on_active_privacy_chip";
+
+        /*
+         * Weather Battery icon is shown when privacy chip is visible
+         * @hide
+         */
+        public static final String HIDE_BATTERY_ICON_ON_ACTIVE_PRIVACY_CHIP =
+                "hide_battery_icon_on_active_privacy_chip";
+
         /**
          * Ringer volume. This is used internally, changing this value will not
          * change the volume. See AudioManager.
