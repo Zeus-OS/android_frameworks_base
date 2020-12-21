@@ -103,7 +103,9 @@
     <!-- Button to restart the device into download mode, within the Restart Options dialog -->
     <string name="global_action_restart_download">Download</string>
     <!-- Button to restart the device into fastboot mode, within the Restart Options dialog -->
-    <string name="global_action_restart_fastboot">Fastbootd</string>
+    <string name="global_action_restart_fastboot">Fastboot</string>
+    <!-- Button to restart systemui, within the Restart Options dialog -->
+    <string name="global_action_restart_systemui">SystemUI</string>
 
     <!-- Restart progress dialog. This is shown if the user chooses to restart the device. -->
     <string name="global_action_restart_progress">Restarting\u2026</string>
@@ -114,5 +116,7 @@
     <!-- Restart to download mode progress dialog. This is shown if the user chooses to restart the device. -->
     <string name="global_action_restart_download_progress">Restarting to download mode\u2026</string>
     <!-- Restart to fastboot mode progress dialog. This is shown if the user chooses to restart the device. -->
-    <string name="global_action_restart_fastboot_progress">Restarting to fastbootd mode\u2026</string>
+     <string name="global_action_restart_fastboot_progress">Restarting to fastbootd mode\u2026</string>
+    <!-- Restart sytemui progress dialog. This is shown if the user chooses to restart the device. -->
+    <string name="global_action_restart_systemui_progress">Restarting SystemUI mode\u2026</string>
 </resources>

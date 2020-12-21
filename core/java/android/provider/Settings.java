@@ -8258,6 +8258,12 @@ public final class Settings {
             "touch_exploration_granted_accessibility_services";
 
         /**
+         * Global Actions count
+         * @hide
+         */
+        public static final String GLOBAL_ACTIONS_MAX_COLUMNS = "global_actions_max_columns";
+
+        /**
          * Whether the Global Actions Panel is enabled.
          * @hide
          */
@@ -8276,6 +8282,69 @@ public final class Settings {
          */
         public static final String GLOBAL_ACTIONS_PANEL_DEBUG_ENABLED =
                 "global_actions_panel_debug_enabled";
+
+        /**
+         * Whether to display the flashlight option in the power menu
+         *
+         * @hide
+         */
+        public static final String GLOBAL_ACTIONS_FLASHLIGHT = "global_actions_flashlight";
+
+        /**
+         * Whether to display airplane in the power menu
+         *
+         * @hide
+         */
+        public static final String GLOBAL_ACTIONS_AIRPLANE = "global_actions_airplane";
+
+        /**
+         * Whether to display screenrecord in the power menu
+         *
+         * @hide
+         */
+        public static final String GLOBAL_ACTIONS_SCREENRECORD = "global_actions_screenrecord";
+
+                /**
+         * Whether to display sound panel in the power menu
+         *
+         * @hide
+         */
+        public static final String GLOBAL_ACTIONS_SOUNDPANEL = "global_actions_soundpanel";
+
+        /**
+         * Whether to display screenshot in the power menu
+         *
+         * @hide
+         */
+        public static final String GLOBAL_ACTIONS_SCREENSHOT = "global_actions_screenshot";
+
+        /**
+         * Whether to display settings in the power menu
+         *
+         * @hide
+         */
+        public static final String GLOBAL_ACTIONS_SETTINGS = "global_actions_settings";
+
+        /**
+         * Whether to display lock in the power menu
+         *
+         * @hide
+         */
+        public static final String GLOBAL_ACTIONS_LOCKDOWN = "global_actions_lockdown";
+
+        /**
+         * Whether to display the users option in the power menu
+         *
+         * @hide
+         */
+        public static final String GLOBAL_ACTIONS_USERS = "global_actions_users";
+
+        /**
+         * Whether to display the flashlight option in the power menu
+         *
+         * @hide
+         */
+        public static final String GLOBAL_ACTIONS_EMERGENCY = "global_actions_emergency";
 
         /**
          * Whether the hush gesture has ever been used

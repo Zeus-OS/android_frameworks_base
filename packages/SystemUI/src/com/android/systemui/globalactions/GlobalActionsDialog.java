@@ -63,6 +63,7 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.os.Process;
 import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.SystemProperties;
@@ -99,6 +100,10 @@ import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ListPopupWindow;
 import android.widget.TextView;
+
+import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.CameraCharacteristics;
+import android.hardware.camera2.CameraAccessException;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
@@ -196,6 +201,8 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     static final String GLOBAL_ACTION_KEY_EMERGENCY = "emergency";
     static final String GLOBAL_ACTION_KEY_SCREENSHOT = "screenshot";
     private static final String GLOBAL_ACTION_KEY_ONTHEGO = "onthego";
+    private static final String GLOBAL_ACTION_KEY_SCREENRECORD = "screenrecord";
+    private static final String GLOBAL_ACTION_KEY_FLASHLIGHT = "flashlight";
 
     /* Valid settings for restart actions keys.
      * see lineage-sdk config.xml config_restartActionsList */
@@ -204,6 +211,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     private static final String RESTART_ACTION_KEY_RESTART_BOOTLOADER = "restart_bootloader";
     private static final String RESTART_ACTION_KEY_RESTART_DOWNLOAD = "restart_download";
     private static final String RESTART_ACTION_KEY_RESTART_FASTBOOT = "restart_fastboot";
+    private static final String RESTART_ACTION_KEY_RESTART_SYSTEMUI = "restart_systemui";
 
     public static final String PREFS_CONTROLS_SEEDING_COMPLETED = "SeedingCompleted";
     public static final String PREFS_CONTROLS_FILE = "controls_prefs";
@@ -279,6 +287,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     private final BlurUtils mBlurUtils;
     @VisibleForTesting
     boolean mShowLockScreenCardsAndControls = false;
+    private boolean mFlashlightEnabled = false;
 
     @VisibleForTesting
     public enum GlobalActionsEvent implements UiEventLogger.UiEventEnum {
@@ -636,7 +645,13 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
      */
     @VisibleForTesting
     protected int getMaxShownPowerItems() {
-        return mResources.getInteger(com.android.systemui.R.integer.power_menu_max_columns);
+        int globalactionMaxColumns = Settings.Secure.getInt(mContext.getContentResolver(),
+                Settings.Secure.GLOBAL_ACTIONS_MAX_COLUMNS, 3);
+        if (globalactionMaxColumns != 0) {
+            return globalactionMaxColumns;
+        } else {
+            return mResources.getInteger(com.android.systemui.R.integer.power_menu_max_columns);
+        }
     }
 
     /**
@@ -693,6 +708,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         RestartBootloaderAction blAction = new RestartBootloaderAction();
         RestartDownloadAction dlAction = new RestartDownloadAction();
         RestartFastbootAction fbAction = new RestartFastbootAction();
+        RestartSystemUIAction sysuiAction = new RestartSystemUIAction();
         ArraySet<String> addedKeys = new ArraySet<String>();
         ArraySet<String> addedRestartKeys = new ArraySet<String>();
         List<Action> tempActions = new ArrayList<>();
@@ -713,23 +729,32 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             if (GLOBAL_ACTION_KEY_POWER.equals(actionKey)) {
                 addIfShouldShowAction(tempActions, shutdownAction);
             } else if (GLOBAL_ACTION_KEY_AIRPLANE.equals(actionKey)) {
-                addIfShouldShowAction(tempActions, mAirplaneModeOn);
+                 if (Settings.Secure.getInt(mContext.getContentResolver(),
+                        Settings.Secure.GLOBAL_ACTIONS_AIRPLANE, 0) == 1) {
+                    addIfShouldShowAction(tempActions, mAirplaneModeOn);
+                }
             } else if (GLOBAL_ACTION_KEY_BUGREPORT.equals(actionKey)) {
                 if (shouldDisplayBugReport(currentUser.get())) {
                     addIfShouldShowAction(tempActions, new BugReportAction());
                 }
             } else if (GLOBAL_ACTION_KEY_SILENT.equals(actionKey)) {
-                if (mShowSilentToggle) {
+                if (Settings.Secure.getInt(mContext.getContentResolver(),
+                        Settings.Secure.GLOBAL_ACTIONS_SOUNDPANEL, 0) == 1) {
                     addIfShouldShowAction(tempActions, mSilentModeAction);
                 }
             } else if (GLOBAL_ACTION_KEY_USERS.equals(actionKey)) {
-                if (SystemProperties.getBoolean("fw.power_user_switcher", false)) {
+                 if (Settings.Secure.getInt(mContext.getContentResolver(),
+                        Settings.Secure.GLOBAL_ACTIONS_USERS, 0) == 1) {
                     addUserActions(tempActions, currentUser.get());
                 }
             } else if (GLOBAL_ACTION_KEY_SETTINGS.equals(actionKey)) {
-                addIfShouldShowAction(tempActions, getSettingsAction());
+                 if (Settings.Secure.getInt(mContext.getContentResolver(),
+                        Settings.Secure.GLOBAL_ACTIONS_SETTINGS, 0) != 0) {
+                    addIfShouldShowAction(tempActions, getSettingsAction());
+                }
             } else if (GLOBAL_ACTION_KEY_LOCKDOWN.equals(actionKey)) {
-                if (shouldDisplayLockdown(currentUser.get())) {
+                if (Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                            Settings.Secure.GLOBAL_ACTIONS_LOCKDOWN, 0, getCurrentUser().id) != 0) {
                     addIfShouldShowAction(tempActions, new LockDownAction());
                 }
             } else if (GLOBAL_ACTION_KEY_VOICEASSIST.equals(actionKey)) {
@@ -739,7 +764,10 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
             } else if (GLOBAL_ACTION_KEY_RESTART.equals(actionKey)) {
                 addIfShouldShowAction(tempActions, restartAction);
             } else if (GLOBAL_ACTION_KEY_SCREENSHOT.equals(actionKey)) {
-                addIfShouldShowAction(tempActions, new ScreenshotAction());
+                if (Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                            Settings.Secure.GLOBAL_ACTIONS_SCREENSHOT, 0, getCurrentUser().id) != 0) {
+                    addIfShouldShowAction(tempActions, new ScreenshotAction());
+                }
             } else if (GLOBAL_ACTION_KEY_LOGOUT.equals(actionKey)) {
                 if (mDevicePolicyManager.isLogoutEnabled()
                         && currentUser.get() != null
@@ -752,7 +780,20 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                     addIfShouldShowAction(tempActions, new OnTheGoAction());
                 }
             } else if (GLOBAL_ACTION_KEY_EMERGENCY.equals(actionKey)) {
-                addIfShouldShowAction(tempActions, new EmergencyDialerAction());
+                if (Settings.Secure.getInt(mContext.getContentResolver(),
+                        Settings.Secure.GLOBAL_ACTIONS_EMERGENCY, 0) == 1) {
+                    addIfShouldShowAction(tempActions, new EmergencyDialerAction());
+                }
+            } else if (GLOBAL_ACTION_KEY_SCREENRECORD.equals(actionKey)) {
+                if (Settings.Secure.getInt(mContext.getContentResolver(),
+                        Settings.Secure.GLOBAL_ACTIONS_SCREENRECORD, 0) == 1) {
+                    addIfShouldShowAction(tempActions, getScreenrecordAction());
+                }
+            } else if (GLOBAL_ACTION_KEY_FLASHLIGHT.equals(actionKey)) {
+                if (Settings.Secure.getInt(mContext.getContentResolver(),
+                        Settings.Secure.GLOBAL_ACTIONS_FLASHLIGHT, 0) == 1) {
+                    addIfShouldShowAction(tempActions, getFlashlightToggleAction());
+                }
             } else {
                 Log.e(TAG, "Invalid global action key " + actionKey);
             }
@@ -776,6 +817,8 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
                 addIfShouldShowAction(mRestartItems, dlAction);
             } else if (RESTART_ACTION_KEY_RESTART_FASTBOOT.equals(actionKey)) {
                 addIfShouldShowAction(mRestartItems, fbAction);
+            } else if (RESTART_ACTION_KEY_RESTART_SYSTEMUI.equals(actionKey)) {
+                addIfShouldShowAction(mRestartItems, sysuiAction);
             }
             // Add here so we don't add more than one.
             addedRestartKeys.add(actionKey);
@@ -1163,6 +1206,28 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
         }
     }
 
+    private final class RestartSystemUIAction extends SinglePressAction {
+        private RestartSystemUIAction() {
+            super(com.android.systemui.R.drawable.ic_lock_restart_systemui,
+                    com.android.systemui.R.string.global_action_restart_systemui);
+        }
+
+        @Override
+        public boolean showDuringKeyguard() {
+            return true;
+        }
+
+        @Override
+        public boolean showBeforeProvisioning() {
+            return true;
+        }
+
+        @Override
+        public void onPress() {
+           Process.killProcess(Process.myPid());
+        }
+    }
+
     private final class RestartFastbootAction extends SinglePressAction {
         private RestartFastbootAction() {
             super(com.android.systemui.R.drawable.ic_lock_restart_fastboot,
@@ -1271,6 +1336,57 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     @VisibleForTesting
     ScreenshotAction makeScreenshotActionForTesting() {
         return new ScreenshotAction();
+    }
+
+     private Action getFlashlightToggleAction() {
+        return new SinglePressAction(com.android.systemui.R.drawable.ic_lock_flashlight,
+                com.android.systemui.R.string.global_action_flashlight) {
+
+            public void onPress() {
+                try {
+                    CameraManager cameraManager = (CameraManager)
+                            mContext.getSystemService(Context.CAMERA_SERVICE);
+                    for (final String cameraId : cameraManager.getCameraIdList()) {
+                        CameraCharacteristics characteristics =
+                            cameraManager.getCameraCharacteristics(cameraId);
+                        int orient = characteristics.get(CameraCharacteristics.LENS_FACING);
+                        if (orient == CameraCharacteristics.LENS_FACING_BACK) {
+                            cameraManager.setTorchMode(cameraId, !mFlashlightEnabled);
+                            mFlashlightEnabled = !mFlashlightEnabled;
+                        }
+                    }
+                } catch (CameraAccessException e) {
+                }
+            }
+
+            public boolean showDuringKeyguard() {
+                return true;
+            }
+
+            public boolean showBeforeProvisioning() {
+                return false;
+            }
+        };
+    }
+
+    private Action getScreenrecordAction() {
+        return new SinglePressAction(com.android.systemui.R.drawable.ic_lock_screenrecord,
+                com.android.systemui.R.string.global_action_screenrecord) {
+            @Override
+            public void onPress() {
+                mScreenRecordHelper.launchRecordPrompt();
+            }
+
+            @Override
+            public boolean showDuringKeyguard() {
+                return true;
+            }
+
+            @Override
+            public boolean showBeforeProvisioning() {
+                return true;
+            }
+        };
     }
 
     @VisibleForTesting
@@ -2162,8 +2278,8 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
     private class AirplaneModeAction extends ToggleAction {
         AirplaneModeAction() {
             super(
-                    R.drawable.ic_lock_airplane_mode,
-                    R.drawable.ic_lock_airplane_mode_off,
+                    com.android.systemui.R.drawable.ic_lock_airplane_mode_enabled,
+                    com.android.systemui.R.drawable.ic_lock_airplane_mode_disabled,
                     R.string.global_actions_toggle_airplane_mode,
                     R.string.global_actions_airplane_mode_on_status,
                     R.string.global_actions_airplane_mode_off_status);

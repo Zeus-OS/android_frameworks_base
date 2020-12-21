@@ -212,6 +212,10 @@
     <!-- Power menu item for taking a screenshot [CHAR LIMIT=20]-->
     <string name="global_action_screenshot">Screenshot</string>
 
+    <string name="global_action_screenrecord">Screenrecord</string>
+    <string name="global_action_flashlight">Flashlight</string>
+    <string name="global_action_settings">Settings</string>
+
     <!-- text to show in place of RemoteInput images when they cannot be shown.
          [CHAR LIMIT=50] -->
     <string name="remote_input_image_insertion_text">sent an image</string>
