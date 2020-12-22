@@ -87,7 +87,6 @@
                     android:id="@+id/status_bar_left_side"
                     android:layout_height="match_parent"
                     android:layout_width="match_parent"
-                    android:paddingEnd="-8dp"
                     android:layout_marginBottom="2dp"
                     android:clipChildren="false"
                 >
@@ -133,6 +132,7 @@
             android:layout_height="match_parent"
             android:layout_weight="@integer/system_icon_area_weight"
             android:orientation="horizontal"
+            android:paddingStart="-8dp"
             android:gravity="center_vertical|end"
             >
             <include layout="@layout/system_icons_used_data" />

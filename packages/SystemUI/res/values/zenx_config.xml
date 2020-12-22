@@ -37,7 +37,7 @@
     <integer name="config_maxVisibleDualStatusIconContainer">9</integer>
 
      <!-- System icon area layout weight -->
-    <item name="system_icon_area_weight" format="float" type="integer">1</item>
+    <item name="system_icon_area_weight" format="float" type="integer">1.2</item>
 
     <!-- The CPU temperature sensor path, defaults to empty -->
     <string name="config_cpuTempSensor" translatable="false"></string>
