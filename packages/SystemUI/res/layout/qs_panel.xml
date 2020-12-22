@@ -26,6 +26,7 @@
         android:id="@+id/quick_settings_background"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@drawable/qs_background_primary"
         android:elevation="4dp" >
 
         <ImageView android:id="@+id/qs_image_view"
@@ -34,18 +35,28 @@
             android:scaleType="centerCrop"
             android:visibility="gone" />
     </FrameLayout>
+
+    <!-- Gradient view behind QS -->
+    <View
+        android:id="@+id/quick_settings_gradient_view"
+        android:layout_width="match_parent"
+        android:layout_height="126dp"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        android:background="@drawable/qs_bg_gradient" />
+
     <!-- Black part behind the status bar -->
     <LinearLayout
         android:id="@+id/quick_settings_status_bar_background"
         android:layout_width="match_parent"
         android:layout_height="@*android:dimen/quick_qs_offset_height"
-        android:background="@android:color/transparent" />
+        android:background="@android:color/transparent">
 
         <ImageView android:id="@+id/qs_header_image_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/qs_header_image_top_margin"
-            android:layout_marginBottom="@dimen/qs_header_image_bottom_margin"
+            android:layout_marginBottom="2dip"
             android:scaleType="centerCrop"
             android:visibility="gone"
             android:background="@drawable/qs_header_image_view_outline" />

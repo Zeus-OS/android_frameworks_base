@@ -70,6 +70,7 @@ import com.android.systemui.tuner.TunerService;
 import com.android.systemui.util.animation.PhysicsAnimator;
 import com.android.internal.util.gzosp.ImageHelper;
 import com.android.systemui.statusbar.NotificationMediaManager;
+import android.graphics.drawable.GradientDrawable;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -87,6 +88,8 @@ public class QSContainerImpl extends FrameLayout implements
 
     private static final String STATUS_BAR_CUSTOM_HEADER_SHADOW =
             "system:" + Settings.System.STATUS_BAR_CUSTOM_HEADER_SHADOW;
+
+    private static final String QS_HEADER_STYLE_COLOR = "qs_header_style_color";
 
     private final Point mSizePoint = new Point();
     private static final FloatPropertyCompat<QSContainerImpl> BACKGROUND_BOTTOM =
@@ -141,6 +144,8 @@ public class QSContainerImpl extends FrameLayout implements
     private boolean mLandscape;
     private int mHeaderShadow = 0;
 
+    private Drawable bgDefault;
+
     private static final String QS_PANEL_FILE_IMAGE = "custom_file_qs_panel_image";
 
     public QSContainerImpl(Context context, AttributeSet attrs) {
@@ -148,6 +153,9 @@ public class QSContainerImpl extends FrameLayout implements
         mContext = context;
         Handler mHandler = new Handler();
         mStatusBarHeaderMachine = new StatusBarHeaderMachine(context);
+        int qsHeaderStyleColor = Settings.System.getInt(mContext.getContentResolver(),
+                    QS_HEADER_STYLE_COLOR, 0x00000000);
+            qsHeaderStyleColor = Color.argb(255, Color.red(qsHeaderStyleColor), Color.green(qsHeaderStyleColor), Color.blue(qsHeaderStyleColor));
         SettingsObserver mSettingsObserver = new SettingsObserver(mHandler);
         mSettingsObserver.observe();
     }
@@ -167,10 +175,11 @@ public class QSContainerImpl extends FrameLayout implements
         mBackgroundGradient = findViewById(R.id.quick_settings_gradient_view);
         mBackgroundImage = findViewById(R.id.qs_header_image_view);
         mBackgroundImage.setClipToOutline(true);
-        updateResources();
+        bgDefault = mBackground.getBackground();
         mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
         mQsHeaderBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
         updateSettings();
+        updateResources();
         mHeader.getHeaderQsPanel().setMediaVisibilityChangedListener((visible) -> {
             if (mHeader.getHeaderQsPanel().isShown()) {
                 mAnimateBottomOnNextLayout = true;
@@ -245,6 +254,15 @@ public class QSContainerImpl extends FrameLayout implements
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_PANEL_CUSTOM_IMAGE_BLUR), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_STYLE_COLOR),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_HEADER_STYLE_GRADIENT),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -268,6 +286,65 @@ public class QSContainerImpl extends FrameLayout implements
             saveCustomFileFromString(Uri.parse(imageUri), QS_PANEL_FILE_IMAGE);
         }
         updateResources();
+    }
+
+   public void updateQSHeaderStyle () {
+
+        switch(getQSHeaderStyle()) {
+            case 0:
+                mStatusBarBackground.setBackgroundColor(Color.BLACK);
+                setQSHeaderGradientStyle(Color.BLACK);
+                break;
+            case 1:
+                mStatusBarBackground.setBackgroundColor(mContext.getResources().getColor(R.color.qs_header_accent_color));
+                setQSHeaderGradientStyle(mContext.getResources().getColor(R.color.qs_header_accent_color));
+                break;
+            case 2:
+                mStatusBarBackground.setBackgroundColor(mContext.getResources().getColor(R.color.qs_header_transparent_color));
+                setQSHeaderGradientStyle(mContext.getResources().getColor(R.color.qs_header_transparent_color));
+                break;
+            case 3:
+                int qsHeaderStyleColor = Settings.System.getInt(mContext.getContentResolver(),
+                    QS_HEADER_STYLE_COLOR, 0x00000000);
+                qsHeaderStyleColor = Color.argb(255, Color.red(qsHeaderStyleColor), Color.green(qsHeaderStyleColor), Color.blue(qsHeaderStyleColor));
+                mStatusBarBackground.setBackgroundColor(qsHeaderStyleColor);
+                setQSHeaderGradientStyle(qsHeaderStyleColor);
+                break;
+            default:
+                break;
+
+        }
+    }
+
+
+    private void setQSHeaderGradientStyle (int color) {
+        int[] colors = {color, mContext.getResources().getColor(R.color.qs_header_transparent_color)};
+
+        //create a new gradient color
+        GradientDrawable gd = new GradientDrawable(
+        GradientDrawable.Orientation.TOP_BOTTOM, colors);
+
+        gd.setCornerRadius(0f);
+        //apply the button background to newly created drawable gradient
+        mBackgroundGradient.setBackground(gd);
+
+        if(isQSHeaderStyleGradientEnabled()) {
+            mBackgroundGradient.setVisibility(View.VISIBLE);
+            mStatusBarBackground.setVisibility(View.GONE);
+        } else {
+            mBackgroundGradient.setVisibility(View.GONE);
+            mStatusBarBackground.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private boolean isQSHeaderStyleGradientEnabled() {
+        return Settings.System.getInt(getContext().getContentResolver(),
+            Settings.System.QS_HEADER_STYLE_GRADIENT, 1) == 1;
+    }
+
+    public int getQSHeaderStyle() {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.QS_HEADER_STYLE, 2, UserHandle.USER_CURRENT);
     }
 
     private void setQsBackground() {
@@ -301,7 +378,7 @@ public class QSContainerImpl extends FrameLayout implements
         }
         mBackground.setBackground(mQsBackGround);
         mQsBackGround.setAlpha(mQsBackGroundAlpha);
-        mQsHeaderBackGround.setAlpha(mQsBackGroundAlpha);
+        mQsHeaderBackGround.setAlpha(255);
     }
 
     @Override
@@ -406,7 +483,7 @@ public class QSContainerImpl extends FrameLayout implements
             updatePaddingsAndMargins();
         }
 
-        int statusBarSideMargin = mHeaderImageEnabled ? mContext.getResources().getDimensionPixelSize(
+        int statusBarSideMargin = mHeaderImageEnabled || !isQSHeaderStyleGradientEnabled() ? mContext.getResources().getDimensionPixelSize(
                 R.dimen.qs_header_image_side_margin) : 0;
 
         ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) mStatusBarBackground.getLayoutParams();
@@ -420,6 +497,8 @@ public class QSContainerImpl extends FrameLayout implements
                 setQsBackground();
             }
         });
+
+        updateQSHeaderStyle();
     }
 
     public void saveCustomFileFromString(Uri fileUri, String fileName) {

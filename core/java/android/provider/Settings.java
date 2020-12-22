@@ -5084,6 +5084,21 @@ public final class Settings {
         public static final String SWITCH_STYLE = "switch_style";
 
         /**
+         * @hide
+         */
+        public static final String QS_HEADER_STYLE = "qs_header_style";
+
+        /**
+         * @hide
+         */
+        public static final String QS_HEADER_STYLE_GRADIENT = "qs_header_style_gradient";
+
+        /**
+         * @hide
+         */
+        public static final String QS_HEADER_STYLE_COLOR = "qs_header_style_color";
+
+        /**
          * Settings dashboard icon style
          * @hide
          */
@@ -6351,6 +6366,8 @@ public final class Settings {
 	    PRIVATE_SETTINGS.add(LOCKSCREEN_WEATHER_SHOW_IMAGE);
             PRIVATE_SETTINGS.add(CENTER_NOTIFICATION_HEADERS);
             PRIVATE_SETTINGS.add(HIDE_SMART_REPLIES);
+            PRIVATE_SETTINGS.add(QS_HEADER_STYLE);
+            PRIVATE_SETTINGS.add(QS_HEADER_STYLE_COLOR);
         }
 
         /**
