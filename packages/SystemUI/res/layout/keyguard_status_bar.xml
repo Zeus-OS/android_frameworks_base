@@ -33,6 +33,7 @@
         android:paddingTop="@dimen/status_bar_padding_top"
         android:layout_alignParentEnd="true"
         android:gravity="center_vertical|end"
+        android:paddingStart="-6dp"
         android:paddingEnd="@dimen/system_icons_keyguard_padding_end" >
         <FrameLayout android:id="@+id/system_icons_container"
             android:layout_width="0dp"
