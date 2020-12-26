@@ -6262,6 +6262,12 @@ public final class Settings {
         public static final String QS_LABEL_USE_NEW_TINT = "qs_label_use_new_tint";
 
         /**
+         * FOD recognizing animation
+         * @hide
+         */
+        public static final String FOD_RECOGNIZING_ANIMATION = "fod_recognizing_animation";
+
+        /**
          * If On-The-Go should be displayed at the power menu.
          *
          * @hide
