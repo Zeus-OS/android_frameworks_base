@@ -53,13 +53,13 @@
         android:id="@+id/space"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_gravity="center"
         android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="1"
         android:orientation="horizontal"
         android:gravity="center_vertical|end" >
 
@@ -94,13 +94,6 @@
             android:orientation="horizontal"
             android:gravity="center_vertical|end"
             android:clipChildren="false" >
-
-            <ImageView
-                android:id="@+id/daily_data_usage_icon"
-                android:layout_height="16sp"
-                android:layout_width="wrap_content"
-                android:src="@drawable/ic_data_saver_off"
-                android:visibility="gone" />
 
             <com.android.systemui.statusbar.info.DataUsageView
                 android:id="@+id/data_sim_usage"
