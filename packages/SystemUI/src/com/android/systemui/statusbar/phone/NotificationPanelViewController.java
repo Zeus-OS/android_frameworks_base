@@ -3172,7 +3172,7 @@ public class NotificationPanelViewController extends PanelViewController {
         boolean ambientLightsHideAod = Settings.System.getIntForUser(resolver,
                 Settings.System.AOD_NOTIFICATION_PULSE_CLEAR, 0, UserHandle.USER_CURRENT) != 0;
         int ambientLightsTimeout = Settings.System.getIntForUser(resolver,
-                Settings.System.AOD_NOTIFICATION_PULSE_TIMEOUT, 0, UserHandle.USER_CURRENT);
+                Settings.System.AOD_NOTIFICATION_PULSE_TIMEOUT, 6, UserHandle.USER_CURRENT);
         boolean pulseColorAutomatic = Settings.System.getIntForUser(resolver,
                 Settings.System.NOTIFICATION_PULSE_COLOR_AUTOMATIC, 0, UserHandle.USER_CURRENT) != 0;
         boolean ambientText = Settings.System.getIntForUser(resolver,
