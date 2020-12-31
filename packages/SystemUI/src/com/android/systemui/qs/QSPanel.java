@@ -238,6 +238,7 @@ public class QSPanel extends LinearLayout implements Callback, BrightnessMirrorL
                     (PagedTileLayout) mRegularTileLayout);
         }
         mQSLogger.logAllTilesChangeListening(mListening, getDumpableTag(), mCachedSpecs);
+        updateSettings();
         updateResources();
     }
 
@@ -1321,6 +1322,8 @@ public class QSPanel extends LinearLayout implements Callback, BrightnessMirrorL
         int getOffsetTop(TileRecord tile);
 
         boolean updateResources();
+        void updateSettings();
+        int getNumColumns();
 
         void setListening(boolean listening);
 
@@ -1345,6 +1348,8 @@ public class QSPanel extends LinearLayout implements Callback, BrightnessMirrorL
         }
 
         default void setExpansion(float expansion) {}
+
+
 
         int getNumVisibleTiles();
     }
@@ -1409,4 +1414,17 @@ public class QSPanel extends LinearLayout implements Callback, BrightnessMirrorL
         }
     }
 
+    public void updateSettings() {
+        if (mTileLayout != null) {
+            mTileLayout.updateSettings();
+
+            for (TileRecord r : mRecords) {
+                configureTile(r.tile, r.tileView);
+            }
+        }
+    }
+
+    public int getNumColumns() {
+        return mTileLayout.getNumColumns();
+    }
 }

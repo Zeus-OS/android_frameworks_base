@@ -167,6 +167,11 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
         return false;
     }
 
+    public void updateSettings() {
+        final Resources res = mContext.getResources();
+        int defaultColumns = Math.max(1, res.getInteger(R.integer.quick_settings_num_columns));
+    }
+
     private boolean updateColumns() {
         int oldColumns = mColumns;
         int oldRows = mRows;
@@ -269,6 +274,10 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
     protected int getColumnStart(int column) {
         return getPaddingStart() + mCellMarginHorizontal / 2 +
                 column *  (mCellWidth + mCellMarginHorizontal);
+    }
+
+    public int getNumColumns() {
+        return mColumns;
     }
 
     @Override

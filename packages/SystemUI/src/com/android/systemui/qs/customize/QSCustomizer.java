@@ -48,6 +48,7 @@ import com.android.systemui.plugins.qs.QSTile;
 import com.android.systemui.qs.QSDetailClipper;
 import com.android.systemui.qs.QSEditEvent;
 import com.android.systemui.qs.QSTileHost;
+import com.android.systemui.qs.QuickQSPanel;
 import com.android.systemui.statusbar.phone.LightBarController;
 import com.android.systemui.statusbar.phone.NotificationsQuickSettingsContainer;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
@@ -93,6 +94,7 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
 
     private UiEventLogger mUiEventLogger = new UiEventLoggerImpl();
 
+    private Menu mQsColumnsSubMenu;
     @Inject
     public QSCustomizer(Context context, AttributeSet attrs,
             LightBarController lightBarController,
@@ -281,6 +283,7 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
                 reset();
                 break;
         }
+        updateSettings();
         return false;
     }
 
@@ -384,5 +387,8 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
         mHeaderImageEnabled = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.STATUS_BAR_CUSTOM_HEADER, 0,
                 UserHandle.USER_CURRENT) == 1;
+        int qsColumns = Settings.System.getIntForUser(
+                mContext.getContentResolver(), Settings.System.QS_QUICKBAR_COLUMNS,
+                QuickQSPanel.NUM_QUICK_TILES_DEFAULT, UserHandle.USER_CURRENT);
     }
 }

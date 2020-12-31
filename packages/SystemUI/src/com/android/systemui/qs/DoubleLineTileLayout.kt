@@ -72,6 +72,10 @@ class DoubleLineTileLayout(
         super.removeAllViews()
     }
 
+    override fun getNumColumns(): Int {
+        return 6
+    }
+
     override fun getOffsetTop(tile: QSPanel.TileRecord?) = top
 
     override fun updateResources(): Boolean {
@@ -110,6 +114,8 @@ class DoubleLineTileLayout(
     override fun onFinishInflate() {
         updateResources()
     }
+
+    override fun updateSettings() { }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
 

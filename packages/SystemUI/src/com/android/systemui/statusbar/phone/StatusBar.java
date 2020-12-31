@@ -451,6 +451,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     // settings
     private QSPanel mQSPanel;
+    private QuickQSPanel mQuickQSPanel;
 
     KeyguardIndicationController mKeyguardIndicationController;
 
@@ -1312,6 +1313,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 if (qs instanceof QSFragment) {
                     mQSPanel = ((QSFragment) qs).getQsPanel();
                     mQSPanel.setBrightnessMirror(mBrightnessMirrorController);
+                    mQuickQSPanel = ((QSFragment) qs).getQuickQsPanel();
                 }
             });
         }
@@ -3171,11 +3173,12 @@ public class StatusBar extends SystemUI implements DemoMode,
         if (mQSPanel != null) {
             mQSPanel.updateResources();
         }
-
         if (mStatusBarWindowController != null) {
             mStatusBarWindowController.refreshStatusBarHeight();
         }
-
+        if (mQuickQSPanel != null) {
+            mQuickQSPanel.updateResources();
+        }
         if (mStatusBarView != null) {
             mStatusBarView.updateResources();
         }
@@ -4193,6 +4196,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_LABEL_USE_NEW_TINT),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_QUICKBAR_COLUMNS),
+                    false, this, UserHandle.USER_ALL);
 	}
 
         @Override
@@ -4210,7 +4216,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                 setUseLessBoringHeadsUp();
 	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_LABEL_USE_NEW_TINT))) {
                 mQSPanel.getHost().reloadAllTiles();
-            }
             updateTileStyle();
             updateGModStyle();
             updateBrightnessSliderStyle();
@@ -4224,7 +4229,16 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateKeyguardStatusSettings();
             setMaxKeyguardNotifConfig();
             setUseLessBoringHeadsUp();
+            setQsColumns();
          }
+    }
+
+    private void setQsColumns() {
+        if (mQSPanel != null) {
+            mQSPanel.updateResources();
+            mQSPanel.updateSettings();
+            mQuickQSPanel.updateSettings();
+        }
     }
 
     private void setHeadsUpStoplist() {
