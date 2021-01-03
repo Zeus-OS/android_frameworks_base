@@ -5751,19 +5751,6 @@ public final class Settings {
         public static final String QS_SHOW_BRIGHTNESS = "qs_show_brightness";
 
         /**
-         * Whether to show QS brightness slider on bottom
-         * @hide
-         */
-        public static final String QS_BRIGHTNESS_POSITION_BOTTOM = "qs_brightness_position_bottom";
-
-        /**
-         * Whether to show QS brightness slider above qs footer
-         * Only applies when {@link QS_BRIGHTNESS_POSITION_BOTTOM} is enabled
-         * @hide
-         */
-        public static final String QS_SHOW_BRIGHTNESS_ABOVE_FOOTER = "qs_show_brightness_above_footer";
-
-        /**
          * Whether to enable the pixel navbar animation
          * @hide
          */

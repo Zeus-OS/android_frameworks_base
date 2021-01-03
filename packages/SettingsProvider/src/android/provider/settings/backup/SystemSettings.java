@@ -86,8 +86,6 @@ public class SystemSettings {
         Settings.System.NOTIFICATION_LIGHT_PULSE,
         Settings.System.RINGTONE_VIBRATION_PATTERN,
         Settings.System.QS_SHOW_BRIGHTNESS,
-        Settings.System.QS_BRIGHTNESS_POSITION_BOTTOM,
-        Settings.System.QS_SHOW_BRIGHTNESS_ABOVE_FOOTER,
         Settings.System.NOTIFICATION_HEADERS,
         Settings.System.CENTER_NOTIFICATION_HEADERS,
         Settings.System.ACCENT_COLOR,
