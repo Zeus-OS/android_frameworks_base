@@ -5727,6 +5727,24 @@ public final class Settings {
         public static final String SYSTEMUI_PLUGIN_VOLUME = "systemui_plugin_volume";
 
         /**
+         * Whether to show qs media divider
+         * @hide
+         */
+        public static final String QS_MEDIA_DIVIDER = "qs_media_divider";
+
+        /**
+         * Media divider color mode
+         * @hide
+         */
+        public static final String QS_MEDIA_DIVIDER_COLOR_MODE = "qs_media_divider_color_mode";
+
+        /**
+         * Interval of changing color in random color mode
+         * @hide
+         */
+        public static final String QS_MEDIA_DIVIDER_RANDOM_COLOR_INTERVAL = "qs_media_divider_random_color_interval";
+
+        /**
          * Whether to show QS brightness slider
          * @hide
          */

@@ -78,6 +78,11 @@ import com.android.systemui.settings.ToggleSliderView;
 import com.android.systemui.statusbar.policy.BrightnessMirrorController;
 import com.android.systemui.statusbar.policy.BrightnessMirrorController.BrightnessMirrorListener;
 import com.android.systemui.util.animation.DisappearParameters;
+import android.graphics.Color;
+import java.util.Random;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import lineageos.providers.LineageSettings;
 
@@ -176,6 +181,9 @@ public class QSPanel extends LinearLayout implements Callback, BrightnessMirrorL
     private int mFooterMarginStartHorizontal;
     private Consumer<Boolean> mMediaVisibilityChangedListener;
     private boolean mMediaVisible;
+
+    private Handler mHandlerTimer = new Handler();
+    private Timer mTimer = null;
 
     @Inject
     public QSPanel(
@@ -471,7 +479,13 @@ public class QSPanel extends LinearLayout implements Callback, BrightnessMirrorL
         boolean above = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.QS_SHOW_BRIGHTNESS_ABOVE_FOOTER, 0,
                 UserHandle.USER_CURRENT) == 1;
-        View seekView = above && !mMediaVisible ? mFooter : mDivider;
+        View seekView;
+
+        if(isMediaDividerEnabled()) {
+            seekView = above && !mMediaVisible ? mFooter : mDivider;
+        } else  {
+           seekView = above && !mMediaVisible ? mFooter : null;
+        }
         for (int i = 0; i < getChildCount(); i++) {
             View v = getChildAt(i);
             if (v == seekView) {
@@ -618,6 +632,14 @@ public class QSPanel extends LinearLayout implements Callback, BrightnessMirrorL
         if (mTileLayout != null) {
             mTileLayout.updateResources();
         }
+
+        if(isMediaDividerEnabled()) {
+            updateMediaDividerColor();
+        } else {
+            if(mDivider != null) {
+                mDivider.setVisibility(View.GONE);
+            }
+        }
     }
 
     protected void updatePadding() {
@@ -664,15 +686,27 @@ public class QSPanel extends LinearLayout implements Callback, BrightnessMirrorL
     }
 
     public boolean switchTileLayout(boolean force) {
-        /** Whether or not the QuickQSPanel currently contains a media player. */
         boolean horizontal = shouldUseHorizontalLayout();
-        if (mDivider != null) {
-            if (!horizontal && mUsingMediaPlayer && mMediaHost.getVisible()) {
-                mDivider.setVisibility(View.VISIBLE);
-            } else {
+        /** Whether or not the QuickQSPanel currently contains a media player. */
+        if(isMediaDividerEnabled()) {
+             if (mDivider != null) {
+                if (!horizontal && mUsingMediaPlayer && mMediaHost.getVisible()) {
+                    mDivider.setVisibility(View.VISIBLE);
+                    updateMediaDividerColor();
+                } else {
+                    mDivider.setVisibility(View.GONE);
+                }
+            }
+        } else {
+            if (mTimer != null) {
+                mTimer.cancel();
+            }
+            if (mDivider != null) {
                 mDivider.setVisibility(View.GONE);
             }
         }
+
+
         if (horizontal != mUsingHorizontalLayout || force) {
             mUsingHorizontalLayout = horizontal;
             View visibleView = horizontal ? mHorizontalLinearLayout : (View) mRegularTileLayout;
@@ -706,7 +740,9 @@ public class QSPanel extends LinearLayout implements Callback, BrightnessMirrorL
             }
             updateTileLayoutMargins();
             updateFooterMargin();
-            updateDividerMargin();
+            if(isMediaDividerEnabled()) {
+                updateDividerMargin();
+            }
             updateMediaDisappearParameters();
             updateMediaHostContentMargins();
             updateHorizontalLinearLayoutMargins();
@@ -714,6 +750,76 @@ public class QSPanel extends LinearLayout implements Callback, BrightnessMirrorL
             return true;
         }
         return false;
+    }
+
+    public boolean isMediaDividerEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_MEDIA_DIVIDER, 1) == 1;
+    }
+
+    private int getMediaDividerColorMode() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_MEDIA_DIVIDER_COLOR_MODE, 0);
+    }
+
+    private int getMediaDividerRandomColorInterval() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.QS_MEDIA_DIVIDER_RANDOM_COLOR_INTERVAL, 3);
+    }
+
+    private void updateMediaDividerColor() {
+        if(isMediaDividerEnabled() && mDivider != null && mUsingMediaPlayer && mMediaHost.getVisible()) {
+            mDivider.setVisibility(View.VISIBLE);
+            switch (getMediaDividerColorMode()) {
+                case 0:
+                    if(mTimer != null) {
+                        mTimer.cancel();
+                    }
+                    mDivider.setBackgroundColor(0x1d000000);
+                    break;
+                case 1:
+                    if(mTimer != null) {
+                        mTimer.cancel();
+                    }
+                    mDivider.setBackgroundColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
+                    break;
+                case 2:
+                    if(mTimer != null) {
+                        mTimer.cancel();
+                    }
+                    mTimer = new Timer();
+                    mDivider.setBackgroundColor(getRandomColor());
+                    int interval= getMediaDividerRandomColorInterval() * 1000;
+                    mTimer.scheduleAtFixedRate(new TimeDisplay(), 0, interval);
+                break;
+            }
+        } else {
+            if (mDivider != null) {
+                mDivider.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    //class TimeDisplay for handling task
+        class TimeDisplay extends TimerTask {
+            @Override
+            public void run() {
+                // run on another thread
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(isMediaDividerEnabled() && getMediaDividerColorMode() == 2) {
+                            mDivider.setBackgroundColor(getRandomColor());
+                        }
+                    }
+                });
+            }
+        }
+
+
+    private int getRandomColor(){
+        Random rnd = new Random();
+            return Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
     }
 
     private void updateHorizontalLinearLayoutMargins() {
@@ -1179,7 +1285,14 @@ public class QSPanel extends LinearLayout implements Callback, BrightnessMirrorL
                 mContentMarginEnd - mVisualTilePadding);
         updateMediaHostContentMargins();
         updateFooterMargin();
-        updateDividerMargin();
+        if(mDivider != null && !shouldUseHorizontalLayout() && mUsingMediaPlayer && mMediaHost.getVisible()) {
+            if(isMediaDividerEnabled()) {
+                mDivider.setVisibility(View.VISIBLE);
+                updateDividerMargin();
+            } else {
+                mDivider.setVisibility(View.GONE);
+            }
+        }
     }
 
     private void updateFooterMargin() {

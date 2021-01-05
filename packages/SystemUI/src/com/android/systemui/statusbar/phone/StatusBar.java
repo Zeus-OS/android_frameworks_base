@@ -4199,6 +4199,15 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_QUICKBAR_COLUMNS),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_MEDIA_DIVIDER),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_MEDIA_DIVIDER_COLOR_MODE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_MEDIA_DIVIDER_RANDOM_COLOR_INTERVAL),
+                    false, this, UserHandle.USER_ALL);
 	}
 
         @Override
@@ -4216,6 +4225,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                 setUseLessBoringHeadsUp();
 	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_LABEL_USE_NEW_TINT))) {
                 mQSPanel.getHost().reloadAllTiles();
+            }
             updateTileStyle();
             updateGModStyle();
             updateBrightnessSliderStyle();
