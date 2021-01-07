@@ -214,6 +214,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     private boolean mPrivacyChipVisible = false;
 
+    private boolean mBrightnessButton;
+    private ImageView mMinBrightness;
+    private ImageView mMaxBrightness;
+
     // Used for RingerModeTracker
     private final LifecycleRegistry mLifecycle = new LifecycleRegistry(this);
 
@@ -226,6 +230,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             ContentResolver resolver = getContext().getContentResolver();
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_DATAUSAGE), false,
+                    this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.QS_QUICK_BRIGHTNESS_SLIDER_SIDE_BUTTONS), false,
                     this, UserHandle.USER_ALL);
             }
 
@@ -327,6 +334,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 mQuickQsBrightness.findViewById(R.id.brightness_icon),
                 mQuickQsBrightness.findViewById(R.id.brightness_slider),
                 mBroadcastDispatcher);
+
+        mMinBrightness = mQuickQsBrightness.findViewById(R.id.brightness_left);
+        mMaxBrightness = mQuickQsBrightness.findViewById(R.id.brightness_right);
+        mMinBrightness.setOnClickListener(this::onClick);
+        mMaxBrightness.setOnClickListener(this::onClick);
 
         mDataUsageView = findViewById(R.id.data_sim_usage);
         mDataUsageLayout = findViewById(R.id.daily_data_usage_layout);
@@ -566,6 +578,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             Settings.System.QS_SYSTEM_INFO_ICON, 1) == 1;
     }
 
+    public boolean isQQSBrightnessSideIconsEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+            Settings.System.QS_QUICK_BRIGHTNESS_SLIDER_SIDE_BUTTONS, 1) == 1;
+    }
+
     private void updateSystemInfoText() {
         mSystemInfoMode = getQsSystemInfoMode();
 
@@ -656,6 +673,9 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             } else {
                 mQuickQsBrightness.findViewById(R.id.brightness_icon).setVisibility(View.GONE);
             }
+            mBrightnessButton = isQQSBrightnessSideIconsEnabled();
+            mMinBrightness.setVisibility(mBrightnessButton ? VISIBLE : GONE);
+            mMaxBrightness.setVisibility(mBrightnessButton ? VISIBLE : GONE);
             mQuickQsBrightness.setVisibility(View.VISIBLE);
         } else {
             mQuickQsBrightness.setVisibility(View.GONE);
@@ -939,6 +959,26 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         } else if (v == mBatteryIcon) {
             mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
                     Intent.ACTION_POWER_USAGE_SUMMARY), 0);
+        } else if (v == mMinBrightness) {
+            final ContentResolver resolver = getContext().getContentResolver();
+            int currentValue = Settings.System.getIntForUser(resolver,
+                    Settings.System.SCREEN_BRIGHTNESS, 0, UserHandle.USER_CURRENT);
+            int brightness = currentValue - 2;
+            if (currentValue != 0) {
+                int math = Math.max(0, brightness);
+                Settings.System.putIntForUser(resolver,
+                        Settings.System.SCREEN_BRIGHTNESS, math, UserHandle.USER_CURRENT);
+            }
+        } else if (v == mMaxBrightness) {
+            final ContentResolver resolver = getContext().getContentResolver();
+            int currentValue = Settings.System.getIntForUser(resolver,
+                    Settings.System.SCREEN_BRIGHTNESS, 0, UserHandle.USER_CURRENT);
+            int brightness = currentValue + 2;
+            if (currentValue != 255) {
+                int math = Math.min(255, brightness);
+                Settings.System.putIntForUser(resolver,
+                        Settings.System.SCREEN_BRIGHTNESS, math, UserHandle.USER_CURRENT);
+            }
         }
     }
 

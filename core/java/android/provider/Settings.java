@@ -5751,6 +5751,12 @@ public final class Settings {
         public static final String QS_SHOW_BRIGHTNESS = "qs_show_brightness";
 
         /**
+         * Whether to show side buttons on Quick QS brightness slider
+         * @hide
+         */
+        public static final String QS_QUICK_BRIGHTNESS_SLIDER_SIDE_BUTTONS = "qs_quick_brightness_slider_side_buttons";
+
+        /**
          * Whether to enable the pixel navbar animation
          * @hide
          */
