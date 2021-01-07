@@ -76,5 +76,6 @@
         <permission name="android.permission.REBOOT" />
         <permission name="android.permission.FORCE_STOP_PACKAGES" />
         <permission name="android.permission.RECOVERY" />
+        <permission name="android.permission.CHANGE_CONFIGURATION" />
     </privapp-permissions>
 </permissions>

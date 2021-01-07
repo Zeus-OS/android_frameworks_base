@@ -170,6 +170,9 @@
     <!-- Listen for keyboard attachment / detachment -->
     <uses-permission android:name="android.permission.TABLET_MODE" />
 
+    <!-- Change local permission -->
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+
     <!-- Self permission for internal broadcasts. -->
     <permission android:name="com.android.systemui.permission.SELF"
             android:protectionLevel="signature" />
