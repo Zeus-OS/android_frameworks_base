@@ -5757,6 +5757,12 @@ public final class Settings {
         public static final String QS_QUICK_BRIGHTNESS_SLIDER_SIDE_BUTTONS = "qs_quick_brightness_slider_side_buttons";
 
         /**
+         * Statusbar hight value for manual mode
+         * @hide
+         */
+        public static final String CUSTOM_STATUSBAR_HEIGHT = "custom_statusbar_height";
+
+        /**
          * Whether to enable the pixel navbar animation
          * @hide
          */

@@ -34,6 +34,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowInsets;
 import android.view.accessibility.AccessibilityNodeInfo;
+import android.provider.Settings;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.systemui.Dependency;
@@ -149,7 +150,7 @@ public class NotificationShelf extends ActivatableNotificationView implements
     private void initDimens() {
         Resources res = getResources();
         mIconAppearTopPadding = res.getDimensionPixelSize(R.dimen.notification_icon_appear_padding);
-        mStatusBarHeight = res.getDimensionPixelOffset(R.dimen.status_bar_height);
+        mStatusBarHeight = getCustomStatusBarHeight();
         mStatusBarPaddingStart = res.getDimensionPixelOffset(R.dimen.status_bar_padding_start);
         mPaddingBetweenElements = res.getDimensionPixelSize(R.dimen.notification_divider_height);
 
@@ -168,6 +169,12 @@ public class NotificationShelf extends ActivatableNotificationView implements
         if (!mShowNotificationShelf) {
             setVisibility(GONE);
         }
+    }
+
+    private int getCustomStatusBarHeight() {
+        final Resources res = mContext.getResources();
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.CUSTOM_STATUSBAR_HEIGHT, res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height));
     }
 
     @Override

@@ -24,6 +24,7 @@ import android.util.Log;
 import android.util.MathUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.provider.Settings;
 
 import com.android.systemui.R;
 import com.android.systemui.statusbar.EmptyShadeView;
@@ -61,11 +62,13 @@ public class StackScrollAlgorithm {
     private int mStatusBarHeight;
     private float mHeadsUpInset;
     private int mPinnedZTranslationExtra;
+    private Context mContext;
 
     public StackScrollAlgorithm(
             Context context,
             ViewGroup hostView) {
         mHostView = hostView;
+        mContext = context;
         initView(context);
     }
 
@@ -80,13 +83,19 @@ public class StackScrollAlgorithm {
         mIncreasedPaddingBetweenElements =
                 res.getDimensionPixelSize(R.dimen.notification_divider_height_increased);
         mCollapsedSize = res.getDimensionPixelSize(R.dimen.notification_min_height);
-        mStatusBarHeight = res.getDimensionPixelSize(R.dimen.status_bar_height);
+        mStatusBarHeight = getCustomStatusBarHeight();
         mClipNotificationScrollToTop = res.getBoolean(R.bool.config_clipNotificationScrollToTop);
         mHeadsUpInset = mStatusBarHeight + res.getDimensionPixelSize(
                 R.dimen.heads_up_status_bar_padding);
         mPinnedZTranslationExtra = res.getDimensionPixelSize(
                 R.dimen.heads_up_pinned_elevation);
         mGapHeight = res.getDimensionPixelSize(R.dimen.notification_section_divider_height);
+    }
+
+    private int getCustomStatusBarHeight() {
+        final Resources res = mContext.getResources();
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.CUSTOM_STATUSBAR_HEIGHT, res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height));
     }
 
     /**

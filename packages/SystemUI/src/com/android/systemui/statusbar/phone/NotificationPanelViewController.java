@@ -38,6 +38,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -715,8 +716,7 @@ public class NotificationPanelViewController extends PanelViewController {
         super.loadDimens();
         mFlingAnimationUtils = mFlingAnimationUtilsBuilder.reset()
                 .setMaxLengthSeconds(0.4f).build();
-        mStatusBarMinHeight = mResources.getDimensionPixelSize(
-                com.android.internal.R.dimen.status_bar_height);
+        mStatusBarMinHeight =getCustomStatusBarHeight();
         mQsPeekHeight = mResources.getDimensionPixelSize(R.dimen.qs_peek_height);
         mNotificationsHeaderCollideDistance = mResources.getDimensionPixelSize(
                 R.dimen.header_notifications_collide_distance);
@@ -732,10 +732,15 @@ public class NotificationPanelViewController extends PanelViewController {
                 R.dimen.status_bar_header_height_keyguard);
         mShelfHeight = mResources.getDimensionPixelSize(R.dimen.notification_shelf_height);
         mDarkIconSize = mResources.getDimensionPixelSize(R.dimen.status_bar_icon_drawing_size_dark);
-        int statusbarHeight = mResources.getDimensionPixelSize(
-                com.android.internal.R.dimen.status_bar_height);
+        int statusbarHeight = getCustomStatusBarHeight();
         mHeadsUpInset = statusbarHeight + mResources.getDimensionPixelSize(
                 R.dimen.heads_up_status_bar_padding);
+    }
+
+    private int getCustomStatusBarHeight() {
+        final Resources res = mView.getContext().getResources();
+        return Settings.System.getInt(mView.getContext().getContentResolver(),
+                Settings.System.CUSTOM_STATUSBAR_HEIGHT, res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height));
     }
 
     /**

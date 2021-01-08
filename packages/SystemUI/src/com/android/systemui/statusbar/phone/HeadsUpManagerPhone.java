@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Region;
 import android.util.Pools;
+import android.provider.Settings;
 
 import androidx.collection.ArraySet;
 
@@ -136,8 +137,14 @@ public class HeadsUpManagerPhone extends HeadsUpManager implements Dumpable,
     private void updateResources() {
         Resources resources = mContext.getResources();
         mHeadsUpInset =
-                resources.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height)
+                getCustomStatusBarHeight()
                         + resources.getDimensionPixelSize(R.dimen.heads_up_status_bar_padding);
+    }
+
+    private int getCustomStatusBarHeight() {
+        final Resources res = mContext.getResources();
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.CUSTOM_STATUSBAR_HEIGHT, res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height));
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

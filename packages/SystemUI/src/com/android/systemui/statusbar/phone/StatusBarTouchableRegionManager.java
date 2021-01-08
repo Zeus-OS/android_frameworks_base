@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnComputeInternalInsetsListener;
 import android.view.WindowInsets;
+import android.provider.Settings;
 
 import com.android.systemui.Dumpable;
 import com.android.systemui.R;
@@ -171,8 +172,13 @@ public final class StatusBarTouchableRegionManager implements Dumpable {
         Resources resources = mContext.getResources();
         mDisplayCutoutTouchableRegionSize = resources.getDimensionPixelSize(
                 com.android.internal.R.dimen.display_cutout_touchable_region_size);
-        mStatusBarHeight =
-                resources.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height);
+        mStatusBarHeight = getCustomStatusBarHeight();
+    }
+
+    private int getCustomStatusBarHeight() {
+        final Resources res = mContext.getResources();
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.CUSTOM_STATUSBAR_HEIGHT, res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height));
     }
 
     /**

@@ -627,8 +627,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
      * when there is a notch involved the status bar can remain a fixed pixel size.
      */
     private void updateMinimumHeight() {
-        int sbHeight = mContext.getResources().getDimensionPixelSize(
-                com.android.internal.R.dimen.status_bar_height);
+        int sbHeight = getCustomStatusBarHeight();
         int qqsHeight = mContext.getResources().getDimensionPixelSize(
                 R.dimen.qs_quick_header_panel_height);
 
@@ -644,6 +643,12 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         }
 
         setMinimumHeight(sbHeight + qqsHeight);
+    }
+
+    private int getCustomStatusBarHeight() {
+        final Resources res = mContext.getResources();
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.CUSTOM_STATUSBAR_HEIGHT, res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height));
     }
 
     private void updateResources() {
