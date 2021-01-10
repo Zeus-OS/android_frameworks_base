@@ -5103,7 +5103,7 @@ public final class Settings {
          *
          * @hide
          */
-        public static final String FINGERPRINT_SUCCESS_VIB = "fingerprint_success_vib";
+        public static final String FP_SUCCESS_VIBRATE = "fp_success_vibrate";
 
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
@@ -6051,12 +6051,6 @@ public final class Settings {
         public static final String LOCKSCREEN_ENABLE_POWER_MENU = "lockscreen_enable_power_menu";
 
         /**
-         * Whether to enable or disable vibration on succesful fingerprint auth
-         * @hide
-         */
-        public static final String FP_SUCCESS_VIBRATE = "fp_success_vibrate";
-
-        /**
          * Whether to enable or disable vibration on fingerprint auth error
          * @hide
          */
@@ -6453,7 +6447,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(VIBRATE_ON_DISCONNECT);
             PRIVATE_SETTINGS.add(HEADS_UP_STOPLIST_VALUES);
             PRIVATE_SETTINGS.add(HEADS_UP_BLACKLIST_VALUES);
-            PRIVATE_SETTINGS.add(FINGERPRINT_SUCCESS_VIB);
             PRIVATE_SETTINGS.add(THEMING_SETTINGS_DASHBOARD_ICONS);
             PRIVATE_SETTINGS.add(QS_TILE_STYLE);
             PRIVATE_SETTINGS.add(UI_STYLE);
