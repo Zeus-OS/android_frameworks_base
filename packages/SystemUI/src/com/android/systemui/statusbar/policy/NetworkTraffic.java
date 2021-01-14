@@ -481,7 +481,7 @@ public class NetworkTraffic extends TextView {
                 Settings.System.NETWORK_TRAFFIC_VIEW_LOCATION, 0,
                 UserHandle.USER_CURRENT) == 1;
         mNetTrafSize = Settings.System.getIntForUser(resolver,
-                Settings.System.NETWORK_TRAFFIC_FONT_SIZE, 24,
+                Settings.System.NETWORK_TRAFFIC_FONT_SIZE, 21,
                 UserHandle.USER_CURRENT);
     }
 
@@ -577,7 +577,7 @@ public class NetworkTraffic extends TextView {
 
     private void updateNetworkTrafficFontStyle() {
         mNetworkTrafficFontStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.NETWORK_TRAFFIC_FONT_STYLE, FONT_NORMAL,
+                Settings.System.NETWORK_TRAFFIC_FONT_STYLE, FONT_BOLD,
 		UserHandle.USER_CURRENT);
         getNetworkTrafficFontStyle(mNetworkTrafficFontStyle);
         updateVisibility();
