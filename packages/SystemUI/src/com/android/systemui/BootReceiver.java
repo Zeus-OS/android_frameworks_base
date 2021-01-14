@@ -77,6 +77,13 @@ public class BootReceiver extends BroadcastReceiver {
                 mContext.startService(cpuinfo);
             }
 
+            // start the random color change service if activated
+            if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.RANDOM_ACCENT_COLOR_ON_SCREEN_OFF, 0, UserHandle.USER_CURRENT) != 0) {
+                Intent randomcolorstate = new Intent(mContext, com.android.systemui.zenx.randomcolor.RandomColorService.class);
+                mContext.startService(randomcolorstate);
+            }
+
         } catch (Exception e) {
             Log.e(TAG, "Can't start load average service", e);
         }

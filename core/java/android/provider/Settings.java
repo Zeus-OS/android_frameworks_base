@@ -5543,6 +5543,18 @@ public final class Settings {
         public static final String X_FOOTER_TEXT_STRING = "x_footer_text_string";
 
         /**
+         * Random color interval screen off
+         * @hide
+         */
+        public static final String RANDOM_ACCENT_COLOR_SCREENOFF_DURATION = "random_accent_color_screenoff_duration";
+
+        /**
+         * Weather to change accent color only on screen off
+         * @hide
+         */
+        public static final String RANDOM_ACCENT_COLOR_ON_SCREEN_OFF = "random_accent_color_on_screen_off";
+
+        /**
          * enable custom lockscreen max notifications config
          * @hide
          */
