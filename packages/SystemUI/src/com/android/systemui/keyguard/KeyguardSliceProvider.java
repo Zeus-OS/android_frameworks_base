@@ -229,8 +229,8 @@ public class KeyguardSliceProvider extends SliceProvider implements
             if (needsMediaLocked()) {
                 addMediaLocked(builder);
             }
-            addWeather(builder);
             builder.addRow(new RowBuilder(mDateUri).setTitle(mLastText));
+            addWeather(builder);
             addNextAlarmLocked(builder);
             addZenModeLocked(builder);
             addPrimaryActionLocked(builder);
@@ -433,11 +433,11 @@ public class KeyguardSliceProvider extends SliceProvider implements
         }
 
         public void updateLockscreenWeather() {
-            mWeatherEnabled = Settings.System.getIntForUser(mContentResolver, Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED, 0, UserHandle.USER_CURRENT) != 0;
+            mWeatherEnabled = Settings.System.getIntForUser(mContentResolver, Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED, 1, UserHandle.USER_CURRENT) != 0;
         }
 
         public void updateLockscreenWeatherStyle() {
-            mShowWeatherSlice = Settings.System.getIntForUser(mContentResolver, Settings.System.AICP_LOCKSCREEN_WEATHER_STYLE, 0, UserHandle.USER_CURRENT) != 0;
+            mShowWeatherSlice = Settings.System.getIntForUser(mContentResolver, Settings.System.AICP_LOCKSCREEN_WEATHER_STYLE, 1, UserHandle.USER_CURRENT) != 0;
         }
     }
 
