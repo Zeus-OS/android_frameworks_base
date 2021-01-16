@@ -4235,6 +4235,18 @@ public final class Settings {
                 "hide_battery_icon_on_active_privacy_chip";
 
         /**
+        * Show or hide dnd on lockscreen
+        * @hide
+        */
+        public static final String SHOW_DND_ON_LOCKSCREEN = "show_dnd_on_lockscreen";
+
+        /**
+         * Show or hide alarm on lockscreen
+         * @hide
+         */
+        public static final String SHOW_ALARM_ON_LOCKSCREEN = "show_alarm_on_lockscreen";
+
+        /**
          * Ringer volume. This is used internally, changing this value will not
          * change the volume. See AudioManager.
          *

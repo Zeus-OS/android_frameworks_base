@@ -163,6 +163,8 @@ public class KeyguardSliceProvider extends SliceProvider implements
     private boolean mWeatherEnabled;
     private boolean mShowWeatherSlice;
 
+    private boolean mDndEnabled, mAlarmEnabled;
+
     /**
      * Receiver responsible for time ticking and updating the date format.
      */
@@ -276,12 +278,14 @@ public class KeyguardSliceProvider extends SliceProvider implements
         if (TextUtils.isEmpty(mNextAlarm)) {
             return;
         }
-        IconCompat alarmIcon = IconCompat.createWithResource(getContext(),
-                R.drawable.ic_access_alarms_big);
-        RowBuilder alarmRowBuilder = new RowBuilder(mAlarmUri)
-                .setTitle(mNextAlarm)
-                .addEndItem(alarmIcon, ListBuilder.ICON_IMAGE);
-        builder.addRow(alarmRowBuilder);
+        if(mAlarmEnabled) {
+            IconCompat alarmIcon = IconCompat.createWithResource(getContext(),
+                    R.drawable.ic_access_alarms_big);
+            RowBuilder alarmRowBuilder = new RowBuilder(mAlarmUri)
+                    .setTitle(mNextAlarm)
+                    .addEndItem(alarmIcon, ListBuilder.ICON_IMAGE);
+            builder.addRow(alarmRowBuilder);
+        }
     }
 
     /**
@@ -292,13 +296,15 @@ public class KeyguardSliceProvider extends SliceProvider implements
         if (!isDndOn()) {
             return;
         }
-        RowBuilder dndBuilder = new RowBuilder(mDndUri)
-                .setContentDescription(getContext().getResources()
-                        .getString(R.string.accessibility_quick_settings_dnd))
-                .addEndItem(
-                    IconCompat.createWithResource(getContext(), R.drawable.stat_sys_dnd),
-                    ListBuilder.ICON_IMAGE);
-        builder.addRow(dndBuilder);
+        if(mDndEnabled) {
+            RowBuilder dndBuilder = new RowBuilder(mDndUri)
+                    .setContentDescription(getContext().getResources()
+                            .getString(R.string.accessibility_quick_settings_dnd))
+                    .addEndItem(
+                        IconCompat.createWithResource(getContext(), R.drawable.stat_sys_dnd),
+                        ListBuilder.ICON_IMAGE);
+            builder.addRow(dndBuilder);
+        }
     }
 
     /**
@@ -373,9 +379,14 @@ public class KeyguardSliceProvider extends SliceProvider implements
             mContentResolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.OMNIJAWS_WEATHER_ICON_PACK),
                     false, this, UserHandle.USER_ALL);
-
             mContentResolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.AICP_LOCKSCREEN_WEATHER_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            mContentResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SHOW_DND_ON_LOCKSCREEN),
+                    false, this, UserHandle.USER_ALL);
+            mContentResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SHOW_ALARM_ON_LOCKSCREEN),
                     false, this, UserHandle.USER_ALL);
         }
 
@@ -395,6 +406,11 @@ public class KeyguardSliceProvider extends SliceProvider implements
                 updateLockscreenWeatherStyle();
                 mContentResolver.notifyChange(mSliceUri, null /* observer */);
             }
+            mDndEnabled = Settings.System.getIntForUser(mContentResolver,
+                Settings.System.SHOW_DND_ON_LOCKSCREEN, 1, UserHandle.USER_CURRENT) != 0;
+            mAlarmEnabled = Settings.System.getIntForUser(mContentResolver,
+                Settings.System.SHOW_ALARM_ON_LOCKSCREEN, 0, UserHandle.USER_CURRENT) != 0;
+
         }
 
         public void updateDateSkeleton() {
