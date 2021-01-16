@@ -327,12 +327,12 @@ public class KeyguardStatusView extends GridLayout implements
 
     private int getLockDateFont() {
         return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.LOCK_DATE_FONTS, 0);
+                Settings.System.LOCK_DATE_FONTS, 28);
     }
 
     private int getOwnerInfoFont() {
         return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.LOCK_OWNERINFO_FONTS, 0);
+                Settings.System.LOCK_OWNERINFO_FONTS, 28);
     }
 
     private int getOwnerInfoSize() {
@@ -376,7 +376,7 @@ public class KeyguardStatusView extends GridLayout implements
     private void refreshLockDateFont() {
         final Resources res = getContext().getResources();
         boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-        int lockDateFont = isPrimary ? getLockDateFont() : 0;
+        int lockDateFont = isPrimary ? getLockDateFont() : 28;
         if (lockDateFont == 0) {
             mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         }
@@ -716,7 +716,7 @@ public class KeyguardStatusView extends GridLayout implements
     private void refreshOwnerInfoFont() {
         final Resources res = getContext().getResources();
         boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-        int ownerinfoFont = isPrimary ? getOwnerInfoFont() : 0;
+        int ownerinfoFont = isPrimary ? getOwnerInfoFont() : 28;
 
         if (ownerinfoFont == 0) {
             mOwnerInfo.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));

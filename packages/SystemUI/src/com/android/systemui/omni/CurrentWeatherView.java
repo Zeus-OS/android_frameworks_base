@@ -143,13 +143,13 @@ public class CurrentWeatherView extends FrameLayout implements OmniJawsClient.Om
         mRightTextColor = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.LOCK_SCREEN_WEATHER_TEMP_COLOR, 0xFFFFFFFF, UserHandle.USER_CURRENT);
         omniRightTextFont = Settings.System.getIntForUser(getContext().getContentResolver(),
-                Settings.System.LOCK_WEATHER_TEMP_FONTS, 27, UserHandle.USER_CURRENT);
+                Settings.System.LOCK_WEATHER_TEMP_FONTS, 28, UserHandle.USER_CURRENT);
         mLeftTextColor = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.LOCK_SCREEN_WEATHER_CITY_COLOR, 0xFFFFFFFF, UserHandle.USER_CURRENT);
         omniLeftTextFont = Settings.System.getIntForUser(getContext().getContentResolver(),
-                Settings.System.LOCK_WEATHER_CITY_FONTS, 27, UserHandle.USER_CURRENT);
+                Settings.System.LOCK_WEATHER_CITY_FONTS, 28, UserHandle.USER_CURRENT);
         mCurrentImageColor = Settings.System.getIntForUser(getContext().getContentResolver(),
-                Settings.System.LOCK_SCREEN_WEATHER_ICON_COLOR, 0xFFFFFFFF, UserHandle.USER_CURRENT);
+                Settings.System.LOCK_SCREEN_WEATHER_ICON_COLOR, 0x99FFFFFF, UserHandle.USER_CURRENT);
         if (DEBUG) Log.d(TAG, "updateWeatherData");
 
         if (!mWeatherClient.isOmniJawsEnabled() || weatherData == null) {
