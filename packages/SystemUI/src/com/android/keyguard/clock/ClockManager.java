@@ -163,6 +163,7 @@ public final class ClockManager {
         addBuiltinClock(() -> new RainbowCircleClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new SunsetClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new LighthouseClockController(res, layoutInflater, colorExtractor, context));
+        addBuiltinClock(() -> new LonelyWolfClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new BlueCircleClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new BlueV2CircleClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new ExplosionCircleClockController(res, layoutInflater, colorExtractor, context));

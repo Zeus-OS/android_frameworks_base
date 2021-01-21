@@ -34,11 +34,11 @@
     <string name="clock_title_samsung_accent" translatable="false">Samsung (Colored)</string>
     <string name="clock_title_default_bold" translatable="false">Default (bold)</string>
     <string name="clock_title_default">Default</string>
-    <string name="clock_title_default_hour_bold" translatable="false">Default (Hour bold)</string>
-    <string name="clock_title_default_minute_bold" translatable="false">Default (Min bold)</string>
-    <string name="clock_title_samsung_bold_hour" translatable="false">Samsung (Hour bold)</string>
-    <string name="clock_title_samsung_bold_minute" translatable="false">Samsung (Minute bold)</string>
-    <string name="clock_title_samsung_big_hours" translatable="false">Sasmung (Big Hour)</string>
+    <string name="clock_title_default_hour_bold" translatable="false">Default-Hour bold</string>
+    <string name="clock_title_default_minute_bold" translatable="false">Default-Min bold</string>
+    <string name="clock_title_samsung_bold_hour" translatable="false">Sammy-Hour bold</string>
+    <string name="clock_title_samsung_bold_minute" translatable="false">Sammy-Min bold</string>
+    <string name="clock_title_samsung_big_hours" translatable="false">Sammy-Big hour</string>
     <string name="clock_title_swing" translatable="false">Swing animation</string>
     <string name="clock_title_loading" translatable="false">Loading animation</string>
     <string name="clock_title_bubble_animation" translatable="false">Bubble animation</string>
@@ -49,5 +49,6 @@
     <string name="clock_title_tux" translatable="false">Tux</string>
     <string name="clock_title_sunset" translatable="false">Sunset</string>
     <string name="clock_title_lighthouse" translatable="false">Lighthouse</string>
+    <string name="clock_title_lonely_wolf" translatable="false">Lonely Wolf</string>
 
 </resources>
