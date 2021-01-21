@@ -31,8 +31,8 @@
     <string name="clock_title_one_line_digital" translatable="false">Digital</string>
     <string name="clock_title_samsung" translatable="false">Samsung</string>
     <string name="clock_title_samsung_bold" translatable="false">Samsung bold</string>
-    <string name="clock_title_samsung_accent" translatable="false">Samsung (Colored)</string>
-    <string name="clock_title_default_bold" translatable="false">Default (bold)</string>
+    <string name="clock_title_samsung_accent" translatable="false">Samsung-Colored</string>
+    <string name="clock_title_default_bold" translatable="false">Default-bold</string>
     <string name="clock_title_default">Default</string>
     <string name="clock_title_default_hour_bold" translatable="false">Default-Hour bold</string>
     <string name="clock_title_default_minute_bold" translatable="false">Default-Min bold</string>
@@ -50,5 +50,6 @@
     <string name="clock_title_sunset" translatable="false">Sunset</string>
     <string name="clock_title_lighthouse" translatable="false">Lighthouse</string>
     <string name="clock_title_lonely_wolf" translatable="false">Lonely Wolf</string>
+    <string name="clock_title_bird" translatable="false">Bird</string>
 
 </resources>
