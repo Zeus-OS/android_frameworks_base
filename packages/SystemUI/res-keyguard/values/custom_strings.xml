@@ -51,5 +51,6 @@
     <string name="clock_title_lighthouse" translatable="false">Lighthouse</string>
     <string name="clock_title_lonely_wolf" translatable="false">Lonely Wolf</string>
     <string name="clock_title_bird" translatable="false">Bird</string>
+    <string name="clock_title_zenx" translatable="false">ZenX</string>
 
 </resources>

@@ -159,6 +159,7 @@ public final class ClockManager {
         addBuiltinClock(() -> new SamsungBoldMinuteClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new SamsungBigHourClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new TuxClockController(res, layoutInflater, colorExtractor, context));
+        addBuiltinClock(() -> new ZenxClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new BubbleAnimationClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new RainbowCircleClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new SunsetClockController(res, layoutInflater, colorExtractor, context));
