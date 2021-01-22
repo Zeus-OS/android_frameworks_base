@@ -28,6 +28,13 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.os.Handler;
+
+import android.graphics.Color;
+import java.util.Random;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.android.settingslib.Utils;
 import com.android.systemui.R;
@@ -45,21 +52,28 @@ public abstract class LogoImage extends ImageView implements
     private boolean mAttached;
     private boolean mLogo;
     private int mLogoColor;
-    private boolean mLogoColorAccent;
+
     public int mLogoPosition;
     private int mLogoStyle;
     private int mTintColor = Color.WHITE;
+    private int mColorMode;
+    private int mInterval;
+
+    private Handler mHandler = new Handler();
+    private Timer mTimer = null;
 
     private static final String STATUS_BAR_LOGO =
             "system:" + Settings.System.STATUS_BAR_LOGO;
     private static final String STATUS_BAR_LOGO_COLOR =
             "system:" + Settings.System.STATUS_BAR_LOGO_COLOR;
-    private static final String STATUS_BAR_LOGO_COLOR_ACCENT =
-            "system:" + Settings.System.STATUS_BAR_LOGO_COLOR_ACCENT;
     private static final String STATUS_BAR_LOGO_POSITION =
             "system:" + Settings.System.STATUS_BAR_LOGO_POSITION;
     private static final String STATUS_BAR_LOGO_STYLE =
             "system:" + Settings.System.STATUS_BAR_LOGO_STYLE;
+    private static final String STATUS_BAR_LOGO_COLOR_MODE =
+            "system:" + Settings.System.STATUS_BAR_LOGO_COLOR_MODE;
+    private static final String STATUSBAR_LOGO_RANDOM_COLOR_INTERVAL =
+            "system:" + Settings.System.STATUSBAR_LOGO_RANDOM_COLOR_INTERVAL;
 
     public LogoImage(Context context) {
         this(context, null);
@@ -90,8 +104,9 @@ public abstract class LogoImage extends ImageView implements
         Dependency.get(TunerService.class).addTunable(this,
                 STATUS_BAR_LOGO,
                 STATUS_BAR_LOGO_COLOR,
-                STATUS_BAR_LOGO_COLOR_ACCENT,
                 STATUS_BAR_LOGO_POSITION,
+                STATUSBAR_LOGO_RANDOM_COLOR_INTERVAL,
+                STATUS_BAR_LOGO_COLOR_MODE,
                 STATUS_BAR_LOGO_STYLE);
     }
 
@@ -118,6 +133,9 @@ public abstract class LogoImage extends ImageView implements
         Drawable drawable = null;
 
         if (!mLogo || isLogoPosition() == true) {
+            if (mTimer != null) {
+                mTimer.cancel();
+            }
             setImageDrawable(null);
             setVisibility(View.GONE);
             return;
@@ -128,7 +146,7 @@ public abstract class LogoImage extends ImageView implements
             case 0:
 	        drawable = mContext.getResources().getDrawable(R.drawable.ic_zenx_logo);
                 break;
-	    case 1:
+	        case 1:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_android_logo);
                 break;
             case 2:
@@ -227,20 +245,63 @@ public abstract class LogoImage extends ImageView implements
         }
 
         setImageDrawable(null);
+        updateLogoColor(drawable);
+        setImageDrawable(drawable);
+    }
+
+    private void updateLogoColor(Drawable drawable) {
 
         clearColorFilter();
 
-        if (mLogoColorAccent == true) {
-            setColorFilter(Utils.getColorAttrDefaultColor(mContext, android.R.attr.colorAccent),PorterDuff.Mode.SRC_IN);
-        } else {
-            if (mLogoColor == 0xFFFFFFFF) {
-                drawable.setTint(mTintColor);
-            } else {
-                setColorFilter(mLogoColor, PorterDuff.Mode.SRC_IN);
-            }
-	}
-        setImageDrawable(drawable);
+        switch(mColorMode){
+            case 0:
+                if (mLogoColor == 0xFFFFFFFF) {
+                    drawable.setTint(mTintColor);
+                } else {
+                    setColorFilter(mLogoColor, PorterDuff.Mode.SRC_IN);
+                }
+                break;
+            case 1:
+                setColorFilter(Utils.getColorAttrDefaultColor(mContext, android.R.attr.colorAccent),PorterDuff.Mode.SRC_IN);
+                break;
+            case 2:
+                if(mTimer != null) {
+                    mTimer.cancel();
+                }
+                mTimer = new Timer();
+                setColorFilter(getRandomColor(),PorterDuff.Mode.SRC_IN);
+                int interval = mInterval * 1000;
+                mTimer.scheduleAtFixedRate(new TimeDisplay(), 0, interval);
+                break;
+        }
     }
+
+    //class TimeDisplay for handling task
+        class TimeDisplay extends TimerTask {
+            @Override
+            public void run() {
+                // run on another thread
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(mLogo && mColorMode == 2 ) {
+                            setColorFilter(getRandomColor(),PorterDuff.Mode.SRC_IN);
+                        } else {
+                            if (mTimer != null) {
+                                 mTimer.cancel();
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+
+    private int getRandomColor(){
+        Random rnd = new Random();
+            return Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+    }
+
 
     @Override
     public void onTuningChanged(String key, String newValue) {
@@ -253,9 +314,14 @@ public abstract class LogoImage extends ImageView implements
                 mLogoColor =
                         newValue == null ? 0xFFFFFFFF : Integer.parseInt(newValue);
                 break;
-            case STATUS_BAR_LOGO_COLOR_ACCENT:
-                mLogoColorAccent = !"0".equals(newValue) ? true : false;
-		break;
+            case STATUS_BAR_LOGO_COLOR_MODE:
+                mColorMode =
+                        newValue == null ? 0 : Integer.parseInt(newValue);
+                break;
+            case STATUSBAR_LOGO_RANDOM_COLOR_INTERVAL:
+                mInterval =
+                        newValue == null ? 3 : Integer.parseInt(newValue);
+                break;
             case STATUS_BAR_LOGO_POSITION:
                 mLogoPosition =
                         newValue == null ? 0 : Integer.parseInt(newValue);

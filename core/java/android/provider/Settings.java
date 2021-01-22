@@ -6432,10 +6432,16 @@ public final class Settings {
         public static final String STATUS_BAR_LOGO_STYLE = "status_bar_logo_style";
 
         /**
-         * Statusbar Bliss logo accent color setting
+         * Statusbar ZenX Color Mode
          * @hide
          */
-        public static final String STATUS_BAR_LOGO_COLOR_ACCENT = "status_bar_logo_color_accent";
+        public static final String STATUS_BAR_LOGO_COLOR_MODE = "status_bar_logo_color_mode";
+
+        /**
+         * Statusbar ZenX Color random interval
+         * @hide
+         */
+        public static final String STATUSBAR_LOGO_RANDOM_COLOR_INTERVAL = "statusbbar_logo_random_color_interval";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
