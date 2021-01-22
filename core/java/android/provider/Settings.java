@@ -5516,6 +5516,11 @@ public final class Settings {
         public static final String PULSE_BRIGHTNESS = "pulse_brightness";
 
         /**
+         * @hide
+         */
+        public static final String DOZE_BRIGHTNESS_FORCE = "doze_brightness_force";
+
+        /**
          * User definable value of aod screen brightness
          *
          * @hide
@@ -6578,6 +6583,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(ACCENT_COLOR);
             PRIVATE_SETTINGS.add(PULSE_BRIGHTNESS);
             PRIVATE_SETTINGS.add(DOZE_BRIGHTNESS);
+            PRIVATE_SETTINGS.add(DOZE_BRIGHTNESS_FORCE);
         }
 
         /**
