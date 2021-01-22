@@ -5975,6 +5975,12 @@ public final class Settings {
         public static final String SHOW_QS_CLOCK = "show_qs_clock";
 
         /**
+         * Whether to display QS status clock
+         * @hide
+         */
+        public static final String SHOW_QS_STATUS_CLOCK = "show_qs_status_clock";
+
+        /**
          * How many rows to show in the qs panel when in portrait
          * @hide
          */

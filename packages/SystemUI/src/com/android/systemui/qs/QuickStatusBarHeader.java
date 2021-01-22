@@ -147,6 +147,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             "system:" + Settings.System.STATUS_BAR_FORCE_BATTERY_ICON_QS_HEADER;
     public static final String HIDE_PERCENTAGE_NEXT_TO_ESTIMATE =
             "system:" + Settings.System.HIDE_PERCENTAGE_NEXT_TO_ESTIMATE;
+    private static final String SHOW_QS_STATUS_CLOCK =
+            "system:" + Settings.System.SHOW_QS_STATUS_CLOCK;
 
     private final Handler mHandler = new Handler();
     private final NextAlarmController mAlarmController;
@@ -186,7 +188,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private ImageView mRingerModeIcon;
     private TextView mRingerModeTextView;
     private View mRingerContainer;
-    private Clock mClockView;
+    private Clock mQsHeaderClockView;
+    private Clock mQsStatusClockView;
     private DateView mDateView;
     private OngoingPrivacyChip mPrivacyChip;
     private Space mSpace;
@@ -376,9 +379,14 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mNextAlarmIcon.setImageTintList(ColorStateList.valueOf(fillColor));
         mRingerModeIcon.setImageTintList(ColorStateList.valueOf(fillColor));
 
-        mClockView = findViewById(R.id.clock);
-        mClockView.setOnClickListener(this);
-        mClockView.setQsHeader();
+        mQsHeaderClockView = findViewById(R.id.clock);
+        mQsHeaderClockView.setOnClickListener(this);
+        mQsHeaderClockView.setQsHeader();
+
+        mQsStatusClockView = findViewById(R.id.clock_status);
+        mQsStatusClockView.setOnClickListener(this);
+        mQsStatusClockView.setQsStatus();
+
         mDateView = findViewById(R.id.date);
         mDateView.setOnClickListener(this);
         mSpace = findViewById(R.id.space);
@@ -414,6 +422,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 QS_BATTERY_LOCATION,
                 HIDE_PERCENTAGE_NEXT_TO_ESTIMATE,
                 STATUS_BAR_FORCE_BATTERY_ICON_QS_HEADER,
+                SHOW_QS_STATUS_CLOCK,
                 STATUS_BAR_CUSTOM_HEADER);
 
     }
@@ -705,7 +714,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         updatePrivacyChipAlphaAnimator();
 
         boolean shouldUseWallpaperTextColor = mLandscape && !mHeaderImageEnabled;
-        mClockView.useWallpaperTextColor(shouldUseWallpaperTextColor);
+        mQsHeaderClockView.useWallpaperTextColor(shouldUseWallpaperTextColor);
+        mQsStatusClockView.useWallpaperTextColor(shouldUseWallpaperTextColor);
     }
 
     private void updateDataUsageView() {
@@ -932,7 +942,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
 
     @Override
     public void onClick(View v) {
-        if (v == mClockView || v == mNextAlarmTextView) {
+        if (v == mQsHeaderClockView || v == mNextAlarmTextView || v == mQsStatusClockView) {
             mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
                     AlarmClock.ACTION_SHOW_ALARMS), 0);
         } else if (v == mNextAlarmContainer && mNextAlarmContainer.isVisibleToUser()) {
@@ -1137,7 +1147,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             case SHOW_QS_CLOCK:
                 boolean showClock =
                         TunerService.parseIntegerSwitch(newValue, true);
-                mClockView.setClockVisibleByUser(showClock);
+                mQsHeaderClockView.setClockVisibleByUser(showClock);
                 break;
             case QS_SHOW_BATTERY_PERCENT:
                 mBatteryRemainingIcon.mShowBatteryPercent =
@@ -1199,6 +1209,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 mHeaderImageEnabled =
                         TunerService.parseIntegerSwitch(newValue, false);
                 updateResources();
+                break;
+            case SHOW_QS_STATUS_CLOCK:
+                boolean showClockStatus =
+                        TunerService.parseIntegerSwitch(newValue, false);
+                mQsStatusClockView.setClockVisibleByUser(showClockStatus);
                 break;
             default:
                 break;
