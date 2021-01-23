@@ -133,7 +133,7 @@ public class ExplosionCircleClockController implements ClockPlugin {
 
     @Override
     public Bitmap getThumbnail() {
-        return BitmapFactory.decodeResource(mResources, R.drawable.explosion_thumbnail);
+        return BitmapFactory.decodeResource(mResources, R.drawable.explosion_preview);
     }
 
     @Override
