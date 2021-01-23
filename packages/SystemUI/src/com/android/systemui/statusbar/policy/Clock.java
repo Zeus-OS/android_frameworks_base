@@ -114,6 +114,8 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     private static final int HIDE_DURATION = 60; // 1 minute
     private static final int SHOW_DURATION = 5; // 5 seconds
 
+    public int DEFAULT_CLOCK_SIZE = 14;
+
     private int mAmPmStyle = AM_PM_STYLE_GONE;
     private final boolean mShowDark;
     private boolean mShowSeconds;
@@ -126,6 +128,9 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     private int mHideDuration = HIDE_DURATION, mShowDuration = SHOW_DURATION;
     private boolean mQsHeader;
     private boolean mQsStatus;
+
+    private int mClockSizeStatusBar = 14;
+    private int mClockSizeQsHeader = 14;
 
     public static final String STATUS_BAR_CLOCK_SECONDS =
             "system:" + Settings.System.STATUS_BAR_CLOCK_SECONDS;
@@ -145,6 +150,10 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
             "system:" + Settings.System.STATUS_BAR_CLOCK_AUTO_HIDE_HDURATION;
     public static final String STATUS_BAR_CLOCK_AUTO_HIDE_SDURATION =
             "system:" + Settings.System.STATUS_BAR_CLOCK_AUTO_HIDE_SDURATION;
+    public static final String QS_HEADER_CLOCK_SIZE =
+            "system:" + Settings.System.QS_HEADER_CLOCK_SIZE;
+    public static final String STATUS_BAR_CLOCK_SIZE =
+            "system:" + Settings.System.STATUS_BAR_CLOCK_SIZE;
 
     /**
      * Whether we should use colors that adapt based on wallpaper/the scrim behind quick settings
@@ -254,6 +263,8 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
                     STATUS_BAR_CLOCK_DATE_FORMAT,
                     STATUS_BAR_CLOCK_AUTO_HIDE,
                     STATUS_BAR_CLOCK_AUTO_HIDE_HDURATION,
+                    STATUS_BAR_CLOCK_SIZE,
+                    QS_HEADER_CLOCK_SIZE,
                     STATUS_BAR_CLOCK_AUTO_HIDE_SDURATION);
             mCommandQueue.addCallback(this);
             if (mShowDark) {
@@ -272,6 +283,7 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
         updateClock();
         updateClockVisibility();
         updateShowSeconds();
+        updateClockSize();
         updateClockVisibility();
     }
 
@@ -397,6 +409,15 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
         setContentDescription(mContentDescriptionFormat.format(mCalendar.getTime()));
     }
 
+    public void updateClockSize() {
+        if(mQsHeader) {
+            setTextSize(mClockSizeQsHeader);
+        } else {
+            setTextSize(mClockSizeStatusBar);
+        }
+		updateClock();
+    }
+
     @Override
     public void onTuningChanged(String key, String newValue) {
         switch (key) {
@@ -435,6 +456,16 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
             case STATUS_BAR_CLOCK_AUTO_HIDE_SDURATION:
                 mShowDuration =
                         TunerService.parseInteger(newValue, SHOW_DURATION);
+                break;
+            case QS_HEADER_CLOCK_SIZE:
+                mClockSizeQsHeader  =
+                        TunerService.parseInteger(newValue, DEFAULT_CLOCK_SIZE);
+                updateClockSize();
+                break;
+            case STATUS_BAR_CLOCK_SIZE:
+                mClockSizeStatusBar  =
+                        TunerService.parseInteger(newValue, DEFAULT_CLOCK_SIZE);
+                updateClockSize();
                 break;
             default:
                 break;
