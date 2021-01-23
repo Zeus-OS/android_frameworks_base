@@ -52,5 +52,6 @@
     <string name="clock_title_lonely_wolf" translatable="false">Lonely Wolf</string>
     <string name="clock_title_bird" translatable="false">Bird</string>
     <string name="clock_title_zenx" translatable="false">ZenX</string>
+    <string name="clock_title_city_circle" translatable="false">City Circle</string>
 
 </resources>
