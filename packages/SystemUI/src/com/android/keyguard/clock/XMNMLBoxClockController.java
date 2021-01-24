@@ -140,22 +140,22 @@ public class XMNMLBoxClockController implements ClockPlugin {
     public Bitmap getPreview(int width, int height) {
 
         View previewView = mLayoutInflater.inflate(R.layout.x_digital_mnml_box, null);
-        TextView previewTime = previewView.findViewById(R.id.clock);
-        TextView previewDate = previewView.findViewById(R.id.bigDate);
+        // TextView previewTime = previewView.findViewById(R.id.clock);
+        // TextView previewDate = previewView.findViewById(R.id.bigDate);
 
-        // Initialize state of plugin before generating preview.
-        ColorExtractor.GradientColors colors = mColorExtractor.getColors(
-                WallpaperManager.FLAG_LOCK);
-        final int hour = mTime.get(Calendar.HOUR) % 12;
-        // lazy and ugly workaround for the it's string
-        String typeHeader = mResources.getQuantityText(
-                R.plurals.type_clock_header, hour).toString();
-        typeHeader = typeHeader.replaceAll("\\n", "") + " ";
-        SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm");
-        previewTime.setText(typeHeader.substring(0, typeHeader.indexOf("^")) + " " + timeformat.format(mTime.getInstance().getTimeInMillis()));
-        DateFormat dateFormat = DateFormat.getInstanceForSkeleton("EEEEMMMMdyyyy", Locale.getDefault());
-        dateFormat.setContext(DisplayContext.CAPITALIZATION_FOR_STANDALONE);
-        previewDate.setText(dateFormat.format(mTime.getInstance().getTimeInMillis()));
+        // // Initialize state of plugin before generating preview.
+        // ColorExtractor.GradientColors colors = mColorExtractor.getColors(
+        //         WallpaperManager.FLAG_LOCK);
+        // final int hour = mTime.get(Calendar.HOUR) % 12;
+        // // lazy and ugly workaround for the it's string
+        // String typeHeader = mResources.getQuantityText(
+        //         R.plurals.type_clock_header, hour).toString();
+        // typeHeader = typeHeader.replaceAll("\\n", "") + " ";
+        // SimpleDateFormat timeformat = new SimpleDateFormat("HH:mm");
+        // previewTime.setText(typeHeader.substring(0, typeHeader.indexOf("^")) + " " + timeformat.format(mTime.getInstance().getTimeInMillis()));
+        // DateFormat dateFormat = DateFormat.getInstanceForSkeleton("EEEEMMMMdyyyy", Locale.getDefault());
+        // dateFormat.setContext(DisplayContext.CAPITALIZATION_FOR_STANDALONE);
+        // previewDate.setText(dateFormat.format(mTime.getInstance().getTimeInMillis()));
 
         return mRenderer.createPreview(previewView, width, height);
     }

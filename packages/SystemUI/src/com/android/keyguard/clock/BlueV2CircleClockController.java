@@ -141,9 +141,9 @@ public class BlueV2CircleClockController implements ClockPlugin {
     public Bitmap getPreview(int width, int height) {
 
         View previewView = getView();
-        TextClock clock = previewView.findViewById(R.id.clock);
-        clock.setFormat12Hour("hh:mm");
-        clock.setFormat24Hour("kk:mm");
+        // TextClock clock = previewView.findViewById(R.id.clock);
+        // clock.setFormat12Hour("hh:mm");
+        // clock.setFormat24Hour("kk:mm");
         onTimeTick();
         return mRenderer.createPreview(previewView, width, height);
     }

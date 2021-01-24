@@ -141,10 +141,10 @@ public class LighthouseClockController implements ClockPlugin {
     public Bitmap getPreview(int width, int height) {
 
         View previewView = getView();
-        TextClock clock = previewView.findViewById(R.id.clock);
-        clock.setFormat12Hour("hh<br>mm");
-        clock.setFormat24Hour("kk<br>mm");
-        onTimeTick();
+        // TextClock clock = previewView.findViewById(R.id.clock);
+        // clock.setFormat12Hour("hh<br>mm");
+        // clock.setFormat24Hour("kk<br>mm");
+        // onTimeTick();
         return mRenderer.createPreview(previewView, width, height);
     }
 

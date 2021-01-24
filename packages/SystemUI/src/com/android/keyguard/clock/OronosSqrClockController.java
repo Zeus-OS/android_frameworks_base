@@ -154,46 +154,46 @@ public class OronosSqrClockController implements ClockPlugin {
     public Bitmap getPreview(int width, int height) {
 
         View previewView = mLayoutInflater.inflate(R.layout.sqr_oronos_clock, null);
-        TextClock previewHourTime = previewView.findViewById(R.id.clockHr);
-        TextClock previewMinuteTime = previewView.findViewById(R.id.clockMin);
-        TextView previewDate = previewView.findViewById(R.id.longDate);
+        // TextClock previewHourTime = previewView.findViewById(R.id.clockHr);
+        // TextClock previewMinuteTime = previewView.findViewById(R.id.clockMin);
+        // TextView previewDate = previewView.findViewById(R.id.longDate);
 
-        // Initialize state of plugin before generating preview.
-        ColorExtractor.GradientColors colors = mColorExtractor.getColors(
-                WallpaperManager.FLAG_LOCK);
-        int[] palette = colors.getColorPalette();
-        if (palette == null) {
-            ColorExtractor.GradientColors sysColors = mColorExtractor.getColors(
-                    WallpaperManager.FLAG_SYSTEM);
-            palette = sysColors.getColorPalette();
-        }
+        // // Initialize state of plugin before generating preview.
+        // ColorExtractor.GradientColors colors = mColorExtractor.getColors(
+        //         WallpaperManager.FLAG_LOCK);
+        // int[] palette = colors.getColorPalette();
+        // if (palette == null) {
+        //     ColorExtractor.GradientColors sysColors = mColorExtractor.getColors(
+        //             WallpaperManager.FLAG_SYSTEM);
+        //     palette = sysColors.getColorPalette();
+        // }
 
-        final int bgColor = palette[Math.max(0, palette.length - 11)];
-        final int hiColor = palette[Math.max(0, palette.length - 5)];
+        // final int bgColor = palette[Math.max(0, palette.length - 11)];
+        // final int hiColor = palette[Math.max(0, palette.length - 5)];
 
-        GradientDrawable hourBg = (GradientDrawable) previewHourTime.getBackground();
-        GradientDrawable minBg = (GradientDrawable) previewMinuteTime.getBackground();
-        GradientDrawable dateBg = (GradientDrawable) previewDate.getBackground();
+        // GradientDrawable hourBg = (GradientDrawable) previewHourTime.getBackground();
+        // GradientDrawable minBg = (GradientDrawable) previewMinuteTime.getBackground();
+        // GradientDrawable dateBg = (GradientDrawable) previewDate.getBackground();
 
-        // Things that needs to be tinted with the background color
-        hourBg.setColor(bgColor);
-        minBg.setColor(bgColor);
-        dateBg.setColor(bgColor);
+        // // Things that needs to be tinted with the background color
+        // hourBg.setColor(bgColor);
+        // minBg.setColor(bgColor);
+        // dateBg.setColor(bgColor);
 
-        // Things that needs to be tinted with the highlighted color
-        hourBg.setStroke(mResources.getDimensionPixelSize(R.dimen.clock_oronos_outline_size),
-                            hiColor);
-        minBg.setStroke(mResources.getDimensionPixelSize(R.dimen.clock_oronos_outline_size),
-                            hiColor);
-        dateBg.setStroke(mResources.getDimensionPixelSize(R.dimen.clock_oronos_outline_size),
-                            hiColor);
-        previewHourTime.setTextColor(hiColor);
-        previewMinuteTime.setTextColor(hiColor);
-        previewDate.setTextColor(hiColor);
+        // // Things that needs to be tinted with the highlighted color
+        // hourBg.setStroke(mResources.getDimensionPixelSize(R.dimen.clock_oronos_outline_size),
+        //                     hiColor);
+        // minBg.setStroke(mResources.getDimensionPixelSize(R.dimen.clock_oronos_outline_size),
+        //                     hiColor);
+        // dateBg.setStroke(mResources.getDimensionPixelSize(R.dimen.clock_oronos_outline_size),
+        //                     hiColor);
+        // previewHourTime.setTextColor(hiColor);
+        // previewMinuteTime.setTextColor(hiColor);
+        // previewDate.setTextColor(hiColor);
 
-        mTime.setTimeInMillis(System.currentTimeMillis());
-        previewDate.setText(mResources.getString(R.string.date_long_title_today, mTime.getDisplayName(
-                Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())));
+        // mTime.setTimeInMillis(System.currentTimeMillis());
+        // previewDate.setText(mResources.getString(R.string.date_long_title_today, mTime.getDisplayName(
+        //         Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())));
 
         return mRenderer.createPreview(previewView, width, height);
     }

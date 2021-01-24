@@ -128,18 +128,18 @@ public class SfunyClockController implements ClockPlugin {
     public Bitmap getPreview(int width, int height) {
 
         View previewView = mLayoutInflater.inflate(R.layout.digital_sfuny_preview, null);
-        TextClock previewHourTime = previewView.findViewById(R.id.clockHour);
-        TextClock previewMinuteTime = previewView.findViewById(R.id.clockMinute);
-        TextClock previewDate = previewView.findViewById(R.id.date);
+        // TextClock previewHourTime = previewView.findViewById(R.id.clockHour);
+        // TextClock previewMinuteTime = previewView.findViewById(R.id.clockMinute);
+        // TextClock previewDate = previewView.findViewById(R.id.date);
 
-        // Initialize state of plugin before generating preview.
-        previewHourTime.setTextColor(Color.WHITE);
-        previewMinuteTime.setTextColor(Color.WHITE);
-        previewDate.setTextColor(Color.WHITE);
-        ColorExtractor.GradientColors colors = mColorExtractor.getColors(
-                WallpaperManager.FLAG_LOCK);
-        setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
-        onTimeTick();
+        // // Initialize state of plugin before generating preview.
+        // previewHourTime.setTextColor(Color.WHITE);
+        // previewMinuteTime.setTextColor(Color.WHITE);
+        // previewDate.setTextColor(Color.WHITE);
+        // ColorExtractor.GradientColors colors = mColorExtractor.getColors(
+        //         WallpaperManager.FLAG_LOCK);
+        // setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
+        // onTimeTick();
 
         return mRenderer.createPreview(previewView, width, height);
     }

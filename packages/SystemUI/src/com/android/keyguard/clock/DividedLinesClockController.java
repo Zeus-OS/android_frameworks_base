@@ -107,7 +107,11 @@ public class DividedLinesClockController implements ClockPlugin {
         mBigClockView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.divided_lines_clock, null);
         mClock = mBigClockView.findViewById(R.id.clock);
+        setClockColors();
+        onTimeTick();
+    }
 
+    private void setClockColors() {
         int mAccentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
 
         if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext) && ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
@@ -124,7 +128,6 @@ public class DividedLinesClockController implements ClockPlugin {
             mClock.setFormat24Hour(Html.fromHtml("kk:mm"));
         }
 
-        onTimeTick();
     }
 
     @Override
@@ -153,19 +156,19 @@ public class DividedLinesClockController implements ClockPlugin {
     @Override
     public Bitmap getPreview(int width, int height) {
         View previewView = mLayoutInflater.inflate(R.layout.divided_lines_preview, null);
-        TextClock previewTime = previewView.findViewById(R.id.clock);
-        TextClock previewDate = previewView.findViewById(R.id.date);
-        View previewTLine = previewView.findViewById(R.id.topLine);
-        View previewBLine = previewView.findViewById(R.id.bottomLine);
+        // TextClock previewTime = previewView.findViewById(R.id.clock);
+        // TextClock previewDate = previewView.findViewById(R.id.date);
+        // View previewTLine = previewView.findViewById(R.id.topLine);
+        // View previewBLine = previewView.findViewById(R.id.bottomLine);
 
-        // Initialize state of plugin before generating preview.
-        previewTime.setTextColor(Color.WHITE);
-        previewDate.setTextColor(Color.WHITE);
-        previewTLine.setBackgroundColor(Color.WHITE);
-        previewBLine.setBackgroundColor(Color.WHITE);
-        ColorExtractor.GradientColors colors = mColorExtractor.getColors(
-                WallpaperManager.FLAG_LOCK);
-        setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
+        // // Initialize state of plugin before generating preview.
+        // previewTime.setTextColor(Color.WHITE);
+        // previewDate.setTextColor(Color.WHITE);
+        // previewTLine.setBackgroundColor(Color.WHITE);
+        // previewBLine.setBackgroundColor(Color.WHITE);
+        // ColorExtractor.GradientColors colors = mColorExtractor.getColors(
+        //         WallpaperManager.FLAG_LOCK);
+        // setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
 
         return mRenderer.createPreview(previewView, width, height);
     }
@@ -190,6 +193,7 @@ public class DividedLinesClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
+        setClockColors();
     }
 
     @Override

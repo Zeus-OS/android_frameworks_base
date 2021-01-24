@@ -146,10 +146,10 @@ public class TuxClockController implements ClockPlugin {
     public Bitmap getPreview(int width, int height) {
 
         View previewView = getView();
-        TextClock clock = previewView.findViewById(R.id.clock);
-        clock.setFormat12Hour("hh\nmm");
-        clock.setFormat24Hour("kk\nmm");
-        onTimeTick();
+        // TextClock clock = previewView.findViewById(R.id.clock);
+        // clock.setFormat12Hour("hh\nmm");
+        // clock.setFormat24Hour("kk\nmm");
+        // onTimeTick();
         return mRenderer.createPreview(previewView, width, height);
     }
 

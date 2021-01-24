@@ -95,6 +95,10 @@ public class SamsungBoldMinuteClockController implements ClockPlugin {
         mBigClockView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.digital_clock_custom, null);
         mClock = mBigClockView.findViewById(R.id.clock);
+        setClockColors();
+    }
+
+    private void setClockColors() {
         int mAccentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
 
         if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext) && ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
@@ -137,18 +141,18 @@ public class SamsungBoldMinuteClockController implements ClockPlugin {
     public Bitmap getPreview(int width, int height) {
 
         View previewView = mLayoutInflater.inflate(R.layout.default_clock_preview, null);
-        TextClock previewTime = previewView.findViewById(R.id.time);
-        previewTime.setFormat12Hour(Html.fromHtml("hh<br><strong>mm</strong>"));
-        previewTime.setFormat24Hour(Html.fromHtml("kk<br><strong>mm</strong>"));
-        TextClock previewDate = previewView.findViewById(R.id.date);
+        // TextClock previewTime = previewView.findViewById(R.id.time);
+        // previewTime.setFormat12Hour(Html.fromHtml("hh<br><strong>mm</strong>"));
+        // previewTime.setFormat24Hour(Html.fromHtml("kk<br><strong>mm</strong>"));
+        // TextClock previewDate = previewView.findViewById(R.id.date);
 
-        // Initialize state of plugin before generating preview.
-        previewTime.setTextColor(Color.WHITE);
-        previewDate.setTextColor(Color.WHITE);
-        ColorExtractor.GradientColors colors = mColorExtractor.getColors(
-                WallpaperManager.FLAG_LOCK);
-        setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
-        onTimeTick();
+        // // Initialize state of plugin before generating preview.
+        // previewTime.setTextColor(Color.WHITE);
+        // previewDate.setTextColor(Color.WHITE);
+        // ColorExtractor.GradientColors colors = mColorExtractor.getColors(
+        //         WallpaperManager.FLAG_LOCK);
+        // setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
+        // onTimeTick();
 
         return mRenderer.createPreview(previewView, width, height);
     }
@@ -174,7 +178,9 @@ public class SamsungBoldMinuteClockController implements ClockPlugin {
     public void setStyle(Style style) {}
 
     @Override
-    public void setTextColor(int color) {}
+    public void setTextColor(int color) {
+        setClockColors();
+    }
 
     @Override
     public void setTypeface(Typeface tf) {

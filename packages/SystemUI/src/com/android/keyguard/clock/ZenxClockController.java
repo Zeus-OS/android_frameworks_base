@@ -103,7 +103,7 @@ public class ZenxClockController implements ClockPlugin {
     private void setClockColors() {
         int mAccentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
         int mWhiteColor = mContext.getResources().getColor(R.color.lockscreen_clock_white_color);
-        
+
         if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext) && ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
              mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + ">hh</font>:<font color=" + mAccentColor + ">mm</font>"));
              mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + ">kk</font>:<font color=" + mAccentColor + ">mm</font>"));
@@ -146,10 +146,10 @@ public class ZenxClockController implements ClockPlugin {
     public Bitmap getPreview(int width, int height) {
 
         View previewView = getView();
-        TextClock clock = previewView.findViewById(R.id.clock);
-        clock.setFormat12Hour("hh:mm");
-        clock.setFormat24Hour("kk:mm");
-        onTimeTick();
+        // TextClock clock = previewView.findViewById(R.id.clock);
+        // clock.setFormat12Hour("hh:mm");
+        // clock.setFormat24Hour("kk:mm");
+        // onTimeTick();
         return mRenderer.createPreview(previewView, width, height);
     }
 

@@ -28,11 +28,11 @@
         android:id="@+id/clock"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="110dp"
+        android:paddingTop="99dp"
         android:gravity="center"
         android:elegantTextHeight="false"
         android:textColor="?attr/wallpaperTextColor"
         android:letterSpacing="0.1"
-        android:textSize="30dp"
+        android:textSize="29dp"
         android:textStyle="bold" />
 </com.android.keyguard.clock.ClockLayout>
