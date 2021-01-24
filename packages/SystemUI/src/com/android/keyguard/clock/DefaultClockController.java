@@ -24,6 +24,7 @@ import android.graphics.Paint.Style;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.graphics.Typeface;
 
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
@@ -158,6 +159,11 @@ public class DefaultClockController implements ClockPlugin {
         } else {
             mTextTime.setTextColor(color);
         }
+    }
+
+    @Override
+    public void setTypeface(Typeface tf) {
+        mClock.setTypeface(tf);
     }
 
     @Override

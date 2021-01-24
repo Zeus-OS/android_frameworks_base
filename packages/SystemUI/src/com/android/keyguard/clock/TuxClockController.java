@@ -27,6 +27,7 @@ import android.widget.TextClock;
 import android.content.Context;
 import com.android.internal.util.zenx.ZenxUtils;
 import android.text.Html;
+import android.graphics.Typeface;
 
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
@@ -176,6 +177,11 @@ public class TuxClockController implements ClockPlugin {
     @Override
     public void setTextColor(int color) {
         setClockColors();
+    }
+
+    @Override
+    public void setTypeface(Typeface tf) {
+        mClock.setTypeface(tf);
     }
 
     @Override

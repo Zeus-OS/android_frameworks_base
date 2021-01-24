@@ -27,6 +27,7 @@ import android.content.Context;
 import com.android.internal.util.zenx.ZenxUtils;
 import android.text.Html;
 import com.airbnb.lottie.LottieAnimationView;
+import android.graphics.Typeface;
 
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
@@ -171,6 +172,11 @@ public class BlueV2CircleClockController implements ClockPlugin {
     @Override
     public void setTextColor(int color) {
         setClockColors();
+    }
+
+    @Override
+    public void setTypeface(Typeface tf) {
+        mClock.setTypeface(tf);
     }
 
     @Override

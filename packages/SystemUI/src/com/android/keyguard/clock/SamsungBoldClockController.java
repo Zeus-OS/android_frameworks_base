@@ -24,6 +24,7 @@ import android.graphics.Paint.Style;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextClock;
+import android.graphics.Typeface;
 
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
@@ -176,6 +177,11 @@ public class SamsungBoldClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {}
+
+    @Override
+    public void setTypeface(Typeface tf) {
+        mClock.setTypeface(tf);
+    }
 
     @Override
     public void setColorPalette(boolean supportsDarkText, int[] colorPalette) {}
