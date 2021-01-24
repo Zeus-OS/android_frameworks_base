@@ -5051,8 +5051,8 @@ public final class Settings {
 
         /**
          * Whether to use accent lock clock colors hour
-         * @hide	         
-         */	        
+         * @hide
+         */
         public static final String LOCKSCREEN_ACCENT_COLOR_HOUR = "lockscreen_accent_color_hour";
 
         /**
@@ -5065,6 +5065,17 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_ACCENT_COLOR_CUSTOM = "lockscreen_accent_color_custom";
+
+        /**
+         * Statusbar clock ZenX Color Mode
+         * @hide
+         */
+        public static final String STATUS_BAR_CLOCK_COLOR_MODE = "status_bar_clock_color_mode";
+        /**
+         * Statusbar clock ZenX random color interval
+         * @hide
+         */
+        public static final String STATUS_BAR_CLOCK_RANDOM_COLOR_INTERVAL = "status_bar_clock_random_color_interval";
 
         /**
          * Whether to use accent lock clock colors minute

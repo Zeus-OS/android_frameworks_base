@@ -53,6 +53,12 @@ import com.android.systemui.statusbar.policy.ConfigurationController.Configurati
 import com.android.systemui.tuner.TunerService;
 import com.android.systemui.tuner.TunerService.Tunable;
 
+import android.graphics.Color;
+import java.util.Random;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
 import libcore.icu.LocaleData;
 
 import lineageos.providers.LineageSettings;
@@ -132,6 +138,13 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     private int mClockSizeStatusBar = 14;
     private int mClockSizeQsHeader = 14;
 
+    private int mColorMode;
+    private int mInterval = 10;
+    private boolean mIsActive;
+    private boolean mShouldUseWallpaperTextColor;
+    private Handler mHandler = new Handler();
+    private Timer mTimer = null;
+
     public static final String STATUS_BAR_CLOCK_SECONDS =
             "system:" + Settings.System.STATUS_BAR_CLOCK_SECONDS;
     private static final String STATUS_BAR_AM_PM =
@@ -154,6 +167,10 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
             "system:" + Settings.System.QS_HEADER_CLOCK_SIZE;
     public static final String STATUS_BAR_CLOCK_SIZE =
             "system:" + Settings.System.STATUS_BAR_CLOCK_SIZE;
+    public static final String STATUS_BAR_CLOCK_COLOR_MODE =
+            "system:" + Settings.System.STATUS_BAR_CLOCK_COLOR_MODE;
+    public static final String STATUS_BAR_CLOCK_RANDOM_COLOR_INTERVAL =
+            "system:" + Settings.System.STATUS_BAR_CLOCK_RANDOM_COLOR_INTERVAL;
 
     /**
      * Whether we should use colors that adapt based on wallpaper/the scrim behind quick settings
@@ -265,6 +282,8 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
                     STATUS_BAR_CLOCK_AUTO_HIDE_HDURATION,
                     STATUS_BAR_CLOCK_SIZE,
                     QS_HEADER_CLOCK_SIZE,
+                    STATUS_BAR_CLOCK_COLOR_MODE,
+                    STATUS_BAR_CLOCK_RANDOM_COLOR_INTERVAL,
                     STATUS_BAR_CLOCK_AUTO_HIDE_SDURATION);
             mCommandQueue.addCallback(this);
             if (mShowDark) {
@@ -386,6 +405,12 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
     private void updateClockVisibility() {
         boolean visible = mClockVisibleByPolicy && mClockVisibleByUser;
         int visibility = visible ? View.VISIBLE : View.GONE;
+        mIsActive = visible;
+        if(!visible) {
+            if (mTimer != null) {
+                mTimer.cancel();
+            }
+        }
         try {
             autoHideHandler.removeCallbacksAndMessages(null);
         } catch (NullPointerException e) {
@@ -467,6 +492,16 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
                         TunerService.parseInteger(newValue, DEFAULT_CLOCK_SIZE);
                 updateClockSize();
                 break;
+            case STATUS_BAR_CLOCK_COLOR_MODE:
+                mColorMode  =
+                        TunerService.parseInteger(newValue, 0);
+                updateColor();
+                break;
+            case STATUS_BAR_CLOCK_RANDOM_COLOR_INTERVAL:
+                mInterval  =
+                        TunerService.parseInteger(newValue, 10);
+                updateColor();
+                break;
             default:
                 break;
         }
@@ -513,16 +548,65 @@ public class Clock extends TextView implements DemoMode, Tunable, CommandQueue.C
      * @param shouldUseWallpaperTextColor whether we should use wallpaperTextColor for text color
      */
     public void useWallpaperTextColor(boolean shouldUseWallpaperTextColor) {
-        if (shouldUseWallpaperTextColor == mUseWallpaperTextColor) {
-            return;
-        }
-        mUseWallpaperTextColor = shouldUseWallpaperTextColor;
+        mShouldUseWallpaperTextColor = shouldUseWallpaperTextColor;
+        updateColor();
+    }
 
-        if (mUseWallpaperTextColor) {
-            setTextColor(Utils.getColorAttr(mContext, R.attr.wallpaperTextColor));
-        } else {
-            setTextColor(mNonAdaptedColor);
+    private void updateColor() {
+            if(mTimer != null) {
+                mTimer.cancel();
+            }
+         switch(mColorMode){
+            case 0:
+                setDefaultColor();
+                break;
+            case 1:
+                setTextColor(Utils.getColorAttrDefaultColor(mContext, android.R.attr.colorAccent));
+                break;
+            case 2:
+                if(mTimer != null) {
+                    mTimer.cancel();
+                }
+                mTimer = new Timer();
+                setTextColor(getRandomColor());
+                int interval = mInterval * 1000;
+                mTimer.scheduleAtFixedRate(new TimeDisplay(), 0, interval);
+                break;
+
         }
+    }
+
+    private void setDefaultColor () {
+         if (mShouldUseWallpaperTextColor) {
+                setTextColor(Utils.getColorAttr(mContext, R.attr.wallpaperTextColor));
+        } else {
+                setTextColor(mNonAdaptedColor);
+        }
+    }
+
+        //class TimeDisplay for handling task
+      class TimeDisplay extends TimerTask {
+            @Override
+            public void run() {
+                // run on another thread
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(mIsActive && mColorMode == 2 ) {
+                            setTextColor(getRandomColor());
+                        } else {
+                            if (mTimer != null) {
+                                 mTimer.cancel();
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+    private int getRandomColor(){
+        Random rnd = new Random();
+            return Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
     }
 
     private void updateShowSeconds() {
