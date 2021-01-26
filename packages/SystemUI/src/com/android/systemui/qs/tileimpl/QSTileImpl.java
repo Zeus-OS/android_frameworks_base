@@ -30,6 +30,7 @@ import static com.android.settingslib.RestrictedLockUtils.EnforcedAdmin;
 import android.annotation.CallSuper;
 import android.annotation.NonNull;
 import android.app.ActivityManager;
+import android.content.res.Configuration;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -41,6 +42,7 @@ import android.os.UserHandle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.Settings;
+import android.provider.Settings.System;
 import android.service.quicksettings.Tile;
 import android.text.format.DateUtils;
 import android.util.ArraySet;
@@ -246,10 +248,8 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                 Settings.Secure.QUICK_SETTINGS_TILES_VIBRATE, 0, UserHandle.USER_CURRENT) == 1);
     }
 
-    public void vibrateTile() {
-        if (!isVibrationEnabled()) {
-            return;
-        }
+    public void vibrateTile(int duration) {
+        if (!isVibrationEnabled()) { return; }
         if (mVibrator != null) {
             if (mVibrator.hasVibrator())
                 mVibrator.vibrate(VibrationEffect.createOneShot(20, VibrationEffect.DEFAULT_AMPLITUDE));
@@ -276,7 +276,7 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                 getInstanceId());
         mQSLogger.logTileClick(mTileSpec, mStatusBarStateController.getState(), mState.state);
         mHandler.sendEmptyMessage(H.CLICK);
-        vibrateTile();
+        vibrateTile(25);
     }
 
     public void secondaryClick() {
@@ -303,7 +303,7 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
                 mContext,
                 Prefs.Key.QS_LONG_PRESS_TOOLTIP_SHOWN_COUNT,
                 QuickStatusBarHeader.MAX_TOOLTIP_SHOWN_COUNT);
-        vibrateTile();
+        vibrateTile(25);
     }
 
     public LogMaker populate(LogMaker logMaker) {
@@ -381,8 +381,10 @@ public abstract class QSTileImpl<TState extends State> implements QSTile, Lifecy
      * {@link QSTileImpl#getLongClickIntent}
      */
     protected void handleLongClick() {
-        Dependency.get(ActivityStarter.class).postStartActivityDismissingKeyguard(
-                getLongClickIntent(), 0);
+        if (getLongClickIntent() != null) {
+            Dependency.get(ActivityStarter.class).postStartActivityDismissingKeyguard(
+                    getLongClickIntent(), 0);
+        }
     }
 
     /**

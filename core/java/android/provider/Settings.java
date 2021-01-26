@@ -10488,7 +10488,7 @@ public final class Settings {
           *
           * @hide
           */
-         public static final String QUICK_SETTINGS_TILES_VIBRATE = "quick_settings_vibrate";
+         public static final String QUICK_SETTINGS_TILES_VIBRATE = "quick_settings_tiles_vibrate";
 
         /**
          * The latest SDK version that CarrierAppUtils#disableCarrierAppsUntilPrivileged has been
