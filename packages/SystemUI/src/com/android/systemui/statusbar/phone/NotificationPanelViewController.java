@@ -3168,7 +3168,7 @@ public class NotificationPanelViewController extends PanelViewController {
         boolean pulseLights = Settings.System.getIntForUser(resolver,
                 Settings.System.NOTIFICATION_PULSE, 0, UserHandle.USER_CURRENT) != 0;
         boolean ambientLights = Settings.System.getIntForUser(resolver,
-                Settings.System.AOD_NOTIFICATION_PULSE, 0, UserHandle.USER_CURRENT) != 0;
+                Settings.System.AOD_NOTIFICATION_PULSE, 1, UserHandle.USER_CURRENT) != 0;
         ExpandableNotificationRow row = mNotificationStackScroller.getFirstActiveClearableNotifications(ROWS_HIGH_PRIORITY);
         boolean activeNotif = row != null;
         int pulseReason = Settings.System.getIntForUser(resolver,
