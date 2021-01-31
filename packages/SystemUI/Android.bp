@@ -80,7 +80,6 @@ android_library {
     additional_manifests: ["LineageManifest.xml"],
 
     libs: [
-        "telephony-common",
         "ims-common",
     ],
 
@@ -188,7 +187,6 @@ android_app {
 
     libs: [
         "ims-common",
-        "telephony-common",
     ],
 
     kotlincflags: ["-Xjvm-default=enable"],

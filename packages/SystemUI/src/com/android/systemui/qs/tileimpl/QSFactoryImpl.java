@@ -54,7 +54,6 @@ import com.android.systemui.qs.tiles.LocaleTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.LiveDisplayTile;
 import com.android.systemui.qs.tiles.MusicTile;
-import com.android.systemui.qs.tiles.LteTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
 import com.android.systemui.qs.tiles.PowerShareTile;
@@ -141,7 +140,6 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<CallTile> mCallTileProvider;
     private final Provider<CameraTile> mCameraTileProvider;
     private final Provider<LocaleTile> mLocaleTileProvider;
-    private final Provider<LteTile> mLteTileProvider;
     private final Provider<SoundTile> mSoundTileProvider;
     private final Provider<ScreenshotTile> mScreenshotTileProvider;
     private final Provider<GamingModeTile> mGamingModeTileProvider;
@@ -198,7 +196,6 @@ public class QSFactoryImpl implements QSFactory {
             Provider<LocaleTile> localeTileProvider,
             Provider<CallTile> callTileProvider,
             Provider<CameraTile> cameraTileProvider,
-            Provider<LteTile> lteTileProvider,
             Provider<SmartPixelsTile> smartPixelsTileProvider,
             Provider<ScreenshotTile> screenshotTileProvider,
             Provider<SoundTile> soundTileProvider,
@@ -254,7 +251,6 @@ public class QSFactoryImpl implements QSFactory {
         mCallTileProvider = callTileProvider;
         mCameraTileProvider = cameraTileProvider;
         mLocaleTileProvider = localeTileProvider;
-        mLteTileProvider = lteTileProvider;
         mSoundTileProvider = soundTileProvider;
         mScreenshotTileProvider = screenshotTileProvider;
         mGamingModeTileProvider = gamingModeTileProvider;
@@ -366,8 +362,6 @@ public class QSFactoryImpl implements QSFactory {
                 return mCameraTileProvider.get();
             case "locale":
                 return mLocaleTileProvider.get();
-            case "lte":
-                return mLteTileProvider.get();
             case "sound":
                 return mSoundTileProvider.get();
             case "screenshot":

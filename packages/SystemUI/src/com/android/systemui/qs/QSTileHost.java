@@ -36,7 +36,6 @@ import com.android.internal.logging.InstanceIdSequence;
 import com.android.internal.logging.UiEventLogger;
 import com.android.systemui.Dumpable;
 import com.android.systemui.R;
-import com.android.systemui.Dependency;
 import com.android.systemui.broadcast.BroadcastDispatcher;
 import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.Main;
