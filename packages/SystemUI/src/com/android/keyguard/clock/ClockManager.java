@@ -189,6 +189,7 @@ public final class ClockManager {
         addBuiltinClock(() -> new OronosClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new OronosSqrClockController(res, layoutInflater, colorExtractor, context));
         addBuiltinClock(() -> new FluidClockController(res, layoutInflater, colorExtractor));
+        addBuiltinClock(() -> new IDEClockController(res, layoutInflater, colorExtractor, context));
 
         // Store the size of the display for generation of clock preview.
         DisplayMetrics dm = res.getDisplayMetrics();
