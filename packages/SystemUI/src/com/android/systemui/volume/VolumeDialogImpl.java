@@ -189,7 +189,7 @@ public class VolumeDialogImpl implements VolumeDialog,
     private LocalMediaManager mLocalMediaManager;
     private Animator mCurrAnimator;
 
-    private boolean mLeftVolumeRocker = false;
+    private boolean isRightPosition = true;
 
     private boolean mHasAlertSlider;
     private boolean mDarkMode;
@@ -223,7 +223,7 @@ public class VolumeDialogImpl implements VolumeDialog,
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.AUDIO_PANEL_VIEW_ALARM), false, this, UserHandle.USER_ALL);
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.AUDIO_PANEL_VIEW_VOICE), false, this, UserHandle.USER_ALL);
             mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.AUDIO_PANEL_VIEW_BT_SCO), false, this, UserHandle.USER_ALL);
-            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.AUDIO_PANEL_VIEW_POSITION), false, this, UserHandle.USER_ALL);
+            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(Settings.System.AUDIO_PANEL_VIEW_POSITION), true, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -239,9 +239,9 @@ public class VolumeDialogImpl implements VolumeDialog,
              isAlarmShowing = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.AUDIO_PANEL_VIEW_ALARM, 0, UserHandle.USER_CURRENT) == 1;
              isVoiceShowing = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.AUDIO_PANEL_VIEW_VOICE, 0, UserHandle.USER_CURRENT) == 1;
              isBTSCOShowing = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.AUDIO_PANEL_VIEW_BT_SCO, 0, UserHandle.USER_CURRENT) == 1;
-             boolean value = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.AUDIO_PANEL_VIEW_POSITION, 1, UserHandle.USER_CURRENT) == 0;
-             if(value != mLeftVolumeRocker){
-                mLeftVolumeRocker = value;
+             boolean value = Settings.System.getIntForUser(mContext.getContentResolver(), Settings.System.AUDIO_PANEL_VIEW_POSITION, 1, UserHandle.USER_CURRENT) == 1;
+             if(value != isRightPosition){
+                isRightPosition = value;
                 initDialog();
              } else {
                 updateRowsH(getActiveRow());
@@ -343,7 +343,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         lp.setTitle(VolumeDialogImpl.class.getSimpleName());
         lp.width = MATCH_PARENT;
         lp.height = WRAP_CONTENT;
-        if(!mLeftVolumeRocker){
+        if(isRightPosition){
             lp.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
         } else {
             lp.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
@@ -353,13 +353,13 @@ public class VolumeDialogImpl implements VolumeDialog,
         mDialog.setContentView(R.layout.volume_dialog);
         mDialogView = mDialog.findViewById(R.id.volume_dialog);
         mDialogView.setLayoutDirection(
-                mLeftVolumeRocker ? View.LAYOUT_DIRECTION_LTR : View.LAYOUT_DIRECTION_RTL);
+                !isRightPosition ? View.LAYOUT_DIRECTION_LTR : View.LAYOUT_DIRECTION_RTL);
         mDialogView.setAlpha(0);
         mDialog.setCanceledOnTouchOutside(true);
         mDialog.setOnShowListener(dialog -> {
             if (!isLandscape()) {
                 mDialogView.setTranslationX(
-                        (mDialogView.getWidth() / 2.0f) * (mLeftVolumeRocker ? -1 : 1));
+                        (mDialogView.getWidth() / 2.0f) * (isRightPosition ? -1 : 1));
             }
             mDialogView.setAlpha(0);
             mDialogView.animate()
@@ -394,7 +394,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         if (mRinger != null) {
             mRingerIcon = mRinger.findViewById(R.id.ringer_icon);
             mZenIcon = mRinger.findViewById(R.id.dnd_icon);
-            if(!mLeftVolumeRocker) {
+            if(isRightPosition) {
                 mRinger.setForegroundGravity(Gravity.RIGHT);
             } else {
                 mRinger.setForegroundGravity(Gravity.LEFT);
@@ -411,7 +411,7 @@ public class VolumeDialogImpl implements VolumeDialog,
             mDialogView.removeView(mODICaptionsTooltipViewStub);
             mODICaptionsTooltipViewStub = null;
         }else if (mODICaptionsTooltipViewStub != null){
-            if(!mLeftVolumeRocker) {
+            if(isRightPosition) {
                 mRinger.setForegroundGravity(Gravity.BOTTOM | Gravity.RIGHT);
             } else {
                 mRinger.setForegroundGravity(Gravity.BOTTOM | Gravity.LEFT);
@@ -421,7 +421,7 @@ public class VolumeDialogImpl implements VolumeDialog,
 
 	mExpandRowsView = mDialog.findViewById(R.id.expandable_indicator_container);
         mExpandRows = mExpandRowsView.findViewById(R.id.expandable_indicator);
-        mExpandRows.setScaleY(mLeftVolumeRocker ? -1f : 1f);
+        mExpandRows.setScaleY(!isRightPosition ? -1f : 1f);
 
         mMediaOutputView = mDialog.findViewById(R.id.media_output_container);
         mMediaOutputScrollView = mDialog.findViewById(R.id.media_output_scroller);
@@ -586,7 +586,7 @@ public class VolumeDialogImpl implements VolumeDialog,
                 if (mCurrAnimator != null && mCurrAnimator.isRunning()) {
                     mCurrAnimator.cancel();
                 }
-                int x = (int) (mLeftVolumeRocker ? 0 : (3 * mWidth + 2 * mSpacer));
+                int x = (int) (!isRightPosition ? 0 : (3 * mWidth + 2 * mSpacer));
                 int endRadius = (int) Math.hypot(3 * mWidth + 2 * mSpacer, mHeight);
                 mCurrAnimator = circularExit(mMediaOutputScrollView, x, endRadius);
                 mCurrAnimator.start();
@@ -672,7 +672,7 @@ public class VolumeDialogImpl implements VolumeDialog,
         }
         if (mExpandRows != null) {
             mMediaButton.setOnClickListener(v -> {
-                int x = (int) (isLandscape() ? (mLeftVolumeRocker ? (
+                int x = (int) (isLandscape() ? (!isRightPosition ? (
                         (mWidth + mSpacer) * (mHasAlertSlider ? 1 : 2) + mWidth / 2)
                         : (mHasAlertSlider ? mWidth * 1.5 + mSpacer : mWidth / 2))
                         : (1.5 * mWidth + mSpacer));
@@ -862,7 +862,7 @@ public class VolumeDialogImpl implements VolumeDialog,
             startZ = -startZ;
         }
 
-        view.setTranslationX(mLeftVolumeRocker ? -startX : startX);
+        view.setTranslationX(!isRightPosition ? -startX : startX);
         view.setTranslationZ(startZ);
         view.setAlpha(startAlpha);
         Util.setVisOrGone(view, true);
@@ -894,7 +894,7 @@ public class VolumeDialogImpl implements VolumeDialog,
 
         view.animate()
             .alpha(endAlpha)
-            .translationX(mLeftVolumeRocker ? -endX : endX)
+            .translationX(!isRightPosition ? -endX : endX)
             .translationZ(endZ)
             .withLayer()
             .setDuration(DIALOG_SHOW_ANIMATION_DURATION)
@@ -1316,7 +1316,7 @@ public class VolumeDialogImpl implements VolumeDialog,
                 }, 50));
         if (!isLandscape()) {
             animator.translationX(
-                    (mDialogView.getWidth() / 2.0f) * (mLeftVolumeRocker ? -1 : 1));
+                    (mDialogView.getWidth() / 2.0f) * (!isRightPosition ? -1 : 1));
         }
         animator.start();
         checkODICaptionsTooltip(true);
