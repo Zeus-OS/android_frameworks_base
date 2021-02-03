@@ -144,7 +144,7 @@
             android:layout_height="match_parent"
             android:layout_weight="@integer/system_icon_area_weight"
             android:orientation="horizontal"
-            android:paddingStart="-8dp"
+            android:paddingStart="-6dp"
             android:gravity="center_vertical|end"
             >
             <include layout="@layout/system_icons_network_speed" />

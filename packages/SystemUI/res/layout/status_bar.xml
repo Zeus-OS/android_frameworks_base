@@ -130,7 +130,7 @@
 
         <com.android.keyguard.AlphaOptimizedLinearLayout android:id="@+id/system_icon_area"
             android:layout_width="0dp"
-            android:paddingStart="-8dp"
+            android:paddingStart="-6dp"
             android:layout_height="match_parent"
             android:layout_weight="@integer/system_icon_area_weight"
             android:orientation="horizontal"
