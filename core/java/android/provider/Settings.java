@@ -5844,6 +5844,18 @@ public final class Settings {
         public static final String QS_BATTERY_LOCATION = "qs_battery_location";
 
         /**
+         * Weather to show Battery icon in QS Header
+         * @hide
+         */
+        public static final String STATUS_BAR_FORCE_BATTERY_ICON_QS_HEADER = "status_bar_force_battery_icon_qs_header";
+
+        /**
+         * Weather to hide Battery Percentage next to estimate
+         * @hide
+         */
+        public static final String HIDE_PERCENTAGE_NEXT_TO_ESTIMATE = "hide_percentage_next_to_estimate";
+
+        /**
          * QS battery %
          * 0: Hide the battery percentage
          * 1: Display the battery percentage inside the icon

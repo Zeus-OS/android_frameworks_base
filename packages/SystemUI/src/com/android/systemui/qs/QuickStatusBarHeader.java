@@ -143,6 +143,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             "system:" + Settings.System.QS_BATTERY_LOCATION;
     public static final String STATUS_BAR_CUSTOM_HEADER =
             "system:" + Settings.System.STATUS_BAR_CUSTOM_HEADER;
+    public static final String STATUS_BAR_FORCE_BATTERY_ICON_QS_HEADER =
+            "system:" + Settings.System.STATUS_BAR_FORCE_BATTERY_ICON_QS_HEADER;
+    public static final String HIDE_PERCENTAGE_NEXT_TO_ESTIMATE =
+            "system:" + Settings.System.HIDE_PERCENTAGE_NEXT_TO_ESTIMATE;
 
     private final Handler mHandler = new Handler();
     private final NextAlarmController mAlarmController;
@@ -408,6 +412,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 STATUS_BAR_BATTERY_STYLE,
                 QS_BATTERY_STYLE,
                 QS_BATTERY_LOCATION,
+                HIDE_PERCENTAGE_NEXT_TO_ESTIMATE,
+                STATUS_BAR_FORCE_BATTERY_ICON_QS_HEADER,
                 STATUS_BAR_CUSTOM_HEADER);
 
     }
@@ -1146,8 +1152,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             case QS_SHOW_BATTERY_ESTIMATE:
                 mBatteryRemainingIcon.mShowBatteryEstimate =
                         TunerService.parseInteger(newValue, 0);
-                mBatteryIcon.mShowBatteryEstimate =
-                        TunerService.parseInteger(newValue, 0);
                 mBatteryRemainingIcon.updatePercentView();
                 mBatteryRemainingIcon.updateVisibility();
                 mBatteryIcon.updatePercentView();
@@ -1172,6 +1176,23 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 } else {
                     mBatteryRemainingIcon.setVisibility(View.GONE);
                     mBatteryIcon.setVisibility(View.VISIBLE);
+                }
+                break;
+            case HIDE_PERCENTAGE_NEXT_TO_ESTIMATE:
+                mBatteryRemainingIcon.updatePercentView();
+                mBatteryRemainingIcon.updateVisibility();
+                mBatteryIcon.updatePercentView();
+                mBatteryIcon.updateVisibility();
+                break;
+            case STATUS_BAR_FORCE_BATTERY_ICON_QS_HEADER:
+                boolean showBatteryIcon =
+                        TunerService.parseIntegerSwitch(newValue, true);
+                if(showBatteryIcon) {
+                    mBatteryIcon.setVisibility(View.VISIBLE);
+                    mBatteryIcon.setForceBatteryPercentage(true);
+                } else {
+                    mBatteryIcon.setForceBatteryPercentage(false);
+                    mBatteryIcon.setVisibility(View.GONE);
                 }
                 break;
             case STATUS_BAR_CUSTOM_HEADER:
