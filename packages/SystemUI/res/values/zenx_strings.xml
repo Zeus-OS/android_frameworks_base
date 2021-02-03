@@ -239,4 +239,7 @@
     <string name="volume_ringer_alarms_only">Alarms</string>
     <string name="volume_ringer_dnd">DnD</string>
     <string name="tristate_flashlight">Torch</string>
+
+    <!-- Scrolling Screenshot string -->
+    <string name="scrollss">Scroll</string>
 </resources>
