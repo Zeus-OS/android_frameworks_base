@@ -144,9 +144,9 @@ public abstract class LogoImage extends ImageView implements
         }
         switch(mLogoStyle){
             case 0:
-	        drawable = mContext.getResources().getDrawable(R.drawable.ic_zenx_logo);
+	            drawable = mContext.getResources().getDrawable(R.drawable.ic_zenx_logo);
                 break;
-	        case 1:
+            case 1:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_android_logo);
                 break;
             case 2:
@@ -256,7 +256,9 @@ public abstract class LogoImage extends ImageView implements
         switch(mColorMode){
             case 0:
                 if (mLogoColor == 0xFFFFFFFF) {
-                    drawable.setTint(mTintColor);
+                    if(drawable != null) {
+                        drawable.setTint(mTintColor);
+                    }
                 } else {
                     setColorFilter(mLogoColor, PorterDuff.Mode.SRC_IN);
                 }

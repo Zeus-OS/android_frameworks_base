@@ -50,7 +50,6 @@
         android:orientation="horizontal"
         >
 
-
         <com.android.systemui.zenx.carrierlabel.CarrierLabel
             android:id="@+id/statusbar_carrier_text"
             android:layout_width="wrap_content"
