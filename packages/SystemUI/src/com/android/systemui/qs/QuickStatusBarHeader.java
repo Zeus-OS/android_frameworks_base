@@ -149,6 +149,10 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             "system:" + Settings.System.HIDE_PERCENTAGE_NEXT_TO_ESTIMATE;
     private static final String SHOW_QS_STATUS_CLOCK =
             "system:" + Settings.System.SHOW_QS_STATUS_CLOCK;
+    private static final String QS_QUICK_BRIGHTNESS_AUTO_BUTTONS =
+            "system:" + Settings.System.QS_QUICK_BRIGHTNESS_AUTO_BUTTONS;
+    private static final String QS_QUICK_BRIGHTNESS_SLIDER_SIDE_BUTTONS =
+            "system:" + Settings.System.QS_QUICK_BRIGHTNESS_SLIDER_SIDE_BUTTONS;
 
     private final Handler mHandler = new Handler();
     private final NextAlarmController mAlarmController;
@@ -225,6 +229,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     private ImageView mMinBrightness;
     private ImageView mMaxBrightness;
 
+    private boolean mAutoButton;
+
     // Used for RingerModeTracker
     private final LifecycleRegistry mLifecycle = new LifecycleRegistry(this);
 
@@ -237,9 +243,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             ContentResolver resolver = getContext().getContentResolver();
             resolver.registerContentObserver(Settings.System
                     .getUriFor(Settings.System.QS_DATAUSAGE), false,
-                    this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System
-                    .getUriFor(Settings.System.QS_QUICK_BRIGHTNESS_SLIDER_SIDE_BUTTONS), false,
                     this, UserHandle.USER_ALL);
             }
 
@@ -408,7 +411,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mSystemInfoIcon = findViewById(R.id.system_info_icon);
         mSystemInfoText = findViewById(R.id.system_info_text);
 
-        updateResources();
         updateSettings();
 
         Dependency.get(TunerService.class).addTunable(this,
@@ -423,6 +425,8 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 HIDE_PERCENTAGE_NEXT_TO_ESTIMATE,
                 STATUS_BAR_FORCE_BATTERY_ICON_QS_HEADER,
                 SHOW_QS_STATUS_CLOCK,
+                QS_QUICK_BRIGHTNESS_SLIDER_SIDE_BUTTONS,
+                QS_QUICK_BRIGHTNESS_AUTO_BUTTONS,
                 STATUS_BAR_CUSTOM_HEADER);
 
     }
@@ -568,13 +572,13 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mLandscape = newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE;
-        updateResources();
+        updateSettings();
     }
 
     @Override
     public void onRtlPropertiesChanged(int layoutDirection) {
         super.onRtlPropertiesChanged(layoutDirection);
-        updateResources();
+        updateSettings();
     }
 
     private void updateSettings() {
@@ -591,11 +595,6 @@ public class QuickStatusBarHeader extends RelativeLayout implements
     public boolean isQsSystemInfoIconEnabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
             Settings.System.QS_SYSTEM_INFO_ICON, 1) == 1;
-    }
-
-    public boolean isQQSBrightnessSideIconsEnabled() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.QS_QUICK_BRIGHTNESS_SLIDER_SIDE_BUTTONS, 1) == 1;
     }
 
     private void updateSystemInfoText() {
@@ -693,7 +692,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             } else {
                 mQuickQsBrightness.findViewById(R.id.brightness_icon).setVisibility(View.GONE);
             }
-            mBrightnessButton = isQQSBrightnessSideIconsEnabled();
+            mQuickQsBrightness.findViewById(R.id.brightness_icon).setVisibility((mAutoButton ? VISIBLE : GONE));
             mMinBrightness.setVisibility(mBrightnessButton ? VISIBLE : GONE);
             mMaxBrightness.setVisibility(mBrightnessButton ? VISIBLE : GONE);
             mQuickQsBrightness.setVisibility(View.VISIBLE);
@@ -802,7 +801,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         }
         if (expansionFraction < 1 && expansionFraction > 0.99) {
             if (mHeaderQsPanel.switchTileLayout()) {
-                updateResources();
+                updateSettings();
             }
         }
         updateSystemInfoText();
@@ -817,7 +816,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         mHeaderTextContainerView.setVisibility(mQsDisabled ? View.GONE : View.VISIBLE);
         mQuickQsStatusIcons.setVisibility(mQsDisabled ? View.GONE : View.VISIBLE);
         mQuickQsBrightness.setVisibility(mQsDisabled ? View.GONE : View.VISIBLE);
-        updateResources();
+        updateSettings();
     }
 
     @Override
@@ -917,7 +916,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         }
         mHeaderQsPanel.setListening(listening);
         if (mHeaderQsPanel.switchTileLayout()) {
-            updateResources();
+            updateSettings();
         }
         mListening = listening;
 
@@ -1138,11 +1137,11 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         switch (key) {
             case QS_SHOW_BRIGHTNESS_SLIDER:
                 mIsQuickQsBrightnessEnabled = TunerService.parseInteger(newValue, 0) > 1;
-                updateResources();
+                updateSettings();
                 break;
             case QS_SHOW_AUTO_BRIGHTNESS:
                 mIsQsAutoBrightnessEnabled = TunerService.parseIntegerSwitch(newValue, true);
-                updateResources();
+                updateSettings();
                 break;
             case SHOW_QS_CLOCK:
                 boolean showClock =
@@ -1208,12 +1207,22 @@ public class QuickStatusBarHeader extends RelativeLayout implements
             case STATUS_BAR_CUSTOM_HEADER:
                 mHeaderImageEnabled =
                         TunerService.parseIntegerSwitch(newValue, false);
-                updateResources();
+                updateSettings();
                 break;
             case SHOW_QS_STATUS_CLOCK:
                 boolean showClockStatus =
                         TunerService.parseIntegerSwitch(newValue, false);
                 mQsStatusClockView.setClockVisibleByUser(showClockStatus);
+                break;
+            case QS_QUICK_BRIGHTNESS_SLIDER_SIDE_BUTTONS:
+                mBrightnessButton =
+                        TunerService.parseIntegerSwitch(newValue, true);
+                updateSettings();
+                break;
+            case QS_QUICK_BRIGHTNESS_AUTO_BUTTONS:
+                mAutoButton =
+                        TunerService.parseIntegerSwitch(newValue, true);
+                updateSettings();
                 break;
             default:
                 break;

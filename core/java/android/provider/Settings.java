@@ -5788,6 +5788,12 @@ public final class Settings {
         public static final String QS_QUICK_BRIGHTNESS_SLIDER_SIDE_BUTTONS = "qs_quick_brightness_slider_side_buttons";
 
         /**
+         * Whether to show auto brightness button on Quick QS brightness slider
+         * @hide
+         */
+        public static final String QS_QUICK_BRIGHTNESS_AUTO_BUTTONS = "qs_quick_brightness_auto_buttons";
+
+        /**
          * Statusbar hight value for manual mode
          * @hide
          */
