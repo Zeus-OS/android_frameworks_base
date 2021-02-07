@@ -75,6 +75,7 @@ android_library {
         "vendor.lineage.powershare-V1.0-java",
         "airbnb-lottie",
         "VendorSupport-preference",
+        "faceunlock_framework",
     ],
     manifest: "AndroidManifest.xml",
     additional_manifests: ["LineageManifest.xml"],
