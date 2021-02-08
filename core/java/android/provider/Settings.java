@@ -5088,13 +5088,6 @@ public final class Settings {
         public static final String SMART_CHARGING_RESUME_LEVEL = "smart_charging_resume_level";
 
         /**
-         * Whether to show blur lockscreen wallpaper
-         * @hide
-         */
-
-        public static final String BLUR_LOCKSCREEN_WALLPAPER = "blur_lockscreen_wallpaper";
-
-        /**
          * Whether to show info on ambient bottom
          * @hide
          */
@@ -5124,12 +5117,6 @@ public final class Settings {
          * @hide
          */
         public static final String LOCKSCREEN_MEDIA_BLUR = "lockscreen_media_blur";
-
-        /**
-         * Lockscreen wallpaper blur level
-         * @hide
-         */
-        public static final String LOCKSCREEN_WALLPAPER_BLUR = "lockscreen_wallpaper_blur";
 
         /**
          * Weather to show QS footer security information
@@ -6845,7 +6832,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE);
             PRIVATE_SETTINGS.add(VOLUME_ROCKER_WAKE);
             PRIVATE_SETTINGS.add(LOCKSCREEN_MEDIA_BLUR);
-            PRIVATE_SETTINGS.add(LOCKSCREEN_WALLPAPER_BLUR);
             PRIVATE_SETTINGS.add(LOCKSCREEN_BATTERY_INFO);
             PRIVATE_SETTINGS.add(VIBRATE_ON_CONNECT);
             PRIVATE_SETTINGS.add(VIBRATE_ON_CALLWAITING);

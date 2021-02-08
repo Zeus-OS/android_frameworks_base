@@ -30,7 +30,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
-import android.graphics.ImageDecoder;
 import android.media.MediaMetadata;
 import android.media.session.MediaController;
 import android.media.session.MediaSession;
@@ -54,7 +53,6 @@ import android.widget.ImageView;
 import com.android.internal.config.sysui.SystemUiDeviceConfigFlags;
 import com.android.internal.statusbar.NotificationVisibility;
 import com.android.internal.util.crdroid.ImageHelper;
-import com.android.systemui.dump.DumpManager;
 import com.android.systemui.Dependency;
 import com.android.systemui.Dumpable;
 import com.android.systemui.Interpolators;
@@ -687,28 +685,11 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable,
         boolean allowWhenShade = false;
         // if no media artwork, show normal lockscreen wallpaper
         if (ENABLE_LOCKSCREEN_WALLPAPER && artworkDrawable == null) {
-
             Bitmap lockWallpaper =
-                mLockscreenWallpaper != null ? mLockscreenWallpaper.getBitmap() : null;
-
+                    mLockscreenWallpaper != null ? mLockscreenWallpaper.getBitmap() : null;
             if (lockWallpaper != null) {
-                Bitmap blurredLockWallpaper;
-
-                if(isBlurLockscreeenWallpaperEnabled()) {
-                    try {
-                       Bitmap mutableLockWallpaper = lockWallpaper.copy(Bitmap.Config.RGBA_F16, true);
-                       float blurLevel = getLockScreenWallaperBlurLevel();
-                       blurredLockWallpaper = ImageHelper.getBlurredImage(mContext, mutableLockWallpaper, blurLevel);
-                    } catch (Exception e) {
-                       blurredLockWallpaper = lockWallpaper;
-                    }
-
-                } else {
-                   blurredLockWallpaper = lockWallpaper;
-                }
-
                 artworkDrawable = new LockscreenWallpaper.WallpaperDrawable(
-                        mBackdropBack.getResources(), blurredLockWallpaper);
+                        mBackdropBack.getResources(), lockWallpaper);
                 // We're in the SHADE mode on the SIM screen - yet we still need to show
                 // the lockscreen wallpaper in that mode.
                 allowWhenShade = mStatusBarStateController.getState() == KEYGUARD;
@@ -829,11 +810,6 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable,
                 }
             }
         }
-    }
-
-    public boolean isBlurLockscreeenWallpaperEnabled() {
-        return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.BLUR_LOCKSCREEN_WALLPAPER, 1) == 1;
     }
 
     public void setup(BackDropView backdrop, ImageView backdropFront, ImageView backdropBack,
@@ -968,13 +944,6 @@ public class NotificationMediaManager implements Dumpable, TunerService.Tunable,
     private float getLockScreenMediaBlurLevel() {
         float level = (float) Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.LOCKSCREEN_MEDIA_BLUR, 100,
-                UserHandle.USER_CURRENT) / 4;
-        return level;
-    }
-
-    private float getLockScreenWallaperBlurLevel() {
-        float level = (float) Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.LOCKSCREEN_WALLPAPER_BLUR, 100,
                 UserHandle.USER_CURRENT) / 4;
         return level;
     }
