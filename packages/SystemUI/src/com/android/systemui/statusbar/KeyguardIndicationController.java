@@ -72,6 +72,7 @@ import com.android.systemui.tuner.TunerService;
 import com.android.systemui.util.wakelock.SettableWakeLock;
 import com.android.systemui.util.wakelock.WakeLock;
 import com.android.systemui.tuner.TunerService;
+import com.android.internal.util.zenx.ZenxUtils;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -520,22 +521,7 @@ public class KeyguardIndicationController implements StateListener,
                         mBatteryBar.setBatteryPercent(mBatteryLevel);
                     }
                 } else {
-                    // Use the high voltage symbol ⚡ (u26A1 unicode) but prevent the system
-                    // to load its emoji colored variant with the uFE0E flag
-                    boolean showAmbientBattery = Settings.System.getIntForUser(mContext.getContentResolver(),
-                        Settings.System.AMBIENT_BATTERY_PERCENT, 0, UserHandle.USER_CURRENT) != 0;
-                    if (showAmbientBattery) {
-                        String bolt = "\u26A1\uFE0E";
-                        CharSequence chargeIndicator = (mPowerPluggedIn ? (bolt + " ") : "") +
-                                NumberFormat.getPercentInstance().format(mBatteryLevel / 100f);
-                        mTextView.switchIndication(chargeIndicator);
-                        if (showBatteryBarOnDoze()) {
-                            mBatteryBar.setVisibility(View.VISIBLE);
-                            mBatteryBar.setBatteryPercent(mBatteryLevel);
-                        }
-                    } else {
-                        mTextView.switchIndication(null);
-                    }
+                    updateAmbientInfo();
                 }
                 updateChargingIndication();
                 updateLockscreenAnimation();
@@ -615,8 +601,47 @@ public class KeyguardIndicationController implements StateListener,
                             mBatteryBar.setVisibility(View.VISIBLE);
                             mBatteryBar.setBatteryPercent(mBatteryLevel);
             }
+
+            if(!mPowerPluggedIn) {
+                updateAmbientInfo();
+            }
             updateChargingIndication();
             updateLockscreenAnimation();
+        }
+    }
+
+    private void updateAmbientInfo() {
+        // Use the high voltage symbol ⚡ (u26A1 unicode) but prevent the system
+        // to load its emoji colored variant with the uFE0E flag
+        boolean showAmbientInfo = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.AMBIENT_INFO, 1, UserHandle.USER_CURRENT) != 0;
+        boolean showAmbientBattery = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.AMBIENT_BATTERY_PERCENT, 1, UserHandle.USER_CURRENT) != 0;
+        boolean showAmbientBatteryTemp = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.AMBIENT_BATTERY_TEMPERATURE, 1, UserHandle.USER_CURRENT) != 0;
+        boolean showAmbientCPUTemp = Settings.System.getIntForUser(mContext.getContentResolver(),
+            Settings.System.AMBIENT_CPU_TEMPERATURE, 0, UserHandle.USER_CURRENT) != 0;
+        if (showAmbientInfo) {
+            String bolt = "\u26A1\uFE0E";
+            String seperator = "";
+            String seperator1 = "";
+            if(showAmbientBattery) {
+                seperator = " | ";
+            }
+            if(showAmbientBatteryTemp) {
+                 seperator1 = " | ";
+            }
+            CharSequence chargeIndicator = (mPowerPluggedIn ? (bolt + " ") : "") +
+                    (showAmbientBattery ? ( NumberFormat.getPercentInstance().format(mBatteryLevel / 100f)) : "") +  // handles Battery level
+                    (showAmbientBatteryTemp ? (seperator +  ZenxUtils.getBatteryTemp(mContext)) : "") +  // handles Battery level
+                    (showAmbientCPUTemp ? (seperator1 + ZenxUtils.getCPUTemp(mContext)) : ""); // handles CPU Temperature
+            mTextView.switchIndication(chargeIndicator);
+            if (showBatteryBarOnDoze()) {
+                mBatteryBar.setVisibility(View.VISIBLE);
+                mBatteryBar.setBatteryPercent(mBatteryLevel);
+            }
+        } else {
+            mTextView.switchIndication(null);
         }
     }
 

@@ -5020,10 +5020,29 @@ public final class Settings {
         public static final String SMART_CHARGING_RESUME_LEVEL = "smart_charging_resume_level";
 
         /**
+         * Whether to show info on ambient bottom
+         * @hide
+         */
+
+        public static final String AMBIENT_INFO = "ambient_info";
+        
+        /**
          * Whether to show battery percent on ambient bottom
          * @hide
          */
+
         public static final String AMBIENT_BATTERY_PERCENT = "ambient_battery_percent";
+        /**
+         * Whether to show battery temperature on ambient bottom
+         * @hide
+         */
+
+        public static final String AMBIENT_BATTERY_TEMPERATURE = "ambient_battery_temperature";
+        /**
+         * Whether to show cpu temperature on ambient bottom
+         * @hide
+         */
+        public static final String AMBIENT_CPU_TEMPERATURE = "ambient_cpu_temperature";
 
         /**
          * media artwork wallpaper blur level on lockscreen
