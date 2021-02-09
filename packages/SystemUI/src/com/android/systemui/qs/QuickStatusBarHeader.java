@@ -1160,7 +1160,7 @@ public class QuickStatusBarHeader extends RelativeLayout implements
                 break;
             case QS_SHOW_BATTERY_ESTIMATE:
                 mBatteryRemainingIcon.mShowBatteryEstimate =
-                        TunerService.parseInteger(newValue, 0);
+                        TunerService.parseInteger(newValue, 1);
                 mBatteryRemainingIcon.updatePercentView();
                 mBatteryRemainingIcon.updateVisibility();
                 mBatteryIcon.updatePercentView();

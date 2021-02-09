@@ -741,7 +741,7 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
 
     private int getMediaDividerColorMode() {
         return Settings.System.getInt(mContext.getContentResolver(),
-                    Settings.System.QS_MEDIA_DIVIDER_COLOR_MODE, 0);
+                    Settings.System.QS_MEDIA_DIVIDER_COLOR_MODE, 2);
     }
 
     private int getMediaDividerRandomColorInterval() {
@@ -1459,9 +1459,9 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
     private void setAnimationTile(QSTileView v) {
         ObjectAnimator animTile = null;
         int animStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.ANIM_TILE_STYLE, 0, UserHandle.USER_CURRENT);
+                Settings.System.ANIM_TILE_STYLE, 1, UserHandle.USER_CURRENT);
         int animDuration = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.ANIM_TILE_DURATION, 2000, UserHandle.USER_CURRENT);
+                Settings.System.ANIM_TILE_DURATION, 1000, UserHandle.USER_CURRENT);
         int interpolatorType = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.ANIM_TILE_INTERPOLATOR, 0, UserHandle.USER_CURRENT);
         if (animStyle == 0) {

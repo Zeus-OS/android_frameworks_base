@@ -89,7 +89,7 @@ public class NotificationLightsView extends RelativeLayout {
 
     public void animateNotificationWithColor(int color) {
         int duration = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.AMBIENT_LIGHT_DURATION, 3,
+                Settings.System.AMBIENT_LIGHT_DURATION, 2,
                 UserHandle.USER_CURRENT) * 1000;
         int repeat = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.AMBIENT_LIGHT_REPEAT_COUNT, 6,

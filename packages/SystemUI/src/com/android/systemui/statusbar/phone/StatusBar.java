@@ -910,6 +910,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         // Others
         mOverlayManager = IOverlayManager.Stub.asInterface(
                 ServiceManager.getService(Context.OVERLAY_SERVICE));
+        updateGModStyle();
     }
 
     @Override
@@ -4292,6 +4293,7 @@ public class StatusBar extends SystemUI implements DemoMode,
      public void updateGModStyle() {
          int gModStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
                  Settings.System.UI_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
+        ThemesUtils.updateUIStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), gModStyle);
      }
 
      public void updateBrightnessSliderStyle() {

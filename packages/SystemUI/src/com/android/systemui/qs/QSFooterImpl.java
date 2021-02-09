@@ -213,7 +213,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
         if (getQsFooterInfo() == 3) {
             if (text == null || text == "") {
-                v.setText("ZenX-OS");
+                v.setText("ZenX - Feel the power");
                 v.setVisibility(View.VISIBLE);
             } else {
                 v.setText(text);
@@ -227,7 +227,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
         if (getQsFooterInfoRight() == 3) {
             if (text == null || text == "") {
-                vRight.setText("ZenX-OS");
+                vRight.setText("ZenX - Feel the power");
                 vRight.setVisibility(View.VISIBLE);
             } else {
                 vRight.setText(text);
@@ -457,7 +457,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
     public int getQsFooterInfo() {
         return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.QS_FOOTER_INFO, 0);
+            Settings.System.QS_FOOTER_INFO, 3);
     }
 
     private void updateQsFooterInfoRightVisibility() {
@@ -498,7 +498,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
     public int getQsFooterInfoRight() {
         return Settings.System.getInt(mContext.getContentResolver(),
-            Settings.System.QS_FOOTER_INFO_RIGHT, 0);
+            Settings.System.QS_FOOTER_INFO_RIGHT, 2);
     }
 
     private boolean showUserSwitcher() {
