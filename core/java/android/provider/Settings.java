@@ -4038,13 +4038,6 @@ public final class Settings {
                 "screen_brightness_for_vr_float";
 
         /**
-         * Sensor blocked packages
-         * @hide
-         */
-        public static final String SENSOR_BLOCKED_APP = "sensor_blocked_app";
-        public static final String SENSOR_BLOCKED_APP_DUMMY = "sensor_blocked_app_dummy";
-
-        /**
          * The screen backlight brightness between 0.0f and 1.0f.
          * @hide
          */
@@ -5108,12 +5101,6 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_CLOCK_RANDOM_COLOR_INTERVAL = "status_bar_clock_random_color_interval";
-
-        /**
-         * Whether to use accent lock clock colors minute
-         * @hide
-         */
-        public static final String SENSOR_BLOCK = "sensor_block";
 
         /**
          * Whether to show the battery info on the lockscreen while charging

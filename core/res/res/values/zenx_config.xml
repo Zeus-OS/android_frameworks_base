@@ -44,11 +44,6 @@
     <string name="action_null">Blank</string>
     <string name="animation_ethans">Ethans</string>
 
-        <!-- Any package that has one of the package names defined below will be prevented
-         from using specific sensors in order to stop battery drain -->
-    <string-array name="config_blockPackagesSensorDrain">
-    </string-array>
-
         <!-- Whether device has dash charging support -->
     <bool name="config_hasDashCharger">false</bool>
 

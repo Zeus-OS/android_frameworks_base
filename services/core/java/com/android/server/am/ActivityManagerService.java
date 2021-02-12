@@ -232,8 +232,6 @@ import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Rect;
 import android.hardware.display.DisplayManagerInternal;
-import android.hardware.SensorManager;
-import android.hardware.SystemSensorManager;
 import android.location.LocationManager;
 import android.media.audiofx.AudioEffect;
 import android.net.Proxy;
@@ -1681,8 +1679,6 @@ public class ActivityManagerService extends IActivityManager.Stub
     static final HostingRecord sNullHostingRecord = new HostingRecord(null);
 
     private GamingModeController mGamingModeController;
-
-    private SystemSensorManager mSystemSensorManager;
 
     final SwipeToScreenshotObserver mSwipeToScreenshotObserver;
     private boolean mIsSwipeToScreenshotEnabled;
@@ -7935,7 +7931,6 @@ public class ActivityManagerService extends IActivityManager.Stub
         RescueParty.onSettingsProviderPublished(mContext);
 
         //mUsageStatsService.monitorPackages();
-        mSystemSensorManager = new SystemSensorManager(mContext, mHandler.getLooper());
 
         // Gaming mode provider
         mGamingModeController = new GamingModeController(mContext);
@@ -16219,9 +16214,6 @@ public class ActivityManagerService extends IActivityManager.Stub
                                         mServices.forceStopPackageLocked(ssp, userId);
                                         mAtmInternal.onPackageUninstalled(ssp);
                                         mBatteryStatsService.notePackageUninstalled(ssp);
-                                        if (mSystemSensorManager != null) {
-                                             mSystemSensorManager.notePackageUninstalled(ssp);
-                                        }
                                         if (mGamingModeController != null) {
                                              mGamingModeController.notePackageUninstalled(ssp);
                                         }
