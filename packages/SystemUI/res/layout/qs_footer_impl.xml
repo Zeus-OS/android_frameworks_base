@@ -166,6 +166,7 @@
             android:layout_marginStart="4dp"
             android:orientation="horizontal"
             android:gravity="center_vertical|start"
+            android:visibility="visible"
             android:clipChildren="false" >
 
             <com.android.systemui.statusbar.policy.QsFooterNetworkTraffic

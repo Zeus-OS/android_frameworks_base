@@ -307,17 +307,7 @@ public class QsFooterNetworkTraffic extends TextView implements StatusIconDispla
         }
 
         private boolean shouldHide(long rxData, long txData, long timeDelta) {
-            long speedTxKB = (long)(txData / (timeDelta / 1000f)) / KB;
-            long speedRxKB = (long)(rxData / (timeDelta / 1000f)) / KB;
-           if (mTrafficType == UP) {
-             return !getConnectAvailable() || speedTxKB < mAutoHideThreshold;
-           } else if (mTrafficType == DOWN) {
-             return !getConnectAvailable() || speedRxKB < mAutoHideThreshold;
-           } else {
-             return !getConnectAvailable() ||
-                    (speedRxKB < mAutoHideThreshold &&
-                    speedTxKB < mAutoHideThreshold);
-           }
+            return false;
         }
     };
 
