@@ -237,4 +237,15 @@
 
     <color name="conversation_important_highlight">#F9AB00</color>
 
+    <!-- ZenHub Card colors -->
+    <color name="card_color">#FFFFFF</color>
+    <color name="card_1_color">#F9FAFC</color>
+    <color name="card_2_color">#F2F4F8</color>
+    <color name="card_3_color">#E9EFF7</color>
+    <color name="card_4_color">#E0E9F5</color>
+    <color name="card_5_color">#D3E0EE</color>
+    <color name="card_6_color">#C6D6E6</color>
+    <color name="card_7_color">#B7CCE1</color>
+    <color name="card_8_color">#A7C3DD</color>
+
 </resources>

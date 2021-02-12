@@ -40,4 +40,15 @@
     <color name="personal_apps_suspension_notification_color">#8AB4F8</color>
 
     <color name="gradient_end">#ff8ab4f8</color>
+
+    <!-- ZenHub Card colors -->
+    <color name="card_color">#10171F</color>
+    <color name="card_1_color">#0F161F</color>
+    <color name="card_2_color">#0E151E</color>
+    <color name="card_3_color">#0C131C</color>
+    <color name="card_4_color">#0B1119</color>
+    <color name="card_5_color">#090F16</color>
+    <color name="card_6_color">#070D13</color>
+    <color name="card_7_color">#050A10</color>
+    <color name="card_8_color">#050A10</color>
 </resources>
