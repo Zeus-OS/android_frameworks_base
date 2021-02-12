@@ -161,7 +161,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
         }
     };
 
-    private boolean mLeftIsVoiceAssist;
+    private boolean mLeftIsVoiceAssist = false;
     private Drawable mLeftAssistIcon;
 
     private IntentButton mRightButton = new DefaultRightButton();
@@ -624,7 +624,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     }
 
     private boolean canLaunchVoiceAssist() {
-        return Dependency.get(AssistManager.class).canVoiceAssistBeLaunchedFromKeyguard();
+        return false;
     }
 
     private void launchPhone() {
@@ -939,7 +939,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     public void updateCameraIconColor() {
         ContentResolver resolver = getContext().getContentResolver();
         int color = Settings.System.getInt(resolver,
-                Settings.System.LOCKSCREEN_CAMERA_ICON_COLOR, 0x99FFFFFF);
+                Settings.System.LOCKSCREEN_CAMERA_ICON_COLOR, 0xffffffff);
 
         if (mRightAffordanceView != null) {
                 mRightAffordanceView.setColorFilter(color);
@@ -949,7 +949,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     public void updatePhoneIconColor() {
         ContentResolver resolver = getContext().getContentResolver();
         int color = Settings.System.getInt(resolver,
-                Settings.System.LOCKSCREEN_PHONE_ICON_COLOR, 0x99FFFFFF);
+                Settings.System.LOCKSCREEN_PHONE_ICON_COLOR, 0xffffffff);
 
         if (mLeftAffordanceView != null) {
             mLeftAffordanceView.setColorFilter(color);
@@ -959,7 +959,7 @@ public class KeyguardBottomAreaView extends FrameLayout implements View.OnClickL
     public void updateIndicationTextColor() {
         ContentResolver resolver = getContext().getContentResolver();
         int color = Settings.System.getInt(resolver,
-                Settings.System.LOCKSCREEN_INDICATION_TEXT_COLOR, 0x99FFFFFF);
+                Settings.System.LOCKSCREEN_INDICATION_TEXT_COLOR, 0xffffffff);
 
         if (mIndicationText != null) {
             mIndicationText.setTextColor(color);
