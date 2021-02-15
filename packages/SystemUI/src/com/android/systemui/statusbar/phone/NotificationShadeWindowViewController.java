@@ -192,6 +192,9 @@ public class NotificationShadeWindowViewController {
             AmbientDisplayConfiguration configuration =
                     new AmbientDisplayConfiguration(mView.getContext());
             switch (key) {
+                case Settings.Secure.DOUBLE_TAP_TO_WAKE:
+                    mDoubleTapEnabledNative = TunerService.parseIntegerSwitch(newValue, true);
+                    break;
                 case Settings.Secure.DOZE_DOUBLE_TAP_GESTURE:
                     mDoubleTapEnabled = configuration.doubleTapGestureEnabled(
                             UserHandle.USER_CURRENT);
@@ -201,10 +204,6 @@ public class NotificationShadeWindowViewController {
                     break;
                 case DOUBLE_TAP_SLEEP_GESTURE:
                     mDoubleTapToSleepEnabled = TunerService.parseIntegerSwitch(newValue, true);
-                    break;
-                case Settings.Secure.DOUBLE_TAP_TO_WAKE:
-                    mDoubleTapEnabledNative = Settings.Secure.getIntForUser(mView.getContext().getContentResolver(),
-                            Settings.Secure.DOUBLE_TAP_TO_WAKE, 0, UserHandle.USER_CURRENT) == 1;
                     break;
                 case QS_SHOW_AUTO_BRIGHTNESS_BUTTON:
                     if (mAutoBrightnessIcon != null) {
@@ -222,12 +221,12 @@ public class NotificationShadeWindowViewController {
             }
         };
         mTunerService.addTunable(tunable,
+                Settings.Secure.DOUBLE_TAP_TO_WAKE,
                 Settings.Secure.DOZE_DOUBLE_TAP_GESTURE,
                 Settings.Secure.DOZE_TAP_SCREEN_GESTURE,
                 DOUBLE_TAP_SLEEP_GESTURE,
                 QS_SHOW_AUTO_BRIGHTNESS_BUTTON,
-                QS_SHOW_BRIGHTNESS_SIDE_BUTTONS,
-                Settings.Secure.DOUBLE_TAP_TO_WAKE);
+                QS_SHOW_BRIGHTNESS_SIDE_BUTTONS);
         mQuickQsOffsetHeight = mView.getResources().getDimensionPixelSize(
                 com.android.internal.R.dimen.quick_qs_offset_height);
 
