@@ -312,8 +312,9 @@
 
     <protected-broadcast android:name="android.intent.action.USER_PRESENT" />
 
-
     <protected-broadcast android:name="android.intent.action.SCREEN_STATE_SERVICE_UPDATE" />
+
+    <protected-broadcast android:name="com.android.systemui.demo" />
 
     <application
         android:name=".SystemUIApplication"
