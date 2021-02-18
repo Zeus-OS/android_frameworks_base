@@ -4397,4 +4397,13 @@
     <string name="config_gpu_clock_path" translatable="false"></string>
     <string name="config_gpu_busy_path" translatable="false"></string>
 
+     <!-- Flashlight brightness -->
+    <bool name="config_flashlight_brightness_enabled" translatable="false">false</bool>
+    <string name="config_flashlight_brightness_path_0" translatable="false"></string>
+    <string name="config_flashlight_brightness_path_1" translatable="false"></string>
+    <string name="config_flashlight_brightness_path_2" translatable="false"></string>
+    <integer name="config_flashlight_brightness_value_low" translatable="false">100</integer>
+    <integer name="config_flashlight_brightness_value_medium" translatable="false">200</integer>
+    <integer name="config_flashlight_brightness_value_high" translatable="false">400</integer>
+
 </resources>

@@ -43,7 +43,6 @@ import android.os.UserHandle;
 import android.provider.Settings;
 import android.view.IWindowManager;
 import android.view.WindowManagerGlobal;
-import android.provider.Settings;
 import android.hardware.input.InputManager;
 import android.os.Handler;
 import android.os.Looper;
@@ -712,6 +711,44 @@ public class ZenxUtils {
         return value == "Error" ? "N/A" : String.format("%s", Integer.parseInt(value)) + "Mhz";
     }
 
+    public static int getFlashlightBrightness(Context context) {
+        int value;
+        if(fileExists(context.getResources().getString(
+                     com.android.internal.R.string.config_flashlight_brightness_path_0))) {
+                        value = Integer.parseInt(readOneLine(context.getResources().getString(
+                            com.android.internal.R.string.config_flashlight_brightness_path_0)));
+                     } else {
+                         value = -1;
+                     }
+
+        return value;
+    }
+
+    public static void setFlashlightBrightness(Context context, int value) {
+        setValue(context.getResources().getString(
+                     com.android.internal.R.string.config_flashlight_brightness_path_0), value);
+        setValue(context.getResources().getString(
+                     com.android.internal.R.string.config_flashlight_brightness_path_1), value);
+        setValue(context.getResources().getString(
+                     com.android.internal.R.string.config_flashlight_brightness_path_2), value);
+    }
+
+    public static void setValue(String path, int value) {
+        if (fileExists(path)) {
+            if (path == null) {
+                return;
+            }
+            try {
+                FileOutputStream fos = new FileOutputStream(new File(path));
+                fos.write(Integer.toString(value).getBytes());
+                fos.flush();
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static String readOneLine(String fname) {
         BufferedReader br;
         String line = null;
@@ -727,6 +764,5 @@ public class ZenxUtils {
         }
         return line;
     }
-
 
 }

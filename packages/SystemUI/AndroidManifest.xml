@@ -306,6 +306,9 @@
     <!-- DataSwitch tile -->
     <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" />
 
+    <!-- Flashlight brightness -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <protected-broadcast android:name="android.intent.action.RANDOM_COLOR_SERVICE_UPDATE" />
 
     <protected-broadcast android:name="com.android.systemui.doze.pulse" />

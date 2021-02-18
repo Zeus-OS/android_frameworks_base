@@ -4063,6 +4063,16 @@
 
   <java-symbol type="attr" name="colorBackgroundFloating" />
 
-    <java-symbol type="color" name="gradient_start" />
+  <java-symbol type="color" name="gradient_start" />
   <java-symbol type="color" name="gradient_end" />
+
+  <!-- Flashlight brightness -->
+  <java-symbol type="bool" name="config_flashlight_brightness_enabled" />
+  <java-symbol type="string" name="config_flashlight_brightness_path_0" />
+  <java-symbol type="string" name="config_flashlight_brightness_path_1" />
+  <java-symbol type="string" name="config_flashlight_brightness_path_2" />
+  <java-symbol type="integer" name="config_flashlight_brightness_value_low" />
+  <java-symbol type="integer" name="config_flashlight_brightness_value_medium" />
+  <java-symbol type="integer" name="config_flashlight_brightness_value_high" />
+
 </resources>
