@@ -17,16 +17,15 @@
 
 package com.android.internal.util.zenx;
 
-import static android.os.UserHandle.USER_SYSTEM;
+import android.os.UserHandle;
 
+import android.app.ActivityManager;
 import android.app.UiModeManager;
 import android.content.Context;
-import android.content.om.IOverlayManager;
+import android.content.om.OverlayManager;
 import android.content.om.OverlayInfo;
-import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.provider.Settings;
-import android.os.RemoteException;
 import android.util.Log;
 
 public class ThemesUtils {
@@ -124,93 +123,96 @@ public class ThemesUtils {
         "com.android.system.navbar.tecno", //4
     };
 
-    public static void updateSwitchStyle(IOverlayManager om, int userId, int switchStyle) {
+    public static void updateSwitchStyle(OverlayManager om, int switchStyle) {
+        UserHandle userId = UserHandle.of(ActivityManager.getCurrentUser());
         if (switchStyle == 0) {
             stockSwitchStyle(om, userId);
         } else {
             try {
                 om.setEnabled(SWITCH_THEMES[switchStyle],
                         true, userId);
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 Log.w(TAG, "Can't change switch theme", e);
             }
         }
     }
 
-    public static void stockSwitchStyle(IOverlayManager om, int userId) {
+    public static void stockSwitchStyle(OverlayManager om, UserHandle userId) {
         for (int i = 0; i < SWITCH_THEMES.length; i++) {
             String switchtheme = SWITCH_THEMES[i];
             try {
                 om.setEnabled(switchtheme,
                         false /*disable*/, userId);
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public static void updateUIStyle(IOverlayManager om, int userId, int uiStyle) {
-        if (uiStyle == 3) {
+    public static void updateUIStyle(OverlayManager om, int uiStyle) {
+        UserHandle userId = UserHandle.of(ActivityManager.getCurrentUser());
+        if (uiStyle == 0) {
             stockUIStyle(om, userId);
         } else {
             try {
                 om.setEnabled(UI_THEMES[uiStyle],
                         true, userId);
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 Log.w(TAG, "Can't change switch theme", e);
             }
         }
     }
 
-    public static void stockUIStyle(IOverlayManager om, int userId) {
+    public static void stockUIStyle(OverlayManager om, UserHandle userId) {
         for (int i = 0; i < UI_THEMES.length; i++) {
             String uitheme = UI_THEMES[i];
             try {
                 om.setEnabled(uitheme,
                         false /*disable*/, userId);
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public static void updateBrightnessSliderStyle(IOverlayManager om, int userId, int brightnessSliderStyle) {
+    public static void updateBrightnessSliderStyle(OverlayManager om, int brightnessSliderStyle) {
+        UserHandle userId = UserHandle.of(ActivityManager.getCurrentUser());
         if (brightnessSliderStyle == 0) {
             stockBrightnessSliderStyle(om, userId);
         } else {
             try {
                 om.setEnabled(UI_THEMES[brightnessSliderStyle],
                         true, userId);
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 Log.w(TAG, "Can't change brightness slider theme", e);
             }
         }
     }
 
-    public static void stockBrightnessSliderStyle(IOverlayManager om, int userId) {
+    public static void stockBrightnessSliderStyle(OverlayManager om, UserHandle userId) {
         for (int i = 0; i < UI_THEMES.length; i++) {
             String brightnessSlidertheme = BRIGHTNESS_SLIDER_THEMES[i];
             try {
                 om.setEnabled(brightnessSlidertheme,
                         false /*disable*/, userId);
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
 
         // Unloads the navbar styles
-    private static void unloadNavbarStyle(IOverlayManager om, int userId) {
+    private static void unloadNavbarStyle(OverlayManager om, UserHandle userId) {
         for (String style : NAVBAR_STYLES) {
             try {
                 om.setEnabled(style, false, userId);
-            } catch (RemoteException e) {
+            } catch (Exception e) {
             }
         }
     }
 
     // Set navbar style
-    public static void setNavbarStyle(IOverlayManager om, int userId, int navbarStyle) {
+    public static void setNavbarStyle(OverlayManager om, UserHandle userId, int navbarStyle) {
         // Always unload navbar styles
         unloadNavbarStyle(om, userId);
 
@@ -218,7 +220,7 @@ public class ThemesUtils {
 
         try {
             om.setEnabled(NAVBAR_STYLES[navbarStyle], true, userId);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
         }
     }
 

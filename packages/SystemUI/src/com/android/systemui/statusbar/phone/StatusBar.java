@@ -70,7 +70,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.om.IOverlayManager;
+import android.content.om.OverlayManager;
 import android.content.pm.IPackageManager;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -693,7 +693,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     protected final BatteryController mBatteryController;
     protected boolean mPanelExpanded;
     private UiModeManager mUiModeManager;
-    private IOverlayManager mOverlayManager;
+    private OverlayManager mOverlayManager;
     protected boolean mIsKeyguard;
     private LogMaker mStatusBarStateLog;
     protected NotificationIconAreaController mNotificationIconAreaController;
@@ -919,18 +919,11 @@ public class StatusBar extends SystemUI implements DemoMode,
         DateTimeView.setReceiverHandler(timeTickHandler);
     }
 
-    protected void getDependencies() {
-        // Others
-        mOverlayManager = IOverlayManager.Stub.asInterface(
-                ServiceManager.getService(Context.OVERLAY_SERVICE));
-        updateGModStyle();
-    }
-
     @Override
     public void start() {
-        getDependencies();
         mScreenLifecycle.addObserver(mScreenObserver);
         mWakefulnessLifecycle.addObserver(mWakefulnessObserver);
+        mOverlayManager = mContext.getSystemService(OverlayManager.class);
         mUiModeManager = mContext.getSystemService(UiModeManager.class);
         mBypassHeadsUpNotifier.setUp();
         mBubbleController.setExpandListener(mBubbleExpandListener);
@@ -1139,6 +1132,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         updateDisplaySize(); // populates mDisplayMetrics
         updateResources();
         updateTheme();
+        updateGModStyle();
 
         inflateStatusBarWindow();
         mNotificationShadeWindowViewController.setService(this, mNotificationShadeWindowController);
@@ -1505,6 +1499,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             mFalsingManager.onScreenOnFromTouch();
         }
     }
+
 
     // TODO(b/117478341): This was left such that CarStatusBar can override this method.
     // Try to remove this.
@@ -3556,7 +3551,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private void updatePanelExpansionForKeyguard() {
         if (mState == StatusBarState.KEYGUARD && mBiometricUnlockController.getMode()
-                != BiometricUnlockController.MODE_WAKE_AND_UNLOCK) {
+            != BiometricUnlockController.MODE_WAKE_AND_UNLOCK) {
             mShadeController.instantExpandNotificationsPanel();
         } else if (mState == StatusBarState.FULLSCREEN_USER_SWITCHER) {
             instantCollapseNotificationPanel();
@@ -3768,11 +3763,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     public void updateSwitchStyle() {
         int switchStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.SWITCH_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
-        ThemesUtils.updateSwitchStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), switchStyle);
-    }
-
-    public void stockSwitchStyle() {
-        ThemesUtils.stockSwitchStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+        ThemesUtils.updateSwitchStyle(mOverlayManager, switchStyle);
     }
 
     private void updateDozingState() {
@@ -4284,7 +4275,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         public void onChange(boolean selfChange, Uri uri) {
             if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SWITCH_STYLE))) {
-                stockSwitchStyle();
                 updateSwitchStyle();
 	        }
              if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_DATE_SELECTION))) {
@@ -4345,8 +4335,8 @@ public class StatusBar extends SystemUI implements DemoMode,
 
      public void updateGModStyle() {
          int gModStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
-                 Settings.System.UI_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
-        ThemesUtils.updateUIStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), gModStyle);
+                 Settings.System.UI_STYLE, 0, UserHandle.USER_CURRENT);
+        ThemesUtils.updateUIStyle(mOverlayManager, gModStyle);
      }
 
      public void updateBrightnessSliderStyle() {

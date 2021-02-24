@@ -98,7 +98,12 @@ public class NavigationBarController implements Callbacks {
         Display[] displays = mDisplayManager.getDisplays();
         for (Display display : displays) {
             if (includeDefaultDisplay || display.getDisplayId() != DEFAULT_DISPLAY) {
-                createNavigationBar(display, result);
+                try {
+                    createNavigationBar(display, result);
+                } catch (Exception e) {
+                    
+                }
+                
             }
         }
     }

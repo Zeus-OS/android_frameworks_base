@@ -77,5 +77,6 @@
         <permission name="android.permission.FORCE_STOP_PACKAGES" />
         <permission name="android.permission.RECOVERY" />
         <permission name="android.permission.CHANGE_CONFIGURATION" />
+        <permission name="android.permission.SYSTEM_CAMERA" />
     </privapp-permissions>
 </permissions>
