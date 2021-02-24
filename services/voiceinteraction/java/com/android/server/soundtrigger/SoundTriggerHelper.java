@@ -123,6 +123,9 @@ public class SoundTriggerHelper implements SoundTrigger.StatusListener {
     private static final int MSG_CALL_STATE_CHANGED = 0;
     private static final int CALL_INACTIVE_MSG_DELAY_MS = 1000;
 
+    // XGoogle keyphrase ID, in case of emergency.
+    private static final int XGOOGLE_KEYPHRASE_ID = 101;
+
     SoundTriggerHelper(Context context) {
         ArrayList <ModuleProperties> modules = new ArrayList<>();
         int status = SoundTrigger.listModules(modules);
@@ -927,10 +930,15 @@ public class SoundTriggerHelper implements SoundTrigger.StatusListener {
         }
         KeyphraseRecognitionExtra[] keyphraseExtras =
                 ((KeyphraseRecognitionEvent) event).keyphraseExtras;
-        if (keyphraseExtras == null || keyphraseExtras.length == 0) {
+        if (keyphraseExtras == null) {
             Slog.w(TAG, "Invalid keyphrase recognition event!");
             return INVALID_VALUE;
-        }
+        } else if (keyphraseExtras.length == 0) {
+            // TODO: Actually fix SoundTrigger HAL instead
+            Slog.w(TAG, "Received empty keyphraseExtras in recognition event!");
+            Slog.w(TAG, "Returning XGoogle keyphrase ID.");
+            return XGOOGLE_KEYPHRASE_ID;
+	    }
         // TODO: Handle more than one keyphrase extras.
         return keyphraseExtras[0].id;
     }
