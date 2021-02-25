@@ -75,10 +75,7 @@ public class DualDataUsageView extends TextView  implements StatusIconDisplayabl
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if ((isDataUsageEnabled() == 0) && this.getText().toString() != "") {
-            setText("No Data");
-        }
-        if (isDataUsageEnabled() != 0) {
+        if (isDataUsageEnabled() == 3) {
             if(shouldUpdateData) {
                 shouldUpdateData = false;
                 updateDataUsage();
@@ -108,7 +105,7 @@ public class DualDataUsageView extends TextView  implements StatusIconDisplayabl
         DataUsageController mobileDataController = new DataUsageController(mContext);
         mobileDataController.setSubscriptionId(
             SubscriptionManager.getDefaultDataSubscriptionId());
-        final DataUsageController.DataUsageInfo info = isDataUsageEnabled() == 1 ?
+        final DataUsageController.DataUsageInfo info = DataUsageUnit() == 1 ?
                 (ZenxUtils.isWiFiConnected(mContext) ?
                         mobileDataController.getDailyWifiDataUsageInfo()
                         : mobileDataController.getDailyDataUsageInfo())
@@ -118,9 +115,15 @@ public class DualDataUsageView extends TextView  implements StatusIconDisplayabl
         formatedinfo = formatDataUsage(info.usageLevel) + " ";
     }
 
-    public int isDataUsageEnabled() {
+
+    public int DataUsageUnit() {
         return Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.DUAL_ROW_DATAUSAGE, 1);
+    }
+
+    public int isDataUsageEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.DUAL_STATUSBAR_ROW_MODE, 0);
     }
 
     public static void updateUsage() {
@@ -153,7 +156,7 @@ public class DualDataUsageView extends TextView  implements StatusIconDisplayabl
 
     @Override
     public boolean isIconVisible() {
-        if(isDataUsageEnabled() != 0) {
+        if(isDataUsageEnabled() == 3) {
             return true;
         } else {
             return false;
