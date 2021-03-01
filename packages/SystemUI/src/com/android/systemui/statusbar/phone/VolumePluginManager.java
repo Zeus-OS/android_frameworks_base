@@ -189,12 +189,12 @@ public class VolumePluginManager extends BroadcastReceiver {
     private List<PackageInfo> getPluginInfo() {
         List<String> plugins = new ArrayList<String>();
         List<ResolveInfo> result = null;
-        if(mPackageManager != null) {
-             result = mPackageManager.queryIntentServices(
+        if (mPackageManager != null) {
+            result = mPackageManager.queryIntentServices(
                 new Intent(VOLUME_PLUGIN_ACTION), PackageManager.MATCH_DISABLED_COMPONENTS);
         } else {
-             mPackageManager = mContext.getPackageManager();
-             result = mPackageManager.queryIntentServices(
+            mPackageManager = mContext.getPackageManager();
+            result = mPackageManager.queryIntentServices(
                 new Intent(VOLUME_PLUGIN_ACTION), PackageManager.MATCH_DISABLED_COMPONENTS);
         }
 
