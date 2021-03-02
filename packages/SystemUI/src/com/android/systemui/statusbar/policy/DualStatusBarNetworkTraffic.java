@@ -615,7 +615,6 @@ public class DualStatusBarNetworkTraffic extends TextView implements StatusIconD
                 mSystemIconVisible = false;
                 break;
         }
-        updateVisibility();
     }
 
     private void updateVisibility() {

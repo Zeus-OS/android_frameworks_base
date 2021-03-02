@@ -185,7 +185,6 @@ public class DualDataUsageView extends TextView  implements StatusIconDisplayabl
                 mSystemIconVisible = false;
                 break;
         }
-        updateVisibility();
     }
 
     private void updateVisibility() {

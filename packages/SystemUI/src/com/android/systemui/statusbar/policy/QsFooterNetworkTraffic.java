@@ -605,7 +605,6 @@ public class QsFooterNetworkTraffic extends TextView implements StatusIconDispla
                 mSystemIconVisible = false;
                 break;
         }
-        updateVisibility();
     }
 
     private void updateVisibility() {
