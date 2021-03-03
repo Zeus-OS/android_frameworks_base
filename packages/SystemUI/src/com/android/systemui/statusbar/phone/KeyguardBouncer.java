@@ -32,8 +32,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowInsets;
-import android.provider.Settings;
-import android.content.res.Resources;
 
 import com.android.internal.widget.LockPatternUtils;
 import com.android.keyguard.KeyguardHostView;
@@ -443,19 +441,14 @@ public class KeyguardBouncer {
         mKeyguardView.setLockPatternUtils(mLockPatternUtils);
         mKeyguardView.setViewMediatorCallback(mCallback);
         mContainer.addView(mRoot, mContainer.getChildCount());
-        mStatusBarHeight = getCustomStatusBarHeight();
+        mStatusBarHeight = mRoot.getResources().getDimensionPixelOffset(
+                com.android.systemui.R.dimen.status_bar_height);
         mRoot.setVisibility(View.INVISIBLE);
 
         final WindowInsets rootInsets = mRoot.getRootWindowInsets();
         if (rootInsets != null) {
             mRoot.dispatchApplyWindowInsets(rootInsets);
         }
-    }
-
-    private int getCustomStatusBarHeight() {
-        final Resources res = mContext.getResources();
-        return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.CUSTOM_STATUSBAR_HEIGHT, res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height));
     }
 
     protected void removeView() {

@@ -28,7 +28,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.provider.Settings;
 
 import com.android.systemui.dagger.qualifiers.Main;
 import com.android.systemui.statusbar.SuperStatusBarViewFactory;
@@ -67,7 +66,8 @@ public class StatusBarWindowController {
         mResources = resources;
 
         if (mBarHeight < 0) {
-            mBarHeight = getCustomStatusBarHeight();
+            mBarHeight = mResources.getDimensionPixelSize(
+                    com.android.internal.R.dimen.status_bar_height);
         }
     }
 
@@ -75,23 +75,13 @@ public class StatusBarWindowController {
         return mBarHeight;
     }
 
-    public void setStatusBarHeight(int newHeight) {
-        mBarHeight = newHeight;
-        refreshStatusBarHeight();
-    }
-
-    private int getCustomStatusBarHeight() {
-        final Resources res = mContext.getResources();
-        return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.CUSTOM_STATUSBAR_HEIGHT, res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height));
-    }
-
     /**
      * Rereads the status_bar_height from configuration and reapplys the current state if the height
      * is different.
      */
     public void refreshStatusBarHeight() {
-        int heightFromConfig = getCustomStatusBarHeight();
+        int heightFromConfig = mResources.getDimensionPixelSize(
+                com.android.internal.R.dimen.status_bar_height);
 
         if (mBarHeight != heightFromConfig) {
             mBarHeight = heightFromConfig;

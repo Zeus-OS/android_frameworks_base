@@ -5842,12 +5842,6 @@ public final class Settings {
         public static final String STATUS_BAR_CLOCK_SIZE = "status_bar_clock_size";
 
         /**
-         * Statusbar hight value for manual mode
-         * @hide
-         */
-        public static final String CUSTOM_STATUSBAR_HEIGHT = "custom_statusbar_height";
-
-        /**
          * Whether to enable the pixel navbar animation
          * @hide
          */

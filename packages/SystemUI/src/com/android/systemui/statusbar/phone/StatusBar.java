@@ -75,7 +75,6 @@ import android.content.pm.IPackageManager;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Point;
 import android.graphics.PointF;
@@ -4310,9 +4309,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.QS_MEDIA_DIVIDER_RANDOM_COLOR_INTERVAL),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.CUSTOM_STATUSBAR_HEIGHT),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_ACCENT_COLOR_HOUR),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -4337,9 +4333,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                 setUseLessBoringHeadsUp();
 	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_LABEL_USE_NEW_TINT))) {
                 mQSPanel.getHost().reloadAllTiles();
-	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.CUSTOM_STATUSBAR_HEIGHT))) {
-                updateStatusbarHeight();
-                updateResources();
             }
             updateTileStyle();
             updateGModStyle();
@@ -4412,15 +4405,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                 UserHandle.USER_CURRENT) == 1;
         if (mNotificationInterruptStateProvider != null)
             mNotificationInterruptStateProvider.setUseLessBoringHeadsUp(lessBoringHeadsUp);
-    }
-
-    private void updateStatusbarHeight() {
-        final Resources res = mContext.getResources();
-
-        int sbHeight =  Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.CUSTOM_STATUSBAR_HEIGHT, res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height));
-
-        mStatusBarWindowController.setStatusBarHeight(sbHeight);
     }
 
     public int getWakefulnessState() {

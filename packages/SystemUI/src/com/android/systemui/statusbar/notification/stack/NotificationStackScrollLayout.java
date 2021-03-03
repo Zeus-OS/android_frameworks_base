@@ -80,7 +80,6 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.OverScroller;
 import android.widget.ScrollView;
-import android.provider.Settings;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.graphics.ColorUtils;
@@ -1112,7 +1111,7 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
                 res.getDimensionPixelSize(R.dimen.notification_divider_height_increased);
         mMinTopOverScrollToEscape = res.getDimensionPixelSize(
                 R.dimen.min_top_overscroll_to_qs);
-        mStatusBarHeight = getCustomStatusBarHeight();
+        mStatusBarHeight = res.getDimensionPixelSize(R.dimen.status_bar_height);
         mBottomMargin = res.getDimensionPixelSize(R.dimen.notification_panel_margin_bottom);
         mSidePaddings = res.getDimensionPixelSize(R.dimen.notification_side_paddings);
         mMinInteractionHeight = res.getDimensionPixelSize(
@@ -1121,12 +1120,6 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
                 Utils.getThemeAttr(mContext, android.R.attr.dialogCornerRadius));
         mHeadsUpInset = mStatusBarHeight + res.getDimensionPixelSize(
                 R.dimen.heads_up_status_bar_padding);
-    }
-
-    private int getCustomStatusBarHeight() {
-        final Resources res = mContext.getResources();
-        return Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.CUSTOM_STATUSBAR_HEIGHT, res.getDimensionPixelSize(com.android.internal.R.dimen.status_bar_height));
     }
 
     @ShadeViewRefactor(RefactorComponent.COORDINATOR)
@@ -1885,7 +1878,7 @@ public class NotificationStackScrollLayout extends ViewGroup implements ScrollAd
     @ShadeViewRefactor(RefactorComponent.SHADE_VIEW)
     protected void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mStatusBarHeight = getCustomStatusBarHeight();
+        mStatusBarHeight = getResources().getDimensionPixelOffset(R.dimen.status_bar_height);
         float densityScale = getResources().getDisplayMetrics().density;
         mSwipeHelper.setDensityScale(densityScale);
         float pagingTouchSlop = ViewConfiguration.get(getContext()).getScaledPagingTouchSlop();
