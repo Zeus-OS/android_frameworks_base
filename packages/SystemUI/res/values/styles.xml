@@ -488,7 +488,7 @@
         <item name="android:padding">@dimen/volume_dialog_icon_padding</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:soundEffectsEnabled">false</item>
-        <item name="android:tint">?android:attr/colorControlNormal</item>
+        <item name="android:tint">?android:attr/colorAccent</item>
     </style>
 
     <style name="DockedDividerBackground">
