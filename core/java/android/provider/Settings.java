@@ -5201,6 +5201,11 @@ public final class Settings {
         /**
          * @hide
          */
+        public static final String STATUS_BAR_HEIGHT = "status_bar_height";
+
+        /**
+         * @hide
+         */
         public static final String BRIGHTNESS_SLIDER_STYLE = "brightness_slider_style";
 
         /**

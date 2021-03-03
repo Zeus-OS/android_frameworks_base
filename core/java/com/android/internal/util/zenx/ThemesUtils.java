@@ -123,6 +123,15 @@ public class ThemesUtils {
         "com.android.system.navbar.tecno", //4
     };
 
+    public static final String[] STATUSBAR_HEIGHT = {
+        "com.android.systemui.statusbar.default",
+        "com.android.systemui.statusbar.small",
+        "com.android.systemui.statusbar.medium",
+        "com.android.systemui.statusbar.large",
+        "com.android.systemui.statusbar.extralarge",
+        "com.android.systemui.statusbar.dualstatusbar",
+};
+
     public static void updateSwitchStyle(OverlayManager om, int switchStyle) {
         UserHandle userId = UserHandle.of(ActivityManager.getCurrentUser());
         if (switchStyle == 0) {
@@ -221,6 +230,32 @@ public class ThemesUtils {
         try {
             om.setEnabled(NAVBAR_STYLES[navbarStyle], true, userId);
         } catch (Exception e) {
+        }
+    }
+
+    public static void updateStatusbarHeight(OverlayManager om, int sbheight) {
+        UserHandle userId = UserHandle.of(ActivityManager.getCurrentUser());
+        if (sbheight == 0) {
+            stockStatusbarHeight(om, userId);
+        } else {
+            try {
+                om.setEnabled(STATUSBAR_HEIGHT[sbheight],
+                        true, userId);
+            } catch (Exception e) {
+                Log.w(TAG, "Can't change statusbar height", e);
+            }
+        }
+    }
+
+    public static void stockStatusbarHeight(OverlayManager om, UserHandle userId) {
+        for (int i = 0; i < STATUSBAR_HEIGHT.length; i++) {
+            String height = STATUSBAR_HEIGHT[i];
+            try {
+                om.setEnabled(height,
+                        false /*disable*/, userId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

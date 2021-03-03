@@ -4317,6 +4317,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_ACCENT_COLOR_CUSTOM),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_HEIGHT),
+                    false, this, UserHandle.USER_ALL);
 	}
 
         @Override
@@ -4336,6 +4339,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             }
             updateTileStyle();
             updateGModStyle();
+            updateStatusbarHeight();
             updateBrightnessSliderStyle();
             updateNavBarStyle();
             update();
@@ -4382,6 +4386,12 @@ public class StatusBar extends SystemUI implements DemoMode,
          int gModStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
                  Settings.System.UI_STYLE, 0, UserHandle.USER_CURRENT);
         ThemesUtils.updateUIStyle(mOverlayManager, gModStyle);
+     }
+
+     public void updateStatusbarHeight() {
+         int height = Settings.System.getIntForUser(mContext.getContentResolver(),
+                 Settings.System.STATUS_BAR_HEIGHT, 0, UserHandle.USER_CURRENT);
+        ThemesUtils.updateStatusbarHeight(mOverlayManager, height);
      }
 
      public void updateBrightnessSliderStyle() {
