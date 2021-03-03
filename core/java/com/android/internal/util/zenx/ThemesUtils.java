@@ -100,7 +100,7 @@ public class ThemesUtils {
     public static final String[] UI_THEMES = {
             "com.android.systemui.ui.default",
             "com.android.systemui.ui.nocornerradius",
-            "com.android.systemui.ui.rectangle",
+            "com.android.systemui.ui.roundlarge",
             "com.android.systemui.ui.aosp",
             "com.android.systemui.ui.roundmedium",
     };
@@ -151,7 +151,7 @@ public class ThemesUtils {
 
     public static void updateUIStyle(OverlayManager om, int uiStyle) {
         UserHandle userId = UserHandle.of(ActivityManager.getCurrentUser());
-        if (uiStyle == 0) {
+        if (uiStyle == 3) {
             stockUIStyle(om, userId);
         } else {
             try {
