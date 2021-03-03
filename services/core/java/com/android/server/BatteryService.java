@@ -34,11 +34,13 @@ import android.hardware.health.V2_1.Constants;
 import android.hardware.health.V2_1.IHealthInfoCallback;
 import android.hidl.manager.V1_0.IServiceManager;
 import android.hidl.manager.V1_0.IServiceNotification;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.metrics.LogMaker;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.BatteryManager;
 import android.os.BatteryManagerInternal;
 import android.os.BatteryProperty;
@@ -62,6 +64,8 @@ import android.os.SystemClock;
 import android.os.Trace;
 import android.os.UEventObserver;
 import android.os.UserHandle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.service.battery.BatteryServiceDumpProto;
 import android.util.EventLog;
@@ -225,6 +229,7 @@ public final class BatteryService extends SystemService {
 
     private boolean mPlayBatteryFullyChargedSound;
     private boolean mIsPlayingBatteryFullyChargedSound;
+    private boolean mBatteryFullyChargedVibrate;
     private Ringtone mPowerRingtone;
     private boolean mSmartChargingEnabled;
     private int mSmartChargingLevel;
@@ -733,6 +738,7 @@ public final class BatteryService extends SystemService {
 
             if (shouldPlayBatteryFullyChargedSoundLocked()) {
                 playBatteryFullyChargedSoundLocked();
+                vibrateCharged();
             } else if (shouldStopBatteryFullyChargedSoundLocked()) {
                 stopBatteryFullyChargedSoundLocked();
             }
@@ -1236,6 +1242,23 @@ public final class BatteryService extends SystemService {
         mIsPlayingBatteryFullyChargedSound = false;
     }
 
+    private void vibrateCharged() {
+        if (!mBatteryFullyChargedVibrate)
+            return;
+
+        Vibrator vibrator = mContext.getSystemService(Vibrator.class);
+        if (vibrator != null && vibrator.hasVibrator()) {
+            final long[] patern = { 0, 800, 800, 800, 800, };
+            final int[] amplitude = { 0, 255, 0, 255, 0, };
+            final VibrationEffect effect =
+                    VibrationEffect.createWaveform(patern, amplitude, -1);
+            final AudioAttributes attributes = new AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build();
+            AsyncTask.execute(() -> vibrator.vibrate(effect, attributes));
+        }
+    }
+
     private final class Led {
         private final LogicalLight mBatteryLight;
 
@@ -1703,6 +1726,9 @@ public final class BatteryService extends SystemService {
                     Settings.System.BATTERY_FULLY_CHARGED_SOUND_ENABLED),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BATTERY_FULLY_CHARGED_VIBRATE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SMART_CHARGING),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -1725,6 +1751,8 @@ public final class BatteryService extends SystemService {
                     resolver, Settings.System.BATTERY_FULLY_CHARGED_SOUND_ENABLED, 1, UserHandle.USER_CURRENT) != 0;
             mSmartChargingEnabled = Settings.System.getIntForUser(resolver,
                     Settings.System.SMART_CHARGING, 0, UserHandle.USER_CURRENT) == 1;
+            mBatteryFullyChargedVibrate = Settings.System.getIntForUser(resolver,
+                    Settings.System.BATTERY_FULLY_CHARGED_VIBRATE, 0, UserHandle.USER_CURRENT) == 1;
             mSmartChargingLevel = Settings.System.getIntForUser(resolver,
                     Settings.System.SMART_CHARGING_LEVEL,
                     mSmartChargingLevelDefaultConfig, UserHandle.USER_CURRENT);
