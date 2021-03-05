@@ -129,8 +129,8 @@ import com.android.systemui.tuner.TunerService;
 import com.android.systemui.util.InjectionInflationController;
 
 import lineageos.providers.LineageSettings;
-import com.android.systemui.zenx.AmbientText;
-import com.android.systemui.zenx.AmbientCustomImage;
+import com.android.systemui.zeus.AmbientText;
+import com.android.systemui.zeus.AmbientCustomImage;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;

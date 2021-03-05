@@ -27,7 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextClock;
 
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 import android.content.Context;
 
 import com.android.internal.colorextraction.ColorExtractor;
@@ -167,12 +167,12 @@ public class SfunyClockController implements ClockPlugin {
         mHourClock.setTextColor(color);
         mMinuteClock.setTextColor(color);
 
-         if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext)) {
+         if(ZeusUtils.useLockscreenClockMinuteAccentColor(mContext)) {
             mHourClock.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
             mMinuteClock.setTextColor(color);
         }
 
-         if(ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+         if(ZeusUtils.useLockscreenClockHourAccentColor(mContext)) {
             mHourClock.setTextColor(color);
             mMinuteClock.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
         }

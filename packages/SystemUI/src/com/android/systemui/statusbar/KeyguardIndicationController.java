@@ -72,7 +72,7 @@ import com.android.systemui.tuner.TunerService;
 import com.android.systemui.util.wakelock.SettableWakeLock;
 import com.android.systemui.util.wakelock.WakeLock;
 import com.android.systemui.tuner.TunerService;
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 
 import java.io.FileDescriptor;
 import java.io.PrintWriter;
@@ -633,8 +633,8 @@ public class KeyguardIndicationController implements StateListener,
             }
             CharSequence chargeIndicator = (mPowerPluggedIn ? (bolt + " ") : "") +
                     (showAmbientBattery ? ( NumberFormat.getPercentInstance().format(mBatteryLevel / 100f)) : "") +  // handles Battery level
-                    (showAmbientBatteryTemp ? (seperator +  ZenxUtils.getBatteryTemp(mContext)) : "") +  // handles Battery level
-                    (showAmbientCPUTemp ? (seperator1 + ZenxUtils.getCPUTemp(mContext)) : ""); // handles CPU Temperature
+                    (showAmbientBatteryTemp ? (seperator +  ZeusUtils.getBatteryTemp(mContext)) : "") +  // handles Battery level
+                    (showAmbientCPUTemp ? (seperator1 + ZeusUtils.getCPUTemp(mContext)) : ""); // handles CPU Temperature
             mTextView.switchIndication(chargeIndicator);
             if (showBatteryBarOnDoze()) {
                 mBatteryBar.setVisibility(View.VISIBLE);

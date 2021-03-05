@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 The ZenX-OS Project
+ * Copyright (C) 2020 The Zeus-OS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextClock;
 import android.content.Context;
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 import android.text.Html;
 import com.airbnb.lottie.LottieAnimationView;
 import android.graphics.Typeface;
@@ -104,10 +104,10 @@ public class RainbowCircleClockController implements ClockPlugin {
         int mAccentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
         int mWhiteColor = mContext.getResources().getColor(R.color.lockscreen_clock_white_color);
 
-        if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext) && ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+        if(ZeusUtils.useLockscreenClockMinuteAccentColor(mContext) && ZeusUtils.useLockscreenClockHourAccentColor(mContext)) {
              mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + ">hh</font>:<font color=" + mAccentColor + ">mm</font>"));
              mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + ">kk</font>:<font color=" + mAccentColor + ">mm</font>"));
-        } else if(ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+        } else if(ZeusUtils.useLockscreenClockHourAccentColor(mContext)) {
              mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + ">hh</font>:<font color=" + mWhiteColor + ">mm</font>"));
              mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + ">kk</font>:<font color=" + mWhiteColor + ">mm</font>"));
         } else {

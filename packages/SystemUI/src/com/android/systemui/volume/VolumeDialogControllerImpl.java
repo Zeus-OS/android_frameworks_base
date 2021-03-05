@@ -55,7 +55,7 @@ import android.util.Log;
 import android.util.Slog;
 import android.view.KeyEvent;
 import android.view.accessibility.AccessibilityManager;
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 
 import androidx.lifecycle.Observer;
 
@@ -424,7 +424,7 @@ public class VolumeDialogControllerImpl implements VolumeDialogController, Dumpa
     }
 
     private void onGetCaptionsComponentStateW(boolean fromTooltip) {
-        if(ZenxUtils.isPackageInstalled(mContext, "com.google.android.as")) {
+        if(ZeusUtils.isPackageInstalled(mContext, "com.google.android.as")) {
             try {
                 String componentNameString = mContext.getString(
                         com.android.internal.R.string.config_defaultSystemCaptionsService);

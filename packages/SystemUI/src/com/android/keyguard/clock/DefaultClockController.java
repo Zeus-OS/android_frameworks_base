@@ -32,7 +32,7 @@ import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
 
 import android.content.Context;
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 
 import java.util.TimeZone;
 
@@ -154,7 +154,7 @@ public class DefaultClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
-        if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
+        if(ZeusUtils.useLockscreenCustomClockAccentColor(mContext)) {
             mTextTime.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
         } else {
             mTextTime.setTextColor(color);

@@ -27,7 +27,7 @@ import android.widget.TextClock;
 import android.graphics.Typeface;
 
 import android.content.Context;
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 
 import com.android.internal.colorextraction.ColorExtractor;
 import com.android.systemui.R;
@@ -181,7 +181,7 @@ public class BubbleClockController implements ClockPlugin {
     private void updateColor() {
         final int primary = mPalette.getPrimaryColor();
 
-        if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
+        if(ZeusUtils.useLockscreenCustomClockAccentColor(mContext)) {
             mAnalogClock.setClockColors(primary, mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
         } else {
             final int secondary = mPalette.getSecondaryColor();

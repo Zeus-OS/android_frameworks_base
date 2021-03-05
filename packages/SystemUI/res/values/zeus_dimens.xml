@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * Copyright (C) 2020 Zeus-OS
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<resources>
+    <!-- Burn-in protection -->
+    <dimen name="horizontal_max_swift">3.0dp</dimen>
+    <dimen name="vertical_max_swift">1.0dp</dimen>
+
+    <!-- Network traffic monitor -->
+    <dimen name="net_traffic_multi_text_size">7dp</dimen>
+    <dimen name="net_traffic_txt_img_padding">2dp</dimen>
+    <dimen name="net_traffic_single_text_size_x">14dp</dimen>
+
+    <!-- OPA home dimens -->
+    <dimen name="halo_inner_radius">10.0dip</dimen>
+    <dimen name="halo_thickness">1.0dip</dimen>
+    <dimen name="halo_diameter">22.0dip</dimen>
+    <dimen name="opa_dot_diam">10.0dip</dimen>
+    <dimen name="opa_diamond_translation">16.0dip</dimen>
+    <dimen name="opa_line_y_translation">16.0dip</dimen>
+    <dimen name="opa_line_x_trans_ry">15.0dip</dimen>
+    <dimen name="opa_line_x_trans_bg">30.0dip</dimen>
+    <dimen name="opa_line_x_collapse_bg">46.0dip</dimen>
+    <dimen name="opa_line_x_collapse_ry">15.0dip</dimen>
+    <dimen name="opa_overshoot_translation">8.0dip</dimen>
+    <dimen name="opa_return_translation">-1.0dip</dimen>
+    <dimen name="opa_rest_to_collapse">7.0dip</dimen>
+
+    <!-- Width of the battery icon in the status bar when set to circle style. -->
+    <dimen name="status_bar_battery_icon_circle_width">14.5dp</dimen>
+
+    <!-- QS tile text visibility -->
+    <dimen name="qs_tile_height_wo_label">64dp</dimen>
+
+    <!-- Custom header -->
+    <dimen name="qs_header_image_offset">32dp</dimen>
+    <dimen name="qs_header_image_side_margin">8dp</dimen>
+    <dimen name="qs_header_image_top_margin">4dp</dimen>
+    <dimen name="qs_header_image_bottom_margin">8dp</dimen>
+
+
+    <!-- The width/height of the charging indicator view on keyguard. -->
+    <dimen name="keyguard_charging_indication_height">80dp</dimen>
+    <dimen name="keyguard_charging_indication_width">55dp</dimen>
+
+    <dimen name="current_weather_image_size">42dp</dimen>
+
+    <dimen name="battery_bar_view_height">6dp</dimen>
+
+    <!-- QS detail view scrolling -->
+    <dimen name="qs_detail_item_height_twoline">72dp</dimen>
+
+    <!-- Notification header R -->
+    <dimen name="notification_header_margin_top">0dp</dimen>
+
+    <!-- QS Brightness control padding -->
+    <dimen name="qs_brightness_footer_padding">12dp</dimen>
+    <dimen name="qs_footer_padding_top">0dp</dimen>
+    <dimen name="qs_page_indicator_margin_bottom">12dp</dimen>
+    <dimen name="qs_paged_tile_layout_padding_bottom">4dp</dimen>
+
+    <!-- Recognizing fingerprint animation -->
+    <dimen name="fod_animation_size">280dp</dimen>
+    <dimen name="fod_animation_offset">0dp</dimen>
+
+    <dimen name="status_bar_mobile_signal_with_type_width">18dp</dimen>
+    <dimen name="status_bar_mobile_signal_width">16dp</dimen>
+    <dimen name="status_bar_mobile_type_height">8dp</dimen>
+    <dimen name="status_bar_mobile_type_padding">2dp</dimen>
+    <dimen name="status_bar_mobile_type_padding_limit">10dp</dimen>
+
+    <!-- Tri-state UI -->
+    <dimen name="tri_state_down_dialog_position">850.0px</dimen>
+    <dimen name="tri_state_down_dialog_position_l">650.0px</dimen>
+    <dimen name="tri_state_middle_dialog_position">650.0px</dimen>
+    <dimen name="tri_state_middle_dialog_position_l">650.0px</dimen>
+    <dimen name="tri_state_up_dialog_position">450.0px</dimen>
+    <dimen name="tri_state_up_dialog_position_l">650.0px</dimen>
+    <dimen name="tri_state_up_dialog_position_deep">21.0px</dimen>
+    <dimen name="tri_state_up_dialog_position_deep_land">21.0px</dimen>
+    <dimen name="tri_state_dialog_elevation">4.0dip</dimen>
+    <dimen name="tri_state_dialog_icon_size">24.0dip</dimen>
+    <dimen name="tri_state_dialog_padding">8.0dip</dimen>
+    <dimen name="tri_state_mid_bottom_left_radius">24.0dip</dimen>
+    <dimen name="tri_state_mid_bottom_right_radius">24.0dip</dimen>
+    <dimen name="tri_state_mid_top_left_radius">24.0dip</dimen>
+    <dimen name="tri_state_mid_top_right_radius">24.0dip</dimen>
+
+    <dimen name="left_tri_state_down_bottom_left_radius">24.0dip</dimen>
+    <dimen name="left_tri_state_down_bottom_right_radius">24.0dip</dimen>
+    <dimen name="left_tri_state_down_top_left_radius">0.0dip</dimen>
+    <dimen name="left_tri_state_down_top_right_radius">24.0dip</dimen>
+    <dimen name="left_tri_state_up_bottom_left_radius">0.0dip</dimen>
+    <dimen name="left_tri_state_up_bottom_right_radius">24.0dip</dimen>
+    <dimen name="left_tri_state_up_top_left_radius">24.0dip</dimen>
+    <dimen name="left_tri_state_up_top_right_radius">24.0dip</dimen>
+    <dimen name="right_tri_state_down_bottom_left_radius">24.0dip</dimen>
+    <dimen name="right_tri_state_down_bottom_right_radius">24.0dip</dimen>
+    <dimen name="right_tri_state_down_top_left_radius">24.0dip</dimen>
+    <dimen name="right_tri_state_down_top_right_radius">0.0dip</dimen>
+    <dimen name="right_tri_state_up_bottom_left_radius">24.0dip</dimen>
+    <dimen name="right_tri_state_up_bottom_right_radius">0.0dip</dimen>
+    <dimen name="right_tri_state_up_top_left_radius">24.0dip</dimen>
+    <dimen name="right_tri_state_up_top_right_radius">24.0dip</dimen>
+
+    <dimen name="screenrecord_dot_size">48dp</dimen>
+
+        <!-- Clear all notifications button -->
+    <dimen name="dismiss_all_button_elevation">10dp</dimen>
+    <dimen name="dismiss_all_button_height">55dp</dimen>
+    <dimen name="dismiss_all_button_margin_bottom">35dp</dimen>
+    <dimen name="dismiss_all_button_width">55dp</dimen>
+    <dimen name="dismiss_all_fab_src_size">24dp</dimen>
+</resources>

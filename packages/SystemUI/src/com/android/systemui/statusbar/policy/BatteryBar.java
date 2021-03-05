@@ -41,7 +41,7 @@ import com.android.systemui.Dependency;
 import com.android.systemui.plugins.DarkIconDispatcher;
 import com.android.systemui.plugins.DarkIconDispatcher.DarkReceiver;
 
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 
 public class BatteryBar extends RelativeLayout implements Animatable, DarkReceiver {
 
@@ -334,10 +334,10 @@ public class BatteryBar extends RelativeLayout implements Animatable, DarkReceiv
             return isDark ? mChargingDarkColor : mChargingColor;
         } else {
             if (isDark) {
-                return ZenxUtils.getBlendColorForPercent(mDarkColor, mBatteryLowDarkColor,
+                return ZeusUtils.getBlendColorForPercent(mDarkColor, mBatteryLowDarkColor,
                         mBlendDarkColorsReversed, percentage);
             } else {
-                return ZenxUtils.getBlendColorForPercent(mColor, mBatteryLowColor,
+                return ZeusUtils.getBlendColorForPercent(mColor, mBatteryLowColor,
                         mBlendColorsReversed, percentage);
             }
         }

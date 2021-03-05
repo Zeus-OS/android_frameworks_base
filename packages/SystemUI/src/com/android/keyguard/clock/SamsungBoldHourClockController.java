@@ -34,7 +34,7 @@ import com.android.systemui.plugins.ClockPlugin;
 
 import android.text.Html;
 import android.content.Context;
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 
 import java.util.TimeZone;
 
@@ -103,13 +103,13 @@ public class SamsungBoldHourClockController implements ClockPlugin {
     private void setClockColors() {
         int mAccentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
 
-        if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext) && ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+        if(ZeusUtils.useLockscreenClockMinuteAccentColor(mContext) && ZeusUtils.useLockscreenClockHourAccentColor(mContext)) {
              mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + "><strong>hh</strong></font><br><font color=" + mAccentColor + ">mm</font>"));
              mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + "><strong>kk</strong></font><br><font color=" + mAccentColor + ">mm</font>"));
-        } else if(ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+        } else if(ZeusUtils.useLockscreenClockHourAccentColor(mContext)) {
              mClock.setFormat12Hour(Html.fromHtml("<font color=" + mAccentColor + "><strong>hh</strong></font><br>mm"));
              mClock.setFormat24Hour(Html.fromHtml("<font color=" + mAccentColor + "><strong>kk</strong></font><br>mm"));
-        } else if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext)) {
+        } else if(ZeusUtils.useLockscreenClockMinuteAccentColor(mContext)) {
              mClock.setFormat12Hour(Html.fromHtml("<strong>hh</strong><br><font color=" + mAccentColor + ">mm</font>"));
              mClock.setFormat24Hour(Html.fromHtml("<strong>kk</strong><br><font color=" + mAccentColor + ">mm</font>"));
         } else {

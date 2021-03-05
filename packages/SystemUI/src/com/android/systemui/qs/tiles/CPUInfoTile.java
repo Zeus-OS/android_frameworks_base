@@ -56,7 +56,7 @@ public class CPUInfoTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.ZENX_SETTINGS;
+        return MetricsEvent.ZEUS_SETTINGS;
     }
 
     @Override

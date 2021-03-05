@@ -22,7 +22,7 @@
     android:visibility="invisible"
     android:theme="@style/QSHeaderTheme"
     android:forceHasOverlappingRendering="false">
-    <com.android.systemui.zenx.logo.LogoImageViewQuick
+    <com.android.systemui.zeus.logo.LogoImageViewQuick
         android:id="@+id/statusbar_logo"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -105,7 +105,7 @@
                  android:layout_gravity="end|center_vertical"
                  android:focusable="false"/>
 
-        <com.android.systemui.zenx.logo.LogoImageViewQuickRight
+        <com.android.systemui.zeus.logo.LogoImageViewQuickRight
             android:id="@+id/statusbar_logo_right"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

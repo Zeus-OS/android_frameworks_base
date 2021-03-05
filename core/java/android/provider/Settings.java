@@ -5123,12 +5123,12 @@ public final class Settings {
         public static final String LOCKSCREEN_ACCENT_COLOR_CUSTOM = "lockscreen_accent_color_custom";
 
         /**
-         * Statusbar clock ZenX Color Mode
+         * Statusbar clock Zeus Color Mode
          * @hide
          */
         public static final String STATUS_BAR_CLOCK_COLOR_MODE = "status_bar_clock_color_mode";
         /**
-         * Statusbar clock ZenX random color interval
+         * Statusbar clock Zeus random color interval
          * @hide
          */
         public static final String STATUS_BAR_CLOCK_RANDOM_COLOR_INTERVAL = "status_bar_clock_random_color_interval";
@@ -6517,13 +6517,13 @@ public final class Settings {
         public static final String STATUS_BAR_LOGO_STYLE = "status_bar_logo_style";
 
         /**
-         * Statusbar ZenX Color Mode
+         * Statusbar Zeus Color Mode
          * @hide
          */
         public static final String STATUS_BAR_LOGO_COLOR_MODE = "status_bar_logo_color_mode";
 
         /**
-         * Statusbar ZenX Color random interval
+         * Statusbar Zeus Color random interval
          * @hide
          */
         public static final String STATUSBAR_LOGO_RANDOM_COLOR_INTERVAL = "statusbbar_logo_random_color_interval";

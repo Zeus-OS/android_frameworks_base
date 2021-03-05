@@ -22,13 +22,13 @@ import android.service.quicksettings.Tile;
 
 import com.android.systemui.R;
 import com.android.systemui.R.drawable;
-import com.android.systemui.zenx.onthego.OnTheGoService;
+import com.android.systemui.zeus.onthego.OnTheGoService;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
-import com.android.internal.util.zenx.OnTheGoUtils;
+import com.android.internal.util.zeus.OnTheGoUtils;
 
 import javax.inject.Inject;
 
@@ -66,7 +66,7 @@ public class OnTheGoTile extends QSTileImpl<BooleanState> {
 
     protected void toggleService() {
         ComponentName cn = new ComponentName("com.android.systemui",
-                "com.android.systemui.zenx.onthego.OnTheGoService");
+                "com.android.systemui.zeus.onthego.OnTheGoService");
         Intent startIntent = new Intent();
         startIntent.setComponent(cn);
         if (isOnTheGoEnabled()) {
@@ -101,7 +101,7 @@ public class OnTheGoTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.ZENX_SETTINGS;
+        return MetricsEvent.ZEUS_SETTINGS;
     }
 
     @Override

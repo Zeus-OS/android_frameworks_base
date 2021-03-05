@@ -59,7 +59,7 @@
           systemui:textAppearance="@style/TextAppearance.StatusBar.Clock" />
 
 
-    <com.android.systemui.zenx.logo.LogoImageViewRight
+    <com.android.systemui.zeus.logo.LogoImageViewRight
         android:id="@+id/statusbar_logo_right"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

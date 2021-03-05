@@ -30,7 +30,7 @@ import com.android.systemui.qs.tileimpl.QSTileImpl;
 import com.android.systemui.statusbar.policy.FlashlightController;
 import com.android.systemui.statusbar.policy.FlashlightController.FlashlightListener;
 import com.android.systemui.plugins.ActivityStarter;
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 
 import javax.inject.Inject;
 
@@ -129,19 +129,19 @@ public class FlashlightTile extends QSTileImpl<BooleanState> {
             // Flashlight brightness low
             brightnesValue = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_flashlight_brightness_value_low);
-            ZenxUtils.setFlashlightBrightness(mContext, brightnesValue);
+            ZeusUtils.setFlashlightBrightness(mContext, brightnesValue);
             mFlashlightController.setFlashlight(true);
         } else if (currentMode == 1) {
             // Flashlight brightness default
             brightnesValue = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_flashlight_brightness_value_medium);
-           ZenxUtils.setFlashlightBrightness(mContext, brightnesValue);
+           ZeusUtils.setFlashlightBrightness(mContext, brightnesValue);
            mFlashlightController.setFlashlight(true);
         } else {
             // Flashlight brightness high
             brightnesValue = mContext.getResources().getInteger(
                 com.android.internal.R.integer.config_flashlight_brightness_value_high);
-           ZenxUtils.setFlashlightBrightness(mContext, brightnesValue);
+           ZeusUtils.setFlashlightBrightness(mContext, brightnesValue);
            mFlashlightController.setFlashlight(true);
         }
     }

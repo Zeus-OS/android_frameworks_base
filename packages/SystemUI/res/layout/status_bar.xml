@@ -89,7 +89,7 @@
                     />
 
 
-                <com.android.systemui.zenx.carrierlabel.CarrierLabel
+                <com.android.systemui.zeus.carrierlabel.CarrierLabel
                     android:id="@+id/statusbar_carrier_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
                     android:visibility="gone"
                     android:singleLine="true"/>
 
-                <com.android.systemui.zenx.logo.LogoImageView
+                <com.android.systemui.zeus.logo.LogoImageView
                     android:id="@+id/statusbar_logo"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

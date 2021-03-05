@@ -143,9 +143,9 @@ import com.android.internal.logging.UiEventLoggerImpl;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.statusbar.RegisterStatusBarResult;
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 import com.android.internal.view.AppearanceRegion;
-import com.android.internal.util.zenx.ThemesUtils;
+import com.android.internal.util.zeus.ThemesUtils;
 import android.database.ContentObserver;
 import com.android.keyguard.KeyguardUpdateMonitor;
 import com.android.keyguard.KeyguardUpdateMonitorCallback;
@@ -4964,7 +4964,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         if (FORCE_SHOW_NAVBAR.equals(key) && mDisplayId == Display.DEFAULT_DISPLAY &&
                 mWindowManagerService != null) {
             boolean mNavbarVisible =
-                        TunerService.parseIntegerSwitch(newValue, ZenxUtils.hasNavbarByDefault(mContext));
+                        TunerService.parseIntegerSwitch(newValue, ZeusUtils.hasNavbarByDefault(mContext));
             boolean hasNavbar = getNavigationBarView() != null;
             if (mNavbarVisible) {
                 if (!hasNavbar) {

@@ -387,7 +387,7 @@
 
         <!-- started from PhoneWindowManager
              TODO: Should have an android:permission attribute -->
-        <service android:name=".zenx.onthego.OnTheGoService"
+        <service android:name=".zeus.onthego.OnTheGoService"
             android:process=":onthego"
             android:exported="false" />
 
@@ -462,7 +462,7 @@
                   android:theme="@style/ExTunerSettings"
                   android:label="@string/tuner_lock_screen"
                   android:process=":tuner"
-                  android:parentActivityName="com.zen.hub.fragments.LockScreenSettings"
+                  android:parentActivityName="com.settings.olymp.fragments.LockScreenSettings"
                   android:exported="true">
         </activity>
 
@@ -878,7 +878,7 @@
                 <data android:scheme="package"/>
             </intent-filter>
         </receiver>
-        <service android:name=".zenx.randomcolor.RandomColorService"
+        <service android:name=".zeus.randomcolor.RandomColorService"
                 android:exported="true" >
             <intent-filter>
                <action android:name="android.intent.action.RANDOM_COLOR_SERVICE_UPDATE"/>

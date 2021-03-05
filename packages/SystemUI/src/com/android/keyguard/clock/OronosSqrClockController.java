@@ -34,7 +34,7 @@ import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
 
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 import android.content.Context;
 
 import java.text.SimpleDateFormat;
@@ -225,12 +225,12 @@ public class OronosSqrClockController implements ClockPlugin {
         mHourClock.setTextColor(color);
         mMinuteClock.setTextColor(color);
 
-         if(ZenxUtils.useLockscreenClockMinuteAccentColor(mContext)) {
+         if(ZeusUtils.useLockscreenClockMinuteAccentColor(mContext)) {
             mHourClock.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
             mMinuteClock.setTextColor(color);
         }
 
-         if(ZenxUtils.useLockscreenClockHourAccentColor(mContext)) {
+         if(ZeusUtils.useLockscreenClockHourAccentColor(mContext)) {
             mHourClock.setTextColor(color);
             mMinuteClock.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
         }

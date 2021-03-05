@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 ZENX-OS
+ * Copyright (C) 2018 ZEUS-OS
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -81,7 +81,7 @@ public class CalendarTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.ZENX_SETTINGS;
+        return MetricsEvent.ZEUS_SETTINGS;
     }
 
     @Override

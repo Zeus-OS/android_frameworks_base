@@ -27,7 +27,7 @@ import android.os.UserHandle;
 import android.content.res.TypedArray;
 import com.android.settingslib.Utils;
 
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import android.graphics.Rect;
@@ -106,10 +106,10 @@ public class DualDataUsageView extends TextView  implements StatusIconDisplayabl
         mobileDataController.setSubscriptionId(
             SubscriptionManager.getDefaultDataSubscriptionId());
         final DataUsageController.DataUsageInfo info = DataUsageUnit() == 1 ?
-                (ZenxUtils.isWiFiConnected(mContext) ?
+                (ZeusUtils.isWiFiConnected(mContext) ?
                         mobileDataController.getDailyWifiDataUsageInfo()
                         : mobileDataController.getDailyDataUsageInfo())
-                : (ZenxUtils.isWiFiConnected(mContext) ?
+                : (ZeusUtils.isWiFiConnected(mContext) ?
                         mobileDataController.getWifiDataUsageInfo()
                         : mobileDataController.getDataUsageInfo());
         formatedinfo = formatDataUsage(info.usageLevel) + " ";

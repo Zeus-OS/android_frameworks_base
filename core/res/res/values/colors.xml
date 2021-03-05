@@ -237,7 +237,7 @@
 
     <color name="conversation_important_highlight">#F9AB00</color>
 
-    <!-- ZenHub Card colors -->
+    <!-- Olymp Card colors -->
     <color name="card_color">#FFFFFF</color>
     <color name="card_1_color">#FCFDFE</color>
     <color name="card_2_color">#F9FAFD</color>

@@ -47,7 +47,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.keyguard.KeyguardSecurityModel.SecurityMode;
 import com.android.keyguard.KeyguardUpdateMonitor;
@@ -362,7 +362,7 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
         mUpdateMonitor = Dependency.get(KeyguardUpdateMonitor.class);
         mUpdateMonitor.registerCallback(mMonitorCallback);
 
-        mIsFodAnimationAvailable = ZenxUtils.isPackageInstalled(context,
+        mIsFodAnimationAvailable = ZeusUtils.isPackageInstalled(context,
                                     context.getResources().getString(
                                     com.android.internal.R.string.config_fodAnimationPackage));
         if (mIsFodAnimationAvailable) {

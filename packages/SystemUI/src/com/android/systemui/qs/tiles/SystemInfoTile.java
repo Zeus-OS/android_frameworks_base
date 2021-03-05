@@ -40,7 +40,7 @@ import com.android.systemui.qs.tileimpl.QSTileImpl;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 
 import javax.inject.Inject;
 
@@ -90,7 +90,7 @@ public class SystemInfoTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.ZENX_SETTINGS;
+        return MetricsEvent.ZEUS_SETTINGS;
     }
 
     @Override
@@ -111,28 +111,28 @@ public class SystemInfoTile extends QSTileImpl<BooleanState> {
             case 1:
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_battery_info);
                 state.label = "Battery temp";
-                state.secondaryLabel = ZenxUtils.getBatteryTemp(mContext);
+                state.secondaryLabel = ZeusUtils.getBatteryTemp(mContext);
                 state.state = Tile.STATE_ACTIVE;
                 state.slash.isSlashed = true;
                 break;
             case 2:
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_cpu_info);
                 state.label = "CPU temp ";
-                state.secondaryLabel = ZenxUtils.getCPUTemp(mContext);
+                state.secondaryLabel = ZeusUtils.getCPUTemp(mContext);
                 state.state = Tile.STATE_ACTIVE;
                 state.slash.isSlashed = true;
                 break;
             case 3:
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_gpu_info);
                 state.label = "GPU freq" ;
-                state.secondaryLabel = ZenxUtils.getGPUClock(mContext);
+                state.secondaryLabel = ZeusUtils.getGPUClock(mContext);
                 state.state = Tile.STATE_ACTIVE;
                 state.slash.isSlashed = true;
                 break;
             case 4:
                 state.icon = ResourceIcon.get(R.drawable.ic_qs_gpu_info);
                 state.label = "GPU busy";
-                state.secondaryLabel = ZenxUtils.getGPUBusy(mContext);
+                state.secondaryLabel = ZeusUtils.getGPUBusy(mContext);
                 state.state = Tile.STATE_ACTIVE;
                 state.slash.isSlashed = true;
                 break;

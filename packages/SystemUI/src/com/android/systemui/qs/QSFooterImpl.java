@@ -62,7 +62,7 @@ import com.android.systemui.statusbar.policy.UserInfoController;
 import com.android.systemui.statusbar.policy.UserInfoController.OnUserInfoChangedListener;
 import com.android.systemui.statusbar.info.QsFooterDataUsageView;
 import com.android.systemui.statusbar.policy.QsFooterNetworkTraffic;
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -213,7 +213,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
         if (getQsFooterInfo() == 3) {
             if (text == null || text == "") {
-                v.setText("ZenX - Feel the power");
+                v.setText("Zeus-OS");
                 v.setVisibility(View.VISIBLE);
             } else {
                 v.setText(text);
@@ -227,7 +227,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
         if (getQsFooterInfoRight() == 3) {
             if (text == null || text == "") {
-                vRight.setText("ZenX - Feel the power");
+                vRight.setText("Zeus-OS");
                 vRight.setVisibility(View.VISIBLE);
             } else {
                 vRight.setText(text);
@@ -593,7 +593,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
 
     public boolean onLongClick(View v) {
         if (v == mSettingsButton) {
-            startZenHubActivity();
+            startOlympActivity();
         }
         return false;
     }
@@ -606,10 +606,10 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
     }
 
     
-    private void startZenHubActivity() {
+    private void startOlympActivity() {
         Intent nIntent = new Intent(Intent.ACTION_MAIN);
         nIntent.setClassName("com.android.settings",
-            "com.android.settings.Settings$ZenHubActivity");
+            "com.android.settings.Settings$OlympActivity");
         mActivityStarter.startActivity(nIntent, true /* dismissShade */);
     }
 

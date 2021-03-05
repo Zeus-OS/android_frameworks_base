@@ -41,7 +41,7 @@
 
     <color name="gradient_end">#ff8ab4f8</color>
 
-    <!-- ZenHub Card colors -->
+    <!-- Olymp Card colors -->
     <color name="card_color">#070C11</color>
     <color name="card_1_color">#070C10</color>
     <color name="card_2_color">#060B0F</color>

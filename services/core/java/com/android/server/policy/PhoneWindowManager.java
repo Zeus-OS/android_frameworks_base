@@ -213,7 +213,7 @@ import com.android.internal.policy.KeyInterceptionInfo;
 import com.android.internal.policy.PhoneWindow;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.util.ArrayUtils;
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 import com.android.internal.util.ScreenshotHelper;
 import com.android.server.ExtconStateObserver;
 import com.android.server.ExtconUEventObserver;
@@ -1764,7 +1764,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 return;
             }
 
-            if (ZenxUtils.killForegroundApp(mContext, mCurrentUserId)) {
+            if (ZeusUtils.killForegroundApp(mContext, mCurrentUserId)) {
                 Toast.makeText(mContext,
                         com.android.internal.R.string.app_killed_message,
                         Toast.LENGTH_SHORT).show();
@@ -1982,25 +1982,25 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 closeApp();
                 break;
             case TORCH:
-                ZenxUtils.toggleCameraFlash();
+                ZeusUtils.toggleCameraFlash();
                 break;
             case SCREENSHOT:
                 takeScreenshot(TAKE_SCREENSHOT_FULLSCREEN);
                 break;
             case VOLUME_PANEL:
-                ZenxUtils.toggleVolumePanel(mContext);
+                ZeusUtils.toggleVolumePanel(mContext);
                 break;
             case CLEAR_ALL_NOTIFICATIONS:
-                ZenxUtils.clearAllNotifications();
+                ZeusUtils.clearAllNotifications();
                 break;
             case NOTIFICATIONS:
-                ZenxUtils.toggleNotifications();
+                ZeusUtils.toggleNotifications();
                 break;
             case QS_PANEL:
-                ZenxUtils.toggleQsPanel();
+                ZeusUtils.toggleQsPanel();
                 break;
             case RINGER_MODES:
-                ZenxUtils.toggleRingerModes(mContext);
+                ZeusUtils.toggleRingerModes(mContext);
                 break;
             default:
                 break;
@@ -6511,13 +6511,13 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     public void sendCustomAction(Intent intent) {
         String action = intent.getAction();
         if (action != null) {
-            if (ZenxUtils.INTENT_SCREENSHOT.equals(action)) {
+            if (ZeusUtils.INTENT_SCREENSHOT.equals(action)) {
                 mContext.enforceCallingOrSelfPermission(ACCESS_SURFACE_FLINGER,
                         TAG + "sendCustomAction permission denied");
                 mHandler.removeCallbacks(mScreenshotRunnable);
                 mScreenshotRunnable.setScreenshotType(TAKE_SCREENSHOT_FULLSCREEN);
                 mHandler.post(mScreenshotRunnable);
-            } else if (ZenxUtils.INTENT_REGION_SCREENSHOT.equals(action)) {
+            } else if (ZeusUtils.INTENT_REGION_SCREENSHOT.equals(action)) {
                 mContext.enforceCallingOrSelfPermission(ACCESS_SURFACE_FLINGER,
                         TAG + "sendCustomAction permission denied");
                 mHandler.removeCallbacks(mScreenshotRunnable);

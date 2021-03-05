@@ -36,7 +36,7 @@ import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
 
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 import android.content.Context;
 
 import java.text.SimpleDateFormat;
@@ -184,7 +184,7 @@ public class XtndMNMLBoxClockController implements ClockPlugin {
     @Override
     public void setTextColor(int color) {
         mDate.setTextColor(color);
-        if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
+        if(ZeusUtils.useLockscreenCustomClockAccentColor(mContext)) {
             mDateDay.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
         } else {
              mDateDay.setTextColor(color);

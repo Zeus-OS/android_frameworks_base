@@ -26,7 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextClock;
 
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 import android.content.Context;
 
 import com.android.internal.colorextraction.ColorExtractor;
@@ -146,7 +146,7 @@ public class BinaryClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
-        if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
+        if(ZeusUtils.useLockscreenCustomClockAccentColor(mContext)) {
             mBinaryClock.setTintColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
         } else {
            mBinaryClock.setTintColor(Color.WHITE);

@@ -96,7 +96,7 @@ import com.android.systemui.statusbar.policy.NextAlarmController;
 import com.android.systemui.statusbar.policy.ZenModeController;
 import com.android.systemui.util.RingerModeTracker;
 import com.android.systemui.tuner.TunerService;
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 
 import lineageos.providers.LineageSettings;
 
@@ -616,19 +616,19 @@ public class QuickStatusBarHeader extends RelativeLayout implements
         switch (mSystemInfoMode) {
             case 1:
                 mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_thermometer));
-                mSystemInfoText.setText(ZenxUtils.getCPUTemp(mContext));
+                mSystemInfoText.setText(ZeusUtils.getCPUTemp(mContext));
                 break;
             case 2:
                 mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_thermometer));
-                mSystemInfoText.setText(ZenxUtils.getBatteryTemp(mContext));
+                mSystemInfoText.setText(ZeusUtils.getBatteryTemp(mContext));
                 break;
             case 3:
                 mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_gpu));
-                mSystemInfoText.setText(ZenxUtils.getGPUClock(mContext));
+                mSystemInfoText.setText(ZeusUtils.getGPUClock(mContext));
                 break;
             case 4:
                 mSystemInfoIcon.setImageDrawable(getContext().getDrawable(R.drawable.ic_gpu_busy));
-                mSystemInfoText.setText(ZenxUtils.getGPUBusy(mContext));
+                mSystemInfoText.setText(ZeusUtils.getGPUBusy(mContext));
                 break;
             default:
                  mSystemInfoLayout.setVisibility(View.GONE);

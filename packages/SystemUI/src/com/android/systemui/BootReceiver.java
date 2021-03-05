@@ -81,7 +81,7 @@ public class BootReceiver extends BroadcastReceiver {
             // start the random color change service if activated
             if (Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.RANDOM_ACCENT_COLOR_ON_SCREEN_OFF, 0, UserHandle.USER_CURRENT) != 0) {
-                Intent randomcolorstate = new Intent(mContext, com.android.systemui.zenx.randomcolor.RandomColorService.class);
+                Intent randomcolorstate = new Intent(mContext, com.android.systemui.zeus.randomcolor.RandomColorService.class);
                 mContext.startService(randomcolorstate);
             }
 

@@ -34,7 +34,7 @@ import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
 
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 import android.content.Context;
 
 import java.text.SimpleDateFormat;
@@ -223,7 +223,7 @@ public class OronosClockController implements ClockPlugin {
         GradientDrawable minBg = (GradientDrawable) mMinuteClock.getBackground();
         GradientDrawable dateBg = (GradientDrawable) mLongDate.getBackground();
 
-        if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
+        if(ZeusUtils.useLockscreenCustomClockAccentColor(mContext)) {
             hourBg.setColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
             minBg.setStroke(mResources.getDimensionPixelSize(R.dimen.clock_oronos_outline_size), 
                             (mContext.getResources().getColor(R.color.lockscreen_clock_accent_color))); 

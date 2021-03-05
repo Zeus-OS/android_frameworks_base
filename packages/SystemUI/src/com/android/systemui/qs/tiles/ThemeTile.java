@@ -35,7 +35,7 @@ import android.widget.ListView;
 
 import com.android.internal.logging.MetricsLogger;
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
-import com.android.internal.util.zenx.ThemesUtils;
+import com.android.internal.util.zeus.ThemesUtils;
 
 import com.android.systemui.R;
 import com.android.systemui.plugins.qs.DetailAdapter;
@@ -199,7 +199,7 @@ public class ThemeTile extends QSTileImpl<BooleanState> {
 
         @Override
         public int getMetricsCategory() {
-            return MetricsEvent.ZENX_SETTINGS;
+            return MetricsEvent.ZEUS_SETTINGS;
         }
 
 
@@ -292,7 +292,7 @@ public class ThemeTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.ZENX_SETTINGS;
+        return MetricsEvent.ZEUS_SETTINGS;
     }
 
     @Override

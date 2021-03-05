@@ -28,7 +28,7 @@ import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
 
 import android.content.Context;
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 
 import java.util.TimeZone;
 
@@ -162,7 +162,7 @@ public class SneekyClockController implements ClockPlugin {
         final int secondary = mPalette.getSecondaryColor();
         //mSneekyClock.setClockColors(primary, secondary);
 
-        if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
+        if(ZeusUtils.useLockscreenCustomClockAccentColor(mContext)) {
             mSneekyClock.setClockColors(mContext.getResources().getColor(R.color.lockscreen_clock_accent_color), secondary);
         } else {
             mSneekyClock.setClockColors(primary, secondary);

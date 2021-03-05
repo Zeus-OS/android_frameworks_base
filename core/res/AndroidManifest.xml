@@ -672,7 +672,7 @@
     <!-- Used to get camera status. -->
     <protected-broadcast android:name="android.intent.action.CAMERA_STATUS_CHANGED" />
 
-    <protected-broadcast android:name="zenx.intent.action.GO_TO_SLEEP" />
+    <protected-broadcast android:name="zeus.intent.action.GO_TO_SLEEP" />
 
     <!-- Gaming mode -->
     <protected-broadcast android:name="android.intent.action.GAMING_MODE_TURN_OFF" />

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2020 Zeus-OS
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+  <!-- Whether to cleanup fingerprints upon connection to the daemon and when user switches -->
+  <java-symbol type="bool" name="config_cleanupUnusedFingerprints" />
+
+  <!-- App error dialog -->
+  <java-symbol type="id" name="aerr_copy" />
+  <java-symbol type="string" name="url_copy_success" />
+  <java-symbol type="string" name="url_copy_failed" />
+  
+    <!-- Smart charging battery percentage -->
+    <java-symbol type="integer" name="config_smartChargingBatteryLevel" />
+    <java-symbol type="integer" name="config_smartChargingBatteryResumeLevel" />
+    <java-symbol type="string" name="config_SmartChargingSysfsNode" />
+    <java-symbol type="string" name="config_SmartChargingSupspendValue" />
+    <java-symbol type="string" name="config_SmartChargingResumeValue" />
+
+    <!-- Whether the device supports Smart Pixels -->
+    <java-symbol type="bool" name="config_enableSmartPixels" />
+
+
+    <!-- AOKP custom system animations -->
+    <java-symbol type="string" name="action_null"/>
+    <java-symbol type="string" name="animation_fade"/>
+    <java-symbol type="string" name="animation_slide_left"/>
+    <java-symbol type="string" name="animation_slide_right"/>
+    <java-symbol type="string" name="animation_slide_left_no_fade"/>
+    <java-symbol type="string" name="animation_slide_right_no_fade"/>
+    <java-symbol type="string" name="animation_slide_up"/>
+    <java-symbol type="string" name="animation_slide_down"/>
+    <java-symbol type="string" name="animation_default"/>
+    <java-symbol type="string" name="animation_translucent"/>
+    <java-symbol type="string" name="animation_grow_shrink"/>
+    <java-symbol type="string" name="animation_grow_shrink_center"/>
+    <java-symbol type="string" name="animation_grow_shrink_bottom"/>
+    <java-symbol type="string" name="animation_grow_shrink_left"/>
+    <java-symbol type="string" name="animation_grow_shrink_right"/>
+    <java-symbol type="string" name="animation_random"/>
+    <java-symbol type="anim" name="shrink_fade_out_ribbon" />
+    <java-symbol type="anim" name="shrink_fade_out_center_ribbon" />
+    <java-symbol type="anim" name="shrink_fade_out_right_ribbon" />
+    <java-symbol type="anim" name="shrink_fade_out_left_ribbon" />
+    <java-symbol type="anim" name="shrink_fade_out_from_bottom_ribbon" />
+    <java-symbol type="anim" name="grow_fade_in_ribbon" />
+    <java-symbol type="anim" name="grow_fade_in_center_ribbon" />
+    <java-symbol type="anim" name="grow_fade_in_left_ribbon" />
+    <java-symbol type="anim" name="grow_fade_in_right_ribbon" />
+    <java-symbol type="anim" name="grow_fade_in_from_bottom_ribbon" />
+    <java-symbol type="anim" name="translucent_enter_ribbon" />
+    <java-symbol type="anim" name="translucent_exit_ribbon" />
+    <java-symbol type="anim" name="slide_in_down" />
+    <java-symbol type="anim" name="slide_out_up" />
+    <java-symbol type="anim" name="slide_in_right_ribbon" />
+    <java-symbol type="anim" name="slide_out_right_ribbon" />
+    <java-symbol type="anim" name="slide_in_left_ribbon" />
+    <java-symbol type="anim" name="slide_out_left_ribbon" />
+    <java-symbol type="anim" name="slow_fade_in" />
+    <java-symbol type="anim" name="slow_fade_out" />
+    <java-symbol type="anim" name="slide_in_up_ribbon" />
+    <java-symbol type="anim" name="slide_out_down_ribbon" />
+    <java-symbol type="anim" name="slide_in_right_no_fade" />
+    <java-symbol type="anim" name="slide_out_left_no_fade" />
+    <java-symbol type="anim" name="slide_in_left_no_fade" />
+    <java-symbol type="anim" name="slide_out_right_no_fade" />
+    <java-symbol type="string" name="animation_ethans"/>
+    <java-symbol type="anim" name="ethans_activity_open_enter" />
+    <java-symbol type="anim" name="ethans_activity_open_exit" />
+    <java-symbol type="anim" name="ethans_activity_close_enter" />
+    <java-symbol type="anim" name="ethans_activity_close_exit" />
+    <java-symbol type="anim" name="ethans_task_open_enter" />
+    <java-symbol type="anim" name="ethans_task_open_exit" />
+    <java-symbol type="anim" name="ethans_task_close_enter" />
+    <java-symbol type="anim" name="ethans_task_close_exit" />
+    <java-symbol type="anim" name="ethans_wallpaper_open_enter" />
+    <java-symbol type="anim" name="ethans_wallpaper_open_exit" />
+    <java-symbol type="anim" name="ethans_wallpaper_close_enter" />
+    <java-symbol type="anim" name="ethans_wallpaper_close_exit" />
+    <java-symbol type="anim" name="ethans_wallpaper_intra_open_enter" />
+    <java-symbol type="anim" name="ethans_wallpaper_intra_open_exit" />
+    <java-symbol type="anim" name="ethans_wallpaper_intra_close_enter" />
+    <java-symbol type="anim" name="ethans_wallpaper_intra_close_exit" />
+    <java-symbol type="anim" name="ethans_launch_task_behind_source" />
+    <java-symbol type="anim" name="ethans_launch_task_behind_target" />
+
+     <!-- Whether device has dash charging support -->
+     <java-symbol type="bool" name="config_hasDashCharger" />
+
+     <!-- Whether device has warp charging support -->
+     <java-symbol type="bool" name="config_hasWarpCharger" />
+
+     <!-- Whether device has VOOC charging support -->
+     <java-symbol type="bool" name="config_hasVoocCharger" />
+     
+    <!-- Device has OnePlus haptic motor -->
+  <java-symbol type="bool" name="config_hasOnePlusHapticMotor" />
+
+  <!-- Enable face auth when swiping security view -->
+  <java-symbol type="bool" name="config_faceAuthOnSecurityView" />
+
+       <!-- Toast Animation -->
+  <java-symbol type="style" name="Animation.Toast.Fade" />
+  <java-symbol type="style" name="Animation.Toast.SlideRight" />
+  <java-symbol type="style" name="Animation.Toast.SlideLeft" />
+  <java-symbol type="style" name="Animation.Toast.Xylon" />
+  <java-symbol type="style" name="Animation.Toast.Toko" />
+  <java-symbol type="style" name="Animation.Toast.Tn" />
+  <java-symbol type="style" name="Animation.Toast.Honami" />
+  <java-symbol type="style" name="Animation.Toast.FastFade" />
+  <java-symbol type="style" name="Animation.Toast.GrowFade" />
+  <java-symbol type="style" name="Animation.Toast.GrowFadeCenter" />
+  <java-symbol type="style" name="Animation.Toast.GrowFadeBottom" />
+  <java-symbol type="style" name="Animation.Toast.Translucent" />
+  <java-symbol type="style" name="Animation.Toast.SlideRightLeft" />
+  <java-symbol type="style" name="Animation.Toast.SlideLeftRight" />
+
+    <!-- Powermenu animations -->
+  <java-symbol type="style" name="GlobalActionsAnimation" />
+  <java-symbol type="style" name="GlobalActionsAnimationTop" />
+  <java-symbol type="style" name="GlobalActionsAnimationEnter" />
+  <java-symbol type="style" name="GlobalActionsAnimationFly" />
+  <java-symbol type="style" name="GlobalActionsAnimationTn" />
+  <java-symbol type="style" name="GlobalActionsAnimationTranslucent" />
+  <java-symbol type="style" name="GlobalActionsAnimationXylon" />
+  <java-symbol type="style" name="GlobalActionsAnimationCard" />
+
+    <!-- True if the notification's should dynamically tint the app icon and text -->
+  <java-symbol type="bool" name="config_allowNotificationIconTextTinting" />
+  <!-- True if the notification's dynamic app icon and text tint should be optimised for dark
+       backgrounds -->
+  <java-symbol type="bool" name="config_useDarkBgNotificationIconTextTinting" />
+
+   <!-- Ambient notification light color -->
+   <java-symbol type="integer" name="config_ambientNotificationDefaultColor" />
+   
+    <!-- Whether device supports an alt. ambient display -->
+    <java-symbol type="bool" name="config_alt_ambient_display"/>
+
+    <java-symbol type="array" name="config_customPermissionsList" />
+      <!-- Whether to send camera status intent -->
+    <java-symbol type="bool" name="config_sendCameraStatusIntent" />
+       <!-- Gaming mode -->
+  <java-symbol type="drawable" name="ic_gaming_notif" />
+  <java-symbol type="string" name="notification_channel_gaming" />
+  <java-symbol type="string" name="gaming_mode_notification_title" />
+  <java-symbol type="string" name="gaming_mode_notification_content" />
+  <java-symbol type="string" name="gaming_mode_enabled_toast" />
+  <java-symbol type="string" name="gaming_mode_disabled_toast" />
+
+    <!-- Pocket Lock -->
+  <java-symbol type="layout" name="pocket_lock_view_layout" />
+  <java-symbol type="id" name="pocket_hint_container" />
+  <java-symbol type="id" name="pocket_hint_image" />
+  <java-symbol type="id" name="pocket_hint_message" />
+
+  <!-- Pocket bridge -->
+  <java-symbol type="string" name="config_pocketBridgeSysfsInpocket" />
+  <java-symbol type="bool" name="config_pocketModeSupported" />
+  <java-symbol type="bool" name="config_pocketUseLightSensor" />
+
+  <!-- Pocket Service -->
+  <java-symbol type="string" name="config_pocketJudgeVendorSensorName" />
+
+    <!-- Themes -->
+  <java-symbol type="color" name="theme_generic_semi_transparent_color" />
+
+    <!-- Long-press kill application -->
+  <java-symbol name="app_killed_message" type="string" />
+
+    <!-- Light / Regular style fonts -->
+  <java-symbol type="string" name="config_lightFontFamily" />
+  <java-symbol type="string" name="config_regularFontFamily" />
+
+  <!-- Whether to show a custom view for FOD -->
+  <java-symbol type="bool" name="config_needCustomFODView" />
+
+  <!-- Default fod pressed icon -->
+  <java-symbol type="integer" name="config_fod_pressed_color" />
+
+  <!-- Default value for FOD animation package resources -->
+  <java-symbol type="string" name="config_fodAnimationPackage" />
+
+    <!-- Whether to use old mobile type icons as default -->
+  <java-symbol type="bool" name="config_useOldMobileIcons" />
+
+  <java-symbol type="integer" name="config_screenBrightnessPulse" />
+
+  <!-- Whether device has physical tri state switch -->
+  <java-symbol type="bool" name="config_hasAlertSlider" />
+
+  <!-- The location of the devices physical tri state switch -->
+  <java-symbol type="integer" name="config_alertSliderLocation" />
+
+  <!-- Whether key handler sends intent when changing slider position -->
+  <java-symbol type="string" name="config_alertSliderIntent" />
+
+    <java-symbol type="array" name="config_blockPackagesSensorDrain" />
+</resources>

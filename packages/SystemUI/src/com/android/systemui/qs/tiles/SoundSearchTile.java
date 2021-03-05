@@ -26,7 +26,7 @@ import android.service.quicksettings.Tile;
 import android.widget.Toast;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 import com.android.systemui.Dependency;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
@@ -44,26 +44,26 @@ public class SoundSearchTile extends QSTileImpl<BooleanState> {
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.ZENX_SETTINGS;
+        return MetricsEvent.ZEUS_SETTINGS;
     }
 
     @Override
     public void handleClick() {
         mHost.collapsePanels();
         // Shazam
-        if (ZenxUtils.isPackageInstalled(mContext, "com.shazam.android") || ZenxUtils.isPackageInstalled(mContext, "com.shazam.encore.android")) {
+        if (ZeusUtils.isPackageInstalled(mContext, "com.shazam.android") || ZeusUtils.isPackageInstalled(mContext, "com.shazam.encore.android")) {
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.setAction("com.shazam.android.intent.actions.START_TAGGING");
             mContext.startActivity(intent);
         // Soundhound
-        } else if (ZenxUtils.isPackageInstalled(mContext, "com.melodis.midomiMusicIdentifier.freemium") || ZenxUtils.isPackageInstalled(mContext, "com.melodis.midomiMusicIdentifier")) {
+        } else if (ZeusUtils.isPackageInstalled(mContext, "com.melodis.midomiMusicIdentifier.freemium") || ZeusUtils.isPackageInstalled(mContext, "com.melodis.midomiMusicIdentifier")) {
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.setAction("com.soundhound.android.ID_NOW_EXTERNAL");
             mContext.startActivity(intent);
         // Google Search Music
-        } else if (ZenxUtils.isPackageInstalled(mContext, "com.google.android.googlequicksearchbox")) {
+        } else if (ZeusUtils.isPackageInstalled(mContext, "com.google.android.googlequicksearchbox")) {
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.setAction("com.google.android.googlequicksearchbox.MUSIC_SEARCH");

@@ -26,7 +26,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextClock;
 
-import com.android.internal.util.zenx.ZenxUtils;
+import com.android.internal.util.zeus.ZeusUtils;
 import android.content.Context;
 
 import com.android.internal.colorextraction.ColorExtractor;
@@ -164,7 +164,7 @@ public class AnalogClockController implements ClockPlugin {
     private void updateColor() {
         final int primary = mPalette.getPrimaryColor();
         final int secondary = mPalette.getSecondaryColor();
-        if(ZenxUtils.useLockscreenCustomClockAccentColor(mContext)) {
+        if(ZeusUtils.useLockscreenCustomClockAccentColor(mContext)) {
             mAnalogClock.setClockColors(primary, mContext.getResources().getColor(R.color.lockscreen_clock_accent_color));
         } else {
             mAnalogClock.setClockColors(primary, secondary);
