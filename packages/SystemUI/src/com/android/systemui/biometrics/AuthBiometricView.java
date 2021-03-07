@@ -16,6 +16,8 @@
 
 package com.android.systemui.biometrics;
 
+import static android.view.WindowManagerPolicyConstants.NAV_BAR_MODE_GESTURAL;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
@@ -28,6 +30,8 @@ import android.hardware.biometrics.BiometricPrompt;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -40,6 +44,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.util.crdroid.FodUtils;
 import com.android.systemui.R;
 
 import java.lang.annotation.Retention;
@@ -192,6 +197,8 @@ public abstract class AuthBiometricView extends LinearLayout {
     protected boolean mDialogSizeAnimating;
     protected Bundle mSavedState;
 
+    protected boolean mHasFod;
+
     /**
      * Delay after authentication is confirmed, before the dialog should be animated away.
      */
@@ -251,6 +258,8 @@ public abstract class AuthBiometricView extends LinearLayout {
 
         mInjector = injector;
         mInjector.mBiometricView = this;
+
+        mHasFod = FodUtils.hasFodSupport(context);
 
         mAccessibilityManager = context.getSystemService(AccessibilityManager.class);
 
@@ -546,6 +555,10 @@ public abstract class AuthBiometricView extends LinearLayout {
      */
     public void restoreState(@Nullable Bundle savedState) {
         mSavedState = savedState;
+    }
+
+    public boolean getHasFod() {
+        return mHasFod;
     }
 
     private void setTextOrHide(TextView view, String string) {
