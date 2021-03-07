@@ -64,6 +64,8 @@ import com.android.server.statusbar.StatusBarManagerInternal;
 
 import java.io.PrintWriter;
 
+import lineageos.providers.LineageSettings;
+
 /**
  * Sends broadcasts about important power state changes.
  * <p>
@@ -96,6 +98,7 @@ public class Notifier {
     private static final int MSG_WIRELESS_CHARGING_STARTED = 3;
     private static final int MSG_PROFILE_TIMED_OUT = 5;
     private static final int MSG_WIRED_CHARGING_STARTED = 6;
+    private static final int MSG_WIRED_CHARGING_DISCONNECTED = 7;
 
     private static final long[] CHARGING_VIBRATION_TIME = {
             40, 40, 40, 40, 40, 40, 40, 40, 40, // ramp-up sampling rate = 40ms
@@ -126,6 +129,7 @@ public class Notifier {
     private final TrustManager mTrustManager;
     private final Vibrator mVibrator;
     private final WakeLockLog mWakeLockLog;
+    private final AudioManager mAudioManager;
 
     private final NotifierHandler mHandler;
     private final Intent mScreenOnIntent;
@@ -177,6 +181,7 @@ public class Notifier {
         mStatusBarManagerInternal = LocalServices.getService(StatusBarManagerInternal.class);
         mTrustManager = mContext.getSystemService(TrustManager.class);
         mVibrator = mContext.getSystemService(Vibrator.class);
+        mAudioManager = mContext.getSystemService(AudioManager.class);
 
         mHandler = new NotifierHandler(looper);
         mScreenOnIntent = new Intent(Intent.ACTION_SCREEN_ON);
@@ -661,6 +666,21 @@ public class Notifier {
     }
 
     /**
+     * Called when wired charging has been disconnected so as to provide user feedback
+     */
+    public void onWiredChargingDisconnected(@UserIdInt int userId) {
+        if (DEBUG) {
+            Slog.d(TAG, "onWiredChargingDisconnected");
+        }
+
+        mSuspendBlocker.acquire();
+        Message msg = mHandler.obtainMessage(MSG_WIRED_CHARGING_DISCONNECTED);
+        msg.setAsynchronous(true);
+        msg.arg1 = userId;
+        mHandler.sendMessage(msg);
+    }
+
+    /**
      * Dumps data for bugreports.
      *
      * @param pw The stream to print to.
@@ -801,6 +821,9 @@ public class Notifier {
     };
 
     private void playChargingStartedFeedback(@UserIdInt int userId, boolean wireless) {
+        if (!isChargingFeedbackEnabled(userId)) {
+            return;
+        }
 
         // vibrate
         final boolean vibrate = Settings.Secure.getIntForUser(mContext.getContentResolver(),
@@ -809,18 +832,22 @@ public class Notifier {
             mVibrator.vibrate(CHARGING_VIBRATION_EFFECT, VIBRATION_ATTRIBUTES);
         }
 
-        if (isChargingFeedbackEnabled(userId)) {
-            // play sound
-            final String soundPath = Settings.Global.getString(mContext.getContentResolver(),
-                    wireless ? Settings.Global.WIRELESS_CHARGING_STARTED_SOUND
-                            : Settings.Global.CHARGING_STARTED_SOUND);
-            final Uri soundUri = Uri.parse("file://" + soundPath);
-            if (soundUri != null) {
-                final Ringtone sfx = RingtoneManager.getRingtone(mContext, soundUri);
-                if (sfx != null) {
-                    sfx.setStreamType(AudioManager.STREAM_SYSTEM);
-                    sfx.play();
-                }
+        // play sound
+        final String soundPath = LineageSettings.Global.getString(mContext.getContentResolver(),
+                LineageSettings.Global.POWER_NOTIFICATIONS_RINGTONE);
+        if (soundPath.equals("silent")) {
+            return;
+        }
+
+        Uri soundUri = Uri.parse(soundPath);
+        if (soundUri != null) {
+            if (!soundUri.isAbsolute()) {
+                soundUri = Uri.parse("file://" + soundPath);
+            }
+            final Ringtone sfx = RingtoneManager.getRingtone(mContext, soundUri);
+            if (sfx != null) {
+                sfx.setStreamType(AudioManager.STREAM_SYSTEM);
+                sfx.play();
             }
         }
     }
@@ -851,7 +878,9 @@ public class Notifier {
         final boolean dndOff = Settings.Global.getInt(mContext.getContentResolver(),
                 Settings.Global.ZEN_MODE, Settings.Global.ZEN_MODE_IMPORTANT_INTERRUPTIONS)
                 == Settings.Global.ZEN_MODE_OFF;
-        return enabled && dndOff;
+        final boolean silentMode = mAudioManager.getRingerModeInternal()
+                == AudioManager.RINGER_MODE_SILENT;
+        return enabled && dndOff && !silentMode;
     }
 
     private final class NotifierHandler extends Handler {
@@ -875,6 +904,7 @@ public class Notifier {
                     lockProfile(msg.arg1);
                     break;
                 case MSG_WIRED_CHARGING_STARTED:
+                case MSG_WIRED_CHARGING_DISCONNECTED:
                     showWiredChargingStarted(msg.arg1);
                     break;
             }
