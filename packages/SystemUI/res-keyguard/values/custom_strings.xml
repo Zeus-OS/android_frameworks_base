@@ -54,5 +54,6 @@
     <string name="clock_title_zenx" translatable="false">ZenX</string>
     <string name="clock_title_city_circle" translatable="false">City Circle</string>
     <string name="clock_title_mountain" translatable="false">Mountain</string>
+    <string name="clock_title_cloudy" translatable="false">Cloudy</string>
 
 </resources>
