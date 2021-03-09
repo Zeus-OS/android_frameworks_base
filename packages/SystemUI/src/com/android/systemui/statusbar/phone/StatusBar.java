@@ -4320,6 +4320,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_HEIGHT),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.BRIGHTNESS_SLIDER_THUMB),
+                    false, this, UserHandle.USER_ALL);
 	}
 
         @Override
@@ -4328,19 +4331,20 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.SWITCH_STYLE))) {
                 updateSwitchStyle();
 	        }
-             if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_DATE_SELECTION))) {
+            if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_DATE_SELECTION))) {
                 updateKeyguardStatusSettings();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_MAX_NOTIF_CONFIG))) {
                 setMaxKeyguardNotifConfig();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.LESS_BORING_HEADS_UP))) {
                 setUseLessBoringHeadsUp();
-	         } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_LABEL_USE_NEW_TINT))) {
+	        } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_LABEL_USE_NEW_TINT))) {
                 mQSPanel.getHost().reloadAllTiles();
-            }
+	        } 
+            updateBrightnessSliderStyle();
+            updateBrightnessThumb();
             updateTileStyle();
             updateGModStyle();
             updateStatusbarHeight();
-            updateBrightnessSliderStyle();
             updateNavBarStyle();
             update();
         }
@@ -4386,6 +4390,12 @@ public class StatusBar extends SystemUI implements DemoMode,
          int gModStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
                  Settings.System.UI_STYLE, 0, UserHandle.USER_CURRENT);
         ThemesUtils.updateUIStyle(mOverlayManager, gModStyle);
+     }
+
+     public void updateBrightnessThumb() {
+         int thumb = Settings.System.getIntForUser(mContext.getContentResolver(),
+                 Settings.System.BRIGHTNESS_SLIDER_THUMB, 0, UserHandle.USER_CURRENT);
+        ThemesUtils.updateBrightnessThumb(mOverlayManager, thumb);
      }
 
      public void updateStatusbarHeight() {

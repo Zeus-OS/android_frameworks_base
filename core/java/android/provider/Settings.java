@@ -5231,6 +5231,11 @@ public final class Settings {
         /**
          * @hide
          */
+        public static final String BRIGHTNESS_SLIDER_THUMB = "brightness_slider_thumb";
+
+        /**
+         * @hide
+         */
         public static final String BRIGHTNESS_SLIDER_STYLE = "brightness_slider_style";
 
         /**

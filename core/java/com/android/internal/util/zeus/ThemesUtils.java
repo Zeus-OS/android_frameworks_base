@@ -132,6 +132,16 @@ public class ThemesUtils {
         "com.android.systemui.statusbar.dualstatusbar",
 };
 
+    public static final String[] BRIGHTNESS_SLIDER_THUMB = {
+        "com.android.systemui.brightness.thumb.default",
+        "com.android.systemui.brightness.thumb.zeus",
+        "com.android.systemui.brightness.thumb.android",
+        "com.android.systemui.brightness.thumb.apple",
+        "com.android.systemui.brightness.thumb.biowizard",
+        "com.android.systemui.brightness.thumb.yingyang",
+        "com.android.systemui.brightness.thumb.flower",
+};
+
     public static void updateSwitchStyle(OverlayManager om, int switchStyle) {
         UserHandle userId = UserHandle.of(ActivityManager.getCurrentUser());
         if (switchStyle == 0) {
@@ -252,6 +262,33 @@ public class ThemesUtils {
             String height = STATUSBAR_HEIGHT[i];
             try {
                 om.setEnabled(height,
+                        false /*disable*/, userId);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void updateBrightnessThumb(OverlayManager om, int bThumb) {
+        UserHandle userId = UserHandle.of(ActivityManager.getCurrentUser());
+        if (bThumb == 0) {
+            stockBrightnessThumb(om, userId);
+        } else {
+            stockBrightnessThumb(om, userId);
+            try {
+                om.setEnabled(BRIGHTNESS_SLIDER_THUMB[bThumb],
+                        true, userId);
+            } catch (Exception e) {
+                Log.w(TAG, "Can't change brughtness thumb", e);
+            }
+        }
+    }
+
+    public static void stockBrightnessThumb(OverlayManager om, UserHandle userId) {
+        for (int i = 0; i < BRIGHTNESS_SLIDER_THUMB.length; i++) {
+            String thumb = BRIGHTNESS_SLIDER_THUMB[i];
+            try {
+                om.setEnabled(thumb,
                         false /*disable*/, userId);
             } catch (Exception e) {
                 e.printStackTrace();
