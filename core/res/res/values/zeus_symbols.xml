@@ -106,9 +106,6 @@
     <!-- Device has OnePlus haptic motor -->
   <java-symbol type="bool" name="config_hasOnePlusHapticMotor" />
 
-  <!-- Enable face auth when swiping security view -->
-  <java-symbol type="bool" name="config_faceAuthOnSecurityView" />
-
        <!-- Toast Animation -->
   <java-symbol type="style" name="Animation.Toast.Fade" />
   <java-symbol type="style" name="Animation.Toast.SlideRight" />

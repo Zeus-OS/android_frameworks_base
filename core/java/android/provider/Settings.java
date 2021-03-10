@@ -11150,6 +11150,7 @@ public final class Settings {
 
         /**
          * Inverse navigation bar layout
+         * Magnification mode value that magnifies whole display.
          * @hide
          */
         public static final String NAVBAR_INVERSE_LAYOUT = "navbar_inverse_layout";
