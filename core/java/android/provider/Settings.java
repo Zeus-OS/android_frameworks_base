@@ -5435,20 +5435,6 @@ public final class Settings {
          */
         public static final String LOCKSCREEN_OWNER_INFO_COLOR = "lockscreen_owner_info_color";
 
-         /**
-         * Change the color of the lockscreen bottom camera shortcut
-         *
-         * @hide
-         */
-        public static final String LOCKSCREEN_CAMERA_ICON_COLOR = "lockscreen_camera_icon_color";
-
-        /**
-         * Change the color of the lockscreen bottom phone shortcut
-         *
-         * @hide
-         */
-        public static final String LOCKSCREEN_PHONE_ICON_COLOR = "lockscreen_phone_icon_color";
-
         /**
          * Change the color of the lockscreen indication text
          *
@@ -6765,8 +6751,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(LOCKSCREEN_CLOCK_COLOR);
             PRIVATE_SETTINGS.add(LOCKSCREEN_CLOCK_DATE_COLOR);
             PRIVATE_SETTINGS.add(LOCKSCREEN_OWNER_INFO_COLOR);
-            PRIVATE_SETTINGS.add(LOCKSCREEN_CAMERA_ICON_COLOR);
-            PRIVATE_SETTINGS.add(LOCKSCREEN_PHONE_ICON_COLOR);
             PRIVATE_SETTINGS.add(LOCKSCREEN_INDICATION_TEXT_COLOR);
             PRIVATE_SETTINGS.add(LOCK_SCREEN_WEATHER_TEMP_COLOR);
             PRIVATE_SETTINGS.add(LOCK_SCREEN_WEATHER_CITY_COLOR);
