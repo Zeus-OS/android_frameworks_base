@@ -53,7 +53,7 @@ public class QsFooterDataUsageView extends TextView {
                     public void run() {
                         updateDataUsage();
                     }
-                }, 10000);
+                }, 3000);
             }
         }
     }
@@ -72,13 +72,9 @@ public class QsFooterDataUsageView extends TextView {
         DataUsageController mobileDataController = new DataUsageController(mContext);
         mobileDataController.setSubscriptionId(
             SubscriptionManager.getDefaultDataSubscriptionId());
-        final DataUsageController.DataUsageInfo info = isDataUsageEnabled() ?
-                (ZeusUtils.isWiFiConnected(mContext) ?
+        final DataUsageController.DataUsageInfo info = (ZeusUtils.isWiFiConnected(mContext) ?
                         mobileDataController.getDailyWifiDataUsageInfo()
-                        : mobileDataController.getDailyDataUsageInfo())
-                : (ZeusUtils.isWiFiConnected(mContext) ?
-                        mobileDataController.getWifiDataUsageInfo()
-                        : mobileDataController.getDataUsageInfo());
+                        : mobileDataController.getDailyDataUsageInfo());
         if(formatedinfo == "" || formatedinfo == " ") {
             formatedinfo = "Loading..";
         } else {
