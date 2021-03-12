@@ -1734,7 +1734,9 @@ final class ActivityRecord extends WindowToken implements WindowManagerService.A
             // App already has a visible window...why would you want a starting window?
             return false;
         }
-
+        if(task ==  null) {
+            task = getTask();
+        }
         final ActivityManager.TaskSnapshot snapshot =
                 mWmService.mTaskSnapshotController.getSnapshot(task.mTaskId, task.mUserId,
                         false /* restoreFromDisk */, false /* isLowResolution */);
