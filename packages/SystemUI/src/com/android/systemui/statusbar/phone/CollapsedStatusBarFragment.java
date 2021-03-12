@@ -85,6 +85,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
 
     private ContentResolver resolver;
 
+    // Default Dualstatusbar 
+    private boolean mDualStatusbarEnabled;
+    private int mDualStatusbarMode;
+
     private class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
             super(handler);
@@ -124,14 +128,31 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             Bundle savedInstanceState) {
-        switch(getDualStatusbarMode()) {
+        mDualStatusbarEnabled = getResources().getBoolean(com.android.internal.R.bool.config_default_dual_status_bar);
+        mDualStatusbarMode = getResources().getInteger(com.android.internal.R.integer.config_default_dual_status_bar_mode);
+        int mDSBarmode = 0;
+        if(mDualStatusbarEnabled) {
+            mDSBarmode = mDualStatusbarMode;
+            mDualStatusbarEnabled = false; // set it back to false to make dual statusbar picker work
+        } else {
+            mDSBarmode = getDualStatusbarMode();
+        }
+        switch(mDSBarmode) {
              case 1:
+                Settings.System.putInt(getContext().getContentResolver(),
+                    Settings.System.DUAL_STATUSBAR_ROW_MODE, 1);
                return inflater.inflate(R.layout.status_bar_dual, container, false);
              case 2:
+                Settings.System.putInt(getContext().getContentResolver(),
+                        Settings.System.DUAL_STATUSBAR_ROW_MODE, 2);
                 return inflater.inflate(R.layout.status_bar_dual_network_speed, container, false);
              case 3:
+                Settings.System.putInt(getContext().getContentResolver(),
+                        Settings.System.DUAL_STATUSBAR_ROW_MODE, 3);
                 return inflater.inflate(R.layout.status_bar_dual_used_data, container, false);
             default:
+                Settings.System.putInt(getContext().getContentResolver(),
+                        Settings.System.DUAL_STATUSBAR_ROW_MODE, 4);
                 return inflater.inflate(R.layout.status_bar, container, false);
          }
     }

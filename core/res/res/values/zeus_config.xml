@@ -169,4 +169,9 @@
 
     <!-- Enable face auth only when swiping security view -->
     <bool name="config_faceAuthOnlyOnSecurityView">false</bool>
+
+    <!-- Allow devices override default dual statusbar settings -->
+    <bool name="config_default_dual_status_bar">false</bool>
+    <integer name="config_default_dual_status_bar_mode">1</integer>
+
 </resources>

@@ -206,4 +206,8 @@
 
     <!-- Enable face auth only when swiping security view -->
   <java-symbol type="bool" name="config_faceAuthOnlyOnSecurityView" />
+
+      <!-- Allow devices override default dual statusbar settings -->
+    <java-symbol type="bool" name="config_default_dual_status_bar" />
+    <java-symbol type="integer" name="config_default_dual_status_bar_mode" />
 </resources>

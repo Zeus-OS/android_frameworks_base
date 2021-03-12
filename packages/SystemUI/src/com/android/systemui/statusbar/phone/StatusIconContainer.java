@@ -75,6 +75,10 @@ public class StatusIconContainer extends AlphaOptimizedLinearLayout {
 
     private Context ctx;
 
+    // Default Dualstatusbar 
+    private boolean mDualStatusbarEnabled;
+    private int mDualStatusbarMode;
+
     public StatusIconContainer(Context context) {
         this(context, null);
     }
@@ -108,12 +112,13 @@ public class StatusIconContainer extends AlphaOptimizedLinearLayout {
         int radius = getResources().getDimensionPixelSize(R.dimen.overflow_dot_radius);
         mStaticDotDiameter = 2 * radius;
         mUnderflowWidth = mIconDotFrameWidth + (MAX_DOTS - 1) * (mStaticDotDiameter + mDotPadding);
-        if(getDualStatusbarMode() != 0) {
+        mDualStatusbarEnabled = getResources().getBoolean(com.android.internal.R.bool.config_default_dual_status_bar);
+
+        if(getDualStatusbarMode() != 0 || mDualStatusbarEnabled) {
             mMaxIcons = getResources().getInteger(R.integer.config_maxVisibleDualStatusIconContainer);
         } else {
             mMaxIcons = getResources().getInteger(R.integer.config_maxVisibleStatusIconContainer);
         }
-
     }
 
     private int getDualStatusbarMode() {
