@@ -37,7 +37,6 @@ import android.os.SystemProperties;
 import android.os.SystemClock;
 import android.net.NetworkInfo;
 import android.net.ConnectivityManager;
-import android.os.SystemProperties;
 import android.text.format.Time;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -95,6 +94,11 @@ public class ZeusUtils {
 
     public static final String INTENT_SCREENSHOT = "action_take_screenshot";
     public static final String INTENT_REGION_SCREENSHOT = "action_take_region_screenshot";
+
+    private static boolean mBlurSupportedSysProp = SystemProperties
+        .getBoolean("ro.surface_flinger.supports_background_blur", false);
+    private static boolean mBlurDisabledSysProp = SystemProperties
+        .getBoolean("persist.sys.sf.disable_blurs", false);
 
     private static OverlayManager mOverlayService;
 
@@ -266,6 +270,15 @@ public class ZeusUtils {
 
     public static void toggleQsPanel() {
         FireActions.toggleQsPanel();
+    }
+
+    /**
+     * If this device can render blurs.
+     *
+     * @return {@code true} when supported.
+     */
+    public static boolean supportsBlur() {
+        return mBlurSupportedSysProp && !mBlurDisabledSysProp && ActivityManager.isHighEndGfx();
     }
 
     public static void sendKeycode(int keycode) {
