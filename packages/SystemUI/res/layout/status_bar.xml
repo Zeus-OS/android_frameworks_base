@@ -53,7 +53,6 @@
         <FrameLayout
             android:layout_height="match_parent"
             android:layout_width="0dp"
-            android:paddingEnd="-2dp"
             android:layout_weight="1">
 
             <include layout="@layout/heads_up_status_bar_layout" />
@@ -62,6 +61,7 @@
                 android:id="@+id/status_bar_left_side"
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
+                android:paddingEnd="-8dp"
                 android:clipChildren="false"
             >
                 <ViewStub
