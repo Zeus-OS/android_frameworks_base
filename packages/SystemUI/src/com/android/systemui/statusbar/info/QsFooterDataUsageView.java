@@ -85,7 +85,7 @@ public class QsFooterDataUsageView extends TextView {
     public boolean isDataUsageEnabled() {
         return Settings.System.getInt(mContext.getContentResolver(),
                 Settings.System.QS_FOOTER_INFO, 3) == 1 || Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.QS_FOOTER_INFO_RIGHT, 2) == 2;
+                Settings.System.QS_FOOTER_INFO_RIGHT, 2) == 1;
     }
 
     public static void updateUsage() {
