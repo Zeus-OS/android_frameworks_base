@@ -89,9 +89,9 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/TextAppearance.StatusBar.Clock"
                         android:singleLine="true"
-                        android:paddingStart="@dimen/status_bar_left_clock_starting_padding"
+                        android:paddingStart="16dp"
                         android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
-                        android:gravity="center"
+                        android:gravity="start|center_vertical"
                     />
                 </com.android.keyguard.AlphaOptimizedLinearLayout>
 
