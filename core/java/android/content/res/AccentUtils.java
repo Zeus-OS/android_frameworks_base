@@ -30,6 +30,7 @@ public class AccentUtils {
                     "qs_header_accent_color",
                     "lockscreen_clock_accent_color",
                     "recents_dismiss_all_background_color",
+                    "dismiss_all_icon_color",
                     "gradient_start"));
 
     private static ArrayList<String> gradientResources = new ArrayList<>(

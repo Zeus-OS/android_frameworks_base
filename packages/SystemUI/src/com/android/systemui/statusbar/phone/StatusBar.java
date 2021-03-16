@@ -2438,7 +2438,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             layoutParams.height = mContext.getResources().getDimensionPixelSize(R.dimen.dismiss_all_button_height);
             layoutParams.bottomMargin = mContext.getResources().getDimensionPixelSize(R.dimen.dismiss_all_button_margin_bottom);
             mDismissAllButton.setElevation(mContext.getResources().getDimension(R.dimen.dismiss_all_button_elevation));
-            mDismissAllButton.setColorFilter(iconcolor);
             mDismissAllButton.setBackground(mContext.getResources().getDrawable(R.drawable.dismiss_all_background));
         }
     }
