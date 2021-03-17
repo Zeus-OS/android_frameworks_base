@@ -27,6 +27,7 @@ import android.util.AttributeSet;
 import android.view.DisplayCutout;
 import android.view.View;
 import android.widget.TextView;
+import android.provider.Settings;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.keyguard.AlphaOptimizedLinearLayout;
@@ -62,6 +63,7 @@ public class HeadsUpStatusBarView extends AlphaOptimizedLinearLayout {
     private Rect mIconDrawingRect = new Rect();
     private Point mDisplaySize;
     private Runnable mOnDrawingRectChangedListener;
+    private boolean mDualStatusbarEnabled;
 
     public HeadsUpStatusBarView(Context context) {
         this(context, null);
@@ -79,7 +81,15 @@ public class HeadsUpStatusBarView extends AlphaOptimizedLinearLayout {
             int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         Resources res = getResources();
+
+        mDualStatusbarEnabled = getResources().getBoolean(com.android.internal.R.bool.config_default_dual_status_bar);
+
         int headsUpStartPadding = getResources().getDimensionPixelSize(R.dimen.heads_up_status_bar_padding_start);
+
+        if(mDualStatusbarEnabled || getDualStatusbarMode() > 0) {
+            headsUpStartPadding = getResources().getDimensionPixelSize(R.dimen.heads_up_dual_status_bar_padding_start); 
+        }
+
         if (headsUpStartPadding > 0) {
             mAbsoluteStartPadding = headsUpStartPadding
                 + res.getDimensionPixelSize(
@@ -90,10 +100,18 @@ public class HeadsUpStatusBarView extends AlphaOptimizedLinearLayout {
                         com.android.internal.R.dimen.notification_content_margin_start);
         }
         mAbsoluteStartPadding = res.getDimensionPixelSize(R.dimen.heads_up_status_bar_padding_start);
+        if(mDualStatusbarEnabled || getDualStatusbarMode() > 0) {
+            mAbsoluteStartPadding = getResources().getDimensionPixelSize(R.dimen.heads_up_dual_status_bar_padding_start); 
+        }
         mEndMargin = res.getDimensionPixelSize(
                 com.android.internal.R.dimen.notification_content_margin_end);
         setPaddingRelative(mAbsoluteStartPadding, 0, mEndMargin, 0);
         updateMaxWidth();
+    }
+
+    private int getDualStatusbarMode() {
+        return Settings.System.getInt(getContext().getContentResolver(),
+            Settings.System.DUAL_STATUSBAR_ROW_MODE, 0);
     }
 
     private void updateMaxWidth() {

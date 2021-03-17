@@ -1408,7 +1408,8 @@
     <dimen name="config_rounded_mask_size_top">@*android:dimen/rounded_corner_radius_top</dimen>
     <dimen name="config_rounded_mask_size_bottom">@*android:dimen/rounded_corner_radius_bottom</dimen>
     
-    <dimen name="heads_up_status_bar_padding_start">5dp</dimen>
+    <dimen name="heads_up_status_bar_padding_start">6dp</dimen>
+    <dimen name="heads_up_dual_status_bar_padding_start">16dp</dimen>
 
     <!-- Output switcher panel related dimensions -->
     <dimen name="media_output_dialog_list_margin">12dp</dimen>
