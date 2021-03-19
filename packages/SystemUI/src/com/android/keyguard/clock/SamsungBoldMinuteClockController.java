@@ -34,6 +34,9 @@ import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
 import com.android.internal.util.zeus.ZeusUtils;
 
+import static com.android.systemui.statusbar.phone
+        .KeyguardClockPositionAlgorithm.CLOCK_USE_DEFAULT_Y;
+
 import java.util.TimeZone;
 
 import static com.android.systemui.statusbar.phone
@@ -172,7 +175,7 @@ public class SamsungBoldMinuteClockController implements ClockPlugin {
 
     @Override
     public int getPreferredY(int totalHeight) {
-        return totalHeight / 2;
+        return CLOCK_USE_DEFAULT_Y;
     }
     @Override
     public void setStyle(Style style) {}

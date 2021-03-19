@@ -40,6 +40,9 @@ import android.content.Context;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import static com.android.systemui.statusbar.phone
+        .KeyguardClockPositionAlgorithm.CLOCK_USE_DEFAULT_Y;
+
 import java.util.TimeZone;
 
 /**
@@ -211,7 +214,7 @@ public class OronosClockController implements ClockPlugin {
 
     @Override
     public int getPreferredY(int totalHeight) {
-        return totalHeight / 2;
+        return CLOCK_USE_DEFAULT_Y;
     }
 
     @Override

@@ -163,7 +163,7 @@ public class MountainCircleController implements ClockPlugin {
 
     @Override
     public int getPreferredY(int totalHeight) {
-        return totalHeight / 2;
+        return totalHeight / 3;
     }
     @Override
     public void setStyle(Style style) {}
