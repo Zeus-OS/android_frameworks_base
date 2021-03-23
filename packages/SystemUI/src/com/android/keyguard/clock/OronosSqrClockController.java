@@ -80,7 +80,6 @@ public class OronosSqrClockController implements ClockPlugin {
      */
     private TextClock mHourClock;
     private TextClock mMinuteClock;
-    private TextView mLongDate;
 
     /**
      * Time and calendars to check the date
@@ -116,7 +115,6 @@ public class OronosSqrClockController implements ClockPlugin {
                 .inflate(R.layout.sqr_oronos_clock, null);
         mHourClock = mBigClockView.findViewById(R.id.clockHr);
         mMinuteClock = mBigClockView.findViewById(R.id.clockMin);
-        mLongDate = mBigClockView.findViewById(R.id.longDate);
         onTimeTick();
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);
@@ -135,7 +133,6 @@ public class OronosSqrClockController implements ClockPlugin {
         mBigClockView = null;
         mHourClock = null;
         mMinuteClock = null;
-        mLongDate = null;
     }
 
     @Override
@@ -255,30 +252,23 @@ public class OronosSqrClockController implements ClockPlugin {
 
         GradientDrawable hourBg = (GradientDrawable) mHourClock.getBackground();
         GradientDrawable minBg = (GradientDrawable) mMinuteClock.getBackground();
-        GradientDrawable dateBg = (GradientDrawable) mLongDate.getBackground();
 
         // Things that needs to be tinted with the background color
         hourBg.setColor(backgroundColor);
         minBg.setColor(backgroundColor);
-        dateBg.setColor(backgroundColor);
 
         // Things that needs to be tinted with the highlighted color
         hourBg.setStroke(mResources.getDimensionPixelSize(R.dimen.clock_oronos_outline_size),
                             highlightColor);
         minBg.setStroke(mResources.getDimensionPixelSize(R.dimen.clock_oronos_outline_size),
                             highlightColor);
-        dateBg.setStroke(mResources.getDimensionPixelSize(R.dimen.clock_oronos_outline_size),
-                            highlightColor);
         mHourClock.setTextColor(highlightColor);
         mMinuteClock.setTextColor(highlightColor);
-        mLongDate.setTextColor(highlightColor);
     }
 
     @Override
     public void onTimeTick() {
         mTime.setTimeInMillis(System.currentTimeMillis());
-        mLongDate.setText(mResources.getString(R.string.date_long_title_today, mTime.getDisplayName(
-                Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())));
 
     }
 
@@ -298,7 +288,7 @@ public class OronosSqrClockController implements ClockPlugin {
 
     @Override
     public boolean shouldShowStatusArea() {
-        return false;
+        return true;
     }
 }
 

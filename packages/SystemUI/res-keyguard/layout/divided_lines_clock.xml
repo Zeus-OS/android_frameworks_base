@@ -59,7 +59,7 @@
                 android:paddingTop="15dp"
                 android:paddingBottom="15dp"
                 android:letterSpacing="0.3"
-                android:textSize="42sp" />
+                android:textSize="44sp" />
 
             <View
                 android:id="@+id/bottomLine"

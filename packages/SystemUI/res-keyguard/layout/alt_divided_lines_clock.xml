@@ -40,7 +40,7 @@
                 android:layout_weight="1"
                 android:paddingTop="15dp"
                 android:letterSpacing="0.3"
-                android:textSize="42sp" />
+                android:textSize="44sp" />
 
             <TextClock
                 android:id="@+id/date"

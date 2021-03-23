@@ -27,7 +27,7 @@
         android:textColor="?attr/wallpaperTextColor"
         android:elegantTextHeight="false"
         android:letterSpacing="0.1"
-        android:textSize="42sp" />
+        android:textSize="44sp" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/rainbow_cirlce_lottie"

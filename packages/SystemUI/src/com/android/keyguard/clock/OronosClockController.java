@@ -80,7 +80,6 @@ public class OronosClockController implements ClockPlugin {
      */
     private TextClock mHourClock;
     private TextClock mMinuteClock;
-    private TextView mLongDate;
 
     /**
      * Time and calendars to check the date
@@ -116,7 +115,6 @@ public class OronosClockController implements ClockPlugin {
                 .inflate(R.layout.oronos_clock, null);
         mHourClock = mBigClockView.findViewById(R.id.clockHr);
         mMinuteClock = mBigClockView.findViewById(R.id.clockMin);
-        mLongDate = mBigClockView.findViewById(R.id.longDate);
         onTimeTick();
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);
@@ -135,7 +133,6 @@ public class OronosClockController implements ClockPlugin {
         mBigClockView = null;
         mHourClock = null;
         mMinuteClock = null;
-        mLongDate = null;
     }
 
     @Override
@@ -224,7 +221,6 @@ public class OronosClockController implements ClockPlugin {
     public void setTextColor(int color) {
         GradientDrawable hourBg = (GradientDrawable) mHourClock.getBackground();
         GradientDrawable minBg = (GradientDrawable) mMinuteClock.getBackground();
-        GradientDrawable dateBg = (GradientDrawable) mLongDate.getBackground();
 
         if(ZeusUtils.useLockscreenCustomClockAccentColor(mContext)) {
             hourBg.setColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
@@ -259,29 +255,21 @@ public class OronosClockController implements ClockPlugin {
 
         GradientDrawable hourBg = (GradientDrawable) mHourClock.getBackground();
         GradientDrawable minBg = (GradientDrawable) mMinuteClock.getBackground();
-        GradientDrawable dateBg = (GradientDrawable) mLongDate.getBackground();
 
         // Things that needs to be tinted with the background color
         mHourClock.setTextColor(backgroundColor);
         minBg.setColor(backgroundColor);
-        dateBg.setColor(backgroundColor);
 
         // Things that needs to be tinted with the highlighted color
         hourBg.setColor(highlightColor);
         minBg.setStroke(mResources.getDimensionPixelSize(R.dimen.clock_oronos_outline_size),
                             highlightColor);
-        dateBg.setStroke(mResources.getDimensionPixelSize(R.dimen.clock_oronos_outline_size),
-                            highlightColor);
         mMinuteClock.setTextColor(highlightColor);
-        mLongDate.setTextColor(highlightColor);
     }
 
     @Override
     public void onTimeTick() {
         mTime.setTimeInMillis(System.currentTimeMillis());
-        mLongDate.setText(mResources.getString(R.string.date_long_title_today, mTime.getDisplayName(
-                Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())));
-
     }
 
     @Override
@@ -300,7 +288,7 @@ public class OronosClockController implements ClockPlugin {
 
     @Override
     public boolean shouldShowStatusArea() {
-        return false;
+        return true;
     }
 }
 

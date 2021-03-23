@@ -20,7 +20,7 @@
             android:paddingRight="4dp"
             android:format12Hour="hh"
             android:format24Hour="kk"
-            android:textSize="88sp" />
+            android:textSize="94sp" />
 
         <TextClock
             android:id="@+id/clockMinute"
@@ -30,7 +30,7 @@
             android:paddingLeft="4dp"
             android:format12Hour="mm"
             android:format24Hour="mm"
-            android:textSize="48sp" />
+            android:textSize="65sp" />
 
     </LinearLayout>
 </com.android.keyguard.clock.ClockLayout>

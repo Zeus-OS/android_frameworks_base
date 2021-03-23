@@ -75,7 +75,6 @@ public class MNMLMinimalClockController implements ClockPlugin {
      * Text clock in preview view hierarchy.
      */
     private TextClock mClock;
-    private TextClock mDate;
 
     private Context mContext;
 
@@ -98,7 +97,6 @@ public class MNMLMinimalClockController implements ClockPlugin {
         mBigClockView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.digital_mnml_minimal, null);
         mClock = mBigClockView.findViewById(R.id.clock);
-        mDate = mBigClockView.findViewById(R.id.date);
         ColorExtractor.GradientColors colors = mColorExtractor.getColors(
                 WallpaperManager.FLAG_LOCK);
         setColorPalette(colors.supportsDarkText(), colors.getColorPalette());
@@ -108,7 +106,6 @@ public class MNMLMinimalClockController implements ClockPlugin {
     public void onDestroyView() {
         mBigClockView = null;
         mClock = null;
-        mDate = null;
     }
 
     @Override
@@ -161,6 +158,7 @@ public class MNMLMinimalClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
+        mClock.setTextColor(color);
         if(ZeusUtils.useLockscreenCustomClockAccentColor(mContext)) {
             mClock.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));
         } else {
@@ -179,9 +177,6 @@ public class MNMLMinimalClockController implements ClockPlugin {
             return;
         }
         final int accentColor = colorPalette[Math.max(0, colorPalette.length - 5)];
-        GradientDrawable dateBg = (GradientDrawable) mDate.getBackground();
-        dateBg.setColor(accentColor);
-        dateBg.setStroke(0,Color.TRANSPARENT);
     }
 
     @Override
@@ -198,6 +193,6 @@ public class MNMLMinimalClockController implements ClockPlugin {
 
     @Override
     public boolean shouldShowStatusArea() {
-        return false;
+        return true;
     }
 }

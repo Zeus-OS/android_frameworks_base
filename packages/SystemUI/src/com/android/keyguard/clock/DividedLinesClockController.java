@@ -197,6 +197,7 @@ public class DividedLinesClockController implements ClockPlugin {
     @Override
     public void setTextColor(int color) {
         setClockColors();
+        mClock.setTextColor(color);
     }
 
     @Override

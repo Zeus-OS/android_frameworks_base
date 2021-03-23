@@ -187,6 +187,7 @@ public class MNMLBoxClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
+        mClock.setTextColor(color);
         mDate.setTextColor(color);
         if(ZeusUtils.useLockscreenCustomClockAccentColor(mContext)) {
             mDateDay.setTextColor((mContext.getResources().getColor(R.color.lockscreen_clock_accent_color)));

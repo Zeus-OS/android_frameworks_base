@@ -53,7 +53,7 @@
         android:fontFamily="@*android:string/config_headlineFontFamilyMedium"
         android:letterSpacing="0.3"
         android:textColor="?attr/wallpaperTextColor"
-        android:textSize="42sp" />
+        android:textSize="44sp" />
 
     <View
         android:id="@+id/bottomLine"

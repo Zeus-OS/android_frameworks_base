@@ -196,6 +196,7 @@ public class AltDividedLinesClockController implements ClockPlugin {
 
     @Override
     public void setTextColor(int color) {
+        mClock.setTextColor(color);
         setClockColors();
     }
 

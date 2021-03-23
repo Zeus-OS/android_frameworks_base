@@ -26,7 +26,7 @@
         android:elegantTextHeight="false"
         android:textColor="?attr/wallpaperTextColor"
         android:letterSpacing="0.1"
-        android:textSize="26dp"
+        android:textSize="30dp"
         android:textStyle="bold" />
     <ImageView
         android:id="@+id/logo"

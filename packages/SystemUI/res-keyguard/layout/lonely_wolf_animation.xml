@@ -39,6 +39,6 @@
         android:textColor="?attr/wallpaperTextColorSecondary"
         android:elegantTextHeight="false"
         android:letterSpacing="0.1"
-        android:textSize="42sp" />
+        android:textSize="44sp" />
 
 </com.android.keyguard.clock.ClockLayout>
