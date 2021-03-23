@@ -73,7 +73,7 @@ public class IDEClockController implements ClockPlugin {
     /**
      * Root view of clock.
      */
-    private ClockLayout mView;
+    private ClockLayout mBigClockView;
 
     /**
      * Text clock for time, date, day and month
@@ -117,9 +117,9 @@ public class IDEClockController implements ClockPlugin {
     }
 
     private void createViews() {
-        mView = (ClockLayout) mLayoutInflater
+        mBigClockView = (ClockLayout) mLayoutInflater
                 .inflate(R.layout.p404_ide_clock, null);
-        setViews(mView);
+        setViews(mBigClockView);
     }
 
     private void setViews(View view) {
@@ -136,7 +136,7 @@ public class IDEClockController implements ClockPlugin {
 
     @Override
     public void onDestroyView() {
-        mView = null;
+        mBigClockView = null;
         mTime = null;
         mDate = null;
         mDay = null;
@@ -174,15 +174,15 @@ public class IDEClockController implements ClockPlugin {
 
     @Override
     public View getView() {
-        if (mView == null) {
-            createViews();
-        }
-        return mView;
+        return null;
     }
 
     @Override
     public View getBigClockView() {
-        return null;
+        if (mBigClockView == null) {
+            createViews();
+        }
+        return mBigClockView;
     }
 
     @Override
@@ -220,13 +220,13 @@ public class IDEClockController implements ClockPlugin {
     @Override
     public void setDarkAmount(float darkAmount) {
         mPalette.setDarkAmount(darkAmount);
-        mView.setDarkAmount(darkAmount);
+        mBigClockView.setDarkAmount(darkAmount);
     }
 
     @Override
     public void onTimeTick() {
-        if (mView != null)
-            mView.onTimeChanged();
+        if (mBigClockView != null)
+            mBigClockView.onTimeChanged();
         if (mTime != null)
             mTime.refreshTime();
         if (mDate != null)
@@ -243,7 +243,6 @@ public class IDEClockController implements ClockPlugin {
 
     @Override
     public boolean shouldShowStatusArea() {
-        if (mContext == null) return true;
-        return Settings.System.getInt(mContext.getContentResolver(), Settings.System.CLOCK_SHOW_STATUS_AREA, 1) == 1;
+        return false;
     }
 }
