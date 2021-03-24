@@ -88,7 +88,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     // Default Dualstatusbar 
     private boolean mDualStatusbarEnabled;
     private int mDualStatusbarMode;
-
+    
     private class SettingsObserver extends ContentObserver {
         SettingsObserver(Handler handler) {
             super(handler);
@@ -131,9 +131,12 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mDualStatusbarEnabled = getResources().getBoolean(com.android.internal.R.bool.config_default_dual_status_bar);
         mDualStatusbarMode = getResources().getInteger(com.android.internal.R.integer.config_default_dual_status_bar_mode);
         int mDSBarmode = 0;
-        if(mDualStatusbarEnabled) {
+        int mDualStatusbarModeHelper = Settings.System.getInt(getContext().getContentResolver(),
+        Settings.System.DUAL_STATUSBAR_ROW_MODE_HELPER, 0);
+        if(mDualStatusbarEnabled && mDualStatusbarModeHelper == 0) {
             mDSBarmode = mDualStatusbarMode;
-            mDualStatusbarEnabled = false; // set it back to false to make dual statusbar picker work
+            Settings.System.putInt(getContext().getContentResolver(),
+                    Settings.System.DUAL_STATUSBAR_ROW_MODE_HELPER, 1);
         } else {
             mDSBarmode = getDualStatusbarMode();
         }

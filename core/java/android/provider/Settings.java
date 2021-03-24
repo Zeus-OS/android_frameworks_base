@@ -5145,6 +5145,11 @@ public final class Settings {
         public static final String DUAL_STATUSBAR_ROW_MODE = "dual_statusbar_row_mode";
 
         /**
+         * @hide
+         */
+        public static final String DUAL_STATUSBAR_ROW_MODE_HELPER = "dual_statusbar_row_mode_helper";
+
+        /**
          * Show data usage in dual row
          * @hide
          */
