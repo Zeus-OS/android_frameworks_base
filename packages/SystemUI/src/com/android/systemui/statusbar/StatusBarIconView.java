@@ -178,11 +178,11 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
         mDozer = new NotificationIconDozeHelper(context);
         mBlocked = blocked;
         final float densityMultiplier = context.getResources().getDisplayMetrics().density;
-        final float scaledPx = 8 * densityMultiplier;
+        final float scaledPx = 7 * densityMultiplier;
         mSlot = slot;
         mNumberPain = new Paint();
-        mNumberPain.setTextAlign(Paint.Align.CENTER);
-        mNumberPain.setColor(context.getColor(R.drawable.notification_number_text_color));
+        mNumberPain.setTextAlign(Paint.Align.CENTER); 
+        mNumberPain.setColor(context.getColor(R.color.qs_header_accent_color));
         mNumberPain.setAntiAlias(true);
         mNumberPain.setTypeface(Typeface.DEFAULT_BOLD);
         mNumberPain.setTextSize(scaledPx);
@@ -363,8 +363,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
         if (!numberEquals || force) {
             if (icon.number > 1 && mShowNotificationCount) {
                 if (mNumberBackground == null) {
-                    mNumberBackground = getContext().getResources().getDrawable(
-                            R.drawable.ic_notification_overlay);
+                    mNumberBackground =  getContext().getDrawable(R.drawable.ic_notification_count);
                 }
                 placeNumber();
             } else {
@@ -484,7 +483,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
 
         if (mNumberBackground != null) {
             mNumberBackground.draw(canvas);
-            canvas.drawText(mNumberText, mNumberX, mNumberY, mNumberPain);
+            canvas.drawText(" " + mNumberText, mNumberX + 19, mNumberY - 7, mNumberPain);
         }
         if (mDotAppearAmount != 0.0f) {
             float radius;
