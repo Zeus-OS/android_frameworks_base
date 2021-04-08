@@ -29,7 +29,7 @@
         <TextClock
             android:id="@+id/clock_day"
             android:layout_width="match_parent"
-            android:textSize="44.5sp"
+            android:textSize="46.5sp"
             android:ellipsize="none"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -54,11 +54,11 @@
                 android:format12Hour="h"
                 android:format24Hour="kk"
                 android:textColor="?android:attr/colorAccent"
-                android:textSize="45.5sp" />
+                android:textSize="50.5sp" />
 
             <TextClock
                 android:id="@+id/time_clock"
-                android:textSize="45.5sp"
+                android:textSize="50.5sp"
                 android:layout_width="wrap_content"
                 android:ellipsize="none"
                 android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
         <TextClock
             android:id="@+id/timedate"
             android:layout_width="wrap_content"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:layout_height="wrap_content"
             android:ellipsize="none"
             android:layout_gravity="left|bottom"
