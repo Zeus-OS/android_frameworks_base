@@ -58,15 +58,15 @@ public class RandomColorService extends Service  {
     private Runnable scrOffTask = new Runnable() {
         public void run() {
             Log.v(TAG,"scrOffTask");
-            updateAccentColor();
-            offScheduled = false;
+                updateAccentColor();
+                offScheduled = false;
             }
     };
 
     private Runnable scrOnTask = new Runnable() {
         public void run() {
-            Log.v(TAG,"scrOnTask");
-            onScheduled = false;
+                Log.v(TAG,"scrOnTask");
+                onScheduled = false;
             }
     };
 
@@ -89,26 +89,26 @@ public class RandomColorService extends Service  {
     {
         Log.d(TAG, "onStart");
         mContext = getApplicationContext();
-
+        
         // firewall
         int rcc = Settings.System.getIntForUser(mContext.getContentResolver(),
                     Settings.System.RANDOM_ACCENT_COLOR_ON_SCREEN_OFF, 0, UserHandle.USER_CURRENT);
-        if(rcc!=0)
+
+        mOverlayManager = IOverlayManager.Stub.asInterface(
+                ServiceManager.getService(Context.OVERLAY_SERVICE));
+
+        if(rcc!=0) {
             mEnabled = true;
-        else
+        } else {
             mEnabled = false;
+        }            
 
         if (mEnabled){
             registerBroadcastReceiver();
         }
 
-        mOverlayManager = IOverlayManager.Stub.asInterface(
-                ServiceManager.getService(Context.OVERLAY_SERVICE));
-
         scrOnHandler = new Handler();
         scrOffHandler = new Handler();
-
-        updateAccentColor();
     }
 
     private void registerBroadcastReceiver() {
@@ -123,8 +123,8 @@ public class RandomColorService extends Service  {
             public void onReceive(Context context, Intent intent) {
                 strAction = intent.getAction();
 
-                if (strAction.equals(Intent.ACTION_SCREEN_OFF)){
-                    Log.d(TAG, "screen off");
+                if (strAction.equals(Intent.ACTION_SCREEN_OFF)){ 
+                    Log.d(TAG, "screen off");                  
                     if(onScheduled){
                         scrOnHandler.removeCallbacks(scrOnTask);
                     } else {
@@ -140,12 +140,19 @@ public class RandomColorService extends Service  {
                     if(offScheduled){
                         scrOffHandler.removeCallbacks(scrOffTask);
                     } else {
-                        scrOnHandler.postDelayed(scrOnTask, 1 * 1000);
+                        scrOnHandler.postDelayed(scrOnTask, 1 * 100);
                     }
                 }
                 if (strAction.equals("android.intent.action.RANDOM_COLOR_SERVICE_UPDATE")){
                     Log.d(TAG, "update color");
-                    updateAccentColor();
+                    int rcs = Settings.System.getIntForUser(mContext.getContentResolver(),
+                        Settings.System.RANDOM_ACCENT_COLOR_ON_SCREEN_OFF, 0, UserHandle.USER_CURRENT);
+                    if(rcs!=0) {
+                        registerBroadcastReceiver();
+                    } else {
+                        scrOffHandler.removeCallbacks(scrOffTask);
+                        onDestroy();
+                    }
                 }
             }
         };
@@ -163,18 +170,18 @@ public class RandomColorService extends Service  {
             mPowerKeyReceiver = null;
         }
     }
-
     private void updateAccentColor() {
-        if(strAction != "" && strAction.equals(Intent.ACTION_SCREEN_OFF)) {
-                int color = getRandomColor();
-                String hexColor = String.format("%08X", (0xFFFFFFFF & color));
-                SystemProperties.set(ACCENT_COLOR_PROP, hexColor);
-                            try {
-                                mOverlayManager.reloadAndroidAssets(UserHandle.USER_CURRENT);
-                                mOverlayManager.reloadAssets("com.android.settings", UserHandle.USER_CURRENT);
-                                mOverlayManager.reloadAssets("com.android.systemui", UserHandle.USER_CURRENT);
-            } catch (RemoteException ignored) { }
-        }
+           int color = getRandomColor();
+           String hexColor = String.format("%08X", (0xFFFFFFFF & color));
+           if(offScheduled){
+                scrOffHandler.removeCallbacks(scrOffTask);
+           }
+           SystemProperties.set(ACCENT_COLOR_PROP, hexColor);
+                       try {
+                           mOverlayManager.reloadAndroidAssets(UserHandle.USER_CURRENT);
+                           mOverlayManager.reloadAssets("com.android.settings", UserHandle.USER_CURRENT);
+                           mOverlayManager.reloadAssets("com.android.systemui", UserHandle.USER_CURRENT);
+       } catch (RemoteException ignored) { }
     }
 
     public int getRandomColor(){

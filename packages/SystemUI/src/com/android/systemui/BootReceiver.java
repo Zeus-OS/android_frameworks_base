@@ -45,6 +45,9 @@ public class BootReceiver extends BroadcastReceiver {
             mContext.getContentResolver().registerContentObserver(Settings.Global.getUriFor(
                     Settings.Global.SHOW_CPU_OVERLAY),
                     false, this);
+            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.RANDOM_ACCENT_COLOR_ON_SCREEN_OFF),
+                    false, this);
             update();
         }
 
@@ -59,6 +62,12 @@ public class BootReceiver extends BroadcastReceiver {
                 mContext.startService(cpuinfo);
             } else {
                 mContext.stopService(cpuinfo);
+            }
+            Intent rcs = new Intent(mContext, com.android.systemui.zeus.randomcolor.RandomColorService.class);
+            if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.RANDOM_ACCENT_COLOR_ON_SCREEN_OFF, 0) != 0) {
+                mContext.startService(rcs);
+            } else {
+                mContext.stopService(rcs);
             }
         }
     }
