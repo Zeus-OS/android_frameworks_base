@@ -22,14 +22,13 @@
     android:layout_height="match_parent"
     android:layout_width="wrap_content"
     android:layout_gravity="center_vertical|end"
-    android:paddingEnd="3dp"
+    android:paddingEnd="0dp"
     android:focusable="true" >
 
         <FrameLayout
             android:id="@+id/background"
             android:layout_height="@dimen/ongoing_appops_chip_height"
             android:layout_width="wrap_content"
-            android:minWidth="46dp"
             android:layout_gravity="center_vertical">
                 <LinearLayout
                     android:id="@+id/icons_container"
