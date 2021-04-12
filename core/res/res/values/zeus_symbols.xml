@@ -219,4 +219,7 @@
 
       <!-- NightLight FOD -->
   <java-symbol type="bool" name="disable_fod_night_light"/>
+
+    <!-- Switch USB controller on Asus ROG devices-->
+  <java-symbol type="bool" name="config_switchUsbController" />
 </resources>

@@ -183,4 +183,7 @@
 
         <!-- NightLight FOD -->
     <bool name="disable_fod_night_light">false</bool>
+
+        <!-- Switch USB controller on Asus ROG devices-->
+    <bool name="config_switchUsbController">false</bool>
 </resources>
