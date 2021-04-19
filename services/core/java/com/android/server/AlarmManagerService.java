@@ -121,6 +121,19 @@ import java.util.TimeZone;
 import java.util.TreeSet;
 import java.util.function.Predicate;
 
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Iterator;
+
+import static android.app.AlarmManager.RTC_WAKEUP;
+import static android.app.AlarmManager.RTC;
+import static android.app.AlarmManager.ELAPSED_REALTIME_WAKEUP;
+import static android.app.AlarmManager.ELAPSED_REALTIME;
+
+import com.android.internal.annotations.GuardedBy;
+import com.android.internal.util.DumpUtils;
+import com.android.internal.util.LocalLog;
+
 /**
  * Alarm manager implementation.
  *
@@ -232,6 +245,10 @@ class AlarmManagerService extends SystemService {
      * At boot we use SYSTEM_UI_SELF_PERMISSION to look up the definer's uid.
      */
     int mSystemUiUid;
+
+    private Set<String> mSeenAlarms = new HashSet<String>();
+    private Set<String> mBlockedAlarms = new HashSet<String>();
+    private int mAlarmsBlockingEnabled;
 
     /**
      * For each uid, this is the last time we dispatched an "allow while idle" alarm,
@@ -478,6 +495,12 @@ class AlarmManagerService extends SystemService {
             mResolver = resolver;
             mResolver.registerContentObserver(Settings.Global.getUriFor(
                     Settings.Global.ALARM_MANAGER_CONSTANTS), false, this);
+            mResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.ALARM_BLOCKING_ENABLED),
+                    false, this, UserHandle.USER_ALL);
+            mResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.ALARM_BLOCKING_LIST),
+                    false, this, UserHandle.USER_ALL);
             updateConstants();
         }
 
@@ -555,6 +578,14 @@ class AlarmManagerService extends SystemService {
                 }
 
                 updateAllowWhileIdleWhitelistDurationLocked();
+
+                mAlarmsBlockingEnabled = Settings.System.getIntForUser(mResolver,
+                        Settings.System.ALARM_BLOCKING_ENABLED, 0, UserHandle.USER_CURRENT);
+                String blockedAlarmList = Settings.System.getStringForUser(mResolver,
+                        Settings.System.ALARM_BLOCKING_LIST, UserHandle.USER_CURRENT);
+                setBlockedAlarms(blockedAlarmList);
+                Slog.d(TAG, "mAlarmsBlockingEnabled=" + mAlarmsBlockingEnabled
+                        + " blockedAlarmList=" + blockedAlarmList);
             }
         }
 
@@ -1691,6 +1722,7 @@ class AlarmManagerService extends SystemService {
             PendingIntent operation, IAlarmListener directReceiver, String listenerTag,
             int flags, WorkSource workSource, AlarmManager.AlarmClockInfo alarmClock,
             int callingUid, String callingPackage) {
+
         // must be *either* PendingIntent or AlarmReceiver, but not both
         if ((operation == null && directReceiver == null)
                 || (operation != null && directReceiver != null)) {
@@ -1760,6 +1792,29 @@ class AlarmManagerService extends SystemService {
         } else {
             maxElapsed = triggerElapsed + windowLength;
         }
+
+        boolean blockAlarm = false;
+        if(operation != null){
+            String tag = operation.getTag("");
+
+            if (type == AlarmManager.RTC_WAKEUP || type == AlarmManager.ELAPSED_REALTIME_WAKEUP){
+
+                Slog.e(TAG, "RTC Alarm: " + type + " " + listenerTag + " " + callingPackage + " " + tag);
+
+                if (!mSeenAlarms.contains(tag)) {
+                    mSeenAlarms.add(tag);
+                }
+                if (mAlarmsBlockingEnabled == 1 && mBlockedAlarms.contains(tag)) {
+                        if (type == AlarmManager.RTC_WAKEUP) {
+                            type = AlarmManager.RTC;
+                        } else {
+                            type = AlarmManager.ELAPSED_REALTIME;
+                        }
+                    blockAlarm = true;
+                    }
+                }
+            }
+
         synchronized (mLock) {
             if (DEBUG_BATCH) {
                 Slog.v(TAG, "set(" + operation + ") : type=" + type
@@ -1779,8 +1834,18 @@ class AlarmManagerService extends SystemService {
                 throw new IllegalStateException(errorMsg);
             }
             setImplLocked(type, triggerAtTime, triggerElapsed, windowLength, maxElapsed,
-                    interval, operation, directReceiver, listenerTag, flags, true, workSource,
-                    alarmClock, callingUid, callingPackage);
+                interval, operation, directReceiver, listenerTag, flags, true, workSource,
+                alarmClock, callingUid, callingPackage);
+        }
+    }
+
+    private void setBlockedAlarms(String AlarmTagsString) {
+        mBlockedAlarms = new HashSet<String>();
+        if (AlarmTagsString != null && AlarmTagsString.length() != 0) {
+            String[] parts = AlarmTagsString.split("\\|");
+            for (int i = 0; i < parts.length; i++) {
+                mBlockedAlarms.add(parts[i]);
+            }
         }
     }
 
@@ -2174,6 +2239,23 @@ class AlarmManagerService extends SystemService {
         @Override
         public long getNextWakeFromIdleTime() {
             return getNextWakeFromIdleTimeImpl();
+        }
+
+        @Override
+        public String getSeenAlarms() {
+            StringBuffer buffer = new StringBuffer();
+            Iterator<String> nextAlarm = mSeenAlarms.iterator();
+
+            while (nextAlarm.hasNext()) {
+                String alarmTag = nextAlarm.next();
+                buffer.append(alarmTag + "|");
+            }
+
+            if (buffer.length() > 0) {
+                buffer.deleteCharAt(buffer.length() - 1);
+            }
+
+            return buffer.toString();
         }
 
         @Override
