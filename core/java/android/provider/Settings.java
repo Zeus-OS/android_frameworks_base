@@ -6611,6 +6611,12 @@ public final class Settings {
         public static final String FORCE_FULLSCREEN_CUTOUT_APPS = "force_full_screen_cutout_apps";
 
         /**
+         * Whether to change the transparency of the notifications
+         * @hide
+         */
+        public static final String NOTIFICATION_BG_ALPHA = "notification_bg_alpha";
+
+        /**
          * @hide
          */
         public static final String SCREEN_STATE_ON_DELAY = "screen_state_on_delay";
