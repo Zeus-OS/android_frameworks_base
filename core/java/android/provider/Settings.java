@@ -6690,8 +6690,24 @@ public final class Settings {
         public static final String WAKELOCK_BLOCKING_LIST = "wakelock_blocking_list";
 
         /**
-         * List of alarms blocks selected
+         * Show ambient icons on lockscreen
          * @hide
+         */
+        public static final String AMBIENT_ICONS_LOCKSCREEN = "ambient_icons_lockscreen";
+
+        /**
+         * Change size of ambient icons on lockscreen
+         * @hide
+         */
+        public static final String AMBIENT_ICONS_SIZE = "ambient_icons_size";
+
+        /**
+         * Change color of ambient icons on lockscreen
+         * @hide
+         */
+        public static final String AMBIENT_ICONS_COLOR = "ambient_icons_color";
+
+        /**
          */
         public static final String ALARM_BLOCKING_LIST = "alarm_blocking_list";
 
