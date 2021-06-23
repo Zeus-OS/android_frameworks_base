@@ -122,4 +122,6 @@
      <string name="global_action_restart_fastboot_progress">Restarting to fastbootd mode\u2026</string>
     <!-- Restart sytemui progress dialog. This is shown if the user chooses to restart the device. -->
     <string name="global_action_restart_systemui_progress">Restarting SystemUI mode\u2026</string>
+    <!-- Name of the additional status bar icons also exposed with SystemUI Tuner -->
+    <string name="status_bar_location">Location</string>
 </resources>
