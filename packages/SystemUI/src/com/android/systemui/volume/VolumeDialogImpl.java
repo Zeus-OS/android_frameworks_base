@@ -1314,8 +1314,6 @@ public class VolumeDialogImpl implements VolumeDialog,
                     mExpanded = false;
                     cleanExpandedRows();
                     mExpandRows.setExpanded(mExpanded);
-                    mDialog.getViewTreeObserver().removeOnComputeInternalInsetsListener(
-                            mInsetsListener);
                     mController.notifyVisible(false);
                 }, 50));
         if (!isLandscape()) {
