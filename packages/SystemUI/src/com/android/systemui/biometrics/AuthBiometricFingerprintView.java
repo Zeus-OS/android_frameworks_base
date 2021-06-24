@@ -83,6 +83,7 @@ public class AuthBiometricFingerprintView extends AuthBiometricView {
 
     private void showTouchSensorString() {
         mIndicatorView.setText(R.string.fingerprint_dialog_touch_sensor);
+        mIndicatorView.setTextColor(mTextColorHint);
     }
 
     private void updateIcon(int lastState, int newState) {

@@ -181,6 +181,7 @@
     <string name="accessibility_battery_two_bars" msgid="7895789999668425551">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‏‏‏‎‏‏‎‏‏‎‎‏‎‎‏‏‎‏‏‏‏‎‏‏‎‎‏‎‏‎‏‏‏‏‎‎‎‏‏‏‎‏‎‏‎‎‎‏‎‏‏‏‎‎‏‏‎‏‎‎‏‏‏‏‎Battery two bars.‎‏‎‎‏‎"</string>
     <string name="accessibility_battery_three_bars" msgid="118341923832368291">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‎‎‏‏‏‎‏‎‎‏‎‎‎‏‏‎‏‏‏‏‎‏‎‏‏‎‏‎‎‏‎‎‏‏‎‎‎‎‎‏‎‎‎‎‏‎‎‎‏‏‎‎‏‎‏‎‎‎‏‏‎Battery three bars.‎‏‎‎‏‎"</string>
     <string name="accessibility_battery_full" msgid="1480463938961288494">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‎‏‏‎‏‎‎‏‎‎‎‏‎‏‏‏‎‏‎‏‎‏‎‎‎‎‏‏‎‏‏‏‏‎‏‎‎‎‎‏‎‎‏‎‎‎‎‎‎‏‎‏‏‎‏‎‎‏‎‏‏‏‎‎Battery full.‎‏‎‎‏‎"</string>
+    <string name="accessibility_battery_unknown" msgid="1807789554617976440">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‎‏‏‏‎‎‏‎‎‎‏‎‏‏‎‏‎‎‎‏‏‏‏‎‎‎‎‎‏‎‏‏‎‎‏‎‏‏‏‏‎‏‎‏‎‏‎‏‎‎‎‎‏‏‎‎‏‏‏‏‎‎‎‎Battery percentage unknown.‎‏‎‎‏‎"</string>
     <string name="accessibility_no_phone" msgid="8828412144430247025">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‏‏‏‏‏‎‏‎‏‎‎‎‎‏‎‎‏‏‎‏‎‎‏‎‎‎‎‏‎‎‏‎‎‎‎‎‎‏‏‏‏‎‎‎‎‎‏‎‎‏‏‎‏‏‎‎‎‏‏‏‎‎‎‏‎No phone.‎‏‎‎‏‎"</string>
     <string name="accessibility_phone_one_bar" msgid="8786055123727785588">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‏‏‏‏‏‎‎‏‏‏‏‎‏‏‏‎‎‏‎‏‎‏‏‎‏‎‎‏‎‏‎‏‏‎‏‎‎‎‏‎‏‏‎‎‏‎‏‏‏‎‎‏‏‏‏‎‎‏‏‏‎‏‎‎‎Phone one bar.‎‏‎‎‏‎"</string>
     <string name="accessibility_phone_two_bars" msgid="3316909612598670674">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‎‏‎‏‏‏‎‎‎‎‎‏‎‎‎‎‎‎‎‎‏‏‏‏‎‏‏‏‎‎‎‎‎‎‎‏‎‏‏‎‎‎‎‎‏‎‏‏‎‏‏‎‏‎‏‎‏‎‏‎‎‏‎‎Phone two bars.‎‏‎‎‏‎"</string>
@@ -853,7 +854,7 @@
     <string name="right_keycode" msgid="2480715509844798438">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‎‏‎‎‎‏‎‎‏‏‎‏‏‎‏‎‏‎‎‎‏‎‏‏‎‎‏‏‏‎‎‏‏‏‎‎‎‎‏‎‎‎‏‏‎‎‏‏‏‏‎‏‎‏‏‏‏‏‎‎‏‏‎‎Right keycode‎‏‎‎‏‎"</string>
     <string name="left_icon" msgid="5036278531966897006">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‏‏‎‎‎‏‎‏‏‏‏‎‎‏‎‎‎‏‏‏‎‏‎‎‏‎‏‎‎‏‎‎‎‎‏‏‎‏‏‏‏‏‎‏‎‎‎‎‎‎‎‎‏‎‏‏‎‏‏‎‏‏‏‎‎Left icon‎‏‎‎‏‎"</string>
     <string name="right_icon" msgid="1103955040645237425">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‎‎‏‏‏‏‎‏‎‏‎‎‏‎‎‎‎‎‏‎‎‏‎‏‎‎‎‎‏‎‏‎‏‎‏‏‎‏‏‎‏‎‏‎‎‏‎‏‎‎‏‎‏‎‏‎‏‏‎‎‎‏‎Right icon‎‏‎‎‏‎"</string>
-    <string name="drag_to_add_tiles" msgid="8933270127508303672">"Press on tiles to add or remove"</string>
+    <string name="drag_to_add_tiles" msgid="8933270127508303672">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‏‏‏‏‏‎‏‏‏‏‏‏‏‎‎‏‎‏‎‏‏‎‎‏‏‏‎‏‏‎‎‏‏‎‏‏‏‎‎‎‏‎‏‏‏‏‎‏‏‎‏‎‏‏‏‏‎‎‏‏‏‎‎‎‎Hold and drag to add tiles‎‏‎‎‏‎"</string>
     <string name="drag_to_rearrange_tiles" msgid="2143204300089638620">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‎‏‏‏‏‎‏‏‎‏‏‏‏‏‎‎‎‏‏‎‎‎‎‏‏‏‏‎‏‎‎‏‎‏‎‏‎‏‏‏‏‏‎‏‏‏‎‏‎‏‏‏‏‏‎‏‏‎‏‏‏‎‎‎Hold and drag to rearrange tiles‎‏‎‎‏‎"</string>
     <string name="drag_to_remove_tiles" msgid="4682194717573850385">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‏‏‎‎‎‎‎‎‏‏‏‏‏‎‏‎‎‏‏‏‏‏‏‏‎‏‎‎‏‎‎‏‏‏‎‎‏‏‏‎‎‎‏‏‎‎‏‏‎‎‏‎‎‏‎‏‎‎‎‏‎‎‎‏‎Drag here to remove‎‏‎‎‏‎"</string>
     <string name="drag_to_remove_disabled" msgid="933046987838658850">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‎‎‏‏‎‎‏‏‏‏‎‎‏‎‏‏‎‏‏‎‎‏‎‏‎‎‏‎‏‎‏‎‏‏‏‏‎‎‏‏‎‏‏‏‏‏‎‎‎‏‏‎‎‏‎‎‏‎‎‎‏‎‎You need at least ‎‏‎‎‏‏‎<xliff:g id="MIN_NUM_TILES">%1$d</xliff:g>‎‏‎‎‏‏‏‎ tiles‎‏‎‎‏‎"</string>
@@ -1090,9 +1091,6 @@
     <string name="controls_added_tooltip" msgid="4842812921719153085">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‏‏‎‎‎‎‏‏‎‎‏‏‎‏‎‏‎‎‏‎‎‎‎‎‏‎‏‏‎‎‎‏‏‎‏‎‏‎‎‎‏‎‏‏‏‏‎‏‏‏‏‎‎‎‎‏‏‎‏‏‏‏‎‏‎Hold Power button to see new controls‎‏‎‎‏‎"</string>
     <string name="controls_menu_add" msgid="4447246119229920050">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‎‏‏‏‏‎‏‏‎‏‏‎‏‏‏‏‏‎‎‏‎‏‎‏‏‎‎‏‎‎‎‎‏‏‎‏‏‎‏‎‏‏‎‏‏‏‏‎‎‎‏‎‎‏‏‎‎‏‏‎‎‏‎‎Add controls‎‏‎‎‏‎"</string>
     <string name="controls_menu_edit" msgid="890623986951347062">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‎‎‏‏‎‎‎‏‎‏‏‏‎‎‎‎‏‎‎‎‎‏‏‏‎‎‏‏‎‎‎‎‏‎‎‎‏‎‏‎‏‎‏‏‎‏‎‏‎‏‏‎‏‏‎‏‏‏‎‏‏‎‎Edit controls‎‏‎‎‏‎"</string>
-
-    <string name="media_output_title" msgid="115223550977351699">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‏‎‏‏‏‎‎‏‏‏‎‎‏‏‎‎‏‎‏‎‏‏‎‏‏‎‎‏‏‎‏‎‏‏‎‎‎‏‎‎‏‏‏‎‎‎‎‏‏‏‎‏‎‎‎‎‎‎‎‎‏‎‎‏‏‎Play media to‎‏‎‎‏‎"</string>
-
     <string name="media_output_dialog_add_output" msgid="5642703238877329518">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‏‏‎‎‏‏‏‎‎‏‎‎‏‏‏‎‏‏‏‎‏‎‎‎‏‎‏‏‎‎‏‏‎‎‎‎‏‏‏‎‎‎‏‏‏‎‏‎‏‎‏‏‏‎‎‎‎‏‏‎‏‏‏‎‎Add outputs‎‏‎‎‏‎"</string>
     <string name="media_output_dialog_group" msgid="5571251347877452212">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‏‏‎‎‏‏‎‏‎‏‎‏‎‎‎‏‎‎‎‎‏‏‏‏‏‎‎‏‎‏‎‏‎‏‎‎‏‎‎‎‏‎‏‎‎‏‏‎‏‏‎‏‏‎‎‏‏‎‏‏‎‏‎‎‎Group‎‏‎‎‏‎"</string>
     <string name="media_output_dialog_single_device" msgid="3102758980643351058">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‎‏‎‏‎‏‏‎‎‎‎‏‏‏‏‎‎‏‏‎‏‏‎‏‏‎‏‏‎‏‎‏‎‎‏‎‎‎‎‏‏‏‎‎‏‏‎‎‏‏‎‏‎‏‎‎‎‎‏‎‎‏‎‎1 device selected‎‏‎‎‏‎"</string>
@@ -1100,5 +1098,6 @@
     <string name="media_output_dialog_disconnected" msgid="1834473104836986046">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‎‏‏‏‎‎‏‎‏‏‏‎‏‎‏‎‏‎‏‏‎‏‏‏‎‎‏‎‎‎‏‏‏‎‎‎‎‏‏‏‏‎‏‎‎‎‏‎‎‎‎‎‏‎‎‏‎‏‏‏‏‏‎‎‎‏‎‎‏‏‎<xliff:g id="DEVICE_NAME">%1$s</xliff:g>‎‏‎‎‏‏‏‎ (disconnected)‎‏‎‎‏‎"</string>
     <string name="media_output_dialog_connect_failed" msgid="3225190634236259010">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‎‏‎‏‏‎‎‏‏‎‎‎‎‏‎‎‎‏‎‏‏‎‏‏‏‎‎‏‎‏‏‎‏‎‎‎‏‏‎‏‎‎‏‎‎‎‏‏‎‏‎‏‎‏‎‏‏‎‎‎‎‏‎‎Couldn\'t connect. Try again.‎‏‎‎‏‎"</string>
     <string name="media_output_dialog_pairing_new" msgid="9099497976087485862">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‏‏‏‏‏‏‏‎‎‏‎‎‎‏‏‏‏‏‏‎‏‎‎‏‎‎‏‏‎‎‏‎‏‎‏‏‎‎‏‏‎‎‎‏‎‏‎‎‏‎‎‏‏‏‎‏‏‎‏‎‎‏‏‎‎Pair new device‎‏‎‎‏‎"</string>
-
+    <string name="battery_state_unknown_notification_title" msgid="8464703640483773454">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‏‏‏‏‏‏‏‎‏‎‏‎‏‏‏‏‎‎‎‏‎‏‎‏‎‏‏‎‎‎‏‏‏‎‎‏‏‏‏‎‎‏‏‏‏‏‏‏‏‎‏‏‎‏‏‏‏‎‎‎‎‎‎‏‏‏‎‎Problem reading your battery meter‎‏‎‎‏‎"</string>
+    <string name="battery_state_unknown_notification_text" msgid="13720937839460899">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‎‏‎‎‏‎‎‎‎‏‏‏‎‏‏‎‏‏‎‎‎‎‏‎‏‏‏‏‏‏‎‎‎‏‏‏‏‎‏‏‎‎‏‎‎‏‏‏‏‎‏‎‎‎‎‎‎‎‎‎‏‎‎‎‏‎‎‎‏‏‎Tap for more information‎‏‎‎‏‎"</string>
 </resources>
