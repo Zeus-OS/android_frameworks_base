@@ -262,13 +262,14 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
 
         @Override
         public void onScreenTurnedOn() {
-            if (mIsBiometricRunning && !mFodGestureEnable) {
-                show();
-            }
-            if (mPressPending) {
-                mHandler.post(() -> showCircle());
-                mPressPending = false;
-            }
+            if (mIsBiometricRunning) {
+                if (!mFodGestureEnable) {
+                    show();
+                } else if (mPressPending) {
+                    mHandler.post(() -> showCircle());
+                    mPressPending = false;
+                }
+            }    
             mScreenTurnedOn = true;
         }
 
